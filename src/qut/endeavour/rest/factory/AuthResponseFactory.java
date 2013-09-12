@@ -3,7 +3,7 @@ package qut.endeavour.rest.factory;
 import com.sun.jersey.api.NotFoundException;
 
 import qut.endeavour.rest.bean.AuthResponse;
-import qut.endeavour.rest.storage.DatabaseStorage;
+import qut.endeavour.rest.storage.DatabaseAccess;
 
 public class AuthResponseFactory {
 	/**
@@ -21,12 +21,11 @@ public class AuthResponseFactory {
 		if( token.length() < 1 ) throw new NotFoundException("Error: No token");
 		
 		AuthResponse ar;
-		DatabaseStorage db = new DatabaseStorage();
 		
 		boolean validUser = false;
 		
 		// ask server if token is authentic
-		validUser = db.validateUser(token, user_id);
+		validUser = DatabaseAccess.validateUser(token, user_id);
 		
 		if ( validUser ) {
 			ar = new AuthResponse( AuthResponse.visibility.FOUND );

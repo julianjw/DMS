@@ -19,6 +19,7 @@ import qut.endeavour.rest.bean.AuthResponse;
 import qut.endeavour.rest.bean.AuthToken;
 import qut.endeavour.rest.factory.AuthResponseFactory;
 import qut.endeavour.rest.factory.AuthTokenFactory;
+import qut.endeavour.rest.storage.DatabaseAccess;
 
 
 @Path("/auth")
@@ -64,7 +65,7 @@ public class AuthResource {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public void authRequest(
 			@FormParam(USER_ID_FIELD) String userId,
-			@FormParam(PASSWORD_FIELD) String passowrd,
+			@FormParam(PASSWORD_FIELD) String password,
 			@Context HttpServletResponse response )
 					throws IOException {
 		
@@ -73,10 +74,8 @@ public class AuthResource {
 		// generate token
 		AuthToken t = AuthTokenFactory.makeToken();
 		
-		// connect to server
-		
 		// check if login details are valid ( validation )
-		validLogin = true;
+		validLogin = DatabaseAccess.validateLogin( userId, password );
 		
 		// redirect user to first page
 		if ( validLogin ) {
