@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<p><a href="./rest/hello">hello service</a></p>
+	<p><a href="./rest/auth?auth_token=abcdef">validate good</a></p>
+	<p><a href="./rest/auth?auth_token=">validate bad</a></p>
+	
+	<form method="post" action="./rest/auth">
+		<p><strong>Authenticate</strong><p>
+		<p><label>UserId: </label><input type="text" id="user_id" /></p>
+		<p><label>Password: </label><input type="password" id="password" /></p>
+		<p><input type="submit" /></p>
+	</form>
+	
+</body>
+</html>
