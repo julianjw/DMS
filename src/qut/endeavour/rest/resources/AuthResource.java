@@ -39,7 +39,11 @@ public class AuthResource {
 	
 	
 	
-	
+	/**
+	 * validates if the current token & userid match and are valid.
+	 * @param uriInfo
+	 * @return
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public AuthResponse validate( @Context UriInfo uriInfo ) {
@@ -47,8 +51,9 @@ public class AuthResource {
 		MultivaluedMap<String, String> params = uriInfo.getQueryParameters();
 		
 		String token = params.getFirst(AUTH_TOKEN_FIELD);
+		String user_id = params.getFirst(USER_ID_FIELD);
 		
-		return AuthResponseFactory.authToken(token);
+		return AuthResponseFactory.authToken(token, user_id);
 	}
 	
 	
