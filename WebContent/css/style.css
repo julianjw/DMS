@@ -1,0 +1,83 @@
+*{
+    margin:0px;
+}
+
+html, body {
+    background-color:pink;
+    height:100%;
+    width:100%;
+}
+
+
+#con-header { /* header container */
+    background-color:#5555FF;
+    padding:0px;
+    border:0px;
+    width:100%;
+    height:95px;
+}
+
+#con-head-logo {
+    background-color:#FF0000;
+    position:relative;
+    height:100%;
+    width:257px;
+    float:left;
+
+}
+
+#con-head-worder {
+    background-color:#AA0000;
+    position:initial;
+    height:100%;
+}
+
+#con-head-quote {
+    height:100%;
+    background-color:#550000;
+    position:relative;
+    float:right;
+}
+
+
+
+
+#con-body{ /* body container */
+     margin:0px;
+     padding:0px;
+
+     width:100%;
+     height:100%;
+
+     background-color:yellow;
+}
+
+
+
+#con-body-nav { /* Side Menu */
+    background-color:purple;
+    float:left;
+    height:100%
+}
+
+#con-body-main{
+    background-color:white;
+    width:100%;
+    height:100%;
+}
+
+#con-body-main-title {
+    background-color:green;
+    width:100%;
+    height:100px;
+}
+
+#con-body-main-nav{
+    background-color:blue;
+    height:100px;
+}
+
+#con-body-main-content{
+    background-color:#55FF55;
+    height:100%;
+}
