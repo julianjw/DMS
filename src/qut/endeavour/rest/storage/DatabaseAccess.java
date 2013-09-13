@@ -10,7 +10,10 @@ import java.sql.SQLException;
 
 public class DatabaseAccess {
 	
-	private final static String dbUrl = "jdbc:mysql://localhost:3306/testdb";
+	private final static String DBMS_LOCATION = "jdbc:mysql://localhost:3306/";
+	private final static String DATABASE_NAME = "endeavordb";
+
+
 	private final static String username = "root";
 	private final static String password = "";
 	
@@ -22,15 +25,9 @@ public class DatabaseAccess {
 		
 			if ( con == null ) {
 				System.out.println("DatabaseAccess: Making a new connection to the database.");
-				con = DriverManager.getConnection(dbUrl, username, password );
+				con = DriverManager.getConnection(DBMS_LOCATION+DATABASE_NAME, username, password );
 			}
-//			
-//			PreparedStatement st = con.prepareStatement("select * from names");
-//			ResultSet result = st.executeQuery();
-//			
-//			while(result.next()) {
-//				System.out.println(result.getString(1) + " " + result.getString(2));
-//			}
+
 		} catch ( SQLException e ) {
 			System.out.println("Database error: " + e.toString());
 		} catch (ClassNotFoundException e) {
