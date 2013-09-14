@@ -20,6 +20,13 @@ public class Employment {
 	 * 
 	 * @param Employer
 	 * @param Address
+	 * @param ContactPerson
+	 * @param Position
+	 * @param Arrangements
+	 * @param Transport
+	 * @param AnnualLeave
+	 * @param SickLeave
+	 * @param Equipment
 	 */
 	public Employment(
 			String Employer,

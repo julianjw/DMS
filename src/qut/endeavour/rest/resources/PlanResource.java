@@ -14,6 +14,7 @@ import qut.endeavour.rest.bean.plan.Communication;
 import qut.endeavour.rest.bean.plan.EducationEmployment;
 import qut.endeavour.rest.bean.plan.HealthDetails;
 import qut.endeavour.rest.bean.plan.PersonalPlan;
+import qut.endeavour.rest.bean.plan.Planning;
 import qut.endeavour.rest.bean.plan.SupportRequired;
 import qut.endeavour.rest.bean.plan.clientdetails.AlertInformation;
 import qut.endeavour.rest.bean.plan.clientdetails.ContactDetails;
@@ -27,6 +28,8 @@ import qut.endeavour.rest.bean.plan.educationemployment.Employment;
 import qut.endeavour.rest.bean.plan.health.DietaryRequirements;
 import qut.endeavour.rest.bean.plan.health.HealthInformation;
 import qut.endeavour.rest.bean.plan.health.HealthManagement;
+import qut.endeavour.rest.bean.plan.planning.GoalPlan;
+import qut.endeavour.rest.bean.plan.planning.HolidayPlan;
 import qut.endeavour.rest.bean.plan.support.DailyActivities;
 import qut.endeavour.rest.bean.plan.support.FinancialSupport;
 import qut.endeavour.rest.bean.plan.support.GeneralSupport;
@@ -86,7 +89,11 @@ public class PlanResource {
 		Employment emp = new Employment("D", "D", "D", "D", "D", "D", "D", "D", "D");
 		EducationEmployment ee = new EducationEmployment( cadm, emp );
 		
-		PersonalPlan pp = new PersonalPlan( cd, hd, supreq, coms, ee );
+		HolidayPlan holPlan = new HolidayPlan("E", "E", "E", "E", "E", "E");
+		GoalPlan goaPlan = new GoalPlan("E", "E", "E", "E", "E", "E");
+		Planning plan = new Planning( holPlan, goaPlan );
+		
+		PersonalPlan pp = new PersonalPlan( cd, hd, supreq, coms, ee, plan );
 		
 		return pp;
 	}
