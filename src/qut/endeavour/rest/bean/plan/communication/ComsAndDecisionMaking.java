@@ -41,11 +41,7 @@ public class ComsAndDecisionMaking {
 		
 	}
 	
-	
-	
-	public ComsAndDecisionMaking() {}
-	
-	
+	public ComsAndDecisionMaking(){}
 	
 	public String getICommunicate() {
 		return this.ICommunicate;

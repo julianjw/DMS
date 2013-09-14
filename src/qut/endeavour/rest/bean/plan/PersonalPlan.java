@@ -9,7 +9,7 @@ public class PersonalPlan {
 	private HealthDetails hd;
 	private SupportRequired sr;
 	private Communication com;
-	/*private List<EducationEmployment> ee;
+	EducationEmployment ee;/*
 	private List<Planning> planning;*/
 	
 	
@@ -17,16 +17,16 @@ public class PersonalPlan {
 			ClientDetails cd,
 			HealthDetails hd,
 			SupportRequired sr,
-			Communication com/*,
-			List<EducationEmployment> ee,
+			Communication com,
+			EducationEmployment ee/*,
 			List<Planning> planning*/
 			) {
 		
 		this.cd = cd;
 		this.hd = hd;
 		this.sr = sr;
-		this.com = com;/*
-		this.ee = ee;
+		this.com = com;
+		this.ee = ee;/*
 		this.planning = planning;*/
 		
 	}
@@ -66,5 +66,14 @@ public class PersonalPlan {
 	}
 	public void setCommunication(Communication com) {
 		this.com = com;
+	}
+	
+	
+	
+	public EducationEmployment getEducationEmployment(){
+		return this.ee;
+	}
+	public void setEducationEmployment(EducationEmployment ee) {
+		this.ee = ee;
 	}
 }

@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 
 import qut.endeavour.rest.bean.plan.ClientDetails;
 import qut.endeavour.rest.bean.plan.Communication;
+import qut.endeavour.rest.bean.plan.EducationEmployment;
 import qut.endeavour.rest.bean.plan.HealthDetails;
 import qut.endeavour.rest.bean.plan.PersonalPlan;
 import qut.endeavour.rest.bean.plan.SupportRequired;
@@ -21,6 +22,8 @@ import qut.endeavour.rest.bean.plan.clientdetails.LivingArangements;
 import qut.endeavour.rest.bean.plan.clientdetails.PersonalDetails;
 import qut.endeavour.rest.bean.plan.communication.BadTopics;
 import qut.endeavour.rest.bean.plan.communication.ComsAndDecisionMaking;
+import qut.endeavour.rest.bean.plan.educationemployment.Education;
+import qut.endeavour.rest.bean.plan.educationemployment.Employment;
 import qut.endeavour.rest.bean.plan.health.DietaryRequirements;
 import qut.endeavour.rest.bean.plan.health.HealthInformation;
 import qut.endeavour.rest.bean.plan.health.HealthManagement;
@@ -78,7 +81,12 @@ public class PlanResource {
 		ComsAndDecisionMaking decision = new ComsAndDecisionMaking("C", "C", "C", "C", "C", "C", "C", "C", badt);
 		Communication coms = new Communication(decision);
 		
-		PersonalPlan pp = new PersonalPlan( cd, hd, supreq, coms );
+		
+		Education cadm = new Education("D", "D", "D", "D", "D", "D", "D", "D", "D", "D", "D");
+		Employment emp = new Employment("D", "D", "D", "D", "D", "D", "D", "D", "D");
+		EducationEmployment ee = new EducationEmployment( cadm, emp );
+		
+		PersonalPlan pp = new PersonalPlan( cd, hd, supreq, coms, ee );
 		
 		return pp;
 	}
