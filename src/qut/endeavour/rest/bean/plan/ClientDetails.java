@@ -19,7 +19,8 @@ public class ClientDetails {
 			PersonalDetails pd,
 			AlertInformation ai,
 			LivingArangements la,
-			FormalOrders fo ){
+			FormalOrders fo
+			){
 		
 		this.pd = pd;
 		this.ai = ai;

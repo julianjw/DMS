@@ -9,27 +9,28 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class PersonalPlan {
 
 	private ClientDetails cd;
-	private List<HealthDetails> hd;
+	/*private List<HealthDetails> hd;
 	private List<SupportRequired> sr;
 	private List<Communication> com;
 	private List<EducationEmployment> ee;
-	private List<Planning> planning;
+	private List<Planning> planning;*/
 	
 	
 	public PersonalPlan(
-			ClientDetails cd,
+			ClientDetails cd/*,
 			List<HealthDetails> hd,
 			List<SupportRequired> sr,
 			List<Communication> com,
 			List<EducationEmployment> ee,
-			List<Planning> planning) {
+			List<Planning> planning*/
+			) {
 		
-		this.cd = cd;
+		this.cd = cd;/*
 		this.hd = hd;
 		this.sr = sr;
 		this.com = com;
 		this.ee = ee;
-		this.planning = planning;
+		this.planning = planning;*/
 		
 	}
 	
@@ -45,6 +46,7 @@ public class PersonalPlan {
 		this.cd = cd;
 	}
 	
+	/*
 	@XmlElement
 	public List<HealthDetails> getHealthDetails(){
 		return this.hd;
@@ -68,6 +70,6 @@ public class PersonalPlan {
 	@XmlElement
 	public List<Planning> getPlanning(){
 		return this.planning;
-	}
+	}*/
 	
 }

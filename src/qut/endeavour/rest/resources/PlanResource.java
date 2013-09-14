@@ -1,15 +1,20 @@
 package qut.endeavour.rest.resources;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.UriInfo;
 
 import qut.endeavour.rest.bean.plan.ClientDetails;
 import qut.endeavour.rest.bean.plan.PersonalPlan;
+import qut.endeavour.rest.bean.plan.clientdetails.AlertInformation;
+import qut.endeavour.rest.bean.plan.clientdetails.ContactDetails;
+import qut.endeavour.rest.bean.plan.clientdetails.FormalOrders;
+import qut.endeavour.rest.bean.plan.clientdetails.LivingArangements;
 import qut.endeavour.rest.bean.plan.clientdetails.PersonalDetails;
 
 @Path("/personalplan")
@@ -30,14 +35,20 @@ public class PlanResource {
 		System.out.println("Username: "+username);
 		System.out.println("clientId: "+clientid);
 		
-		/*
 		
-		ClientDetails cd = new ClientDetails(
-				new PersonalDetails(""),
-				new 
-				)
-		*/
-		return null;
+		PersonalDetails pd = new PersonalDetails( "a", "a", "a", "a", "a", "a" );
+		AlertInformation ai = new AlertInformation( "a", "a", "a", "a", "a", "a", "a", "a" );
+		ArrayList<ContactDetails> contd = new ArrayList<ContactDetails>();
+		contd.add(new ContactDetails("cd1","cd","cd"));
+		contd.add(new ContactDetails("cd2","cd","cd"));
+		contd.add(new ContactDetails("cd3","cd","cd"));
+		LivingArangements la = new LivingArangements("a", "a", "a", contd, "a", contd);
+		FormalOrders fo = new FormalOrders("a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a");
+		ClientDetails cd = new ClientDetails( pd, ai, la, fo );
+		
+		PersonalPlan pp = new PersonalPlan( cd );
+		
+		return pp;
 	}
 	
 }
