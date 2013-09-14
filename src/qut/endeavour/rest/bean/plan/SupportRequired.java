@@ -1,5 +1,7 @@
 package qut.endeavour.rest.bean.plan;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import qut.endeavour.rest.bean.plan.support.DailyActivities;
 import qut.endeavour.rest.bean.plan.support.FinancialSupport;
 import qut.endeavour.rest.bean.plan.support.GeneralSupport;
@@ -7,7 +9,7 @@ import qut.endeavour.rest.bean.plan.support.MobilityAndTransport;
 import qut.endeavour.rest.bean.plan.support.Relaxation;
 
 
-
+@XmlRootElement
 public class SupportRequired {
 	private GeneralSupport generalSupport;
 	private MobilityAndTransport mobilityAndTransport;

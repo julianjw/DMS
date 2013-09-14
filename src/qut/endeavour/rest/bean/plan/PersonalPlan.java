@@ -8,24 +8,24 @@ public class PersonalPlan {
 	private ClientDetails cd;
 	private HealthDetails hd;
 	private SupportRequired sr;
-	/*private List<Communication> com;
-	private List<EducationEmployment> ee;
+	private Communication com;
+	/*private List<EducationEmployment> ee;
 	private List<Planning> planning;*/
 	
 	
 	public PersonalPlan(
 			ClientDetails cd,
 			HealthDetails hd,
-			SupportRequired sr/*,
-			List<Communication> com,
+			SupportRequired sr,
+			Communication com/*,
 			List<EducationEmployment> ee,
 			List<Planning> planning*/
 			) {
 		
 		this.cd = cd;
 		this.hd = hd;
-		this.sr = sr;/*
-		this.com = com;
+		this.sr = sr;
+		this.com = com;/*
 		this.ee = ee;
 		this.planning = planning;*/
 		
@@ -57,5 +57,14 @@ public class PersonalPlan {
 	}
 	public void setSupportRequired(SupportRequired sr) {
 		this.sr = sr;
+	}
+	
+	
+	
+	public Communication getCommunication(){
+		return this.com;
+	}
+	public void setCommunication(Communication com) {
+		this.com = com;
 	}
 }

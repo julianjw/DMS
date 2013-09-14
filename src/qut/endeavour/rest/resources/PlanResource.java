@@ -10,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import qut.endeavour.rest.bean.plan.ClientDetails;
+import qut.endeavour.rest.bean.plan.Communication;
 import qut.endeavour.rest.bean.plan.HealthDetails;
 import qut.endeavour.rest.bean.plan.PersonalPlan;
 import qut.endeavour.rest.bean.plan.SupportRequired;
@@ -18,6 +19,8 @@ import qut.endeavour.rest.bean.plan.clientdetails.ContactDetails;
 import qut.endeavour.rest.bean.plan.clientdetails.FormalOrders;
 import qut.endeavour.rest.bean.plan.clientdetails.LivingArangements;
 import qut.endeavour.rest.bean.plan.clientdetails.PersonalDetails;
+import qut.endeavour.rest.bean.plan.communication.BadTopics;
+import qut.endeavour.rest.bean.plan.communication.ComsAndDecisionMaking;
 import qut.endeavour.rest.bean.plan.health.DietaryRequirements;
 import qut.endeavour.rest.bean.plan.health.HealthInformation;
 import qut.endeavour.rest.bean.plan.health.HealthManagement;
@@ -56,7 +59,6 @@ public class PlanResource {
 		FormalOrders fo = new FormalOrders("a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a");
 		ClientDetails cd = new ClientDetails( pd, ai, la, fo );
 		
-		
 		HealthInformation healthInfo = new HealthInformation("b", "b", false, false, false, "b", "b");
 		HealthManagement healthManagement = new HealthManagement("b", "b", "b", "b", 0, "b", "b", "b", "b", "b");
 		DietaryRequirements dietaryReqs = new DietaryRequirements("b", "b", false, "b", "b", "b", "b", "b", "b", "b", "b", "b", "b");
@@ -69,7 +71,14 @@ public class PlanResource {
 		Relaxation relax = new Relaxation("C","C","C","C","C");
 		SupportRequired supreq = new SupportRequired(gs, mat, finsup, dailyact, relax);
 		
-		PersonalPlan pp = new PersonalPlan( cd, hd, supreq );
+		ArrayList<BadTopics> badt = new ArrayList<BadTopics>();
+		badt.add( new BadTopics("C1","C") );
+		badt.add( new BadTopics("C2","C") );
+		badt.add( new BadTopics("C3","C") );
+		ComsAndDecisionMaking decision = new ComsAndDecisionMaking("C", "C", "C", "C", "C", "C", "C", "C", badt);
+		Communication coms = new Communication(decision);
+		
+		PersonalPlan pp = new PersonalPlan( cd, hd, supreq, coms );
 		
 		return pp;
 	}
