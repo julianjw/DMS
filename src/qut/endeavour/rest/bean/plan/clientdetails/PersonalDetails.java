@@ -1,6 +1,5 @@
 package qut.endeavour.rest.bean.plan.clientdetails;
 
-import java.util.Date;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -10,16 +9,16 @@ public class PersonalDetails {
 	private String preferredName;
 	private String clientId;
 	private String photoURL;
-	private Date creationDate;
-	private Date reviewDate;
+	private String creationDate;
+	private String reviewDate;
 	
 	public PersonalDetails(
 			String cn,
 			String pn,
 			String cid,
 			String purl,
-			Date cd,
-			Date rd ) {
+			String cd,
+			String rd ) {
 		this.clientName = cn;
 		this.preferredName = pn;
 		this.clientId = cid;
@@ -54,19 +53,27 @@ public class PersonalDetails {
 		this.clientId = cid;
 	}
 	
-	public Date getCreationDate() {
+	public String getPhotoUrl() {
+		return this.photoURL;
+	}
+	
+	public void setPhotoUrl( String url ) {
+		this.photoURL = url;
+	}
+	
+	public String getCreationDate() {
 		return this.creationDate;
 	}
 	
-	public void setCreationDate( Date cd ) {
+	public void setCreationDate( String cd ) {
 		this.creationDate = cd;
 	}
 	
-	public Date getReviewDate() {
+	public String getReviewDate() {
 		return this.reviewDate;
 	}
 	
-	public void setReviewDate(Date rd) {
+	public void setReviewDate(String rd) {
 		this.reviewDate = rd;
 	}
 	
