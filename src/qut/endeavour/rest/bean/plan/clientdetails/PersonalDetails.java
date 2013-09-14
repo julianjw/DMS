@@ -13,6 +13,7 @@ public class PersonalDetails {
 	private String clientName;
 	private String preferredName;
 	private String clientId;
+	private String address;
 	private String photoURL;
 	private String creationDate;
 	private String reviewDate;
@@ -22,6 +23,7 @@ public class PersonalDetails {
 	 * @param clientName
 	 * @param preferredName
 	 * @param clientId
+	 * @param address
 	 * @param photoURL
 	 * @param creationDate
 	 * @param reviewDate
@@ -30,12 +32,14 @@ public class PersonalDetails {
 			String clientName,
 			String preferredName,
 			String clientId,
+			String address,
 			String photoURL,
 			String creationDate,
 			String reviewDate ) {
 		this.clientName = clientName;
 		this.preferredName = preferredName;
 		this.clientId = clientId;
+		this.address = address;
 		this.photoURL = photoURL;
 		this.creationDate = creationDate;
 		this.reviewDate = reviewDate;
@@ -59,13 +63,25 @@ public class PersonalDetails {
 		this.preferredName = preferredName;
 	}
 	
+	
+	
 	public String getClientId() {
 		return this.clientId;
 	}
-	
 	public void setClientId( String clientId ) {
 		this.clientId = clientId;
 	}
+	
+	
+	
+	public String getAddress() {
+		return this.address;
+	}
+	public void setAddress( String address ) {
+		this.address = address;
+	}
+	
+	
 	
 	public String getPhotoUrl() {
 		return this.photoURL;
