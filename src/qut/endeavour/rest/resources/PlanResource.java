@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import qut.endeavour.rest.bean.plan.ClientDetails;
 import qut.endeavour.rest.bean.plan.HealthDetails;
 import qut.endeavour.rest.bean.plan.PersonalPlan;
+import qut.endeavour.rest.bean.plan.SupportRequired;
 import qut.endeavour.rest.bean.plan.clientdetails.AlertInformation;
 import qut.endeavour.rest.bean.plan.clientdetails.ContactDetails;
 import qut.endeavour.rest.bean.plan.clientdetails.FormalOrders;
@@ -20,6 +21,11 @@ import qut.endeavour.rest.bean.plan.clientdetails.PersonalDetails;
 import qut.endeavour.rest.bean.plan.health.DietaryRequirements;
 import qut.endeavour.rest.bean.plan.health.HealthInformation;
 import qut.endeavour.rest.bean.plan.health.HealthManagement;
+import qut.endeavour.rest.bean.plan.support.DailyActivities;
+import qut.endeavour.rest.bean.plan.support.FinancialSupport;
+import qut.endeavour.rest.bean.plan.support.GeneralSupport;
+import qut.endeavour.rest.bean.plan.support.MobilityAndTransport;
+import qut.endeavour.rest.bean.plan.support.Relaxation;
 
 @Path("/personalplan")
 public class PlanResource {
@@ -56,7 +62,14 @@ public class PlanResource {
 		DietaryRequirements dietaryReqs = new DietaryRequirements("b", "b", false, "b", "b", "b", "b", "b", "b", "b", "b", "b", "b");
 		HealthDetails hd = new HealthDetails(healthInfo, healthManagement, dietaryReqs);
 		
-		PersonalPlan pp = new PersonalPlan( cd, hd );
+		GeneralSupport gs = new GeneralSupport("C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C");
+		MobilityAndTransport mat = new MobilityAndTransport("C", "C", "C", "C", "C", "C", "C", "C");
+		FinancialSupport finsup = new FinancialSupport("C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C");
+		DailyActivities dailyact = new DailyActivities("C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C");
+		Relaxation relax = new Relaxation("C","C","C","C","C");
+		SupportRequired supreq = new SupportRequired(gs, mat, finsup, dailyact, relax);
+		
+		PersonalPlan pp = new PersonalPlan( cd, hd, supreq );
 		
 		return pp;
 	}
