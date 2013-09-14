@@ -1,23 +1,21 @@
 package qut.endeavour.rest.bean.plan;
 
-import java.util.List;
-
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class PersonalPlan {
 
 	private ClientDetails cd;
-	/*private List<HealthDetails> hd;
-	private List<SupportRequired> sr;
+	private HealthDetails hd;
+	/*private List<SupportRequired> sr;
 	private List<Communication> com;
 	private List<EducationEmployment> ee;
 	private List<Planning> planning;*/
 	
 	
 	public PersonalPlan(
-			ClientDetails cd/*,
+			ClientDetails cd,
+			HealthDetails hd/*,
 			List<HealthDetails> hd,
 			List<SupportRequired> sr,
 			List<Communication> com,
@@ -25,8 +23,8 @@ public class PersonalPlan {
 			List<Planning> planning*/
 			) {
 		
-		this.cd = cd;/*
-		this.hd = hd;
+		this.cd = cd;
+		this.hd = hd;/*
 		this.sr = sr;
 		this.com = com;
 		this.ee = ee;
@@ -37,7 +35,7 @@ public class PersonalPlan {
 	public PersonalPlan() {} // used to create bean from JSON
 	
 	
-	@XmlElement( name = "clientdetails")
+//	@XmlElement( name = "clientdetails")
 	public ClientDetails getClientDetails(){
 		return this.cd;
 	}
@@ -46,30 +44,13 @@ public class PersonalPlan {
 		this.cd = cd;
 	}
 	
-	/*
-	@XmlElement
-	public List<HealthDetails> getHealthDetails(){
+	public HealthDetails getHealthDetails(){
 		return this.hd;
 	}
 	
-	@XmlElement
-	public List<SupportRequired> getSupportRequired(){
-		return this.sr;
+	public void setHealthDetails(HealthDetails hd) {
+		this.hd = hd;
 	}
 	
-	@XmlElement
-	public List<Communication> getCommunication(){
-		return this.com;
-	}
-	
-	@XmlElement
-	public List<EducationEmployment> getEducationEmployment(){
-		return this.ee;
-	}
-	
-	@XmlElement
-	public List<Planning> getPlanning(){
-		return this.planning;
-	}*/
 	
 }
