@@ -1,9 +1,9 @@
 package qut.endeavour.rest.resources;
 
-import java.util.ArrayList;
-import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -11,91 +11,224 @@ import javax.ws.rs.core.MediaType;
 
 import qut.endeavour.rest.bean.plan.ClientDetails;
 import qut.endeavour.rest.bean.plan.Communication;
-import qut.endeavour.rest.bean.plan.EducationEmployment;
 import qut.endeavour.rest.bean.plan.HealthDetails;
 import qut.endeavour.rest.bean.plan.PersonalPlan;
 import qut.endeavour.rest.bean.plan.Planning;
 import qut.endeavour.rest.bean.plan.SupportRequired;
-import qut.endeavour.rest.bean.plan.clientdetails.AlertInformation;
-import qut.endeavour.rest.bean.plan.clientdetails.ContactDetails;
-import qut.endeavour.rest.bean.plan.clientdetails.FormalOrders;
-import qut.endeavour.rest.bean.plan.clientdetails.LivingArangements;
-import qut.endeavour.rest.bean.plan.clientdetails.PersonalDetails;
-import qut.endeavour.rest.bean.plan.communication.BadTopics;
-import qut.endeavour.rest.bean.plan.communication.ComsAndDecisionMaking;
-import qut.endeavour.rest.bean.plan.educationemployment.Education;
-import qut.endeavour.rest.bean.plan.educationemployment.Employment;
-import qut.endeavour.rest.bean.plan.health.DietaryRequirements;
-import qut.endeavour.rest.bean.plan.health.HealthInformation;
-import qut.endeavour.rest.bean.plan.health.HealthManagement;
-import qut.endeavour.rest.bean.plan.planning.GoalPlan;
-import qut.endeavour.rest.bean.plan.planning.HolidayPlan;
-import qut.endeavour.rest.bean.plan.support.DailyActivities;
-import qut.endeavour.rest.bean.plan.support.FinancialSupport;
-import qut.endeavour.rest.bean.plan.support.GeneralSupport;
-import qut.endeavour.rest.bean.plan.support.MobilityAndTransport;
-import qut.endeavour.rest.bean.plan.support.Relaxation;
+import qut.endeavour.rest.factory.PlanFactory;
 
 @Path("/personalplan")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class PlanResource {
 	
 	
-	@GET
-	@Path("/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public PersonalPlan getPersonalPlan(
+	
+	@POST
+	@Path("/planning/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
+	public void setJSONPlanning(
 			@PathParam("username") String username,
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
 		
-		
+		System.out.println("Posting: Planning");
 		System.out.println("Token: "+token);
 		System.out.println("Username: "+username);
 		System.out.println("clientId: "+clientid);
 		
+		//return PlanFactory.createPlanning();
 		
-		PersonalDetails pd = new PersonalDetails( "a", "a", "a", "a", "a", "a", "a" );
-		AlertInformation ai = new AlertInformation( "a", "a", "a", "a", "a", "a", "a", "a" );
-		ArrayList<ContactDetails> contd = new ArrayList<ContactDetails>();
-		contd.add(new ContactDetails("cd1","cd","cd"));
-		contd.add(new ContactDetails("cd2","cd","cd"));
-		contd.add(new ContactDetails("cd3","cd","cd"));
-		LivingArangements la = new LivingArangements("a", "a", "a", contd, "a", contd);
-		FormalOrders fo = new FormalOrders("a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a");
-		ClientDetails cd = new ClientDetails( pd, ai, la, fo );
+	}
+	
+	/*
+	@GET
+	@Path("/communication/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Communication JSONCommunication(
+			@PathParam("username") String username,
+			@PathParam("token") String token,
+			@PathParam("clientid") String clientid
+			) {
 		
-		HealthInformation healthInfo = new HealthInformation("b", "b", false, false, false, "b", "b");
-		HealthManagement healthManagement = new HealthManagement("b", "b", "b", "b", 0, "b", "b", "b", "b", "b");
-		DietaryRequirements dietaryReqs = new DietaryRequirements("b", "b", false, "b", "b", "b", "b", "b", "b", "b", "b", "b", "b");
-		HealthDetails hd = new HealthDetails(healthInfo, healthManagement, dietaryReqs);
+		System.out.println("Requesting: ClientDetails");
+		System.out.println("Token: "+token);
+		System.out.println("Username: "+username);
+		System.out.println("clientId: "+clientid);
 		
-		GeneralSupport gs = new GeneralSupport("C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C");
-		MobilityAndTransport mat = new MobilityAndTransport("C", "C", "C", "C", "C", "C", "C", "C");
-		FinancialSupport finsup = new FinancialSupport("C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C");
-		DailyActivities dailyact = new DailyActivities("C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C");
-		Relaxation relax = new Relaxation("C","C","C","C","C");
-		SupportRequired supreq = new SupportRequired(gs, mat, finsup, dailyact, relax);
+		return PlanFactory.createCommunication();
+	}
+	
+	@GET
+	@Path("/supportrequired/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public SupportRequired JSONSupportRequired(
+			@PathParam("username") String username,
+			@PathParam("token") String token,
+			@PathParam("clientid") String clientid
+			) {
 		
-		ArrayList<BadTopics> badt = new ArrayList<BadTopics>();
-		badt.add( new BadTopics("C1","C") );
-		badt.add( new BadTopics("C2","C") );
-		badt.add( new BadTopics("C3","C") );
-		ComsAndDecisionMaking decision = new ComsAndDecisionMaking("C", "C", "C", "C", "C", "C", "C", "C", badt);
-		Communication coms = new Communication(decision);
+		System.out.println("Requesting: ClientDetails");
+		System.out.println("Token: "+token);
+		System.out.println("Username: "+username);
+		System.out.println("clientId: "+clientid);
 		
+		return PlanFactory.createSupportRequired();
+	}
+	
+	@GET
+	@Path("/healthdetails/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public HealthDetails JSONHealthDetails(
+			@PathParam("username") String username,
+			@PathParam("token") String token,
+			@PathParam("clientid") String clientid
+			) {
 		
-		Education cadm = new Education("D", "D", "D", "D", "D", "D", "D", "D", "D", "D", "D");
-		Employment emp = new Employment("D", "D", "D", "D", "D", "D", "D", "D", "D");
-		EducationEmployment ee = new EducationEmployment( cadm, emp );
+		System.out.println("Requesting: ClientDetails");
+		System.out.println("Token: "+token);
+		System.out.println("Username: "+username);
+		System.out.println("clientId: "+clientid);
 		
-		HolidayPlan holPlan = new HolidayPlan("E", "E", "E", "E", "E", "E");
-		GoalPlan goaPlan = new GoalPlan("E", "E", "E", "E", "E", "E");
-		Planning plan = new Planning( holPlan, goaPlan );
+		return PlanFactory.createHealthDetails();
+	}
+	
+	@GET
+	@Path("/clientdetails/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ClientDetails JSONClientDetails(
+			@PathParam("username") String username,
+			@PathParam("token") String token,
+			@PathParam("clientid") String clientid
+			) {
 		
-		PersonalPlan pp = new PersonalPlan( cd, hd, supreq, coms, ee, plan );
+		System.out.println("Requesting: ClientDetails");
+		System.out.println("Token: "+token);
+		System.out.println("Username: "+username);
+		System.out.println("clientId: "+clientid);
 		
-		return pp;
+		return PlanFactory.createClientDetails();
+	}
+	
+	@GET
+	@Path("/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public PersonalPlan JSONPersonalPlan(
+			@PathParam("username") String username,
+			@PathParam("token") String token,
+			@PathParam("clientid") String clientid
+			) {
+		
+		System.out.println("Requesting: PersonalPlan");
+		System.out.println("Token: "+token);
+		System.out.println("Username: "+username);
+		System.out.println("clientId: "+clientid);
+		
+		return PlanFactory.createPersonalPlan();
+	}
+	
+	
+	/********************************************************************************************/
+	@GET
+	@Path("/planning/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Planning JSONPlanning(
+			@PathParam("username") String username,
+			@PathParam("token") String token,
+			@PathParam("clientid") String clientid
+			) {
+		
+		System.out.println("Requesting: Planning");
+		System.out.println("Token: "+token);
+		System.out.println("Username: "+username);
+		System.out.println("clientId: "+clientid);
+		
+		return PlanFactory.createPlanning();
+	}
+	
+	@GET
+	@Path("/communication/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Communication JSONCommunication(
+			@PathParam("username") String username,
+			@PathParam("token") String token,
+			@PathParam("clientid") String clientid
+			) {
+		
+		System.out.println("Requesting: ClientDetails");
+		System.out.println("Token: "+token);
+		System.out.println("Username: "+username);
+		System.out.println("clientId: "+clientid);
+		
+		return PlanFactory.createCommunication();
+	}
+	
+	@GET
+	@Path("/supportrequired/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public SupportRequired JSONSupportRequired(
+			@PathParam("username") String username,
+			@PathParam("token") String token,
+			@PathParam("clientid") String clientid
+			) {
+		
+		System.out.println("Requesting: ClientDetails");
+		System.out.println("Token: "+token);
+		System.out.println("Username: "+username);
+		System.out.println("clientId: "+clientid);
+		
+		return PlanFactory.createSupportRequired();
+	}
+	
+	@GET
+	@Path("/healthdetails/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public HealthDetails JSONHealthDetails(
+			@PathParam("username") String username,
+			@PathParam("token") String token,
+			@PathParam("clientid") String clientid
+			) {
+		
+		System.out.println("Requesting: ClientDetails");
+		System.out.println("Token: "+token);
+		System.out.println("Username: "+username);
+		System.out.println("clientId: "+clientid);
+		
+		return PlanFactory.createHealthDetails();
+	}
+	
+	@GET
+	@Path("/clientdetails/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ClientDetails JSONClientDetails(
+			@PathParam("username") String username,
+			@PathParam("token") String token,
+			@PathParam("clientid") String clientid
+			) {
+		
+		System.out.println("Requesting: ClientDetails");
+		System.out.println("Token: "+token);
+		System.out.println("Username: "+username);
+		System.out.println("clientId: "+clientid);
+		
+		return PlanFactory.createClientDetails();
+	}
+	
+	@GET
+	@Path("/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public PersonalPlan JSONPersonalPlan(
+			@PathParam("username") String username,
+			@PathParam("token") String token,
+			@PathParam("clientid") String clientid
+			) {
+		
+		System.out.println("Requesting: PersonalPlan");
+		System.out.println("Token: "+token);
+		System.out.println("Username: "+username);
+		System.out.println("clientId: "+clientid);
+		
+		return PlanFactory.createPersonalPlan();
 	}
 	
 }
