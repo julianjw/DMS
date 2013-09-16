@@ -13,6 +13,8 @@ public class DatabaseAccess {
 	
 	private final static String DBMS_LOCATION = "jdbc:mysql://localhost:3306/";
 	private final static String DATABASE_NAME = "endeavourdb";
+	
+	private final static String TBL_ACTIVE_SESSION = "active_session";
 
 	private final static String dbUsername = "root";
 	private final static String dbPassword = "";
@@ -36,6 +38,24 @@ public class DatabaseAccess {
 		}
 		
 		return false;
+	}
+	
+	
+	/**
+	 * Close an open database connection.
+	 * @return true if successful.
+	 */
+	public static boolean closeConnection() {
+		if ( con != null ) {
+			try {
+				con.close();
+				con = null;
+			} catch (SQLException e) {
+				System.out.println("DatabaseAccess: Unable to close database connection.");
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	
@@ -98,11 +118,41 @@ public class DatabaseAccess {
 			ResultSet countResult = ps.executeQuery();
 			countResult.next();
 			
-			if ( countResult.getInt("count")  == 1 ) return true; // valid login
+			if ( countResult.getInt("count")  == 1 ) {
+				System.out.println("DatabaseAccess: username & password are valid.");
+				logoutUser(user_id);
+				return true; 
+			}
+			
 			return false;
 			
 		} catch (SQLException e) {
 			System.out.println("SQLException: " + e.toString());
+		}
+		
+		return false;
+	}
+
+	/**
+	 * remove a user's database authentication, closing their session.
+	 * 
+	 * @param user_id
+	 * @return
+	 */
+	public static boolean logoutUser(String user_id) {
+		System.out.println("DatabaseAccess: User is being logged out.");
+		
+		String sql = "DELETE FROM `"+DATABASE_NAME+"`.`"+TBL_ACTIVE_SESSION+"` WHERE `"+TBL_ACTIVE_SESSION+"`.`username` = ?";
+		PreparedStatement ps;
+		
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, user_id);
+			ps.executeUpdate();
+			return true;
+			
+		} catch (SQLException e) {
+			System.out.println("DatabaseAccess: " +  e.toString());
 		}
 		
 		return false;
@@ -136,6 +186,7 @@ public class DatabaseAccess {
 	
 	/**
 	 * Creates a new session in the database's login table
+	 * This happens after a successful login
 	 * 
 	 * @param user_id
 	 * @param string
@@ -143,8 +194,8 @@ public class DatabaseAccess {
 	public static boolean createAuthentication(String user_id, String token) {
 		if (!makeConnection()) return false;
 		
-		System.out.println("DatabaseAccess: Inserting token into database ");
-		String sql = "INSERT INTO `endeavourdb`.`login` (`username`, `token`, `create_timestamp`) VALUES (?, ?, CURRENT_TIMESTAMP);";
+		System.out.println("DatabaseAccess: User is being logged in.");
+		String sql = "INSERT INTO `"+DATABASE_NAME+"`.`"+TBL_ACTIVE_SESSION+"` (`username`, `token`, `create_timestamp`) VALUES (?, ?, CURRENT_TIMESTAMP);";
 		
 		try {
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -152,7 +203,7 @@ public class DatabaseAccess {
 			ps.setString(2, token);
 			ps.executeUpdate();
 			return true;
-			
+		
 		} catch (SQLException e) {
 			System.out.println("SQLException: " + e.toString());
 		}
