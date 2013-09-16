@@ -1,14 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Personal Plan</title>
-<script src="./scripts/global-functions.js"></script>
-<script src="./scripts/personalplan.js"></script>
-</head>
+<jsp:include page="partials/head.html" flush="true" />
+	<!-- navigation -->
+<!-- 	<h3>Personal Plan Nav</h3> -->
+	<a href='client.html'>Client Details</a>
+	<a href='health.html'>Health Details</a>
+	<a href='support.html'>Support Required</a>
+	<a href='communication.html'>Communication</a>
+	<a href='education.html'>Education and Employment</a>
+	<a href='planning.html'>Planning</a>
+<jsp:include page="partials/nav.html" flush="true" />
+	<!--title -->
+	Personal Plan
+<jsp:include page="partials/body.html" flush="true" />
+	<!-- page content -->
+	
+<jsp:include page="partials/footer.html" flush="true" />
+<!-- Page specific scripts -->
+</html></head>
 <body>
-<jsp:include page="layout.html" flush="true" />
 </body>
 </html>

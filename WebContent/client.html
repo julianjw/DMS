@@ -2,6 +2,7 @@
 <head>
 	<script type='text/javascript' src='scripts/jquery.js' ></script>
 	<script type='text/javascript' src='scripts/json2.js' ></script>
+	<script type='text/javascript' src='scripts/jquery.cookie.js' ></script>
 	<link href="css/style.css" rel="stylesheet">
 
 </head>
@@ -390,15 +391,21 @@
 			
 			var jsonText = JSON.stringify(clientDetails);
 			
+			//alert(jsonText);
+			
+			//var test = "./rest/personalplan/clientdetails/" + $.cookie('auth_token') + "/" + $.cookie('user_id') +"/" + personDetails.clientId;
+			//alert(test);
+			
 			$.ajax({
-				url:'',
+				url:'./rest/personalplan/clientdetails/' + $.cookie('auth_token') + '/' + $.cookie('user_id') +'/' + personDetails.clientId,
 				type: 'POST',
-				dataType: 'application/jsonp',
+				dataType: 'application/json',
 				data: jsonText,
 				complete: function(jqXHR, textStatus) {
 					alert(textStatus);
 				}
 			});
+			
 		});
 
 		

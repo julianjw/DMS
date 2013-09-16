@@ -2,6 +2,7 @@
 <head>
 	<script type='text/javascript' src='scripts/jquery.js' ></script>
 	<script type='text/javascript' src='scripts/json2.js' ></script>
+	<script type='text/javascript' src='scripts/jquery.cookie.js' ></script>
 	<link href="css/style.css" rel="stylesheet">
 
 </head>
@@ -117,10 +118,14 @@
 			var jsonText = JSON.stringify(communication);
 			$("#testing").html(jsonText);
 			
+			var test = "./rest/personalplan/communication/" + $.cookie('auth_token') + "/" + $.cookie('user_id') +"/1";
+			
+			alert(test);
+			
 			$.ajax({
-				url:'',
+				url:'./rest/personalplan/communication/' + $.cookie('auth_token')+ '/' + $.cookie('user_id') +'/1',
 				type: 'POST',
-				dataType: 'application/jsonp',
+				dataType: 'application/json',
 				data: jsonText,
 				complete: function(jqXHR, textStatus) {
 					alert(textStatus);

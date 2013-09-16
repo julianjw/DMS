@@ -39,7 +39,7 @@ function checkRole() {
 			if($.cookie('role')) {
 				$.removeCookie('role');
 			}
-			$.cookie('role', data.role)
+			$.cookie('role', data.role);
 		}, "json");
 	}else {
 		window.location.replace("http://" + window.location.hostname + ":8080/EndeavourDMS/login.jsp");

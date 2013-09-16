@@ -21,11 +21,11 @@ function loadContent() {
 	nav += "</ul></div>";
 	
 	//Create the html to put into the content div
-	var content = "<p>Test</p>";
+	//var content = "<jsp:include page=client.html flush=true />";
 	
 	
 	//Insert page content
 	document.getElementById("con-body-main-title").innerHTML = title;
 	document.getElementById("con-body-main-nav").innerHTML = nav;
-	document.getElementById("con-body-main-content").innerHTML = content;
+	//document.getElementById("con-body-main-content").innerHTML = content;
 }

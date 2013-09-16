@@ -320,7 +320,7 @@ DROPDOWN HERE + INLINE FORMATTING
 			$("#testing").html(jsonText);
 			
 			$.ajax({
-				url:'',
+				url:'./rest/personalplan/healthdetails/' + $.cookie('auth_token') + '/' + $.cookie('user_id') +'/' + '/1',
 				type: 'POST',
 				dataType: 'application/jsonp',
 				data: jsonText,
