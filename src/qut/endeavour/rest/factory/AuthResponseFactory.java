@@ -13,14 +13,8 @@ public class AuthResponseFactory {
 	 * @param token
 	 * @return AuthResponse object
 	 */
-	public static AuthResponse authToken( String token, String user_id ) {
-		
-		// sanity checks
-		if( user_id == null ) throw new DMSClientErrorException("No user_id supplied");
-		if( user_id.length() < 1 ) throw new DMSClientErrorException("No user_id supplied");
-		if( token == null ) throw new DMSClientErrorException("No token supplied");
-		if( token.length() < 1 ) throw new DMSClientErrorException("No token supplied");
-		
+	public static AuthResponse authenticateToken( String token, String user_id ) {
+
 		AuthResponse ar;
 		
 		boolean validUser = false;

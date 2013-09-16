@@ -17,6 +17,7 @@ import javax.ws.rs.core.UriInfo;
 
 import qut.endeavour.rest.bean.AuthResponse;
 import qut.endeavour.rest.bean.AuthToken;
+import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.factory.AuthResponseFactory;
 import qut.endeavour.rest.factory.AuthTokenFactory;
 import qut.endeavour.rest.storage.DatabaseAccess;
@@ -54,7 +55,13 @@ public class AuthResource {
 		String token = params.getFirst(AUTH_TOKEN_FIELD);
 		String user_id = params.getFirst(USER_ID_FIELD);
 		
-		return AuthResponseFactory.authToken(token, user_id);
+		// sanity checks
+		if( user_id == null ) throw new DMSClientErrorException("No user_id supplied");
+		if( user_id.length() < 1 ) throw new DMSClientErrorException("No user_id supplied");
+		if( token == null ) throw new DMSClientErrorException("No token supplied");
+		if( token.length() < 1 ) throw new DMSClientErrorException("No token supplied");
+		
+		return AuthResponseFactory.authenticateToken(token, user_id);
 	}
 	
 	
