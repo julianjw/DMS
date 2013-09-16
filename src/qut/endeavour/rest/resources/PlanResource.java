@@ -9,6 +9,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import qut.endeavour.rest.bean.Verification;
 import qut.endeavour.rest.bean.plan.ClientDetails;
 import qut.endeavour.rest.bean.plan.Communication;
 import qut.endeavour.rest.bean.plan.HealthDetails;
@@ -26,105 +27,113 @@ public class PlanResource {
 	
 	@POST
 	@Path("/planning/{user_id: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
-	public void setJSONPlanning(
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Verification setJSONPlanning(
 			@PathParam("user_id") String username,
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
 		
-		System.out.println("Posting: Planning");
+		System.out.println("Writing: Planning");
 		System.out.println("Token: "+token);
 		System.out.println("user_id: "+username);
 		System.out.println("clientId: "+clientid);
 		
+		return new Verification(Verification.Verified.SUCCESS);
 		//return PlanFactory.createPlanning();
 		
 	}
 	
-	/*
-	@GET
+	
+	@POST
 	@Path("/communication/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Communication JSONCommunication(
+	public Verification setJSONCommunication(
 			@PathParam("username") String username,
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
 		
-		System.out.println("Requesting: ClientDetails");
+		System.out.println("Writing: ClientDetails");
 		System.out.println("Token: "+token);
 		System.out.println("Username: "+username);
 		System.out.println("clientId: "+clientid);
 		
-		return PlanFactory.createCommunication();
+		return new Verification(Verification.Verified.SUCCESS);
 	}
 	
-	@GET
+	@POST
 	@Path("/supportrequired/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public SupportRequired JSONSupportRequired(
+	public Verification setJSONSupportRequired(
 			@PathParam("username") String username,
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
 		
-		System.out.println("Requesting: ClientDetails");
+		System.out.println("Writing: ClientDetails");
 		System.out.println("Token: "+token);
 		System.out.println("Username: "+username);
 		System.out.println("clientId: "+clientid);
 		
-		return PlanFactory.createSupportRequired();
+		return new Verification(Verification.Verified.SUCCESS);
 	}
 	
-	@GET
+	@POST
 	@Path("/healthdetails/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public HealthDetails JSONHealthDetails(
+	public Verification setJSONHealthDetails(
 			@PathParam("username") String username,
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
 		
-		System.out.println("Requesting: ClientDetails");
+		System.out.println("Writing: ClientDetails");
 		System.out.println("Token: "+token);
 		System.out.println("Username: "+username);
 		System.out.println("clientId: "+clientid);
 		
-		return PlanFactory.createHealthDetails();
+		return new Verification(Verification.Verified.SUCCESS);
 	}
 	
-	@GET
+	@POST
 	@Path("/clientdetails/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public ClientDetails JSONClientDetails(
+	public Verification setJSONClientDetails(
 			@PathParam("username") String username,
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
 		
-		System.out.println("Requesting: ClientDetails");
+		System.out.println("Writing: ClientDetails");
 		System.out.println("Token: "+token);
 		System.out.println("Username: "+username);
 		System.out.println("clientId: "+clientid);
 		
-		return PlanFactory.createClientDetails();
+		return new Verification(Verification.Verified.SUCCESS);
 	}
 	
-	@GET
+	@POST
 	@Path("/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public PersonalPlan JSONPersonalPlan(
+	public Verification setJSONPersonalPlan(
 			@PathParam("username") String username,
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
 		
-		System.out.println("Requesting: PersonalPlan");
+		System.out.println("Writing: PersonalPlan");
 		System.out.println("Token: "+token);
 		System.out.println("Username: "+username);
 		System.out.println("clientId: "+clientid);
 		
-		return PlanFactory.createPersonalPlan();
+		return new Verification(Verification.Verified.SUCCESS);
 	}
 	
 	
