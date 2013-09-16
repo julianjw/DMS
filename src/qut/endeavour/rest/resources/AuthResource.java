@@ -88,21 +88,26 @@ public class AuthResource {
 				   
 			boolean validLogin = false;
 			
-			validLogin = DatabaseAccess.validateLogin( userId, password );
+			validLogin = DatabaseAccess.loginAttempt( userId, password );
 			   
 			// redirect user to first page
 			if ( validLogin ) {
 				// generate token
 				AuthToken t = AuthFactory.makeToken();
+				
 				// store token as active session
-				response.sendRedirect(VALID_USER_REDIRECT + "?" + AUTH_TOKEN_FIELD + "=" + t.getTokenId() + "&" + USER_ID_FIELD + "=" + userId);
+				if ( DatabaseAccess.createAuthentication( userId, t.toString()) ) {
+					response.sendRedirect(VALID_USER_REDIRECT + "?" + AUTH_TOKEN_FIELD + "=" + t.getTokenId() + "&" + USER_ID_FIELD + "=" + userId);
+				} else {
+					response.sendRedirect(INVALID_USER_REDIRECT + "?" + MESSAGE  + "=" + "CannotCreateAuth");
+				}
 			
 			} else {
-				response.sendRedirect(INVALID_USER_REDIRECT + "?" + MESSAGE  + "=" + "1");
+				response.sendRedirect(INVALID_USER_REDIRECT + "?" + MESSAGE  + "=" + "InvalidLogin");
 			}
 			
 		} else {
-			response.sendRedirect(INVALID_USER_REDIRECT + "?" + MESSAGE  + "=" + "1");
+			response.sendRedirect(INVALID_USER_REDIRECT + "?" + MESSAGE  + "=" + "InvalidLogin");
 		}
 	}
 }

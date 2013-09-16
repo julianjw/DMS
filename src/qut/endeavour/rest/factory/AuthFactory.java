@@ -42,9 +42,9 @@ public final class AuthFactory {
 	public static AuthRole createRole(String userId, String token) {
 		String role = DatabaseAccess.getRole(userId, token);
 		
-		if ( role == AuthRole.Role.CLIENT.getValue() ) return new AuthRole(AuthRole.Role.CLIENT);
-		if ( role == AuthRole.Role.STAFF.getValue() ) return new AuthRole(AuthRole.Role.STAFF);
-
+		if ( role.equals(AuthRole.Role.CLIENT.getValue()) ) return new AuthRole(AuthRole.Role.CLIENT);
+		if ( role.equals(AuthRole.Role.STAFF.getValue()) ) return new AuthRole(AuthRole.Role.STAFF);
+		
 		return new AuthRole(AuthRole.Role.INVALID);
 	}
 	
