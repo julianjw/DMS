@@ -95,7 +95,7 @@ public class AuthResource {
 				// generate token
 				AuthToken t = AuthFactory.makeToken();
 				// store token as active session
-				response.sendRedirect(VALID_USER_REDIRECT + "?" + AUTH_TOKEN_FIELD + "=" + t.getTokenId() + "?" + USER_ID_FIELD + "=" + userId);
+				response.sendRedirect(VALID_USER_REDIRECT + "?" + AUTH_TOKEN_FIELD + "=" + t.getTokenId() + "&" + USER_ID_FIELD + "=" + userId);
 			
 			} else {
 				response.sendRedirect(INVALID_USER_REDIRECT + "?" + MESSAGE  + "=" + "1");
