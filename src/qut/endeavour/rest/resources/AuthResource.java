@@ -25,11 +25,11 @@ import qut.endeavour.rest.storage.DatabaseAccess;
 @Path("/auth")
 public class AuthResource {
 
-	@Context
-	UriInfo uriInfo;
-	
-	@Context
-	Request request;
+//	@Context
+//	UriInfo uriInfo;
+//	
+//	@Context
+//	Request request;
 	
 	private final String USER_ID_FIELD = "user_id";
 	private final String PASSWORD_FIELD = "password";
@@ -69,23 +69,31 @@ public class AuthResource {
 			@Context HttpServletResponse response )
 					throws IOException {
 		
-		boolean validLogin = false;
-		
-		// generate token
-		AuthToken t = AuthTokenFactory.makeToken();
-		
-		// check if login details are valid ( validation )
-		validLogin = DatabaseAccess.validateLogin( userId, password );
-		
-		// redirect user to first page
-		if ( validLogin ) {
-			// store token as active session
+		//Sanity Checks
+		if (	userId != null &&
+				userId != "" &&
+				password != null &&
+				password != "" 
+				) {
 			
-			response.sendRedirect(VALID_USER_REDIRECT + "?" + AUTH_TOKEN_FIELD + "=" + t.getTokenId());
+			boolean validLogin = false;
+			
+			// generate token
+			AuthToken t = AuthTokenFactory.makeToken();
+			
+			// check if login details are valid ( validation )
+			validLogin = DatabaseAccess.validateLogin( userId, password );
+			
+			// redirect user to first page
+			if ( validLogin ) {
+				// store token as active session
+				
+				response.sendRedirect(VALID_USER_REDIRECT + "?" + AUTH_TOKEN_FIELD + "=" + t.getTokenId());
+			} else {
+				response.sendRedirect(INVALID_USER_REDIRECT);
+			}
 		} else {
 			response.sendRedirect(INVALID_USER_REDIRECT);
 		}
-		
 	}
-	
 }

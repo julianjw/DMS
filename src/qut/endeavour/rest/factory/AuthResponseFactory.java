@@ -1,9 +1,10 @@
 package qut.endeavour.rest.factory;
 
-import com.sun.jersey.api.NotFoundException;
 
 import qut.endeavour.rest.bean.AuthResponse;
+import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.storage.DatabaseAccess;
+
 
 public class AuthResponseFactory {
 	/**
@@ -15,10 +16,10 @@ public class AuthResponseFactory {
 	public static AuthResponse authToken( String token, String user_id ) {
 		
 		// sanity checks
-		if( user_id == null ) throw new NotFoundException("Error: No user_id");
-		if( user_id.length() < 1 ) throw new NotFoundException("Error: No user_id");
-		if( token == null ) throw new NotFoundException("Error: No token");
-		if( token.length() < 1 ) throw new NotFoundException("Error: No token");
+		if( user_id == null ) throw new DMSClientErrorException("No user_id supplied");
+		if( user_id.length() < 1 ) throw new DMSClientErrorException("No user_id supplied");
+		if( token == null ) throw new DMSClientErrorException("No token supplied");
+		if( token.length() < 1 ) throw new DMSClientErrorException("No token supplied");
 		
 		AuthResponse ar;
 		
