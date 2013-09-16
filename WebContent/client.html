@@ -1,0 +1,342 @@
+<html>
+<head>
+	<script type='text/javascript' src='scripts/jquery.js' ></script>
+	<script type='text/javascript' src='scripts/json2.js' ></script>
+	<link href="css/style.css" rel="stylesheet">
+
+</head>
+<body>
+	<button id='PageNavPrev' name='PageNavPrev' >Previous</button>	
+	<button id='PageNavNext' name='PageNavNext' >Next</button>
+	<button id='PageNavSubmitB' name='PageNavSubmitB'>Submit</button>
+	
+	<div id='detailsD'>
+		<label for='profilepic' id='profilepicL' class='toggle'>Picture: </label>
+		<div id='ppD'>
+			<img id="ppPreview" class='pp' /><br />
+			<input type="file" name="profilepic" id='profilepic' onchange="PreviewImage();">
+			<p class='error' id='profilepicE'></p>
+		</div>
+		<br>
+		
+		<label for='nameT' id='nameL' class='toggle'>Name: </label>
+		<div id='nameD' >
+			<input type='text' name='nameT' id='nameT' placeholder='Name' />
+			<p class='error' id='nameE' ></p>
+		</div>
+		<br />
+
+		<label for='nicknameT' id='nicknameL' class='toggle'>I like to be called: </label>
+		<div id='nicknameD'>
+			<input type='text' name='nicknameT' id='nicknameT' placeholder='Nickname' />
+			<p class='error' id='nicknameE'></p>
+		</div>
+		<br />
+
+		<label for='IDT' id='IDL' class='toggle'>ID: </label>
+		<div id='IDTD'>
+			<input type='text' name='IDT' id='IDT' placeholder='ID' />
+			<p class='error' id='IDE' ></p>
+		</div>
+		<br />
+
+		<label for='addressT' id='addressL' class='toggle'>Address: </label>
+		<div id='addressD' >
+			<input type='text' name='addressT' id='addressT' placeholder='Address' />
+			<p class='error' id='AddressE' ></p>
+		</div>
+		<br />
+
+		<label for='createDate' id='createDateL' class='toggle'>Creation date: </label>
+		<div id='createDateD' >
+			<input type='text' name='createDateT' id='createDateT' />
+			<p class='error' id='createDateE' ></p>
+		</div>
+		<br />
+
+		<label for='reviseDate' id='reviseDateL' class='toggle'>Revision Date: </label>
+		<div id='reviseDateD' >
+			<input type='text' name='reviseDateT' id='reviseDateT' />
+			<p class='error' id='reviseDateE'></p>
+		</div>
+		<br />
+
+
+	</div>
+
+	<div id='alertInfoD'>
+		<label for='allergiesT' class='toggle'>Allergies: </label>
+		<div id='allergiesD'>
+			<textarea id='allergiesT' name='allergiesT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+
+		<label for='meddicalT' class='toggle'>Medical Issues: </label>
+		<div id='meddicalD'>
+			<textarea id='meddicalT' name='meddicalT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+
+		<label for='safeEatingT' class='toggle'>Safe Eating Alerts: </label>
+		<div id='safeEatingD'>
+			<textarea id='safeEatingT' name='safeEatingT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='safetyConcernsT' class='toggle'>Safety Concerns: </label>
+		<div id='safetyConcernsD'>
+			<textarea id='safetyConcernsT' name='safetyConcernsT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='restrictiveT' class='toggle'>Restrictive Practices: </label>
+		<div id='restrictiveD'>
+			<textarea id='restrictiveT' name='restrictiveT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='guardianT' class='toggle'>Guardian: </label>
+		<div id='guardianD'>
+			<textarea id='guardianT' name='guardianT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='supportNeedsT' class='toggle'>Complex Support Needs: </label>
+		<div id='supportNeedsD'>
+			<textarea id='supportNeedsT' name='supportNeedsT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='phobiasT' class='toggle'>Phobias: </label>
+		<div id='phobiasD'>
+			<textarea id='phobiasT' name='phobiasT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='otherT' class='toggle'>Other: </label>
+		<div id='otherD'>
+			<textarea id='otherT' name='otherT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+	</div>
+
+	<div id='livingD'>
+		<label for='serviceT' class='toggle'>Service: </label>
+		<div id='serviceD'>
+			<textarea id='serviceT' name='serviceT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+
+		<label for='addressLivingT' class='toggle'>Address: </label>
+		<div id='addressLivingD'>
+			<textarea id='addressLivingT' name='addressLivingT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='phoneT' class='toggle' >Phone: </label>
+		<div id='phoneD'>
+			<textarea id='phoneT' name='phoneT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+
+		<label for='familyD' class='toggle'>Other Family Members: </label>
+		<br />
+		<div id='familyD'></div>
+		<button id='familyAddRecord' name='familyAddRecord' onclick="Duplicate('familyD');">Add Another</button>
+		<br />
+		
+		<label for='sickContactT' >Sick contact: </label>
+		<div id='sickContactD'>
+			<textarea id='sickContactT' name='sickContactT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='otherPeopleD' class='toggle'>Other Important People: </label>
+		<br />
+		<div id='otherPeopleD'></div>
+		<button id='otherPeopleAddRecord' name='otherPeopleAddRecord' onclick="Duplicate('otherPeopleD');">Add Another</button>
+		<br />
+	</div>	
+
+	<div id='formalD'>
+		<p id='testing'></p>
+	</div>
+
+	
+
+
+
+	<!--
+	TEMPLATES FOR CLONING -- hidden by css
+	-->	
+	<div id='familyDTemplate' class='formTemplate'>
+		<label for='familyNameT' >Name: </label>
+		<input type='text' name='familyNameT' id='familyNameT' placeholder='Name' />
+		<br />
+		<label for='familyRelationshipT' >Relationship: </label>
+		<input type='text' name='familyRelationshipT' id='familyRelationshipT' placeholder='Name' />
+		<br />
+		<label for='familyContactT' >Contact Arangements: </label>
+		<textarea id='familyContactT' name='familyContactT' rows="3" cols="50"></textarea>
+		<br />
+	</div>
+
+	<div id='otherPeopleDTemplate' class='formTemplate'>
+		<label for='otherPeopleNameT' >Name: </label>
+		<input type='text' name='otherPeopleNameT' id='otherPeopleNameT' placeholder='Name' />
+		<br />
+		<label for='otherPeopleRelationshipT' >Relationship: </label>
+		<input type='text' name='otherPeopleRelationshipT' id='otherPeopleRelationshipT' placeholder='Name' />
+		<br />
+		<label for='otherPeopleContactT' >Contact Arrangements: </label>
+		<textarea id='otherPeopleContactT' name='otherPeopleContactT' rows="3" cols="50"></textarea>
+		<br />
+	</div>
+</body>
+</html>
+
+
+
+<script type='text/javascript'>
+	var pageDivNav = new Array("detailsD", "alertInfoD", "livingD", "formalD");
+
+	function PageNavigation(dir) {
+		for(var i=0; i<pageDivNav.length; i++) {
+			if($("#" + pageDivNav[i]).css('display') != 'none') {
+				//perform page navigation
+				if(dir=="next") {
+					$("#PageNavPrev").show();
+					$("#" + pageDivNav[i+1]).show();
+					//show the submit button and hide next button if we are on the last page
+					if(i+1==pageDivNav.length-1) {
+						$("#PageNavNext").hide();
+						$("#PageNavSubmitB").show();
+					}
+				}else if(dir=='prev') {
+					$("#PageNavNext").show();
+					$("#PageNavSubmitB").hide();
+					$("#" + pageDivNav[i-1]).show();
+					//hide the previous button if we are on the first page
+					if(i-1==0) {
+						$("#PageNavPrev").hide();
+					}
+				}
+				//hide the current div
+				$("#" + pageDivNav[i]).hide();
+				break;
+			}
+		}
+	};
+
+
+	function Duplicate(divName) {
+		$("#"+divName).append($("#" + divName + "Template").children().clone());
+	};
+		
+
+	function PreviewImage() {
+        var oFReader = new FileReader();
+        
+        oFReader.onload = function (e) {
+            $('#ppPreview').attr('src', e.target.result);
+        };
+        oFReader.readAsDataURL($("#profilepic").files[0]);
+    };
+
+
+
+
+	$(document).ready(function() {
+		//page load
+		//hide necessary elements
+//MAKE THIS INTO A FUNCTION BECAUSE YOU DO IT ON EVERY PAGE AND HAVE AN ARRAY OF THE PAGE NAV DIVS
+		$("#PageNavSubmitB").hide();
+		$("#PageNavPrev").hide();
+		$("#alertInfoD").hide();
+		$("#livingD").hide();
+		$("#formalD").hide();
+
+//populate date field this will need to be changed when u start pulling data from steven
+		var d =  new Date();
+		var month = d.getMonth()+1;
+		var day = d.getDate();
+		var date = ((''+day).length<2 ? '0' : '') + day + '/' + ((''+month).length<2 ? '0' : '') + month + '/' + d.getFullYear();
+		$("#createDateT").val(date);
+
+
+		//click on the previous button
+		$("#PageNavPrev").click(function(){
+			PageNavigation('prev');
+		});
+
+		//click on the next button
+		$("#PageNavNext").click(function(){
+			PageNavigation('next');
+		});
+
+		//click on toggle class element
+		$(".toggle").click(function(event){
+			$(this).next().toggle();
+		});
+		
+		//click on the submit button
+		$("#PageNavSubmitB").click(function(){
+			var alertInformation = new Object();
+			alertInformation.allergies = $("#allergiesT").val();
+			alertInformation.complexSupportNeeds = $("#supportNeedsT").val();
+			alertInformation.eatingAlerts = $("#safeEatingT").val();
+			alertInformation.guardian = $("#guardianT").val();
+			alertInformation.medIssues = $("#meddicalT").val();
+			alertInformation.other = $("#otherT").val();
+			alertInformation.phobias = $("#phobiasT").val();
+			alertInformation.restrictive = $("#restrictiveT").val();
+			
+			var formalOrders = new Object();
+			formalOrders.appointee = $("#restrictiveT").val();
+			formalOrders.commenceDate = $("#restrictiveT").val();
+			formalOrders.contactArrangement = $("#restrictiveT").val();
+			formalOrders.details = $("#restrictiveT").val();
+			formalOrders.familyContact = $("#restrictiveT").val();
+			formalOrders.justiceRequirements = $("#restrictiveT").val();
+			formalOrders.orderFor = $("#restrictiveT").val();
+			formalOrders.orderLocation = $("#restrictiveT").val();
+			formalOrders.otherInfo = $("#restrictiveT").val();
+			formalOrders.protOrder = $("#restrictiveT").val();
+			formalOrders.specialConditions = $("#restrictiveT").val();
+			formalOrders.supportOfficer = $("#restrictiveT").val();
+			formalOrders.visitorInfo = $("#restrictiveT").val();
+			
+			var livingArangements = new Object();
+			livingArangements.address = $("#addressT").val();
+			var familyMembers = new Object();
+//ITERATE OVER THESE DYNAMICALLY			
+			livingArangements.familyMembers = familyMembers;
+			var importantPerson = new Object();
+//ITERATE OVER THESE DYNAMICALLY	
+			livingArangements.importantPerson = importantPerson;
+			livingArangements.phoneNumber = $("#phoneT").val();
+			livingArangements.service = $("#serviceT").val();
+			livingArangements.sickContact = $("#sickContactT").val();
+			
+			var personDetails = new Object();
+			personDetails.address = $("#addressT").val();
+			personDetails.clientId = $("#IDT").val();
+			personDetails.clientName = $("#nameT").val();
+			personDetails.creationDate = $("#createDateT").val();
+			personDetails.photoUrl = $("#profilepic").val();
+			personDetails.preferredName = $("#nicknameT").val();
+			personDetails.reviewDate = $("#reviceDateT").val();
+			
+			var clientDetails = new Object();
+			clientDetails.alertInformation = alertInformation;
+			clientDetails.formalOrders = formalOrders;
+			clientDetails.livingArangements = livingArangements;
+			clientDetails.personDetails = personDetails;
+			
+			var jsonText = JSON.stringify(clientDetails);
+			$("#testing").html(jsonText);
+		});
+
+		
+	});
+</script>
