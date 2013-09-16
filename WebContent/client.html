@@ -159,7 +159,89 @@
 	</div>	
 
 	<div id='formalD'>
-		<p id='testing'></p>
+		<h4 class='toggle'>Formal Orders</h4>
+		<div id='formalOdersD'>
+			<label for='orderForT' class='toggle' >Order For: </label>
+			<div id='orderForD'>
+				<textarea id='orderForT' name='orderForT' rows="3" cols="50"></textarea>
+			</div>
+			<br />
+			
+			<label for='appointeeT' class='toggle' >Appointee: </label>
+			<div id='appointeeD'>
+				<textarea id='appointeeT' name='appointeeT' rows="3" cols="50"></textarea>
+			</div>
+			<br />
+			
+			<label for='detailsT' class='toggle' >Details: </label>
+			<div id='detailsD'>
+				<textarea id='detailsT' name='detailsT' rows="3" cols="50"></textarea>
+			</div>
+			<br />
+			
+			<label for='orderLocationT' class='toggle' >Location of Order: </label>
+			<div id='orderLocationD'>
+				<textarea id='orderLocationT' name='orderLocationT' rows="3" cols="50"></textarea>
+			</div>
+			<br />
+			
+			<label for='orderOtherInfoT' class='toggle' >Other Information: </label>
+			<div id='orderOtherInfoD'>
+				<textarea id='orderOtherInfoT' name='orderOtherInfoT' rows="3" cols="50"></textarea>
+			</div>
+			<br />
+		</div>
+		
+		<h4 class='toggle'>Child Protection Orders and Family Contact Arrangements</h4>
+		<div id='childProtD'>
+			<label for='childSupportOfficerT' class='toggle' >Child Support Officer Name and Details: </label>
+			<div id='childSupportOfficerD'>
+				<textarea id='childSupportOfficerT' name='childSupportOfficerT' rows="3" cols="50"></textarea>
+			</div>
+			<br />
+			
+			<label for='communityVisitorT' class='toggle' >Community Visitor Information: </label>
+			<div id='communityVisitorD'>
+				<textarea id='communityVisitorT' name='communityVisitorT' rows="3" cols="50"></textarea>
+			</div>
+			<br />
+			
+			<label for='protOrderT' class='toggle' >Protection Order Details: </label>
+			<div id='protOrderD'>
+				<textarea id='protOrderT' name='protOrderT' rows="3" cols="50"></textarea>
+			</div>
+			<br />
+			
+			<label for='startDateT' class='toggle' >Date of Commencement: </label>
+			<div id='startDateD'>
+				<textarea id='startDateT' name='startDateT' rows="3" cols="50"></textarea>
+			</div>
+			<br />
+			
+			<label for='justiceT' class='toggle' >Justice Requirements for Children's Court: </label>
+			<div id='justiceD'>
+				<textarea id='justiceT' name='justiceT' rows="3" cols="50"></textarea>
+			</div>
+			<br />
+			
+			<label for='famContactDeetsT' class='toggle' >Family Member Contact Details: </label>
+			<div id='famContactDeetsD'>
+				<textarea id='famContactDeetsT' name='famContactDeetsT' rows="3" cols="50"></textarea>
+			</div>
+			<br />
+			
+			<label for='contactArrangT' class='toggle' >Contact Arrangements: </label>
+			<div id='contactArrangD'>
+				<textarea id='contactArrangT' name='contactArrangT' rows="3" cols="50"></textarea>
+			</div>
+			<br />
+			
+			<label for='specialConT' class='toggle' >Special Conditions (list comprehensively): </label>
+			<div id='specialConD'>
+				<textarea id='specialConT' name='specialConT' rows="3" cols="50"></textarea>
+			</div>
+			<br />
+		</div>
 	</div>
 
 	
@@ -200,6 +282,7 @@
 <script type='text/javascript'>
 	var pageDivNav = new Array("detailsD", "alertInfoD", "livingD", "formalD");
 
+	
 	function PageNavigation(dir) {
 		for(var i=0; i<pageDivNav.length; i++) {
 			if($("#" + pageDivNav[i]).css('display') != 'none') {
@@ -228,20 +311,7 @@
 		}
 	};
 
-
-	function Duplicate(divName) {
-		$("#"+divName).append($("#" + divName + "Template").children().clone());
-	};
-		
-
-	function PreviewImage() {
-        var oFReader = new FileReader();
-        
-        oFReader.onload = function (e) {
-            $('#ppPreview').attr('src', e.target.result);
-        };
-        oFReader.readAsDataURL($("#profilepic").files[0]);
-    };
+	
 
 
 
@@ -262,22 +332,7 @@
 		var day = d.getDate();
 		var date = ((''+day).length<2 ? '0' : '') + day + '/' + ((''+month).length<2 ? '0' : '') + month + '/' + d.getFullYear();
 		$("#createDateT").val(date);
-
-
-		//click on the previous button
-		$("#PageNavPrev").click(function(){
-			PageNavigation('prev');
-		});
-
-		//click on the next button
-		$("#PageNavNext").click(function(){
-			PageNavigation('next');
-		});
-
-		//click on toggle class element
-		$(".toggle").click(function(event){
-			$(this).next().toggle();
-		});
+		
 		
 		//click on the submit button
 		$("#PageNavSubmitB").click(function(){
@@ -292,19 +347,19 @@
 			alertInformation.restrictive = $("#restrictiveT").val();
 			
 			var formalOrders = new Object();
-			formalOrders.appointee = $("#restrictiveT").val();
-			formalOrders.commenceDate = $("#restrictiveT").val();
-			formalOrders.contactArrangement = $("#restrictiveT").val();
-			formalOrders.details = $("#restrictiveT").val();
-			formalOrders.familyContact = $("#restrictiveT").val();
-			formalOrders.justiceRequirements = $("#restrictiveT").val();
-			formalOrders.orderFor = $("#restrictiveT").val();
-			formalOrders.orderLocation = $("#restrictiveT").val();
-			formalOrders.otherInfo = $("#restrictiveT").val();
-			formalOrders.protOrder = $("#restrictiveT").val();
-			formalOrders.specialConditions = $("#restrictiveT").val();
-			formalOrders.supportOfficer = $("#restrictiveT").val();
-			formalOrders.visitorInfo = $("#restrictiveT").val();
+			formalOrders.appointee = $("#appointeeT").val();
+			formalOrders.commenceDate = $("#startDateT").val();
+			formalOrders.contactArrangement = $("#contactArrangT").val();
+			formalOrders.details = $("#detailsT").val();
+			formalOrders.familyContact = $("#famContactDeetsT").val();
+			formalOrders.justiceRequirements = $("#justiceT").val();
+			formalOrders.orderFor = $("#orderForT").val();
+			formalOrders.orderLocation = $("#orderLocationT").val();
+			formalOrders.otherInfo = $("#orderOtherInfoT").val();
+			formalOrders.protOrder = $("#protOrderT").val();
+			formalOrders.specialConditions = $("#specialConT").val();
+			formalOrders.supportOfficer = $("#childSupportOfficerT").val();
+			formalOrders.visitorInfo = $("#communityVisitorT").val();
 			
 			var livingArangements = new Object();
 			livingArangements.address = $("#addressT").val();
@@ -334,7 +389,16 @@
 			clientDetails.personDetails = personDetails;
 			
 			var jsonText = JSON.stringify(clientDetails);
-			$("#testing").html(jsonText);
+			
+			$.ajax({
+				url:'',
+				type: 'POST',
+				dataType: 'application/jsonp',
+				data: jsonText,
+				complete: function(jqXHR, textStatus) {
+					alert(textStatus);
+				}
+			});
 		});
 
 		

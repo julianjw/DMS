@@ -1,0 +1,20 @@
+<html><head>
+<script type='text/javascript' src='scripts/jquery.js' ></script>
+<script type='text/javascript' src='scripts/jquery.cookie.js' ></script>
+<script type='text/javascript' src='scripts/global-functions.js' ></script>
+</head><body></body></html>
+<script type='text/javascript'>
+	$(document).ready(function() {
+		//get values from url
+		var user_id=$.getUrlVar('user_id');
+		var auth_token = $.getUrlVar('auth_token');
+		
+		//create cookies
+		$.cookie('user_id', user_id);
+		$.cookie('auth_token', auth_token, { expires: 1});
+
+		//re-direct to index page
+		window.location.replace("http://" + window.location.hostname + ":8080/EndeavourDMS/index.jsp");
+		
+	});
+</script>

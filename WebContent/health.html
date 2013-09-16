@@ -1,6 +1,7 @@
 <html>
 <head>
 	<script type='text/javascript' src='scripts/jquery.js' ></script>
+	<script type='text/javascript' src='scripts/json2.js' ></script>
 	<link href="css/style.css" rel="stylesheet">
 
 </head>
@@ -8,6 +9,7 @@
 	<button id='PageNavPrev' name='PageNavPrev' >Previous</button>	
 	<button id='PageNavNext' name='PageNavNext' >Next</button>
 	<button id='PageNavSubmitB' name='PageNavSubmitB'>Submit</button>
+	<div id='testing'></div>
 	
 	<div id='healthD'>
 		<label for='relevantT' class='toggle'>Relevant information and history about disability: </label>
@@ -26,19 +28,19 @@
 <!--
 PUT THESE IN A TABLE!!!!!!!!!
 -->	
-			<label for='medinceCy'>Do I take medicine?
-			<input type="checkbox" name="medicineCy" value="medicineY">yes
-			<input type="checkbox" name="medicineCn" value="medicineN">no
+			<label for='takeMeds'>Do I take medicine?
+			<input type="radio" name="takeMeds" id='takeMedsYes' value="true"> Yes
+			<input type="radio" name="takeMeds" id='takeMedsNo' value="false"> No
 			<br />
 
-			<label for='assistanceCy'>Do I require assistance?
-			<input type="checkbox" name="assistanceCy" value="assistanceY">yes
-			<input type="checkbox" name="assistanceCn" value="assistanceN">no
+			<label for='reqAssist'>Do I require assistance?
+			<input type="radio" name="reqAssist" id='reqAssistYes' value="true"> Yes
+			<input type="radio" name="reqAssist" id='reqAssistYes' value="false"> No
 			<br />
 
-			<label for='selfmedCy'>Self medicate?
-			<input type="checkbox" name="selfmedCy" value="selfmedY">yes
-			<input type="checkbox" name="selfmedCy" value="selfmedN">no
+			<label for='selfMed'>Self medicate?
+			<input type="radio" name="selfMed" id='selfMedYes' value="true"> Yes
+			<input type="radio" name="selfMed" id='selfMedNo' value="false"> No
 			<br />
 		</div>
 
@@ -63,37 +65,45 @@ PUT THESE IN A TABLE!!!!!!!!!
 			<p class='error' id='medConditionE' name='medConditionE'></p>
 		</div>
 
-		<label for='beforeT' class='toggle'>How will I know if I am about to have a <p class='medCon'></p>:</label>
+		<label for='beforeT' class='toggle'>What do I do when I am having or about to experience a <p class='medCon'></p>:</label>
 			<div id='beforeD'>
-				<textarea id='beforeT' name'beforeT' rows="3" cols="50"></textarea>
+				<textarea id='beforeT' name='beforeT' rows="3" cols="50"></textarea>
 			</div>
 		<br />
 
-		<label for='actionT' class='medCon toggle' >What do I do when having or about to experience a <p class='medCon'></p>:</label>
+		<label for='actionT' class='toggle'>How will I know if a <p class='medCon'></p>&nbsp is about to happen to me:</label>
 			<div id='actionD'>
-				<textarea id='actionT' name'actionT' rows="3" cols="50"></textarea>
+				<textarea id='actionT' name='actionT' rows="3" cols="50"></textarea>
 			</div>
 		<br />
 
-		<p>In general my <p class='medCon'></p> lasts up to </p>
+		<label>In general my <p class='medCon'></p>&nbsp lasts up to </label>
 		<input type='text' id='durationT' name='durationT' placeholder='time' class='inline'>
+		<br />
 
-		<p>I experience <p class='medCon'></p> up to </p>
+		<label>I experience <p class='medCon'></p>&nbsp up to </label>
 		<input type='text' id='freqT' name='freqT' placeholder='frequency' class='inline'>
-		<p class='inline'>times a </p>
+		<label>times a </label>
+		<select id='orderOfFreq' name='orderOfFreq'>
+		  <option value='day'>Day</option>
+		  <option value='week'>Week</option>
+		  <option value='month'>Month</option>
+		  <option value='year'>Year</option>
+		</select>
+		<br />
 <!--
 DROPDOWN HERE + INLINE FORMATTING
 -->		
 
 		<label for='carerActionT' class='inline toggle' >If I am experiencing a <p class='medCon'></p> I need you to do the following:</label>
 			<div id='carerActionD'>
-				<textarea id='carerActionT' name'carerActionT' rows="3" cols="50"></textarea>
+				<textarea id='carerActionT' name='carerActionT' rows="3" cols="50"></textarea>
 			</div>
 		<br />
 
 		<label for='avoidanceT' class='inline toggle' >To avoid recurring  <p class='medCon'></p>s I need you to do the following:</label>
 			<div id='avoidanceD'>
-				<textarea id='avoidanceT' name'avoidanceT' rows="3" cols="50"></textarea>
+				<textarea id='avoidanceT' name='avoidanceT' rows="3" cols="50"></textarea>
 			</div>
 		<br />
 
@@ -101,13 +111,13 @@ DROPDOWN HERE + INLINE FORMATTING
 		<div id='epilepsyD'>
 			<label for='seizureT' class='inline toggle' >If I have a brief conscious seizure I need you to do the following:</label>
 				<div id='seizureD'>
-					<textarea id='seizureT' name'seizureT' rows="3" cols="50"></textarea>
+					<textarea id='seizureT' name='seizureT' rows="3" cols="50"></textarea>
 				</div>
 			<br />
 
 			<label for='seizure2T' class='inline toggle' >If I have a tonic, clonic or ongoing seizure(s) I need you to do the following:</label>
 				<div id='seizure2D'>
-					<textarea id='seizure2T' name'seizure2T' rows="3" cols="50"></textarea>
+					<textarea id='seizure2T' name='seizure2T' rows="3" cols="50"></textarea>
 				</div>
 			<br />
 		</div>
@@ -116,13 +126,13 @@ DROPDOWN HERE + INLINE FORMATTING
 	<div id='dietD'>
 		<label for='foodCantEatT' class='toggle' >Food I cannot eat:</label>
 			<div id='foodCantEatD'>
-				<textarea id='foodCantEatT' name'foodCantEatT' rows="3" cols="50"></textarea>
+				<textarea id='foodCantEatT' name='foodCantEatT' rows="3" cols="50"></textarea>
 			</div>
 		<br />
 
 		<label for='foodShouldntEatT' class='toggle' >Food I should avoid:</label>
 			<div id='foodShouldntEatD'>
-				<textarea id='foodShouldntEatT' name'foodShouldntEatT' rows="3" cols="50"></textarea>
+				<textarea id='foodShouldntEatT' name='foodShouldntEatT' rows="3" cols="50"></textarea>
 			</div>
 		<br />
 
@@ -133,64 +143,63 @@ DROPDOWN HERE + INLINE FORMATTING
 
 		<label for='generalEatT' class='toggle' >During the day I generally eat:</label>
 			<div id='generalEatD'>
-				<textarea id='generalEatT' name'generalEatT' rows="3" cols="50"></textarea>
+				<textarea id='generalEatT' name='generalEatT' rows="3" cols="50"></textarea>
 			</div>
 		<br />
 
 		<label for='snacksT' class='toggle' >My favourite snacks are:</label>
 			<div id='snacksD'>
-				<textarea id='snacksT' name'snacksT' rows="3" cols="50"></textarea>
+				<textarea id='snacksT' name='snacksT' rows="3" cols="50"></textarea>
 			</div>
 		<br />
 
 		<label for='foodDislikeT' class='toggle' >Food I dislike:</label>
 			<div id='foodDislikeD'>
-				<textarea id='foodDislikeT' name'foodDislikeT' rows="3" cols="50"></textarea>
+				<textarea id='foodDislikeT' name='foodDislikeT' rows="3" cols="50"></textarea>
 			</div>
 		<br />
 
 		<label for='breakfastT' class='toggle' >For Breakfast I like to have:</label>
 			<div id='breakfastD'>
-				<textarea id='breakfastT' name'breakfastT' rows="3" cols="50"></textarea>
+				<textarea id='breakfastT' name='breakfastT' rows="3" cols="50"></textarea>
 			</div>
 		<br />
 
 		<label for='lunchT' class='toggle' >For Lunch I like to have:</label>
 			<div id='lunchD'>
-				<textarea id='lunchT' name'lunchT' rows="3" cols="50"></textarea>
+				<textarea id='lunchT' name='lunchT' rows="3" cols="50"></textarea>
 			</div>
 		<br />
 
 		<label for='dinnerT' class='toggle' >For Dinner I like to have:</label>
 			<div id='dinnerD'>
-				<textarea id='dinnerT' name'dinnerT' rows="3" cols="50"></textarea>
+				<textarea id='dinnerT' name='dinnerT' rows="3" cols="50"></textarea>
 			</div>
 		<br />
 
 		<label for='supportEatT' class='toggle' >Support I require to eat:</label>
 			<div id='supportEatD'>
-				<textarea id='supportEatT' name'supportEatT' rows="3" cols="50"></textarea>
+				<textarea id='supportEatT' name='supportEatT' rows="3" cols="50"></textarea>
 			</div>
 		<br />
 
 		<label for='supportDrinkT' class='toggle' >Support I require to drink:</label>
 			<div id='supportDrinkD'>
-				<textarea id='supportDrinkT' name'supportDrinkT' rows="3" cols="50"></textarea>
+				<textarea id='supportDrinkT' name='supportDrinkT' rows="3" cols="50"></textarea>
 			</div>
 		<br />
 
 		<label for='otherT' class='toggle' >Other important information:</label>
 			<div id='otherD'>
-				<textarea id='otherT' name'otherT' rows="3" cols="50"></textarea>
+				<textarea id='otherT' name='otherT' rows="3" cols="50"></textarea>
 			</div>
 		<br />
 
 		<label for='locationT' class='toggle' >Location I prefer to eat at:</label>
 			<div id='locationD'>
-				<textarea id='locationT' name'locationT' rows="3" cols="50"></textarea>
+				<textarea id='locationT' name='locationT' rows="3" cols="50"></textarea>
 			</div>
 		<br />
-
 	</div>
 </body>
 </html>
@@ -229,14 +238,6 @@ DROPDOWN HERE + INLINE FORMATTING
 	};
 
 
-	function Duplicate(divName) {
-		$("#"+divName).append($("#" + divName + "Template").children().clone());
-	};
-		
-
-
-
-
 	$(document).ready(function() {
 		//page load
 		//hide necessary elements
@@ -245,29 +246,16 @@ DROPDOWN HERE + INLINE FORMATTING
 		$("#hManagementD").hide();
 		$("#dietD").hide();
 
-
-		//click on the previous button
-		$("#PageNavPrev").click(function(){
-			PageNavigation('prev');
-		});
-
-		//click on the next button
-		$("#PageNavNext").click(function(){
-			PageNavigation('next');
-		});
-
-		//click on toggle class element
-		$(".toggle").click(function(event){
-			$(this).next().toggle();
-		});
-
+		
 		//entering a medical condition
 		$("#medConditionT").keyup(function(){
 			$(".medCon").html($("#medConditionT").val());
 		});
 		
+		
 		//click on the submit button
 		$("#PageNavSubmitB").click(function(){
+			
 			var dietaryRequirements = new Object();
 			if($('#safeEatingCy').prop('checked')) {
 				dietaryRequirements.assessmentDone = true;
@@ -287,18 +275,60 @@ DROPDOWN HERE + INLINE FORMATTING
 			dietaryRequirements.supportDrinking = $("#supportDrinkT").val();
 			dietaryRequirements.usualDiet = $("#generalEatT").val();
 			
-			var healthInformation = new Object();
-			healthInformation.additionalInfo = $("#dinnerT").val();
-			healthInformation.allMedicalInfo = $("#dinnerT").val();
-			healthInformation.assistanceWithMedication = $("#dinnerT").val();
-			healthInformation.conditions = $("#dinnerT").val();
-			healthInformation.historyAndInfo = $("#dinnerT").val();
-			healthInformation.selfMedicate = $("#dinnerT").val();
-			healthInformation.takeMedication = $("#dinnerT").val();
 			
+			
+			var healthInformation = new Object();
+			healthInformation.additionalInfo = $("#additionalT").val();
+			healthInformation.allMedicalInfo = $("#medContactT").val();
+			if($("#reqAssistYes").prop("checked", true)) {
+				healthInformation.assistanceWithMedication = true;
+			}else if($("#reqAssistNo").prop("checked", false)) {
+				healthInformation.assistanceWithMedication = false;
+			}
+			
+			if($("#selfMedYes").prop("checked", true)) {
+				healthInformation.selfMedicate = true;
+			}else if($("#selfMedNo").prop("checked", false)) {
+				healthInformation.selfMedicate = false;
+			}
+			if($("#takeMedsYes").prop("checked", true)) {
+				healthInformation.takeMedication = true;
+			}else if($("#takeMedsNo").prop("checked", false)) {
+				healthInformation.takeMedication = false;
+			}
+			healthInformation.conditions = $("#supportT").val();
+			healthInformation.historyAndInfo = $("#relevantT").val();
+			
+			var healthManagement = new Object();
+			healthManagement.duration = $("#durationT").val();
+			healthManagement.frequency = $("#freqT").val();
+			healthManagement.medicalCondition = $("#medConditionT").val();
+			healthManagement.orderOfFrequency = $("#orderOfFreq").val();
+			healthManagement.precurser = $("#dinnerT").val();
+			healthManagement.seizureBrief = $("#seizureT").val();
+			healthManagement.seizureNonBrief = $("#seizure2T").val();
+			healthManagement.staffResponse = $("#carerActionT").val();
+			healthManagement.symptom = $("#beforeT").val();
+			healthManagement.symptomAvoidance = $("#avoidanceT").val();
 			
 			var healthDetails = new Object();
 			healthDetails.dietaryRequirements = dietaryRequirements;
+			healthDetails.healthInformation = healthInformation;
+			healthDetails.healthManagement = healthManagement;
+
+			var jsonText = JSON.stringify(healthDetails);
+			$("#testing").html(jsonText);
+			
+			$.ajax({
+				url:'',
+				type: 'POST',
+				dataType: 'application/jsonp',
+				data: jsonText,
+				complete: function(jqXHR, textStatus) {
+					alert(textStatus);
+				}
+			});
+		});
 		
 	});
 </script>

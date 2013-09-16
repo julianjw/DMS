@@ -141,3 +141,32 @@ ul.horizontal a:hover,ul.horizontal a:active
 {
 background-color:#7A991A;
 }
+
+
+
+.fakeLink {
+	cursor: pointer;
+	color: blue;
+	text-decoration:underline;
+}
+
+.error {
+	color: red;
+}
+
+.pp {
+	width:100px;
+	height:100px;
+}
+
+.toggle {
+	cursor: pointer;
+}
+
+.formTemplate {
+	display: none;
+}
+
+.medCon {
+	display: inline;
+}

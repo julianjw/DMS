@@ -1,0 +1,253 @@
+<html>
+<head>
+	<script type='text/javascript' src='scripts/jquery.js' ></script>
+	<script type='text/javascript' src='scripts/json2.js' ></script>
+	<link href="css/style.css" rel="stylesheet">
+
+</head>
+<body>
+	<button id='PageNavPrev' name='PageNavPrev' >Previous</button>	
+	<button id='PageNavNext' name='PageNavNext' >Next</button>
+	<button id='PageNavSubmitB' name='PageNavSubmitB'>Submit</button>
+	<div id='testing'></div>
+	
+	<div id='educationD'>
+		<label for='institutionNameT' class='toggle'>Education Institution: </label>
+		<div id='institutionNameD'>
+			<textarea id='institutionNameT' name='institutionNameT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='addressT' class='toggle'>Address: </label>
+		<div id='addressD'>
+			<textarea id='addressT' name='addressT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='enrolledCourseT' class='toggle'>Enrolled Course: </label>
+		<div id='enrolledCourseD'>
+			<textarea id='enrolledCourseT' name='enrolledCourseT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='contactPersonT' class='toggle'>Contact Person: </label>
+		<div id='contactPersonD'>
+			<textarea id='contactPersonT' name='contactPersonT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='liaisonT' class='toggle'>Liaison/Guidance Officer: </label>
+		<div id='liaisonD'>
+			<textarea id='liaisonT' name='liaisonT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='supportPersonsT' class='toggle'>Support Persons: </label>
+		<div id='supportPersonsD'>
+			<textarea id='supportPersonsT' name='supportPersonsT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='teacherT' class='toggle'>Teacher Lecturer: </label>
+		<div id='teacherD'>
+			<textarea id='teacherT' name='teacherT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='eduSupportPlanT' class='toggle'>Education Support Plan: </label>
+		<div id='eduSupportPlanD'>
+			<textarea id='eduSupportPlanT' name='eduSupportPlanT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='otherSupportRequiredT' class='toggle'>Other Support Accessed or Required: </label>
+		<div id='otherSupportRequiredD'>
+			<textarea id='otherSupportRequiredT' name='otherSupportRequiredT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='communityAssistanceT' class='toggle'>Community Agency Assistance: </label>
+		<div id='communityAssistanceD'>
+			<textarea id='communityAssistanceT' name='communityAssistanceT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='studySupportT' class='toggle'>Homework or Study Support: </label>
+		<div id='studySupportD'>
+			<textarea id='studySupportT' name='studySupportT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+	</div>
+
+	<div id='employmentD'>
+		<label for='employerT' class='toggle'>Employer: </label>
+		<div id='employerD'>
+			<textarea id='employerT' name='employerT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='addressEmploymentT' class='toggle'>Address: </label>
+		<div id='addressEmploymentD'>
+			<textarea id='addressEmploymentT' name='addressEmploymentT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='contactPersonT' class='toggle'>Supervisor/TDO/Contact Person: </label>
+		<div id='contactPersonD'>
+			<textarea id='contactPersonT' name='contactPersonT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='positionT' class='toggle'>Position Held: </label>
+		<div id='positionD'>
+			<textarea id='positionT' name='positionT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='arrangementsT' class='toggle'>Work Arrangements: </label>
+		<div id='arrangementsD'>
+			<textarea id='arrangementsT' name='arrangementsT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='transportT' class='toggle'>Transport: </label>
+		<div id='transportD'>
+			<textarea id='transportT' name='transportT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='annualLeaveT' class='toggle'>Holiday leave arrangements for the next 12 months: </label>
+		<div id='annualLeaveD'>
+			<textarea id='annualLeaveT' name='annualLeaveT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='sickLeaveT' class='toggle'>Sick leave arrangements: </label>
+		<div id='sickLeaveD'>
+			<textarea id='sickLeaveT' name='sickLeaveT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+		
+		<label for='equipmentT' class='toggle'>Resource/Tools/Equipment Required: </label>
+		<div id='equipmentD'>
+			<textarea id='equipmentT' name='equipmentT' rows="3" cols="50"></textarea>
+		</div>
+		<br />
+	</div>
+</body>
+</html>
+
+
+
+<script type='text/javascript'>
+	var pageDivNav = new Array("educationD", "employmentD");
+
+	function PageNavigation(dir) {
+		for(var i=0; i<pageDivNav.length; i++) {
+			if($("#" + pageDivNav[i]).css('display') != 'none') {
+				//perform page navigation
+				if(dir=="next") {
+					$("#PageNavPrev").show();
+					$("#" + pageDivNav[i+1]).show();
+					//show the submit button and hide next button if we are on the last page
+					if(i+1==pageDivNav.length-1) {
+						$("#PageNavNext").hide();
+						$("#PageNavSubmitB").show();
+					}
+				}else if(dir=='prev') {
+					$("#PageNavNext").show();
+					$("#PageNavSubmitB").hide();
+					$("#" + pageDivNav[i-1]).show();
+					//hide the previous button if we are on the first page
+					if(i-1==0) {
+						$("#PageNavPrev").hide();
+					}
+				}
+				//hide the current div
+				$("#" + pageDivNav[i]).hide();
+				break;
+			}
+		}
+	};
+
+
+	function Duplicate(divName) {
+		$("#"+divName).append($("#" + divName + "Template").children().clone());
+	};
+		
+
+	$(document).ready(function() {
+		//page load
+		//hide necessary elements
+//MAKE THIS INTO A FUNCTION BECAUSE YOU DO IT ON EVERY PAGE AND HAVE AN ARRAY OF THE PAGE NAV DIVS
+		$("#PageNavSubmitB").hide();
+		$("#PageNavPrev").hide();
+		$("#employmentD").hide();
+		
+
+
+		//click on the previous button
+		$("#PageNavPrev").click(function(){
+			PageNavigation('prev');
+		});
+
+		//click on the next button
+		$("#PageNavNext").click(function(){
+			PageNavigation('next');
+		});
+
+		//click on toggle class element
+		$(".toggle").click(function(event){
+			$(this).next().toggle();
+		});
+		
+		//click on the submit button
+		$("#PageNavSubmitB").click(function(){
+			var education = new Object();
+			education.address = $("#addressT").val();
+			education.communityAssistance = $("#communityAssistanceT").val();
+			education.contactPerson = $("#contactPersonT").val();
+			education.eduSupportPlan = $("#eduSupportPlanT").val();
+			education.enrolledCourse = $("#enrolledCourseT").val();
+			education.institutionName = $("#institutionNameT").val();
+			education.liaison = $("#liaisonT").val();
+			education.otherSupportRequired = $("#otherSupportRequiredT").val();
+			education.studySupport = $("#studySupportT").val();
+			education.supportPersons = $("#supportPersonsT").val();
+			education.teacher = $("#teacherT").val();
+			
+			var employment = new Object();
+			employment.address = $("#addressEmploymentT").val();
+			employment.annualLeave = $("#annualLeaveT").val();
+			employment.arrangements = $("#arrangementsT").val();
+			employment.contactPerson = $("#contactPersonT").val();
+			employment.employer = $("#employerT").val();
+			employment.equipment = $("#equipmentT").val();
+			employment.position = $("#positionT").val();
+			employment.sickLeave = $("#sickLeaveT").val();
+			employment.transport = $("#transportT").val();
+			
+
+			
+			var educationEmployment = new Object();
+			educationEmployment.education = education;
+			educationEmployment.employment = employment;
+
+			
+			var jsonText = JSON.stringify(educationEmployment);
+			$("#testing").html(jsonText);
+			
+			$.ajax({
+				url:'',
+				type: 'POST',
+				dataType: 'application/jsonp',
+				data: jsonText,
+				complete: function(jqXHR, textStatus) {
+					alert(textStatus);
+				}
+			});
+		});
+
+		
+	});
+</script>
