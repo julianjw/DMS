@@ -27,7 +27,7 @@ public class Verification {
 	}
 	
 	@XmlElement(name="verified")
-	public String getRole() {
+	public String getVerification() {
 		return this.value.getValue();
 	}
 }
