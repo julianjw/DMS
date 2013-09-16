@@ -12,33 +12,25 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
 
 import qut.endeavour.rest.bean.AuthResponse;
 import qut.endeavour.rest.bean.AuthToken;
 import qut.endeavour.rest.exception.DMSClientErrorException;
-import qut.endeavour.rest.factory.AuthResponseFactory;
-import qut.endeavour.rest.factory.AuthTokenFactory;
+import qut.endeavour.rest.factory.AuthFactory;
 import qut.endeavour.rest.storage.DatabaseAccess;
 
 
 @Path("/auth")
 public class AuthResource {
-
-//	@Context
-//	UriInfo uriInfo;
-//	
-//	@Context
-//	Request request;
 	
 	private final String USER_ID_FIELD = "user_id";
 	private final String PASSWORD_FIELD = "password";
 	private final String AUTH_TOKEN_FIELD = "auth_token";
+	private final String MESSAGE = "badlogin";
 	
-	private final String VALID_USER_REDIRECT = "../";
+	private final String VALID_USER_REDIRECT = "../post-login.html";
 	private final String INVALID_USER_REDIRECT = "../";
-	
 	
 	
 	/**
@@ -61,7 +53,7 @@ public class AuthResource {
 		if( token == null ) throw new DMSClientErrorException("No token supplied");
 		if( token.length() < 1 ) throw new DMSClientErrorException("No token supplied");
 		
-		return AuthResponseFactory.authenticateToken(token, user_id);
+		return AuthFactory.createAuthResponse(token, user_id);
 	}
 	
 	
@@ -86,7 +78,7 @@ public class AuthResource {
 			boolean validLogin = false;
 			
 			// generate token
-			AuthToken t = AuthTokenFactory.makeToken();
+			AuthToken t = AuthFactory.makeToken();
 			
 			// check if login details are valid ( validation )
 			validLogin = DatabaseAccess.validateLogin( userId, password );
@@ -95,12 +87,12 @@ public class AuthResource {
 			if ( validLogin ) {
 				// store token as active session
 				
-				response.sendRedirect(VALID_USER_REDIRECT + "?" + AUTH_TOKEN_FIELD + "=" + t.getTokenId());
+				response.sendRedirect(VALID_USER_REDIRECT + "?" + AUTH_TOKEN_FIELD + "=" + t.getTokenId() + "?" + USER_ID_FIELD + "=" + userId);
 			} else {
-				response.sendRedirect(INVALID_USER_REDIRECT);
+				response.sendRedirect(INVALID_USER_REDIRECT + "?" + MESSAGE  + "=" + "badlogin");
 			}
 		} else {
-			response.sendRedirect(INVALID_USER_REDIRECT);
+			response.sendRedirect(INVALID_USER_REDIRECT + "?" + MESSAGE  + "=" + "1");
 		}
 	}
 }

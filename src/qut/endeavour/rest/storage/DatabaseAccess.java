@@ -33,21 +33,29 @@ public class DatabaseAccess {
 		} catch (ClassNotFoundException e) {
 			System.out.println("Database error: " + e.toString());
 		}
-		
 	}
 	
-	
-	
 	public static boolean validateUser(String token, String user_id) {
+		// TODO Auto-generated method stub
 		makeConnection();
 		System.out.println("DatabaseAccess: Validating session token.");
 		return true;
 	}
 
 	public static boolean validateLogin(String userId, String password) {
+		// TODO Auto-generated method stub
 		makeConnection();
 		System.out.println("DatabaseAccess: Validating login.");
 		return true;
+	}
+
+
+
+	public static String getRole(String userId, String token) {
+		// TODO Auto-generated method stub
+		makeConnection();
+		System.out.println("DatabaseAccess: Getting role.");
+		return "staff";
 	}
 
 }

@@ -25,16 +25,16 @@ public class PlanResource {
 	
 	
 	@POST
-	@Path("/planning/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
+	@Path("/planning/{user_id: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
 	public void setJSONPlanning(
-			@PathParam("username") String username,
+			@PathParam("user_id") String username,
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
 		
 		System.out.println("Posting: Planning");
 		System.out.println("Token: "+token);
-		System.out.println("Username: "+username);
+		System.out.println("user_id: "+username);
 		System.out.println("clientId: "+clientid);
 		
 		//return PlanFactory.createPlanning();
