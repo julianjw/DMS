@@ -31,7 +31,7 @@ public class AuthResource {
 	private final String MESSAGE = "badlogin";
 	
 	private final String VALID_USER_REDIRECT = "../post-login.html";
-	private final String INVALID_USER_REDIRECT = "../";
+	private final String INVALID_USER_REDIRECT = "../login.jsp";
 	
 	
 	/**
