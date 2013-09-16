@@ -26,6 +26,7 @@ public class AuthResource {
 	
 	private final String USER_ID_FIELD = "user_id";
 	private final String PASSWORD_FIELD = "password";
+	
 	private final String AUTH_TOKEN_FIELD = "auth_token";
 	private final String MESSAGE = "badlogin";
 	
@@ -58,9 +59,14 @@ public class AuthResource {
 	
 	
 	
-	
+	/**
+	 * Checks user_id and password
+	 * @param userId
+	 * @param password
+	 * @param response
+	 * @throws IOException
+	 */
 	@POST
-	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public void authRequest(
 			@FormParam(USER_ID_FIELD) String userId,
@@ -68,29 +74,33 @@ public class AuthResource {
 			@Context HttpServletResponse response )
 					throws IOException {
 		
+		System.out.println();
+		System.out.println("user_id: "+userId);
+		System.out.println("password: "+password);
+		
+		//sanity checks
 		//Sanity Checks
 		if (	userId != null &&
 				userId != "" &&
 				password != null &&
 				password != "" 
 				) {
-			
+				   
 			boolean validLogin = false;
 			
-			// generate token
-			AuthToken t = AuthFactory.makeToken();
-			
-			// check if login details are valid ( validation )
 			validLogin = DatabaseAccess.validateLogin( userId, password );
-			
+			   
 			// redirect user to first page
 			if ( validLogin ) {
+				// generate token
+				AuthToken t = AuthFactory.makeToken();
 				// store token as active session
-				
 				response.sendRedirect(VALID_USER_REDIRECT + "?" + AUTH_TOKEN_FIELD + "=" + t.getTokenId() + "?" + USER_ID_FIELD + "=" + userId);
+			
 			} else {
-				response.sendRedirect(INVALID_USER_REDIRECT + "?" + MESSAGE  + "=" + "badlogin");
+				response.sendRedirect(INVALID_USER_REDIRECT + "?" + MESSAGE  + "=" + "1");
 			}
+			
 		} else {
 			response.sendRedirect(INVALID_USER_REDIRECT + "?" + MESSAGE  + "=" + "1");
 		}
