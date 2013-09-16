@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<p><a href="./rest/auth?auth_token=abcdef&user_id=steven">validate good</a></p>
+	<p><a href="./rest/auth?auth_token=12345">no user_id</a></p>
+	<p><a href="./rest/auth?user_id=12345">no auth_token</a></p>
+	<p><a href="./rest/auth?auth_token=&user_id=">both blank</a></p>
+	<p><a href="./rest/auth?auth_token=12345&user_id=">user_id blank</a></p>
+	<p><a href="./rest/auth?auth_token=&user_id=12345">auth_token blank</a></p>
+	<br>
+	
+	<p><a href="./rest/personalplan/usernameSteve/token21asdf55/clientidSomeoneElse">fetch a personal plan</a></p>
+	<p><a href="./rest/personalplan/clientdetails/usernameSteve/token21asdf55/clientidSomeoneElse">fetch client details</a></p>
+	
+	<form method="post" action="./rest/auth">
+		<p><strong>Authenticate</strong><p>
+		<p><label>UserId: </label><input type="text" id="user_id" /></p>
+		<p><label>Password: </label><input type="password" id="password" /></p>
+		<p><input type="submit" /></p>
+	</form>
+	
+</body>
+</html>
