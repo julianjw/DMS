@@ -22,7 +22,14 @@ import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.factory.AuthFactory;
 import qut.endeavour.rest.storage.DatabaseAccess;
 
-
+/**
+ * This RESTful resource resides in the <b>./rest/auth</b> path
+ * 
+ * @author Steven
+ * 
+ * 
+ *
+ */
 @Path("/auth")
 public class AuthResource {
 	
@@ -37,9 +44,13 @@ public class AuthResource {
 	
 	
 	/**
-	 * validates if the current token & userid match and are valid.
-	 * @param uriInfo
-	 * @return
+	 * Validates current token & user_id combination.
+	 * 
+	 *  ./rest/auth/?auth_token={AUTH_TOKEN}&user_id={USER_ID}
+	 * 
+	 * @param uriInfo - Reads supplied URL.
+	 * 
+	 * @return Verification - JSON verification success or failure
 	 */
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
