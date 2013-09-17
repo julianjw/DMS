@@ -8,6 +8,7 @@ import java.util.Random;
 import qut.endeavour.rest.bean.AuthResponse;
 import qut.endeavour.rest.bean.AuthRole;
 import qut.endeavour.rest.bean.AuthToken;
+import qut.endeavour.rest.bean.Verification;
 import qut.endeavour.rest.storage.DatabaseAccess;
 
 /**
@@ -73,4 +74,22 @@ public final class AuthFactory {
 		
 		return ar;
 	}
+	
+	
+	
+	/**
+	 * 
+	 * @param user_id
+	 * @param token
+	 * @return
+	 */
+	public static Verification authLogoutUser( String user_id, String token ) {
+		if ( DatabaseAccess.validateUser(user_id, token)) {
+			if ( DatabaseAccess.logoutUser(user_id) ) {
+				return new Verification(Verification.Verified.SUCCESS);
+			}
+		}
+		return new Verification(Verification.Verified.FAILURE);
+	}
+	
 }

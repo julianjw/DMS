@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -16,6 +17,7 @@ import javax.ws.rs.core.UriInfo;
 
 import qut.endeavour.rest.bean.AuthResponse;
 import qut.endeavour.rest.bean.AuthToken;
+import qut.endeavour.rest.bean.Verification;
 import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.factory.AuthFactory;
 import qut.endeavour.rest.storage.DatabaseAccess;
@@ -32,6 +34,31 @@ public class AuthResource {
 	
 	private final String VALID_USER_REDIRECT = "../post-login.html";
 	private final String INVALID_USER_REDIRECT = "../login.jsp";
+	
+	
+	/**
+	 * validates if the current token & userid match and are valid.
+	 * @param uriInfo
+	 * @return
+	 */
+	@DELETE
+	@Produces(MediaType.APPLICATION_JSON)
+	public Verification logout( @Context UriInfo uriInfo ) {
+		
+		MultivaluedMap<String, String> params = uriInfo.getQueryParameters();
+		
+		String token = params.getFirst(AUTH_TOKEN_FIELD);
+		String user_id = params.getFirst(USER_ID_FIELD);
+		
+		// sanity checks
+		if( user_id == null ) throw new DMSClientErrorException("No user_id supplied");
+		if( user_id.length() < 1 ) throw new DMSClientErrorException("No user_id supplied");
+		if( token == null ) throw new DMSClientErrorException("No token supplied");
+		if( token.length() < 1 ) throw new DMSClientErrorException("No token supplied");
+		
+		return AuthFactory.authLogoutUser(token, user_id);
+	}
+	
 	
 	
 	/**
@@ -78,7 +105,6 @@ public class AuthResource {
 		System.out.println("user_id: "+userId);
 		System.out.println("password: "+password);
 		
-		//sanity checks
 		//Sanity Checks
 		if (	userId != null &&
 				userId != "" &&
