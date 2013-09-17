@@ -125,7 +125,7 @@
 			$.ajax({
 				url:'./rest/personalplan/communication/' + $.cookie('auth_token')+ '/' + $.cookie('user_id') +'/1',
 				type: 'POST',
-				dataType: 'application/json',
+				contentType: 'application/json',
 				data: jsonText,
 				complete: function(jqXHR, textStatus) {
 					alert(textStatus);
