@@ -1,8 +1,10 @@
 package qut.endeavour.rest.bean.admin;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
+@XmlRootElement(name="user")
 public class DMSUser {
 	private String user_id;
 	private String name;

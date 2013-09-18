@@ -52,7 +52,9 @@ public class UsersResource {
 	//@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 //	public void newUser( JAXBElement<DMSUser> newUserJAX ){//, @Context UriInfo uriInfo ) {
-	public void newUser( DMSUser newUser ) {
+	public void newUser( final DMSUser newUser ) {
+
+		
 //	public void newUser( final String text) {
 //		DMSUser newUser = newUserJAX.getValue();
 		//System.out.println(text);

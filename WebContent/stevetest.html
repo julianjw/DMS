@@ -37,17 +37,18 @@
 		DMSUser.role = "roleie";
 		
 		
-		var jsonText = JSON.stringify(DMSUser);
-		alert(jsonText);
+		var jsonText = JSON.stringify({user: DMSUser});
+		//alert(jsonText);
 		//$("#testing").html(jsonText);
 		
 		$.ajax({
 			url:'./rest/user', // + $.cookie('auth_token')+ '/' + $.cookie('user_id') +'/1',
 			type: 'POST',
 			contentType: 'application/json',
+			dataType: 'json',
 			data: jsonText,
 			complete: function(jqXHR, textStatus) {
-				alert(textStatus);
+				//alert(textStatus);
 			}
 		});
 	</script>
