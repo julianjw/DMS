@@ -1,9 +1,8 @@
 <jsp:include page="partials/head.html" flush="true" />
-	<!-- navigation -->
-	
-<jsp:include page="partials/nav.html" flush="true" />
 	<!--title -->
 	Login Page
+<jsp:include page="partials/nav.html" flush="true" />
+	<!-- navigation -->
 <jsp:include page="partials/body.html" flush="true" />
 	<!-- page content -->
 	<form method="post" action="./rest/auth">
