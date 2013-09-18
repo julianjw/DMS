@@ -37,6 +37,7 @@ public class UsersResource {
 	
 	
 	@GET
+	@Produces(MediaType.APPLICATION_JSON)
 	public DMSUser existinguser(){
 		DMSUser user = new DMSUser();
 		user.setName("namefield");
@@ -45,14 +46,16 @@ public class UsersResource {
 		user.setUser_id("idfield");
 		return user;
 	}
+	
+	
 	@POST
 	//@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 //	public void newUser( JAXBElement<DMSUser> newUserJAX ){//, @Context UriInfo uriInfo ) {
-	//public void newUser( DMSUser newUser ) {
-	public void newUser( final String text) {
+	public void newUser( DMSUser newUser ) {
+//	public void newUser( final String text) {
 //		DMSUser newUser = newUserJAX.getValue();
-		System.out.println(text);
+		//System.out.println(text);
 //		MultivaluedMap<String, String> params = uriInfo.getQueryParameters();
 //		
 //		String token = params.getFirst(AUTH_TOKEN_FIELD);
@@ -64,10 +67,10 @@ public class UsersResource {
 //		if( token == null ) throw new DMSClientErrorException("No token supplied");
 //		if( token.length() < 1 ) throw new DMSClientErrorException("No token supplied");
 		
-//		System.out.println(newUser.getUser_id());
-//		System.out.println(newUser.getName());
-//		System.out.println(newUser.getPassword());
-//		System.out.println(newUser.getRole());
+		System.out.println(newUser.getUser_id());
+		System.out.println(newUser.getName());
+		System.out.println(newUser.getPassword());
+		System.out.println(newUser.getRole());
 	}
 	
 	
