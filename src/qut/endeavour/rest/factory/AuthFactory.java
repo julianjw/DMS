@@ -85,7 +85,7 @@ public final class AuthFactory {
 	 */
 	public static Verification authLogoutUser( String user_id, String token ) {
 		if ( DatabaseAccess.validateUser(user_id, token)) {
-			if ( DatabaseAccess.logoutUser(user_id) ) {
+			if ( DatabaseAccess.logoutUser(user_id, token) ) {
 				return new Verification(Verification.Verified.SUCCESS);
 			}
 		}

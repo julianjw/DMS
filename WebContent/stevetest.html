@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+	<script type='text/javascript' src='scripts/jquery.js' ></script>
+	<script type='text/javascript' src='scripts/json2.js' ></script>
+
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
@@ -25,4 +29,26 @@
 	</form>
 	
 </body>
+	<script type='text/javascript'>
+		var DMSUser = new Object();
+		DMSUser.user_id = "userid";
+		DMSUser.name = "me name";
+		DMSUser.password = "mahpassword";
+		DMSUser.role = "roleie";
+		
+		
+		var jsonText = JSON.stringify(DMSUser);
+		alert(jsonText);
+		//$("#testing").html(jsonText);
+		
+		$.ajax({
+			url:'./rest/user', // + $.cookie('auth_token')+ '/' + $.cookie('user_id') +'/1',
+			type: 'POST',
+			contentType: 'application/json',
+			data: jsonText,
+			complete: function(jqXHR, textStatus) {
+				alert(textStatus);
+			}
+		});
+	</script>
 </html>

@@ -1,11 +1,14 @@
 package qut.endeavour.rest.storage;
 
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 
 
@@ -21,12 +24,19 @@ public class DatabaseAccess {
 	
 	private static Connection  con = null;
 	
+	private static Map<String,RoleRecord> roleByName = null;
+	
+	
+	
+	
 	private static boolean makeConnection() {
 		try {
 			if ( con == null ) {
 				Class.forName("com.mysql.jdbc.Driver");
 				System.out.println("DatabaseAccess: Making a new connection to the database.");
 				con = DriverManager.getConnection(DBMS_LOCATION+DATABASE_NAME, dbUsername, dbPassword );
+				
+				populateRoles();
 			}
 			
 			return true;
@@ -50,12 +60,37 @@ public class DatabaseAccess {
 			try {
 				con.close();
 				con = null;
+				roleByName = null;
 			} catch (SQLException e) {
 				System.out.println("DatabaseAccess: Unable to close database connection.");
 				return false;
 			}
 		}
 		return true;
+	}
+	
+	
+	/**
+	 * 
+	 * @throws SQLException
+	 */
+	private static void populateRoles() throws SQLException {
+		System.out.println("DatabaseAccess: Keep valid roles stored for role id referencing.");
+		
+		// make new map
+		roleByName = new HashMap<String,RoleRecord>();
+		
+		String sql = "SELECT * from `roles` order by role_id";
+
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet results = ps.executeQuery();
+		
+		while (results.next()) {
+			int roleId = results.getInt("role_id");
+			String roleName = results.getString("role");
+			String roleDetails = results.getString("details");
+			roleByName.put(roleName, new RoleRecord(roleId,roleName,roleDetails));
+		}
 	}
 	
 	
@@ -106,6 +141,11 @@ public class DatabaseAccess {
 	public static boolean loginAttempt(String user_id, String password) {
 		if (!makeConnection()) return false;
 		
+//		for ( Entry<String,RoleRecord> record : roleByName.entrySet()){
+//			System.out.println( record.getKey() +": "+ record.getValue().roleId +", "+ record.getValue().role +", "+ record.getValue().details);
+//		}
+			
+		
 		System.out.println("DatabaseAccess: Validating login.");
 		
 		// check if user exists.
@@ -133,13 +173,83 @@ public class DatabaseAccess {
 		return false;
 	}
 
+	
+	/**
+	 * Insert a new user into the database.
+	 * 
+	 * role_name is case sensitive.
+	 * 
+	 * @param currentUser_id
+	 * @param token
+	 * @param personName
+	 * @param newUser_id
+	 * @param password
+	 * @param role_name
+	 * @return
+	 */
+	public static boolean createUser( String currentUser_id, String token, String personName, String newUser_id, String password, String role_name ){
+		String currentUserRole = getRole(currentUser_id, token);
+		int role_id;
+		
+		try {
+			role_id = roleByName.get(role_name).roleId;
+		} catch (Exception e) {
+			// role doesn't exist in database
+			// this is case sensitive
+			return false;
+		}
+		
+		// Refuse roles that aren't allowed to create users.
+		if ( currentUserRole.equals("") ) return false;
+		if ( currentUserRole.equals("CLIENT") ) return false;
+		
+		// TODO check if they are allowed to make a new client
+		
+		// TODO check if they are allowed to make a new staff
+		
+		System.out.println("DatabaseAccess: Creating new user.");
+		
+		String sql = "INSERT INTO `"+DATABASE_NAME+"`.`"+TBL_ACTIVE_SESSION+"` (`user_id`, `name`, `username`, `password`, `role_id`) VALUES (NULL, ?, ?, ?, ?);";
+		PreparedStatement ps;
+		
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, personName);
+			ps.setString(2, newUser_id);
+			ps.setString(3, password);
+			ps.setInt(4, role_id);
+			ps.executeUpdate();
+			return true;
+			
+		} catch (SQLException e) {
+			System.out.println("DatabaseAccess: " +  e.toString());
+		}
+		
+		return false;
+	}
+	
+	
 	/**
 	 * remove a user's database authentication, closing their session.
 	 * 
 	 * @param user_id
 	 * @return
 	 */
-	public static boolean logoutUser(String user_id) {
+	public static boolean logoutUser(String user_id, String token) {
+		// can only log out of your own session
+		if ( !validateUser(user_id, token) ) return false;
+		return logoutUser( user_id );
+		
+	}
+
+
+	/**
+	 * Only to be used after user has been authenticated
+	 * Must remain private function for security reasons
+	 * @param user_id
+	 * @return
+	 */
+	private static boolean logoutUser(String user_id) {
 		System.out.println("DatabaseAccess: User is being logged out.");
 		
 		String sql = "DELETE FROM `"+DATABASE_NAME+"`.`"+TBL_ACTIVE_SESSION+"` WHERE `"+TBL_ACTIVE_SESSION+"`.`username` = ?";
@@ -159,6 +269,13 @@ public class DatabaseAccess {
 	}
 
 
+	/**
+	 * Return the role of current session user
+	 * 
+	 * @param user_id
+	 * @param token
+	 * @return
+	 */
 	public static String getRole(String user_id, String token) {
 		
 		if (!makeConnection()) return "";
