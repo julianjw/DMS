@@ -1,6 +1,11 @@
 <jsp:include page="partials/head.html" flush="true" />
+
+	<!--title -->
+	Personal Plan
+	
+<jsp:include page="partials/nav.html" flush="true" />
 	<!-- navigation -->
-<!-- 	<h3>Personal Plan Nav</h3> -->
+	<!-- 	<h3>Personal Plan Nav</h3> -->
 	<div class="horizontalNav">
 	<ul>
 		<li id="client" class="pageNav"><a href='#client'>Client Details</a></li>
@@ -11,9 +16,6 @@
 		<li id="planning" class="pageNav"><a href='#planning'>Planning</a></li>
 	</ul>
 	</div>
-<jsp:include page="partials/nav.html" flush="true" />
-	<!--title -->
-	Personal Plan
 <jsp:include page="partials/body.html" flush="true" />
 	<!-- page content -->
 
