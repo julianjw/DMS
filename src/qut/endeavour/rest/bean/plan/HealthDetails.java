@@ -1,6 +1,6 @@
 package qut.endeavour.rest.bean.plan;
 
-import qut.endeavour.rest.bean.plan.health.DietaryRequirements;
+import qut.endeavour.rest.bean.plan.health.HealthDietary;
 import qut.endeavour.rest.bean.plan.health.HealthInformation;
 import qut.endeavour.rest.bean.plan.health.HealthManagement;
 
@@ -8,7 +8,7 @@ import qut.endeavour.rest.bean.plan.health.HealthManagement;
 public class HealthDetails {
 	private HealthInformation healthInformation;
 	private HealthManagement healthManagement;
-	private DietaryRequirements dietaryRequirements;
+	private HealthDietary dietaryRequirements;
 	
 	/**
 	 * 
@@ -19,7 +19,7 @@ public class HealthDetails {
 	public HealthDetails(
 			HealthInformation healthInformation,
 			HealthManagement healthManagement,
-			DietaryRequirements dietaryRequirements
+			HealthDietary dietaryRequirements
 			){
 		
 		this.healthInformation = healthInformation;
@@ -52,10 +52,10 @@ public class HealthDetails {
 	
 	
 	
-	public DietaryRequirements getDietaryRequirements() {
+	public HealthDietary getDietaryRequirements() {
 		return this.dietaryRequirements;
 	}
-	public void setDietaryRequirements( DietaryRequirements dietaryRequirements ) {
+	public void setDietaryRequirements( HealthDietary dietaryRequirements ) {
 		this.dietaryRequirements = dietaryRequirements;
 	}
 }

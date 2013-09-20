@@ -18,7 +18,7 @@ import qut.endeavour.rest.bean.plan.communication.BadTopics;
 import qut.endeavour.rest.bean.plan.communication.ComsAndDecisionMaking;
 import qut.endeavour.rest.bean.plan.educationemployment.Education;
 import qut.endeavour.rest.bean.plan.educationemployment.Employment;
-import qut.endeavour.rest.bean.plan.health.DietaryRequirements;
+import qut.endeavour.rest.bean.plan.health.HealthDietary;
 import qut.endeavour.rest.bean.plan.health.HealthInformation;
 import qut.endeavour.rest.bean.plan.health.HealthManagement;
 import qut.endeavour.rest.bean.plan.planning.GoalPlan;
@@ -47,7 +47,7 @@ public class PlanFactory {
 	public static HealthDetails createHealthDetails() {
 		HealthInformation healthInfo = new HealthInformation("b", "b", false, false, false, "b", "b");
 		HealthManagement healthManagement = new HealthManagement("b", "b", "b", "b", 0, "b", "b", "b", "b", "b");
-		DietaryRequirements dietaryReqs = new DietaryRequirements("b", "b", false, "b", "b", "b", "b", "b", "b", "b", "b", "b", "b");
+		HealthDietary dietaryReqs = new HealthDietary("b", "b", false, "b", "b", "b", "b", "b", "b", "b", "b", "b", "b");
 		return new HealthDetails(healthInfo, healthManagement, dietaryReqs);
 		
 	}

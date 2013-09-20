@@ -3,7 +3,7 @@ package qut.endeavour.rest.bean.plan.health;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class DietaryRequirements {
+public class HealthDietary {
 	private String CannotEat;
 	private String AvoidFood;
 	private boolean AssessmentDone;
@@ -34,7 +34,7 @@ public class DietaryRequirements {
 	 * @param OtherInfo
 	 * @param Location
 	 */
-	public DietaryRequirements(
+	public HealthDietary(
 			String CannotEat,
 			String AvoidFood,
 			boolean AssessmentDone,
@@ -65,7 +65,7 @@ public class DietaryRequirements {
 		this.Location = Location;
 	}
 	
-	public DietaryRequirements() {}
+	public HealthDietary() {}
 	
 	public String getCannotEat() {
 		return this.CannotEat;

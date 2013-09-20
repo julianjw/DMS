@@ -19,12 +19,16 @@ public class DatabaseAccess {
 	private final static String dbUsername = "root";
 	private final static String dbPassword = "";
 	
+	
+	
 	/* ADMIN */
 	private final static String TBL_ACTIVE_SESSION = "active_session";
 	
+	
+	
 	/* PERSONAL PLAN */
 		// CLIENT DETAILS
-	private final static String TBL_PERSONAL_DETAILS = "client_personal_details"; // personal details
+	private final static String TBL_PERSONAL_DETAILS = "client_personal_details";
 	private final static String TBL_ALERT_INFO = "client_alerts";
 	private final static String TBL_FORMAL_ORDERS = "client_formal_orders";
 	private final static String TBL_LIVING_ARRANGEMENTS = "client_living_arrangements";
@@ -32,7 +36,24 @@ public class DatabaseAccess {
 	private final static String TBL_CONTACT_TYPE = "client_contact_type";
 	
 	
-
+		// HEALTH
+	private final static String TBL_DIETARY = "health_dietary";
+	private final static String TBL_DISABILITY = "health_disability";
+	private final static String TBL_MANAGEMENT = "health_management";
+	
+	
+		// COMMUNICATION
+	
+	
+		// EDUCATION AND EMPLOYMENT
+	
+	
+		// PLANNING
+	
+	
+		// SUPPORT
+	
+	
 	
 	
 	private static Connection  con = null;
