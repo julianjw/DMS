@@ -4,82 +4,63 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Relaxation {
-	private String Activities;
-	private String Music;
-	private String Movie;
-	private String TVShow;
-	private String OtherActivities;
-	
-	/**
-	 * 
-	 * @param Activities
-	 * @param Music
-	 * @param Movie
-	 * @param TVShow
-	 * @param OtherActivities
-	 */
-	public Relaxation(
-			String Activities,
-			String Music,
-			String Movie,
-			String TVShow,
-			String OtherActivities
-			) {
-		
-		this.Activities = Activities;
-		this.Music = Music;
-		this.Movie = Movie;
-		this.TVShow = TVShow;
-		this.OtherActivities = OtherActivities;
-		
-	}
-	
-	
+	private String activities;
+	private String music;
+	private String movie;
+	private String tVShow;
+	private String otherActivities;
 	
 	public Relaxation() {}
-	
-	
-	
+
+	public Relaxation(String activities, String music, String movie,
+			String tVShow, String otherActivities) {
+		super();
+		this.activities = activities;
+		this.music = music;
+		this.movie = movie;
+		this.tVShow = tVShow;
+		this.otherActivities = otherActivities;
+	}
+
 	public String getActivities() {
-		return this.Activities;
+		return activities;
 	}
-	public void setActivities( String Activities ) {
-		this.Activities = Activities;
+
+	public void setActivities(String activities) {
+		this.activities = activities;
 	}
-	
-	
-	
+
 	public String getMusic() {
-		return this.Music;
+		return music;
 	}
-	public void setMusic( String Music ) {
-		this.Music = Music;
+
+	public void setMusic(String music) {
+		this.music = music;
 	}
-	
-	
-	
+
 	public String getMovie() {
-		return this.Movie;
+		return movie;
 	}
-	public void setMovie( String Movie ) {
-		this.Movie = Movie;
+
+	public void setMovie(String movie) {
+		this.movie = movie;
 	}
-	
-	
-	
-	public String getTVShow() {
-		return this.TVShow;
+
+	public String gettVShow() {
+		return tVShow;
 	}
-	public void setTVShow( String TVShow ) {
-		this.TVShow = TVShow;
+
+	public void settVShow(String tVShow) {
+		this.tVShow = tVShow;
 	}
-	
-	
-	
+
 	public String getOtherActivities() {
-		return this.OtherActivities;
+		return otherActivities;
 	}
-	public void setOtherActivities( String OtherActivities ) {
-		this.OtherActivities = OtherActivities;
+
+	public void setOtherActivities(String otherActivities) {
+		this.otherActivities = otherActivities;
 	}
+	
+	
 }

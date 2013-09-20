@@ -1,6 +1,7 @@
 package qut.endeavour.rest.factory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import qut.endeavour.rest.bean.plan.ClientDetails;
 import qut.endeavour.rest.bean.plan.Communication;
@@ -57,7 +58,9 @@ public class PlanFactory {
 		GeneralSupport gs = new GeneralSupport("C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C");
 		MobilityAndTransport mat = new MobilityAndTransport("C", "C", "C", "C", "C", "C", "C", "C");
 		FinancialSupport finsup = new FinancialSupport("C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C");
-		DailyActivities dailyact = new DailyActivities("C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C");
+		List<String> services = new ArrayList<String>();
+		services.add("C");
+		DailyActivities dailyact = new DailyActivities("C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", services);
 		Relaxation relax = new Relaxation("C","C","C","C","C");
 		return new SupportRequired(gs, mat, finsup, dailyact, relax);
 	}

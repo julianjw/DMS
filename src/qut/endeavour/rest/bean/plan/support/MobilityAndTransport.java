@@ -4,121 +4,92 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class MobilityAndTransport {
-	private String LiftsAndEscalators;
-	private String UnevenSurfaces;
-	private String Height;
-	private String MobilityAids;
-	private String RoadSafetySkills;
-	private String PublicTransport;
-	private String TravelPreferences;
-	private String OtherTravelSupport;
-	
-	/**
-	 * 
-	 * @param LiftsAndEscalators
-	 * @param UnevenSurfaces
-	 * @param Height
-	 * @param MobilityAids
-	 * @param RoadSafetySkills
-	 * @param PublicTransport
-	 * @param TravelPreferences
-	 * @param OtherTravelSupport
-	 */
-	public MobilityAndTransport(
-			String LiftsAndEscalators,
-			String UnevenSurfaces,
-			String Height,
-			String MobilityAids,
-			String RoadSafetySkills,
-			String PublicTransport,
-			String TravelPreferences,
-			String OtherTravelSupport
-			) {
-		
-		this.LiftsAndEscalators = LiftsAndEscalators;
-		this.UnevenSurfaces = UnevenSurfaces;
-		this.Height = Height;
-		this.MobilityAids = MobilityAids;
-		this.RoadSafetySkills = RoadSafetySkills;
-		this.PublicTransport = PublicTransport;
-		this.TravelPreferences = TravelPreferences;
-		this.OtherTravelSupport = OtherTravelSupport;
-		
-	}
-	
-	
+	private String liftsAndEscalators;
+	private String unevenSurfaces;
+	private String height;
+	private String mobilityAids;
+	private String roadSafetySkills;
+	private String publicTransport;
+	private String travelPreferences;
+	private String otherTravelSupport;
 	
 	public MobilityAndTransport() {}
-	
-	
-	
+
+	public MobilityAndTransport(String liftsAndEscalators,
+			String unevenSurfaces, String height, String mobilityAids,
+			String roadSafetySkills, String publicTransport,
+			String travelPreferences, String otherTravelSupport) {
+		this.liftsAndEscalators = liftsAndEscalators;
+		this.unevenSurfaces = unevenSurfaces;
+		this.height = height;
+		this.mobilityAids = mobilityAids;
+		this.roadSafetySkills = roadSafetySkills;
+		this.publicTransport = publicTransport;
+		this.travelPreferences = travelPreferences;
+		this.otherTravelSupport = otherTravelSupport;
+	}
+
 	public String getLiftsAndEscalators() {
-		return this.LiftsAndEscalators;
+		return liftsAndEscalators;
 	}
-	public void setLiftsAndEscalators( String LiftsAndEscalators ) {
-		this.LiftsAndEscalators = LiftsAndEscalators;
+
+	public void setLiftsAndEscalators(String liftsAndEscalators) {
+		this.liftsAndEscalators = liftsAndEscalators;
 	}
-	
-	
-	
+
 	public String getUnevenSurfaces() {
-		return this.UnevenSurfaces;
+		return unevenSurfaces;
 	}
-	public void setUnevenSurfaces( String UnevenSurfaces ) {
-		this.UnevenSurfaces = UnevenSurfaces;
+
+	public void setUnevenSurfaces(String unevenSurfaces) {
+		this.unevenSurfaces = unevenSurfaces;
 	}
-	
-	
-	
+
 	public String getHeight() {
-		return this.Height;
+		return height;
 	}
-	public void setHeight( String Height ) {
-		this.Height = Height;
+
+	public void setHeight(String height) {
+		this.height = height;
 	}
-	
-	
-	
+
 	public String getMobilityAids() {
-		return this.MobilityAids;
+		return mobilityAids;
 	}
-	public void setMobilityAids( String MobilityAids ) {
-		this.MobilityAids = MobilityAids;
+
+	public void setMobilityAids(String mobilityAids) {
+		this.mobilityAids = mobilityAids;
 	}
-	
-	
-	
+
 	public String getRoadSafetySkills() {
-		return this.RoadSafetySkills;
+		return roadSafetySkills;
 	}
-	public void setRoadSafetySkills( String RoadSafetySkills ) {
-		this.RoadSafetySkills = RoadSafetySkills;
+
+	public void setRoadSafetySkills(String roadSafetySkills) {
+		this.roadSafetySkills = roadSafetySkills;
 	}
-	
-	
-	
+
 	public String getPublicTransport() {
-		return this.PublicTransport;
+		return publicTransport;
 	}
-	public void setPublicTransport(String PublicTransport) {
-		this.PublicTransport = PublicTransport;
+
+	public void setPublicTransport(String publicTransport) {
+		this.publicTransport = publicTransport;
 	}
-	
-	
-	
+
 	public String getTravelPreferences() {
-		return this.TravelPreferences;
+		return travelPreferences;
 	}
-	public void setTravelPreferences( String TravelPreferences ) {
-		this.TravelPreferences = TravelPreferences;
+
+	public void setTravelPreferences(String travelPreferences) {
+		this.travelPreferences = travelPreferences;
 	}
-	
-	
-	
+
 	public String getOtherTravelSupport() {
-		return this.OtherTravelSupport;
+		return otherTravelSupport;
 	}
-	public void setOtherTravelSupport( String OtherTravelSupport ) {
-		this.OtherTravelSupport = OtherTravelSupport;
+
+	public void setOtherTravelSupport(String otherTravelSupport) {
+		this.otherTravelSupport = otherTravelSupport;
 	}
 }

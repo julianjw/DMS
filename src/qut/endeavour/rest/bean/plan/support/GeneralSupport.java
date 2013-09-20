@@ -4,186 +4,145 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class GeneralSupport {
-	private String CrowdSafety;
-	private String StrangerDanger;
-	private String MoneyHandling;
-	private String Crowds;
-	private String SocialNetworks;
-	private String Communications;
-	private String EatingOut;
-	private String Beliefs;
-	private String Leisure;
-	private String UsingApplicances;
-	private String UsingChemical;
-	private String HazardRecognition;
-	private String OtherSafetyInfo;
-	
-	/**
-	 * 
-	 * @param CrowdSafety
-	 * @param StrangerDanger
-	 * @param MoneyHandling
-	 * @param Crowds
-	 * @param SocialNetworks
-	 * @param Communications
-	 * @param EatingOut
-	 * @param Beliefs
-	 * @param Leisure
-	 * @param UsingApplicances
-	 * @param UsingChemical
-	 * @param HazardRecognition
-	 * @param OtherSafetyInfo
-	 */
-	public GeneralSupport(
-			String CrowdSafety,
-			String StrangerDanger,
-			String MoneyHandling,
-			String Crowds,
-			String SocialNetworks,
-			String Communications,
-			String EatingOut,
-			String Beliefs,
-			String Leisure,
-			String UsingApplicances,
-			String UsingChemical,
-			String HazardRecognition,
-			String OtherSafetyInfo
-			) {
-		
-		this.CrowdSafety = CrowdSafety;
-		this.StrangerDanger = StrangerDanger;
-		this.MoneyHandling = MoneyHandling;
-		this.Crowds = Crowds;
-		this.SocialNetworks = SocialNetworks;
-		this.Communications = Communications;
-		this.EatingOut = EatingOut;
-		this.Beliefs = Beliefs;
-		this.Leisure = Leisure;
-		this.UsingApplicances = UsingApplicances;
-		this.UsingChemical = UsingChemical;
-		this.HazardRecognition = HazardRecognition;
-		this.OtherSafetyInfo = OtherSafetyInfo;
-		
-	}
-	
-	
+	private String crowdSafety;
+	private String strangerDanger;
+	private String moneyHandling;
+	private String crowds;
+	private String socialNetworks;
+	private String communications;
+	private String eatingOut;
+	private String beliefs;
+	private String leisure;
+	private String usingApplicances;
+	private String usingChemical;
+	private String hazardRecognition;
+	private String otherSafetyInfo;
 	
 	public GeneralSupport() {}
-	
-	
-	
+
+	public GeneralSupport(String crowdSafety, String strangerDanger,
+			String moneyHandling, String crowds, String socialNetworks,
+			String communications, String eatingOut, String beliefs,
+			String leisure, String usingApplicances, String usingChemical,
+			String hazardRecognition, String otherSafetyInfo) {
+		this.crowdSafety = crowdSafety;
+		this.strangerDanger = strangerDanger;
+		this.moneyHandling = moneyHandling;
+		this.crowds = crowds;
+		this.socialNetworks = socialNetworks;
+		this.communications = communications;
+		this.eatingOut = eatingOut;
+		this.beliefs = beliefs;
+		this.leisure = leisure;
+		this.usingApplicances = usingApplicances;
+		this.usingChemical = usingChemical;
+		this.hazardRecognition = hazardRecognition;
+		this.otherSafetyInfo = otherSafetyInfo;
+	}
+
 	public String getCrowdSafety() {
-		return this.CrowdSafety;
+		return crowdSafety;
 	}
-	public void setCrowdSafety( String CrowdSafety ) {
-		this.CrowdSafety = CrowdSafety;
+
+	public void setCrowdSafety(String crowdSafety) {
+		this.crowdSafety = crowdSafety;
 	}
-	
-	
-	
+
 	public String getStrangerDanger() {
-		return this.StrangerDanger;
+		return strangerDanger;
 	}
-	public void setStrangerDanger( String StrangerDanger ) {
-		this.StrangerDanger = StrangerDanger;
+
+	public void setStrangerDanger(String strangerDanger) {
+		this.strangerDanger = strangerDanger;
 	}
-	
-	
-	
+
 	public String getMoneyHandling() {
-		return this.MoneyHandling;
+		return moneyHandling;
 	}
-	public void setMoneyHandling( String MoneyHandling ) {
-		this.MoneyHandling = MoneyHandling;
+
+	public void setMoneyHandling(String moneyHandling) {
+		this.moneyHandling = moneyHandling;
 	}
-	
-	
-	
+
 	public String getCrowds() {
-		return this.Crowds;
+		return crowds;
 	}
-	public void setCrowds( String Crowds ) {
-		this.Crowds = Crowds;
+
+	public void setCrowds(String crowds) {
+		this.crowds = crowds;
 	}
-	
-	
-	
+
 	public String getSocialNetworks() {
-		return this.SocialNetworks;
+		return socialNetworks;
 	}
-	public void setSocialNetworks( String SocialNetworks ) {
-		this.SocialNetworks = SocialNetworks;
+
+	public void setSocialNetworks(String socialNetworks) {
+		this.socialNetworks = socialNetworks;
 	}
-	
-	
-	
+
 	public String getCommunications() {
-		return this.Communications;
+		return communications;
 	}
-	public void setCommunications(String Communications) {
-		this.Communications = Communications;
+
+	public void setCommunications(String communications) {
+		this.communications = communications;
 	}
-	
-	
-	
+
 	public String getEatingOut() {
-		return this.EatingOut;
+		return eatingOut;
 	}
-	public void setEatingOut( String EatingOut ) {
-		this.EatingOut = EatingOut;
+
+	public void setEatingOut(String eatingOut) {
+		this.eatingOut = eatingOut;
 	}
-	
-	
-	
+
 	public String getBeliefs() {
-		return this.Beliefs;
+		return beliefs;
 	}
-	public void setBeliefs( String Beliefs ) {
-		this.Beliefs = Beliefs;
+
+	public void setBeliefs(String beliefs) {
+		this.beliefs = beliefs;
 	}
-	
-	
-	
+
 	public String getLeisure() {
-		return this.Leisure;
+		return leisure;
 	}
-	public void setLeisure( String Leisure ) {
-		this.Leisure = Leisure;
+
+	public void setLeisure(String leisure) {
+		this.leisure = leisure;
 	}
-	
-	
-	
+
 	public String getUsingApplicances() {
-		return this.UsingApplicances;
+		return usingApplicances;
 	}
-	public void setUsingApplicances( String UsingApplicances ) {
-		this.UsingApplicances = UsingApplicances;
+
+	public void setUsingApplicances(String usingApplicances) {
+		this.usingApplicances = usingApplicances;
 	}
-	
-	
-	
+
 	public String getUsingChemical() {
-		return this.UsingChemical;
+		return usingChemical;
 	}
-	public void setUsingChemical( String UsingChemical ) {
-		this.UsingChemical = UsingChemical;
+
+	public void setUsingChemical(String usingChemical) {
+		this.usingChemical = usingChemical;
 	}
-	
-	
-	
+
 	public String getHazardRecognition() {
-		return this.HazardRecognition;
+		return hazardRecognition;
 	}
-	public void setHazardRecognition(String HazardRecognition) {
-		this.HazardRecognition = HazardRecognition;
+
+	public void setHazardRecognition(String hazardRecognition) {
+		this.hazardRecognition = hazardRecognition;
 	}
-	
-	
-	
+
 	public String getOtherSafetyInfo() {
-		return this.OtherSafetyInfo;
+		return otherSafetyInfo;
 	}
-	public void setOtherSafetyInfo(String OtherSafetyInfo) {
-		this.OtherSafetyInfo = OtherSafetyInfo;
+
+	public void setOtherSafetyInfo(String otherSafetyInfo) {
+		this.otherSafetyInfo = otherSafetyInfo;
 	}
+	
+	
 }

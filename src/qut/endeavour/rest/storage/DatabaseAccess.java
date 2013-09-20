@@ -43,6 +43,13 @@ public class DatabaseAccess {
 	private final static String TBL_FREQUENCY_PERIOD = "health_frequency_period"; //TODO PRELOAD
 	
 	
+		// SUPPORT
+	private final static String TBL_SUPPORT_GENERAL = "support_general";
+	private final static String TBL_MOBILITY_TRANSPORT = "support_mobility_transport";
+	private final static String TBL_FINANCIAL = "support_financial";
+	private final static String TBL_ACTIVITIES = "support_activities";
+	private final static String TBL_RELAXATION = "support_relaxation";
+	
 		// COMMUNICATION
 	
 	
@@ -50,9 +57,6 @@ public class DatabaseAccess {
 	
 	
 		// PLANNING
-	
-	
-		// SUPPORT
 	
 	
 	

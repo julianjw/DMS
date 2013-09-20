@@ -4,199 +4,154 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class FinancialSupport {
-	private String FinancialAdmin;
-	private String BudgetExpend;
-	private String BudgetGoals;
-	private String PersonalItemsSupport;
-	private String BudgetTransport;
-	private String MoneyHandlingSupport;
-	private String Budgeting;
-	private String BudgetGroceries;
-	private String BudgetHouse;
-	private String BudgetUtilities;
-	private String BudgetBills;
-	private String BudgetEmergency;
-	private String BudgetSupportNetwork;
-	private String OtherRequirements;
-	
-	/**
-	 * 
-	 * @param FinancialAdmin
-	 * @param BudgetExpend
-	 * @param BudgetGoals
-	 * @param PersonalItemsSupport
-	 * @param BudgetTransport
-	 * @param MoneyHandlingSupport
-	 * @param Budgeting
-	 * @param BudgetGroceries
-	 * @param BudgetHouse
-	 * @param BudgetUtilities
-	 * @param BudgetBills
-	 * @param BudgetEmergency
-	 * @param BudgetSupportNetwork
-	 * @param OtherRequirements
-	 */
-	public FinancialSupport(
-			String FinancialAdmin,
-			String BudgetExpend,
-			String BudgetGoals,
-			String PersonalItemsSupport,
-			String BudgetTransport,
-			String MoneyHandlingSupport,
-			String Budgeting,
-			String BudgetGroceries,
-			String BudgetHouse,
-			String BudgetUtilities,
-			String BudgetBills,
-			String BudgetEmergency,
-			String BudgetSupportNetwork,
-			String OtherRequirements
-			) {
-		
-		this.FinancialAdmin = FinancialAdmin;
-		this.BudgetExpend = BudgetExpend;
-		this.BudgetGoals = BudgetGoals;
-		this.PersonalItemsSupport = PersonalItemsSupport;
-		this.BudgetTransport = BudgetTransport;
-		this.MoneyHandlingSupport = MoneyHandlingSupport;
-		this.Budgeting = Budgeting;
-		this.BudgetGroceries = BudgetGroceries;
-		this.BudgetHouse = BudgetHouse;
-		this.BudgetUtilities = BudgetUtilities;
-		this.BudgetBills = BudgetBills;
-		this.BudgetEmergency = BudgetEmergency;
-		this.BudgetSupportNetwork = BudgetSupportNetwork;
-		this.OtherRequirements = OtherRequirements;
-		
-	}
-	
-	
+	private String financialAdmin;
+	private String budgetExpend;
+	private String budgetConstraintGoal;
+	private String personalItemsSupport;
+	private String budgetTransport;
+	private String moneyHandlingSupport;
+	private String budgeting;
+	private String budgetGroceries;
+	private String budgetHouse;
+	private String budgetUtilities;
+	private String budgetBills;
+	private String budgetEmergency;
+	private String budgetSupportNetwork;
+	private String otherRequirements;
 	
 	public FinancialSupport() {}
-	
-	
-	
+
+	public FinancialSupport(String financialAdmin, String budgetExpend,
+			String budgetConstraintGoal, String personalItemsSupport,
+			String budgetTransport, String moneyHandlingSupport,
+			String budgeting, String budgetGroceries, String budgetHouse,
+			String budgetUtilities, String budgetBills, String budgetEmergency,
+			String budgetSupportNetwork, String otherRequirements) {
+		this.financialAdmin = financialAdmin;
+		this.budgetExpend = budgetExpend;
+		this.budgetConstraintGoal = budgetConstraintGoal;
+		this.personalItemsSupport = personalItemsSupport;
+		this.budgetTransport = budgetTransport;
+		this.moneyHandlingSupport = moneyHandlingSupport;
+		this.budgeting = budgeting;
+		this.budgetGroceries = budgetGroceries;
+		this.budgetHouse = budgetHouse;
+		this.budgetUtilities = budgetUtilities;
+		this.budgetBills = budgetBills;
+		this.budgetEmergency = budgetEmergency;
+		this.budgetSupportNetwork = budgetSupportNetwork;
+		this.otherRequirements = otherRequirements;
+	}
+
 	public String getFinancialAdmin() {
-		return this.FinancialAdmin;
+		return financialAdmin;
 	}
-	public void setFinancialAdmin( String FinancialAdmin ) {
-		this.FinancialAdmin = FinancialAdmin;
+
+	public void setFinancialAdmin(String financialAdmin) {
+		this.financialAdmin = financialAdmin;
 	}
-	
-	
-	
+
 	public String getBudgetExpend() {
-		return this.BudgetExpend;
+		return budgetExpend;
 	}
-	public void setBudgetExpend( String BudgetExpend ) {
-		this.BudgetExpend = BudgetExpend;
+
+	public void setBudgetExpend(String budgetExpend) {
+		this.budgetExpend = budgetExpend;
 	}
-	
-	
-	
-	public String getBudgetGoals() {
-		return this.BudgetGoals;
+
+	public String getBudgetConstraintGoal() {
+		return budgetConstraintGoal;
 	}
-	public void setBudgetGoals( String BudgetGoals ) {
-		this.BudgetGoals = BudgetGoals;
+
+	public void setBudgetConstraintGoal(String budgetConstraintGoal) {
+		this.budgetConstraintGoal = budgetConstraintGoal;
 	}
-	
-	
-	
+
 	public String getPersonalItemsSupport() {
-		return this.PersonalItemsSupport;
+		return personalItemsSupport;
 	}
-	public void setPersonalItemsSupport( String PersonalItemsSupport ) {
-		this.PersonalItemsSupport = PersonalItemsSupport;
+
+	public void setPersonalItemsSupport(String personalItemsSupport) {
+		this.personalItemsSupport = personalItemsSupport;
 	}
-	
-	
-	
+
 	public String getBudgetTransport() {
-		return this.BudgetTransport;
+		return budgetTransport;
 	}
-	public void setBudgetTransport( String BudgetTransport ) {
-		this.BudgetTransport = BudgetTransport;
+
+	public void setBudgetTransport(String budgetTransport) {
+		this.budgetTransport = budgetTransport;
 	}
-	
-	
-	
+
 	public String getMoneyHandlingSupport() {
-		return this.MoneyHandlingSupport;
+		return moneyHandlingSupport;
 	}
-	public void setMoneyHandlingSupport(String MoneyHandlingSupport) {
-		this.MoneyHandlingSupport = MoneyHandlingSupport;
+
+	public void setMoneyHandlingSupport(String moneyHandlingSupport) {
+		this.moneyHandlingSupport = moneyHandlingSupport;
 	}
-	
-	
-	
+
 	public String getBudgeting() {
-		return this.Budgeting;
+		return budgeting;
 	}
-	public void setBudgeting( String Budgeting ) {
-		this.Budgeting = Budgeting;
+
+	public void setBudgeting(String budgeting) {
+		this.budgeting = budgeting;
 	}
-	
-	
-	
+
 	public String getBudgetGroceries() {
-		return this.BudgetGroceries;
+		return budgetGroceries;
 	}
-	public void setBudgetGroceries( String BudgetGroceries ) {
-		this.BudgetGroceries = BudgetGroceries;
+
+	public void setBudgetGroceries(String budgetGroceries) {
+		this.budgetGroceries = budgetGroceries;
 	}
-	
-	
-	
+
 	public String getBudgetHouse() {
-		return this.BudgetHouse;
+		return budgetHouse;
 	}
-	public void setBudgetHouse( String BudgetHouse ) {
-		this.BudgetHouse = BudgetHouse;
+
+	public void setBudgetHouse(String budgetHouse) {
+		this.budgetHouse = budgetHouse;
 	}
-	
-	
-	
+
 	public String getBudgetUtilities() {
-		return this.BudgetUtilities;
+		return budgetUtilities;
 	}
-	public void setBudgetUtilities( String BudgetUtilities ) {
-		this.BudgetUtilities = BudgetUtilities;
+
+	public void setBudgetUtilities(String budgetUtilities) {
+		this.budgetUtilities = budgetUtilities;
 	}
-	
-	
-	
+
 	public String getBudgetBills() {
-		return this.BudgetBills;
+		return budgetBills;
 	}
-	public void setBudgetBills( String BudgetBills ) {
-		this.BudgetBills = BudgetBills;
+
+	public void setBudgetBills(String budgetBills) {
+		this.budgetBills = budgetBills;
 	}
-	
-	
-	
+
 	public String getBudgetEmergency() {
-		return this.BudgetEmergency;
+		return budgetEmergency;
 	}
-	public void setBudgetEmergency(String BudgetEmergency) {
-		this.BudgetEmergency = BudgetEmergency;
+
+	public void setBudgetEmergency(String budgetEmergency) {
+		this.budgetEmergency = budgetEmergency;
 	}
-	
-	
-	
+
 	public String getBudgetSupportNetwork() {
-		return this.BudgetSupportNetwork;
+		return budgetSupportNetwork;
 	}
-	public void setBudgetSupportNetwork(String BudgetSupportNetwork) {
-		this.BudgetSupportNetwork = BudgetSupportNetwork;
+
+	public void setBudgetSupportNetwork(String budgetSupportNetwork) {
+		this.budgetSupportNetwork = budgetSupportNetwork;
 	}
-	
-	
-	
+
 	public String getOtherRequirements() {
-		return this.OtherRequirements;
+		return otherRequirements;
 	}
-	public void setOtherRequirements(String OtherRequirements) {
-		this.OtherRequirements = OtherRequirements;
+
+	public void setOtherRequirements(String otherRequirements) {
+		this.otherRequirements = otherRequirements;
 	}
 }
