@@ -18,7 +18,7 @@ public class LivingArrangements {
 	public List<ContactDetails> importantPerson;
 	public ContactDetails sickContact;
 	
-//	public LivingArrangements() {}
+	public LivingArrangements() {}
 	
 	public LivingArrangements(String service, String houseNumber,
 			String street, String suburb, int postCode, String city,
