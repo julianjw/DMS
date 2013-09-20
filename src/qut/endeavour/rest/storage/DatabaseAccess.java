@@ -132,6 +132,7 @@ public class DatabaseAccess {
 			int roleId = results.getInt("role_id");
 			String roleName = results.getString("role");
 			String roleDetails = results.getString("details");
+			System.out.println("--Storing: "+roleId+" "+roleName+" "+roleDetails);
 			roleByName.put(roleName, new RoleRecord(roleId,roleName,roleDetails));
 		}
 	}
@@ -334,6 +335,8 @@ public class DatabaseAccess {
 			ps.setString(1, user_id);
 			ResultSet countResult = ps.executeQuery();
 			countResult.next();
+			
+			System.out.println("result getstring: " + countResult.getString("role"));
 			
 			return countResult.getString("role");
 			

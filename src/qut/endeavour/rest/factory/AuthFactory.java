@@ -43,8 +43,12 @@ public final class AuthFactory {
 	public static AuthRole createRole(String userId, String token) {
 		String role = DatabaseAccess.getRole(userId, token);
 		
-		if ( role.equals(AuthRole.Role.CLIENT.getValue()) ) return new AuthRole(AuthRole.Role.CLIENT);
-		if ( role.equals(AuthRole.Role.STAFF.getValue()) ) return new AuthRole(AuthRole.Role.STAFF);
+		if ( role.toLowerCase().equals(AuthRole.Role.CLIENT.getValue()) ) return new AuthRole(AuthRole.Role.CLIENT);
+		if ( role.toLowerCase().equals(AuthRole.Role.SW.getValue()) ) return new AuthRole(AuthRole.Role.SW);
+		if ( role.toLowerCase().equals(AuthRole.Role.SC.getValue()) ) return new AuthRole(AuthRole.Role.SC);
+		if ( role.toLowerCase().equals(AuthRole.Role.SDIM.getValue()) ) return new AuthRole(AuthRole.Role.SDIM);
+		if ( role.toLowerCase().equals(AuthRole.Role.SOM.getValue()) ) return new AuthRole(AuthRole.Role.SOM);
+		if ( role.toLowerCase().equals(AuthRole.Role.RDO.getValue()) ) return new AuthRole(AuthRole.Role.RDO);
 		
 		return new AuthRole(AuthRole.Role.INVALID);
 	}

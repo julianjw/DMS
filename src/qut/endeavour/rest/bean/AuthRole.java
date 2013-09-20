@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class AuthRole {
 	public static enum Role {
-		INVALID(""), CLIENT("client"), STAFF("staff");
+		INVALID(""), CLIENT("client"), SW("sw"), RDO("r&do"), SDIM("sdim"), SOM("som"), SC("sc");
 		
 		private final String value;
 		private Role( String value ) {
