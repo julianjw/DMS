@@ -4,100 +4,100 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class HealthInformation {
-	private String HistoryAndInfo;
-	private String Conditions;
-	private boolean TakeMedication;
-	private boolean AssistanceWithMedication;
-	private boolean SelfMedicate;
-	private String AllMedicalInfo;
-	private String AdditionalInfo;
+	private String historyAndInfo;
+	private String conditions;
+	private boolean takeMedication;
+	private boolean assistanceWithMedication;
+	private boolean selfMedicate;
+	private String allMedicalInfo;
+	private String additionalInfo;
 	
-	/**
-	 * 
-	 * @param HistoryAndInfo
-	 * @param Conditions
-	 * @param TakeMedication
-	 * @param AssistanceWithMedication
-	 * @param SelfMedicate
-	 * @param AllMedicalInfo
-	 * @param AdditionalInfo
-	 */
-	public HealthInformation(
-			String HistoryAndInfo,
-			String Conditions,
-			boolean TakeMedication,
-			boolean AssistanceWithMedication,
-			boolean SelfMedicate,
-			String AllMedicalInfo,
-			String AdditionalInfo
-			) {
-		
-		this.HistoryAndInfo = HistoryAndInfo;
-		this.Conditions = Conditions;
-		this.TakeMedication = TakeMedication;
-		this.AssistanceWithMedication = AssistanceWithMedication;
-		this.SelfMedicate = SelfMedicate;
-		this.AllMedicalInfo = AllMedicalInfo;
-		this.AdditionalInfo = AdditionalInfo;
-	}
 	
 	public HealthInformation() {}
-	
+
+
+	public HealthInformation(String historyAndInfo, String conditions,
+			boolean takeMedication, boolean assistanceWithMedication,
+			boolean selfMedicate, String allMedicalInfo, String additionalInfo) {
+		this.historyAndInfo = historyAndInfo;
+		this.conditions = conditions;
+		this.takeMedication = takeMedication;
+		this.assistanceWithMedication = assistanceWithMedication;
+		this.selfMedicate = selfMedicate;
+		this.allMedicalInfo = allMedicalInfo;
+		this.additionalInfo = additionalInfo;
+	}
+
+
 	public String getHistoryAndInfo() {
-		return this.HistoryAndInfo;
+		return historyAndInfo;
 	}
-	
-	public void setHistoryAndInfo( String HistoryAndInfo ) {
-		this.HistoryAndInfo = HistoryAndInfo;
+
+
+	public void setHistoryAndInfo(String historyAndInfo) {
+		this.historyAndInfo = historyAndInfo;
 	}
-	
+
+
 	public String getConditions() {
-		return this.Conditions;
+		return conditions;
 	}
-	
-	public void setConditions( String Conditions ) {
-		this.Conditions = Conditions;
+
+
+	public void setConditions(String conditions) {
+		this.conditions = conditions;
 	}
-	
-	public boolean getTakeMedication() {
-		return this.TakeMedication;
+
+
+	public boolean isTakeMedication() {
+		return takeMedication;
 	}
-	
-	public void setTakeMedication( boolean TakeMedication ) {
-		this.TakeMedication = TakeMedication;
+
+
+	public void setTakeMedication(boolean takeMedication) {
+		this.takeMedication = takeMedication;
 	}
-	
-	public boolean getAssistanceWithMedication() {
-		return this.AssistanceWithMedication;
+
+
+	public boolean isAssistanceWithMedication() {
+		return assistanceWithMedication;
 	}
-	
-	public void setAssistanceWithMedication( boolean AssistanceWithMedication ) {
-		this.AssistanceWithMedication = AssistanceWithMedication;
+
+
+	public void setAssistanceWithMedication(boolean assistanceWithMedication) {
+		this.assistanceWithMedication = assistanceWithMedication;
 	}
-	
-	public boolean getSelfMedicate() {
-		return this.SelfMedicate;
+
+
+	public boolean isSelfMedicate() {
+		return selfMedicate;
 	}
-	
-	public void setSelfMedicate( boolean SelfMedicate ) {
-		this.SelfMedicate = SelfMedicate;
+
+
+	public void setSelfMedicate(boolean selfMedicate) {
+		this.selfMedicate = selfMedicate;
 	}
-	
+
+
 	public String getAllMedicalInfo() {
-		return this.AllMedicalInfo;
+		return allMedicalInfo;
 	}
-	
-	public void setAllMedicalInfo(String AllMedicalInfo) {
-		this.AllMedicalInfo = AllMedicalInfo;
+
+
+	public void setAllMedicalInfo(String allMedicalInfo) {
+		this.allMedicalInfo = allMedicalInfo;
 	}
-	
+
+
 	public String getAdditionalInfo() {
-		return this.AdditionalInfo;
+		return additionalInfo;
 	}
-	
-	public void setAdditionalInfo( String AdditionalInfo ) {
-		this.AdditionalInfo = AdditionalInfo;
+
+
+	public void setAdditionalInfo(String additionalInfo) {
+		this.additionalInfo = additionalInfo;
 	}
+
 	
 	
 }

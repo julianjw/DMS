@@ -1,145 +1,115 @@
 package qut.endeavour.rest.bean.plan.health;
 
 public class HealthManagement {
-	private String MedicalCondition;
-	private String Symptom;
-	private String Precurser;
-	private String Duration;
-	private int Frequency;
-	private String OrderOfFrequency;
-	private String StaffResponse;
-	private String SymptomAvoidance;
-	private String SeizureBrief;
-	private String SeizureNonBrief;
-	
-	/**
-	 * 
-	 * @param MedicalCondition
-	 * @param Symptom
-	 * @param Precurser
-	 * @param Duration
-	 * @param Frequency
-	 * @param OrderOfFrequency
-	 * @param StaffResponse
-	 * @param SymptomAvoidance
-	 * @param SeizureBrief
-	 * @param SeizureNonBrief
-	 */
-	public HealthManagement(
-			String MedicalCondition,
-			String Symptom,
-			String Precurser,
-			String Duration,
-			int Frequency,
-			String OrderOfFrequency,
-			String StaffResponse,
-			String SymptomAvoidance,
-			String SeizureBrief,
-			String SeizureNonBrief
-			) {
-		
-		this.MedicalCondition = MedicalCondition;
-		this.Symptom = Symptom;
-		this.Precurser = Precurser;
-		this.Duration = Duration;
-		this.Frequency = Frequency;
-		this.OrderOfFrequency = OrderOfFrequency;
-		this.StaffResponse = StaffResponse;
-		this.SymptomAvoidance = SymptomAvoidance;
-		this.SeizureBrief = SeizureBrief;
-		this.SeizureNonBrief = SeizureNonBrief;
-	}
+	private String medicalCondition;
+	private String symptom;
+	private String precurser;
+	private String duration;
+	private int frequency;
+	private String frequencyPeriod; // week, month or year
+	private String staffResponse;
+	private String symptomAvoidance;
+	private String seizureBrief;
+	private String seizureNonBrief;
 	
 	public HealthManagement() {}
-	
-	
-	
+
+	public HealthManagement(String medicalCondition, String symptom,
+			String precurser, String duration, int frequency,
+			String frequencyPeriod, String staffResponse,
+			String symptomAvoidance, String seizureBrief, String seizureNonBrief) {
+		this.medicalCondition = medicalCondition;
+		this.symptom = symptom;
+		this.precurser = precurser;
+		this.duration = duration;
+		this.frequency = frequency;
+		this.frequencyPeriod = frequencyPeriod;
+		this.staffResponse = staffResponse;
+		this.symptomAvoidance = symptomAvoidance;
+		this.seizureBrief = seizureBrief;
+		this.seizureNonBrief = seizureNonBrief;
+	}
+
 	public String getMedicalCondition() {
-		return this.MedicalCondition;
+		return medicalCondition;
 	}
-	public void setMedicalCondition( String MedicalCondition ) {
-		this.MedicalCondition = MedicalCondition;
+
+	public void setMedicalCondition(String medicalCondition) {
+		this.medicalCondition = medicalCondition;
 	}
-	
-	
-	
+
 	public String getSymptom() {
-		return this.Symptom;
+		return symptom;
 	}
-	public void setSymptom( String Symptom ) {
-		this.Symptom = Symptom;
+
+	public void setSymptom(String symptom) {
+		this.symptom = symptom;
 	}
-	
-	
-	
+
 	public String getPrecurser() {
-		return this.Precurser;
+		return precurser;
 	}
-	public void setPrecurser( String Precurser ) {
-		this.Precurser = Precurser;
+
+	public void setPrecurser(String precurser) {
+		this.precurser = precurser;
 	}
-	
-	
-	
+
 	public String getDuration() {
-		return this.Duration;
+		return duration;
 	}
-	public void setDuration( String Duration ) {
-		this.Duration = Duration;
+
+	public void setDuration(String duration) {
+		this.duration = duration;
 	}
-	
-	
-	
+
 	public int getFrequency() {
-		return this.Frequency;
+		return frequency;
 	}
-	public void setFrequency(int Frequency) {
-		this.Frequency = Frequency;
+
+	public void setFrequency(int frequency) {
+		this.frequency = frequency;
 	}
-	
-	
-	
-	public String getOrderOfFrequency() {
-		return this.OrderOfFrequency;
+
+	public String getFrequencyPeriod() {
+		return frequencyPeriod;
 	}
-	public void setOrderOfFrequency( String OrderOfFrequency ) {
-		this.OrderOfFrequency = OrderOfFrequency;
+
+	public void setFrequencyPeriod(String frequencyPeriod) {
+		this.frequencyPeriod = frequencyPeriod;
 	}
-	
-	
-	
+
 	public String getStaffResponse() {
-		return this.StaffResponse;
+		return staffResponse;
 	}
-	public void setStaffResponse( String StaffResponse ) {
-		this.StaffResponse = StaffResponse;
+
+	public void setStaffResponse(String staffResponse) {
+		this.staffResponse = staffResponse;
 	}
-	
-	
-	
+
 	public String getSymptomAvoidance() {
-		return this.SymptomAvoidance;
+		return symptomAvoidance;
 	}
-	public void setSymptomAvoidance( String SymptomAvoidance ) {
-		this.SymptomAvoidance = SymptomAvoidance;
+
+	public void setSymptomAvoidance(String symptomAvoidance) {
+		this.symptomAvoidance = symptomAvoidance;
 	}
-	
-	
-	
+
 	public String getSeizureBrief() {
-		return this.SeizureBrief;
+		return seizureBrief;
 	}
-	public void setSeizureBrief( String SeizureBrief ) {
-		this.SeizureBrief = SeizureBrief;
+
+	public void setSeizureBrief(String seizureBrief) {
+		this.seizureBrief = seizureBrief;
 	}
-	
-	
-	
+
 	public String getSeizureNonBrief() {
-		return this.SeizureNonBrief;
+		return seizureNonBrief;
 	}
-	public void setSeizureNonBrief( String SeizureNonBrief ) {
-		this.SeizureNonBrief = SeizureNonBrief;
+
+	public void setSeizureNonBrief(String seizureNonBrief) {
+		this.seizureNonBrief = seizureNonBrief;
 	}
+	
+	
 	
 }

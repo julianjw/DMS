@@ -4,171 +4,145 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class HealthDietary {
-	private String CannotEat;
-	private String AvoidFood;
-	private boolean AssessmentDone;
-	private String UsualDiet;
-	private String Snacks;
-	private String Dislikes;
-	private String Breakfast;
-	private String Lunch;
-	private String Dinner;
-	private String SupportDrinking;
-	private String EatingSupport;
-	private String OtherInfo;
-	private String Location;
-	
-	/**
-	 * 
-	 * @param CannotEat
-	 * @param AvoidFood
-	 * @param AssessmentDone
-	 * @param UsualDiet
-	 * @param Snacks
-	 * @param Dislikes
-	 * @param Breakfast
-	 * @param Lunch
-	 * @param Dinner
-	 * @param SupportDrinking
-	 * @param EatingSupport
-	 * @param OtherInfo
-	 * @param Location
-	 */
-	public HealthDietary(
-			String CannotEat,
-			String AvoidFood,
-			boolean AssessmentDone,
-			String UsualDiet,
-			String Snacks,
-			String Dislikes,
-			String Breakfast,
-			String Lunch,
-			String Dinner,
-			String SupportDrinking,
-			String EatingSupport,
-			String OtherInfo,
-			String Location
-			) {
-		
-		this.CannotEat = CannotEat;
-		this.AvoidFood = AvoidFood;
-		this.AssessmentDone = AssessmentDone;
-		this.UsualDiet = UsualDiet;
-		this.Snacks = Snacks;
-		this.Dislikes = Dislikes;
-		this.Breakfast = Breakfast;
-		this.Lunch = Lunch;
-		this.Dinner = Dinner;
-		this.SupportDrinking = SupportDrinking;
-		this.EatingSupport = EatingSupport;
-		this.OtherInfo = OtherInfo;
-		this.Location = Location;
-	}
+	private String cannotEat;
+	private String avoidFood;
+	private boolean assessmentDone;
+	private String usualDiet;
+	private String snacks;
+	private String dislikes;
+	private String breakfast;
+	private String lunch;
+	private String dinner;
+	private String supportDrinking;
+	private String eatingSupport;
+	private String otherInfo;
+	private String location;
 	
 	public HealthDietary() {}
-	
+
+	public HealthDietary(String cannotEat, String avoidFood,
+			boolean assessmentDone, String usualDiet, String snacks,
+			String dislikes, String breakfast, String lunch, String dinner,
+			String supportDrinking, String eatingSupport, String otherInfo,
+			String location) {
+		this.cannotEat = cannotEat;
+		this.avoidFood = avoidFood;
+		this.assessmentDone = assessmentDone;
+		this.usualDiet = usualDiet;
+		this.snacks = snacks;
+		this.dislikes = dislikes;
+		this.breakfast = breakfast;
+		this.lunch = lunch;
+		this.dinner = dinner;
+		this.supportDrinking = supportDrinking;
+		this.eatingSupport = eatingSupport;
+		this.otherInfo = otherInfo;
+		this.location = location;
+	}
+
 	public String getCannotEat() {
-		return this.CannotEat;
+		return cannotEat;
 	}
-	
-	public void setCannotEat( String CannotEat ) {
-		this.CannotEat = CannotEat;
+
+	public void setCannotEat(String cannotEat) {
+		this.cannotEat = cannotEat;
 	}
-	
+
 	public String getAvoidFood() {
-		return this.AvoidFood;
+		return avoidFood;
 	}
-	
-	public void setAvoidFood( String AvoidFood ) {
-		this.AvoidFood = AvoidFood;
+
+	public void setAvoidFood(String avoidFood) {
+		this.avoidFood = avoidFood;
 	}
-	
-	public boolean getAssessmentDone() {
-		return this.AssessmentDone;
+
+	public boolean isAssessmentDone() {
+		return assessmentDone;
 	}
-	
-	public void setAssessmentDone( boolean AssessmentDone ) {
-		this.AssessmentDone = AssessmentDone;
+
+	public void setAssessmentDone(boolean assessmentDone) {
+		this.assessmentDone = assessmentDone;
 	}
-	
+
 	public String getUsualDiet() {
-		return this.UsualDiet;
+		return usualDiet;
 	}
-	
-	public void setUsualDiet( String UsualDiet ) {
-		this.UsualDiet = UsualDiet;
+
+	public void setUsualDiet(String usualDiet) {
+		this.usualDiet = usualDiet;
 	}
-	
+
 	public String getSnacks() {
-		return this.Snacks;
+		return snacks;
 	}
-	
-	public void setSnacks(String Snacks) {
-		this.Snacks = Snacks;
+
+	public void setSnacks(String snacks) {
+		this.snacks = snacks;
 	}
-	
+
 	public String getDislikes() {
-		return this.Dislikes;
+		return dislikes;
 	}
-	
-	public void setDislikes( String Dislikes ) {
-		this.Dislikes = Dislikes;
+
+	public void setDislikes(String dislikes) {
+		this.dislikes = dislikes;
 	}
-	
+
 	public String getBreakfast() {
-		return this.Breakfast;
+		return breakfast;
 	}
-	
-	public void setBreakfast( String Breakfast ) {
-		this.Breakfast = Breakfast;
+
+	public void setBreakfast(String breakfast) {
+		this.breakfast = breakfast;
 	}
-	
+
 	public String getLunch() {
-		return this.Lunch;
+		return lunch;
 	}
-	
-	public void setLunch( String Lunch ) {
-		this.Lunch = Lunch;
+
+	public void setLunch(String lunch) {
+		this.lunch = lunch;
 	}
-	
+
 	public String getDinner() {
-		return this.Dinner;
+		return dinner;
 	}
-	
-	public void setDinner( String Dinner ) {
-		this.Dinner = Dinner;
+
+	public void setDinner(String dinner) {
+		this.dinner = dinner;
 	}
-	
+
 	public String getSupportDrinking() {
-		return this.SupportDrinking;
+		return supportDrinking;
 	}
-	
-	public void setSupportDrinking( String SupportDrinking ) {
-		this.SupportDrinking = SupportDrinking;
+
+	public void setSupportDrinking(String supportDrinking) {
+		this.supportDrinking = supportDrinking;
 	}
-	
+
 	public String getEatingSupport() {
-		return this.EatingSupport;
+		return eatingSupport;
 	}
-	
-	public void setEatingSupport(String EatingSupport) {
-		this.EatingSupport = EatingSupport;
+
+	public void setEatingSupport(String eatingSupport) {
+		this.eatingSupport = eatingSupport;
 	}
-	
+
 	public String getOtherInfo() {
-		return this.OtherInfo;
+		return otherInfo;
 	}
-	
-	public void setOtherInfo(String OtherInfo) {
-		this.OtherInfo = OtherInfo;
+
+	public void setOtherInfo(String otherInfo) {
+		this.otherInfo = otherInfo;
 	}
-	
+
 	public String getLocation() {
-		return this.Location;
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 	
-	public void setLocation(String Location) {
-		this.Location = Location;
-	}
 
 }

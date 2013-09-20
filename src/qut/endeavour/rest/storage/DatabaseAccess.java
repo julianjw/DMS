@@ -33,13 +33,14 @@ public class DatabaseAccess {
 	private final static String TBL_FORMAL_ORDERS = "client_formal_orders";
 	private final static String TBL_LIVING_ARRANGEMENTS = "client_living_arrangements";
 	private final static String TBL_CONTACTS = "client_contacts";
-	private final static String TBL_CONTACT_TYPE = "client_contact_type";
+	private final static String TBL_CONTACT_TYPE = "client_contact_type"; // TODO PRELOAD
 	
 	
 		// HEALTH
 	private final static String TBL_DIETARY = "health_dietary";
 	private final static String TBL_DISABILITY = "health_disability";
 	private final static String TBL_MANAGEMENT = "health_management";
+	private final static String TBL_FREQUENCY_PERIOD = "health_frequency_period"; //TODO PRELOAD
 	
 	
 		// COMMUNICATION
