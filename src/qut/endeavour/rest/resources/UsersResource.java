@@ -9,6 +9,7 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -23,6 +24,7 @@ import qut.endeavour.rest.bean.admin.DMSUser;
 import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.factory.AuthFactory;
 import qut.endeavour.rest.storage.DatabaseAccess;
+import qut.endeavour.rest.utility.Users;
 
 /**
  * Very powerful service to create, remove and modify users.
@@ -37,10 +39,10 @@ public class UsersResource {
 	
 	
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON) // TODO get validation
 	public DMSUser existinguser(){
 		DMSUser user = new DMSUser();
-		user.setName("namefield");
+		user.setrName("namefield");
 		user.setPassword("passwordfield");
 		user.setRole("rolefield");
 		user.setUser_id("idfield");
@@ -49,12 +51,26 @@ public class UsersResource {
 	
 	
 	@POST
-	//@Produces(MediaType.APPLICATION_JSON)
+	@Path("/planning/{user_id: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
-//	public void newUser( JAXBElement<DMSUser> newUserJAX ){//, @Context UriInfo uriInfo ) {
-	public void newUser( final DMSUser newUser ) {
-
+	@Produces(MediaType.APPLICATION_JSON)
+	public void newUser(
+			final DMSUser newUser,
+			@PathParam("user_id") String currentUser_id,
+			@PathParam("token") String token
+			) {
 		
+		System.out.println("Existing user id: "+currentUser_id);
+		System.out.println("Existing user auth: "+token);
+		
+		System.out.println("new user_id:"+newUser.getUser_id());
+		System.out.println("new user name:"+newUser.getrName());
+		System.out.println("new user password:"+newUser.getPassword());
+		System.out.println("new user role:"+newUser.getRole());
+		
+		if ( Users.putUserInDatabase( currentUser_id, token, newUser ) ) {
+		
+		}
 //	public void newUser( final String text) {
 //		DMSUser newUser = newUserJAX.getValue();
 		//System.out.println(text);
@@ -69,10 +85,7 @@ public class UsersResource {
 //		if( token == null ) throw new DMSClientErrorException("No token supplied");
 //		if( token.length() < 1 ) throw new DMSClientErrorException("No token supplied");
 		
-		System.out.println(newUser.getUser_id());
-		System.out.println(newUser.getName());
-		System.out.println(newUser.getPassword());
-		System.out.println(newUser.getRole());
+		
 	}
 	
 	

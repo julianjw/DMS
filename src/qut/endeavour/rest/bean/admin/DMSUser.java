@@ -5,13 +5,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="user")
 public class DMSUser {
 	private String user_id;
-	private String name;
+	private String rName;
 	private String password;
 	private String role;
 	
-	public DMSUser ( String user_id, String name, String password, String role ) {
+	public DMSUser ( String user_id, String rName, String password, String role ) {
 		this.user_id = user_id;
-		this.name = name;
+		this.rName = rName;
 		this.password = password;
 		this.role = role;
 	}
@@ -24,12 +24,15 @@ public class DMSUser {
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
-	public String getName() {
-		return name;
+	
+	public String getrName() {
+		return rName;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public void setrName(String rName) {
+		this.rName = rName;
 	}
+
 	public String getPassword() {
 		return password;
 	}

@@ -1,7 +1,6 @@
 package qut.endeavour.rest.storage;
 
 import java.sql.Connection;
-
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +8,8 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import qut.endeavour.rest.bean.admin.DMSUser;
 
 
 
@@ -21,11 +22,12 @@ public class DatabaseAccess {
 	
 	
 	
-	/* ADMIN */
+	/* ***** ADMIN ***** */
 	private final static String TBL_ACTIVE_SESSION = "active_session";
+	private final static String TBL_USER_INFO = "user_info";
 	
 	
-	/* PERSONAL PLAN */
+	/* ***** BEGIN PERSONAL PLAN ***** */
 		// CLIENT DETAILS
 	private final static String TBL_PERSONAL_DETAILS = "client_personal_details";
 	private final static String TBL_ALERT_INFO = "client_alerts";
@@ -34,13 +36,11 @@ public class DatabaseAccess {
 	private final static String TBL_CONTACTS = "client_contacts";
 	private final static String TBL_CONTACT_TYPE = "client_contact_type"; // subtable
 	
-	
 		// HEALTH
 	private final static String TBL_DIETARY = "health_dietary";
 	private final static String TBL_DISABILITY = "health_disability";
 	private final static String TBL_MANAGEMENT = "health_management";
 	private final static String TBL_FREQUENCY_PERIOD = "health_frequency_period"; //TODO PRELOAD
-	
 	
 		// SUPPORT
 	private final static String TBL_SUPPORT_GENERAL = "support_general";
@@ -60,10 +60,13 @@ public class DatabaseAccess {
 		// PLANNING
 	private final static String TBL_GOAL = "plan_goal";
 	private final static String TBL_HOLIDAY = "plan_holiday";
+	/* ***** END PERSONAL PLAN ***** */
+	
+	
+	
 	
 	
 	private static Connection  con = null;
-	
 	private static Map<String,RoleRecord> roleByName = null;
 	
 	
@@ -147,7 +150,7 @@ public class DatabaseAccess {
 		
 		System.out.println("DatabaseAccess: Validating session token.");
 		
-		String sql = "SELECT count(*) as count FROM `login` WHERE username = ? and token = ?";
+		String sql = "SELECT count(*) as count FROM `"+DATABASE_NAME+"`.`"+TBL_ACTIVE_SESSION+"` WHERE username = ? and token = ?";
 		
 		try {
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -229,6 +232,7 @@ public class DatabaseAccess {
 	 */
 	public static boolean createUser( String currentUser_id, String token, String personName, String newUser_id, String password, String role_name ){
 		String currentUserRole = getRole(currentUser_id, token);
+		
 		int role_id;
 		
 		try {
