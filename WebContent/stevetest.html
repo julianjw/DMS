@@ -31,17 +31,17 @@
 </body>
 	<script type='text/javascript'>
 		var DMSUser = new Object();
-		DMSUser.user_id = "userid";
-		DMSUser.name = "me name";
-		DMSUser.password = "mahpassword";
-		DMSUser.role = "roleie";
+		DMSUser.user_id = "new userid";
+		DMSUser.rName = "new user name";
+		DMSUser.password = "new user password";
+		DMSUser.role = "new user role";
 		
 		var jsonText = JSON.stringify(DMSUser);
 		//alert(jsonText);
 		//$("#testing").html(jsonText);
 		
 		$.ajax({
-			url:'./rest/user', // + $.cookie('auth_token')+ '/' + $.cookie('user_id') +'/1',
+			url:'./rest/user/userid/token', // + $.cookie('auth_token')+ '/' + $.cookie('user_id') +'/1',
 			type: 'POST',
 			contentType: 'application/json; charset=UTF-8',
 			dataType: 'json',
