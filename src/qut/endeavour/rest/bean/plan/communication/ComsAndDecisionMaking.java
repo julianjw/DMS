@@ -6,120 +6,105 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class ComsAndDecisionMaking {
-	private String ICommunicate;
-	private String YouCommunicate;
-	private String SupportPeople;
-	private String SupportMeBy;
-	private String IndependantDecisions;
-	private String GoodTopics;
-	private String Likes;
-	private String Dislikes;
-	private List<BadTopics> DoNotTalkAbout;
-	
-	
-	public ComsAndDecisionMaking(
-			String ICommunicate,
-			String YouCommunicate,
-			String SupportPeople,
-			String SupportMeBy,
-			String IndependantDecisions,
-			String GoodTopics,
-			String Likes,
-			String Dislikes,
-			List<BadTopics> DoNotTalkAbout
-			) {
-		
-		this.ICommunicate = ICommunicate;
-		this.YouCommunicate = YouCommunicate;
-		this.SupportPeople = SupportPeople;
-		this.SupportMeBy = SupportMeBy;
-		this.IndependantDecisions = IndependantDecisions;
-		this.GoodTopics = GoodTopics;
-		this.Likes = Likes;
-		this.Dislikes = Dislikes;
-		this.DoNotTalkAbout = DoNotTalkAbout;
-		
-	}
+	private String iCommunicate;
+	private String youCommunicate;
+	private String supportPeople;
+	private String supportMeBy;
+	private String independantDecisions;
+	private String goodTopics;
+	private String likes;
+	private String dislikes;
+	private List<BadTopics> doNotTalkAbout;
 	
 	public ComsAndDecisionMaking(){}
-	
-	public String getICommunicate() {
-		return this.ICommunicate;
+
+	public ComsAndDecisionMaking(String iCommunicate, String youCommunicate,
+			String supportPeople, String supportMeBy,
+			String independantDecisions, String goodTopics, String likes,
+			String dislikes, List<BadTopics> doNotTalkAbout) {
+		this.iCommunicate = iCommunicate;
+		this.youCommunicate = youCommunicate;
+		this.supportPeople = supportPeople;
+		this.supportMeBy = supportMeBy;
+		this.independantDecisions = independantDecisions;
+		this.goodTopics = goodTopics;
+		this.likes = likes;
+		this.dislikes = dislikes;
+		this.doNotTalkAbout = doNotTalkAbout;
 	}
-	public void setICommunicate( String ICommunicate ) {
-		this.ICommunicate = ICommunicate;
+
+	public String getiCommunicate() {
+		return iCommunicate;
 	}
-	
-	
-	
+
+	public void setiCommunicate(String iCommunicate) {
+		this.iCommunicate = iCommunicate;
+	}
+
 	public String getYouCommunicate() {
-		return this.YouCommunicate;
+		return youCommunicate;
 	}
-	public void setYouCommunicate( String YouCommunicate ) {
-		this.YouCommunicate = YouCommunicate;
+
+	public void setYouCommunicate(String youCommunicate) {
+		this.youCommunicate = youCommunicate;
 	}
-	
-	
-	
+
 	public String getSupportPeople() {
-		return this.SupportPeople;
+		return supportPeople;
 	}
-	public void setSupportPeople( String SupportPeople ) {
-		this.SupportPeople = SupportPeople;
+
+	public void setSupportPeople(String supportPeople) {
+		this.supportPeople = supportPeople;
 	}
-	
-	
-	
+
 	public String getSupportMeBy() {
-		return this.SupportMeBy;
+		return supportMeBy;
 	}
-	public void setSupportMeBy( String SupportMeBy ) {
-		this.SupportMeBy = SupportMeBy;
+
+	public void setSupportMeBy(String supportMeBy) {
+		this.supportMeBy = supportMeBy;
 	}
-	
-	
-	
+
 	public String getIndependantDecisions() {
-		return this.IndependantDecisions;
+		return independantDecisions;
 	}
-	public void setIndependantDecisions( String IndependantDecisions ) {
-		this.IndependantDecisions = IndependantDecisions;
+
+	public void setIndependantDecisions(String independantDecisions) {
+		this.independantDecisions = independantDecisions;
 	}
-	
-	
-	
+
 	public String getGoodTopics() {
-		return this.GoodTopics;
+		return goodTopics;
 	}
-	public void setGoodTopics(String GoodTopics) {
-		this.GoodTopics = GoodTopics;
+
+	public void setGoodTopics(String goodTopics) {
+		this.goodTopics = goodTopics;
 	}
-	
-	
-	
+
 	public String getLikes() {
-		return this.Likes;
+		return likes;
 	}
-	public void setLikes( String Likes ) {
-		this.Likes = Likes;
+
+	public void setLikes(String likes) {
+		this.likes = likes;
 	}
-	
-	
-	
+
 	public String getDislikes() {
-		return this.Dislikes;
+		return dislikes;
 	}
-	public void setDislikes( String Dislikes ) {
-		this.Dislikes = Dislikes;
+
+	public void setDislikes(String dislikes) {
+		this.dislikes = dislikes;
 	}
-	
-	
-	
+
 	public List<BadTopics> getDoNotTalkAbout() {
-		return this.DoNotTalkAbout;
+		return doNotTalkAbout;
 	}
-	public void setDoNotTalkAbout( List<BadTopics> DoNotTalkAbout ) {
-		this.DoNotTalkAbout = DoNotTalkAbout;
+
+	public void setDoNotTalkAbout(List<BadTopics> doNotTalkAbout) {
+		this.doNotTalkAbout = doNotTalkAbout;
 	}
+	
+	
 	
 }

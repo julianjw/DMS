@@ -4,88 +4,75 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class HolidayPlan {
-	private String HolidayType;
-	private String Strategies;
-	private String HowWhoWhere;
-	private String Timeframes;
-	private String DetailsAndInfo;
-	private String ResourcesRequired;
-	
-	
-	
-	public HolidayPlan(
-			String HolidayType,
-			String Strategies,
-			String HowWhoWhere,
-			String Timeframes,
-			String DetailsAndInfo,
-			String ResourcesRequired
-			) {
-		
-		this.HolidayType = HolidayType;
-		this.Strategies = Strategies;
-		this.HowWhoWhere = HowWhoWhere;
-		this.Timeframes = Timeframes;
-		this.DetailsAndInfo = DetailsAndInfo;
-		this.ResourcesRequired = ResourcesRequired;
-		
-	}
-	
-	
+	private String holidayType;
+	private String strategies;
+	private String howWhoWhere;
+	private String timeframes;
+	private String detailsAndInfo;
+	private String resourcesRequired;
 	
 	public HolidayPlan() {}
-	
-	
-	
+
+	public HolidayPlan(String holidayType, String strategies,
+			String howWhoWhere, String timeframes, String detailsAndInfo,
+			String resourcesRequired) {
+		super();
+		this.holidayType = holidayType;
+		this.strategies = strategies;
+		this.howWhoWhere = howWhoWhere;
+		this.timeframes = timeframes;
+		this.detailsAndInfo = detailsAndInfo;
+		this.resourcesRequired = resourcesRequired;
+	}
+
 	public String getHolidayType() {
-		return this.HolidayType;
+		return holidayType;
 	}
-	public void setHolidayType( String HolidayType ) {
-		this.HolidayType = HolidayType;
+
+	public void setHolidayType(String holidayType) {
+		this.holidayType = holidayType;
 	}
-	
-	
-	
+
 	public String getStrategies() {
-		return this.Strategies;
+		return strategies;
 	}
-	public void setStrategies( String Strategies ) {
-		this.Strategies = Strategies;
+
+	public void setStrategies(String strategies) {
+		this.strategies = strategies;
 	}
-	
-	
-	
+
 	public String getHowWhoWhere() {
-		return this.HowWhoWhere;
+		return howWhoWhere;
 	}
-	public void setHowWhoWhere( String HowWhoWhere ) {
-		this.HowWhoWhere = HowWhoWhere;
+
+	public void setHowWhoWhere(String howWhoWhere) {
+		this.howWhoWhere = howWhoWhere;
 	}
-	
-	
-	
+
 	public String getTimeframes() {
-		return this.Timeframes;
+		return timeframes;
 	}
-	public void setTimeframes(String Timeframes) {
-		this.Timeframes = Timeframes;
+
+	public void setTimeframes(String timeframes) {
+		this.timeframes = timeframes;
 	}
-	
-	
-	
+
 	public String getDetailsAndInfo() {
-		return this.DetailsAndInfo;
+		return detailsAndInfo;
 	}
-	public void setDetailsAndInfo( String DetailsAndInfo ) {
-		this.DetailsAndInfo = DetailsAndInfo;
+
+	public void setDetailsAndInfo(String detailsAndInfo) {
+		this.detailsAndInfo = detailsAndInfo;
 	}
-	
-	
-	
+
 	public String getResourcesRequired() {
-		return this.ResourcesRequired;
+		return resourcesRequired;
 	}
-	public void setResourcesRequired( String ResourcesRequired ) {
-		this.ResourcesRequired = ResourcesRequired;
+
+	public void setResourcesRequired(String resourcesRequired) {
+		this.resourcesRequired = resourcesRequired;
 	}
+	
+	
+	
 }

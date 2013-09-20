@@ -5,161 +5,125 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Education {
-	private String InstitutionName;
-	private String Address;
-	private String EnrolledCourse;
-	private String ContactPerson;
-	private String Liaison;
-	private String SupportPersons;
-	private String Teacher;
-	private String EduSupportPlan;
-	private String OtherSupportRequired;
-	private String CommunityAssistance;
-	private String StudySupport;
-	
-	
-	/**
-	 * 
-	 * @param InstitutionName
-	 * @param Address
-	 * @param EnrolledCourse
-	 * @param ContactPerson
-	 * @param Liaison
-	 * @param SupportPersons
-	 * @param Teacher
-	 * @param EduSupportPlan
-	 * @param OtherSupportRequired
-	 * @param CommunityAssistance
-	 * @param StudySupport
-	 */
-	public Education(
-			String InstitutionName,
-			String Address,
-			String EnrolledCourse,
-			String ContactPerson,
-			String Liaison,
-			String SupportPersons,
-			String Teacher,
-			String EduSupportPlan,
-			String OtherSupportRequired,
-			String CommunityAssistance,
-			String StudySupport
-			) {
-		
-		this.InstitutionName = InstitutionName;
-		this.Address = Address;
-		this.EnrolledCourse = EnrolledCourse;
-		this.ContactPerson = ContactPerson;
-		this.Liaison = Liaison;
-		this.SupportPersons = SupportPersons;
-		this.Teacher = Teacher;
-		this.EduSupportPlan = EduSupportPlan;
-		this.OtherSupportRequired = OtherSupportRequired;
-		this.CommunityAssistance = CommunityAssistance;
-		this.StudySupport = StudySupport;
-		
-	}
-	
-	
+	private String institutionName;
+	private String address;
+	private String enrolledCourse;
+	private String contactPerson;
+	private String liaison;
+	private String supportPersons;
+	private String teacher;
+	private String eduSupportPlan;
+	private String otherSupportRequired;
+	private String communityAssistance;
+	private String studySupport;
 	
 	public Education() {}
-	
-	
-	
+
+	public Education(String institutionName, String address,
+			String enrolledCourse, String contactPerson, String liaison,
+			String supportPersons, String teacher, String eduSupportPlan,
+			String otherSupportRequired, String communityAssistance,
+			String studySupport) {
+		this.institutionName = institutionName;
+		this.address = address;
+		this.enrolledCourse = enrolledCourse;
+		this.contactPerson = contactPerson;
+		this.liaison = liaison;
+		this.supportPersons = supportPersons;
+		this.teacher = teacher;
+		this.eduSupportPlan = eduSupportPlan;
+		this.otherSupportRequired = otherSupportRequired;
+		this.communityAssistance = communityAssistance;
+		this.studySupport = studySupport;
+	}
+
 	public String getInstitutionName() {
-		return this.InstitutionName;
+		return institutionName;
 	}
-	public void setInstitutionName( String InstitutionName ) {
-		this.InstitutionName = InstitutionName;
+
+	public void setInstitutionName(String institutionName) {
+		this.institutionName = institutionName;
 	}
-	
-	
-	
+
 	public String getAddress() {
-		return this.Address;
+		return address;
 	}
-	public void setAddress( String Address ) {
-		this.Address = Address;
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
-	
-	
-	
+
 	public String getEnrolledCourse() {
-		return this.EnrolledCourse;
+		return enrolledCourse;
 	}
-	public void setEnrolledCourse( String EnrolledCourse ) {
-		this.EnrolledCourse = EnrolledCourse;
+
+	public void setEnrolledCourse(String enrolledCourse) {
+		this.enrolledCourse = enrolledCourse;
 	}
-	
-	
-	
+
 	public String getContactPerson() {
-		return this.ContactPerson;
+		return contactPerson;
 	}
-	public void setContactPerson( String ContactPerson ) {
-		this.ContactPerson = ContactPerson;
+
+	public void setContactPerson(String contactPerson) {
+		this.contactPerson = contactPerson;
 	}
-	
-	
-	
+
 	public String getLiaison() {
-		return this.Liaison;
+		return liaison;
 	}
-	public void setLiaison( String Liaison ) {
-		this.Liaison = Liaison;
+
+	public void setLiaison(String liaison) {
+		this.liaison = liaison;
 	}
-	
-	
-	
+
 	public String getSupportPersons() {
-		return this.SupportPersons;
+		return supportPersons;
 	}
-	public void setSupportPersons(String SupportPersons) {
-		this.SupportPersons = SupportPersons;
+
+	public void setSupportPersons(String supportPersons) {
+		this.supportPersons = supportPersons;
 	}
-	
-	
-	
+
 	public String getTeacher() {
-		return this.Teacher;
+		return teacher;
 	}
-	public void setTeacher( String Teacher ) {
-		this.Teacher = Teacher;
+
+	public void setTeacher(String teacher) {
+		this.teacher = teacher;
 	}
-	
-	
-	
+
 	public String getEduSupportPlan() {
-		return this.EduSupportPlan;
+		return eduSupportPlan;
 	}
-	public void setEduSupportPlan( String EduSupportPlan ) {
-		this.EduSupportPlan = EduSupportPlan;
+
+	public void setEduSupportPlan(String eduSupportPlan) {
+		this.eduSupportPlan = eduSupportPlan;
 	}
-	
-	
-	
+
 	public String getOtherSupportRequired() {
-		return this.OtherSupportRequired;
+		return otherSupportRequired;
 	}
-	public void setOtherSupportRequired( String OtherSupportRequired ) {
-		this.OtherSupportRequired = OtherSupportRequired;
+
+	public void setOtherSupportRequired(String otherSupportRequired) {
+		this.otherSupportRequired = otherSupportRequired;
 	}
-	
-	
-	
+
 	public String getCommunityAssistance() {
-		return this.CommunityAssistance;
+		return communityAssistance;
 	}
-	public void setCommunityAssistance( String CommunityAssistance ) {
-		this.CommunityAssistance = CommunityAssistance;
+
+	public void setCommunityAssistance(String communityAssistance) {
+		this.communityAssistance = communityAssistance;
 	}
-	
-	
-	
+
 	public String getStudySupport() {
-		return this.StudySupport;
+		return studySupport;
 	}
-	public void setStudySupport( String StudySupport ) {
-		this.StudySupport = StudySupport;
+
+	public void setStudySupport(String studySupport) {
+		this.studySupport = studySupport;
 	}
+	
+	
 }

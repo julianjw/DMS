@@ -4,88 +4,74 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class GoalPlan {
-	private String GoalToAchieve;
-	private String Strategies;
-	private String HowWhoWhere;
-	private String Timeframes;
-	private String Outcomes;
-	private String ResourcesRequired;
-	
-	
-	
-	public GoalPlan(
-			String GoalToAchieve,
-			String Strategies,
-			String HowWhoWhere,
-			String Timeframes,
-			String Outcomes,
-			String ResourcesRequired
-			) {
-		
-		this.GoalToAchieve = GoalToAchieve;
-		this.Strategies = Strategies;
-		this.HowWhoWhere = HowWhoWhere;
-		this.Timeframes = Timeframes;
-		this.Outcomes = Outcomes;
-		this.ResourcesRequired = ResourcesRequired;
-		
-	}
-	
-	
+	private String goalToAchieve;
+	private String strategies;
+	private String howWhoWhere;
+	private String timeframes;
+	private String outcomes;
+	private String resourcesRequired;
 	
 	public GoalPlan() {}
-	
-	
-	
+
+	public GoalPlan(String goalToAchieve, String strategies,
+			String howWhoWhere, String timeframes, String outcomes,
+			String resourcesRequired) {
+		super();
+		this.goalToAchieve = goalToAchieve;
+		this.strategies = strategies;
+		this.howWhoWhere = howWhoWhere;
+		this.timeframes = timeframes;
+		this.outcomes = outcomes;
+		this.resourcesRequired = resourcesRequired;
+	}
+
 	public String getGoalToAchieve() {
-		return this.GoalToAchieve;
+		return goalToAchieve;
 	}
-	public void setGoalToAchieve( String GoalToAchieve ) {
-		this.GoalToAchieve = GoalToAchieve;
+
+	public void setGoalToAchieve(String goalToAchieve) {
+		this.goalToAchieve = goalToAchieve;
 	}
-	
-	
-	
+
 	public String getStrategies() {
-		return this.Strategies;
+		return strategies;
 	}
-	public void setStrategies( String Strategies ) {
-		this.Strategies = Strategies;
+
+	public void setStrategies(String strategies) {
+		this.strategies = strategies;
 	}
-	
-	
-	
+
 	public String getHowWhoWhere() {
-		return this.HowWhoWhere;
+		return howWhoWhere;
 	}
-	public void setHowWhoWhere( String HowWhoWhere ) {
-		this.HowWhoWhere = HowWhoWhere;
+
+	public void setHowWhoWhere(String howWhoWhere) {
+		this.howWhoWhere = howWhoWhere;
 	}
-	
-	
-	
+
 	public String getTimeframes() {
-		return this.Timeframes;
+		return timeframes;
 	}
-	public void setTimeframes(String Timeframes) {
-		this.Timeframes = Timeframes;
+
+	public void setTimeframes(String timeframes) {
+		this.timeframes = timeframes;
 	}
-	
-	
-	
+
 	public String getOutcomes() {
-		return this.Outcomes;
+		return outcomes;
 	}
-	public void setOutcomes( String Outcomes ) {
-		this.Outcomes = Outcomes;
+
+	public void setOutcomes(String outcomes) {
+		this.outcomes = outcomes;
 	}
-	
-	
-	
+
 	public String getResourcesRequired() {
-		return this.ResourcesRequired;
+		return resourcesRequired;
 	}
-	public void setResourcesRequired( String ResourcesRequired ) {
-		this.ResourcesRequired = ResourcesRequired;
+
+	public void setResourcesRequired(String resourcesRequired) {
+		this.resourcesRequired = resourcesRequired;
 	}
+	
+	
 }

@@ -5,135 +5,105 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Employment {
-	private String Employer;
-	private String Address;
-	private String ContactPerson;
-	private String Position;
-	private String Arrangements;
-	private String Transport;
-	private String AnnualLeave;
-	private String SickLeave;
-	private String Equipment;
-	
-	
-	/**
-	 * 
-	 * @param Employer
-	 * @param Address
-	 * @param ContactPerson
-	 * @param Position
-	 * @param Arrangements
-	 * @param Transport
-	 * @param AnnualLeave
-	 * @param SickLeave
-	 * @param Equipment
-	 */
-	public Employment(
-			String Employer,
-			String Address,
-			String ContactPerson,
-			String Position,
-			String Arrangements,
-			String Transport,
-			String AnnualLeave,
-			String SickLeave,
-			String Equipment
-			) {
-		
-		this.Employer = Employer;
-		this.Address = Address;
-		this.ContactPerson = ContactPerson;
-		this.Position = Position;
-		this.Arrangements = Arrangements;
-		this.Transport = Transport;
-		this.AnnualLeave = AnnualLeave;
-		this.SickLeave = SickLeave;
-		this.Equipment = Equipment;
-		
-	}
-	
-	
+	private String employer;
+	private String address;
+	private String contactPerson;
+	private String position;
+	private String arrangements;
+	private String transport;
+	private String annualLeave;
+	private String sickLeave;
+	private String equipment;
 	
 	public Employment() {}
-	
-	
-	
+
+	public Employment(String employer, String address, String contactPerson,
+			String position, String arrangements, String transport,
+			String annualLeave, String sickLeave, String equipment) {
+		super();
+		this.employer = employer;
+		this.address = address;
+		this.contactPerson = contactPerson;
+		this.position = position;
+		this.arrangements = arrangements;
+		this.transport = transport;
+		this.annualLeave = annualLeave;
+		this.sickLeave = sickLeave;
+		this.equipment = equipment;
+	}
+
 	public String getEmployer() {
-		return this.Employer;
+		return employer;
 	}
-	public void setEmployer( String Employer ) {
-		this.Employer = Employer;
+
+	public void setEmployer(String employer) {
+		this.employer = employer;
 	}
-	
-	
-	
+
 	public String getAddress() {
-		return this.Address;
+		return address;
 	}
-	public void setAddress( String Address ) {
-		this.Address = Address;
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
-	
-	
-	
+
 	public String getContactPerson() {
-		return this.ContactPerson;
+		return contactPerson;
 	}
-	public void setContactPerson( String ContactPerson ) {
-		this.ContactPerson = ContactPerson;
+
+	public void setContactPerson(String contactPerson) {
+		this.contactPerson = contactPerson;
 	}
-	
-	
-	
+
 	public String getPosition() {
-		return this.Position;
+		return position;
 	}
-	public void setPosition(String Position) {
-		this.Position = Position;
+
+	public void setPosition(String position) {
+		this.position = position;
 	}
-	
-	
-	
+
 	public String getArrangements() {
-		return this.Arrangements;
+		return arrangements;
 	}
-	public void setArrangements( String Arrangements ) {
-		this.Arrangements = Arrangements;
+
+	public void setArrangements(String arrangements) {
+		this.arrangements = arrangements;
 	}
-	
-	
-	
+
 	public String getTransport() {
-		return this.Transport;
+		return transport;
 	}
-	public void setTransport( String Transport ) {
-		this.Transport = Transport;
+
+	public void setTransport(String transport) {
+		this.transport = transport;
 	}
-	
-	
-	
+
 	public String getAnnualLeave() {
-		return this.AnnualLeave;
+		return annualLeave;
 	}
-	public void setAnnualLeave( String AnnualLeave ) {
-		this.AnnualLeave = AnnualLeave;
+
+	public void setAnnualLeave(String annualLeave) {
+		this.annualLeave = annualLeave;
 	}
-	
-	
-	
+
 	public String getSickLeave() {
-		return this.SickLeave;
+		return sickLeave;
 	}
-	public void setSickLeave( String SickLeave ) {
-		this.SickLeave = SickLeave;
+
+	public void setSickLeave(String sickLeave) {
+		this.sickLeave = sickLeave;
 	}
-	
-	
-	
+
 	public String getEquipment() {
-		return this.Equipment;
+		return equipment;
 	}
-	public void setEquipment( String Equipment ) {
-		this.Equipment = Equipment;
+
+	public void setEquipment(String equipment) {
+		this.equipment = equipment;
 	}
+	
+	
+	
 }

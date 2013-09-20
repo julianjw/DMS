@@ -25,7 +25,6 @@ public class DatabaseAccess {
 	private final static String TBL_ACTIVE_SESSION = "active_session";
 	
 	
-	
 	/* PERSONAL PLAN */
 		// CLIENT DETAILS
 	private final static String TBL_PERSONAL_DETAILS = "client_personal_details";
@@ -33,7 +32,7 @@ public class DatabaseAccess {
 	private final static String TBL_FORMAL_ORDERS = "client_formal_orders";
 	private final static String TBL_LIVING_ARRANGEMENTS = "client_living_arrangements";
 	private final static String TBL_CONTACTS = "client_contacts";
-	private final static String TBL_CONTACT_TYPE = "client_contact_type"; // TODO PRELOAD
+	private final static String TBL_CONTACT_TYPE = "client_contact_type"; // subtable
 	
 	
 		// HEALTH
@@ -51,14 +50,16 @@ public class DatabaseAccess {
 	private final static String TBL_RELAXATION = "support_relaxation";
 	
 		// COMMUNICATION
-	
+	private final static String TBL_COMMUNICATION = "communication";
+	private final static String TBL_BAD_TOPICS = "communication_bad_topics";
 	
 		// EDUCATION AND EMPLOYMENT
-	
+	private final static String TBL_EDUCATION = "education";
+	private final static String TBL_EMPLOYMENT = "employment";
 	
 		// PLANNING
-	
-	
+	private final static String TBL_GOAL = "plan_goal";
+	private final static String TBL_HOLIDAY = "plan_holiday";
 	
 	
 	private static Connection  con = null;
