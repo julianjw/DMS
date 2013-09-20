@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import qut.endeavour.rest.bean.Verification;
 import qut.endeavour.rest.bean.plan.ClientDetails;
 import qut.endeavour.rest.bean.plan.Communication;
+import qut.endeavour.rest.bean.plan.EducationEmployment;
 import qut.endeavour.rest.bean.plan.HealthDetails;
 import qut.endeavour.rest.bean.plan.PersonalPlan;
 import qut.endeavour.rest.bean.plan.Planning;
@@ -111,6 +112,24 @@ public class PlanResource {
 			) {
 		
 		System.out.println("Writing: ClientDetails");
+		System.out.println("Token: "+token);
+		System.out.println("Username: "+username);
+		System.out.println("clientId: "+clientid);
+		
+		return new Verification(Verification.Verified.SUCCESS);
+	}
+	
+	@POST
+	@Path("/educationemployment/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Verification setJSONEducationEmployment(
+			@PathParam("username") String username,
+			@PathParam("token") String token,
+			@PathParam("clientid") String clientid
+			) {
+		
+		System.out.println("Writing: EducationEmployment");
 		System.out.println("Token: "+token);
 		System.out.println("Username: "+username);
 		System.out.println("clientId: "+clientid);
@@ -221,6 +240,23 @@ public class PlanResource {
 		System.out.println("clientId: "+clientid);
 		
 		return PlanFactory.createClientDetails();
+	}
+	
+	@GET
+	@Path("/educationemployment/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public EducationEmployment JSONEducationEmployment(
+			@PathParam("username") String username,
+			@PathParam("token") String token,
+			@PathParam("clientid") String clientid
+			) {
+		
+		System.out.println("Requesting: ClientDetails");
+		System.out.println("Token: "+token);
+		System.out.println("Username: "+username);
+		System.out.println("clientId: "+clientid);
+		
+		return PlanFactory.createEducationEmployment();
 	}
 	
 	@GET

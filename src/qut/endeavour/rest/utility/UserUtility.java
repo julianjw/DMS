@@ -3,7 +3,7 @@ package qut.endeavour.rest.utility;
 import qut.endeavour.rest.bean.admin.DMSUser;
 import qut.endeavour.rest.storage.DatabaseAccess;
 
-public class Users {
+public class UserUtility {
 	public static boolean putUserInDatabase( String currentUser_id, String token, DMSUser user ){
 		String personName = user.getrName();
 		String newUser_id = user.getUser_id();

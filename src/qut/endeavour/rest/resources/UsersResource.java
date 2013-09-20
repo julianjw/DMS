@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 import qut.endeavour.rest.bean.Verification;
 import qut.endeavour.rest.bean.admin.DMSUser;
 import qut.endeavour.rest.exception.DMSClientErrorException;
-import qut.endeavour.rest.utility.Users;
+import qut.endeavour.rest.utility.UserUtility;
 
 /**
  * Very powerful service to create, remove and modify users.
@@ -61,7 +61,7 @@ public class UsersResource {
 		if( token == null ) throw new DMSClientErrorException("No token supplied");
 		if( token.length() < 1 ) throw new DMSClientErrorException("No token supplied");
 		
-		if ( Users.putUserInDatabase( currentUser_id, token, newUser ) ) {
+		if ( UserUtility.putUserInDatabase( currentUser_id, token, newUser ) ) {
 			return new Verification(Verification.Verified.SUCCESS);
 		}
 		return new Verification(Verification.Verified.FAILURE);
