@@ -1,17 +1,3 @@
-function getUsername() {
-	
-	var username = "";
-	
-	var currentUrl = document.URL;
-	
-	var temp = currentUrl.split("rest/");
-	
-	return temp;
-	
-	//return username;
-}
-
-
 $.extend({
 	getUrlVars: function(){
 	var vars = [], hash;
@@ -62,22 +48,3 @@ function PreviewImage() {
     };
     oFReader.readAsDataURL($("#profilepic").files[0]);
 };
-
-$(document).ready(function(){
-	
-
-	//click on the previous button
-	$("#PageNavPrev").click(function(){
-		PageNavigation('prev');
-	});
-
-	//click on the next button
-	$("#PageNavNext").click(function(){
-		PageNavigation('next');
-	});
-
-	//click on toggle class element
-	$(".toggle").click(function(event){
-		$(this).next().toggle();
-	});
-});

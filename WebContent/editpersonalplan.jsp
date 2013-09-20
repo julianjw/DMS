@@ -6,7 +6,8 @@
 <jsp:include page="partials/nav.html" flush="true" />
 	<!-- navigation -->
 	<!-- 	<h3>Personal Plan Nav</h3> -->
-	<a href='editpersonalplan.jsp'>Edit Existing Plan</a>
+	<a href='personalplan.jsp'>New Personal Plan</a>
+
 	
 	<div class="horizontalNav">
 	<ul>
@@ -27,10 +28,21 @@
 	<div id="communicationD"><jsp:include page="personalplan/communication.html" flush="true" /></div>
 	<div id="educationD"><jsp:include page="personalplan/education.html" flush="true" /></div>
  	<div id="planningD"><jsp:include page="personalplan/planning.html" flush="true" /></div>
+
+	<div id="existingPlans">
+		
+	</div>
+
+
 <jsp:include page="partials/footer.html" flush="true" />
 <!-- Page specific scripts -->
 <script>
 $(document).ready(function(){
+	
+	
+	
+	
+	
 	
 	//click on the previous button
 	$("#PageNavPrev").click(function(){
@@ -49,7 +61,7 @@ $(document).ready(function(){
 	
 	var navs = new Array("clientD", "healthD", "supportD", "communicationD", "educationD", "planningD");
 	
-	$("#"+navs[0]).show();
+	//$("#"+navs[0]).show();
 	
 	for (var i=0; i<navs.length-1;i++) {
 		

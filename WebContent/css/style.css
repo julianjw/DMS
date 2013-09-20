@@ -69,7 +69,7 @@ html, body {
 
 #con-body-main-title {
 /*     background-color:green; */
-    width:100%;
+/*     width:100%; */
     height:100px;
 }
 
@@ -172,4 +172,11 @@ background-color:#7A991A;
 .hidden {
 	display:none;
 }
+
+.italic {
+	font-style:italic;
+}
+
+.bold {
+	font-style:bold;
 }

@@ -324,6 +324,21 @@
 		var date = ((''+day).length<2 ? '0' : '') + day + '/' + ((''+month).length<2 ? '0' : '') + month + '/' + d.getFullYear();
 		$("#createDateT").val(date);
 		
+		//click on the previous button
+		$("#PageNavPrev").click(function(){
+			PageNavigation('prev');
+		});
+
+		//click on the next button
+		$("#PageNavNext").click(function(){
+			PageNavigation('next');
+		});
+
+		//click on toggle class element
+		$(".toggle").click(function(event){
+			$(this).next().toggle();
+		});
+		
 		
 		//click on the submit button
 		$("#PageNavSubmitB").click(function(){
