@@ -5,10 +5,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import qut.endeavour.rest.bean.AuthRole;
 import qut.endeavour.rest.bean.admin.DMSUser;
 
 
@@ -70,7 +73,15 @@ public class DatabaseAccess {
 	private static Map<String,RoleRecord> roleByName = null;
 	
 	
-	
+	public static List<String> getRoles( String user_id, String token ) {
+		List<String> roles = new ArrayList<String>();
+		if ( validateUser(user_id, token) ) {
+			for ( Entry<String,RoleRecord> record : roleByName.entrySet()){
+				roles.add(record.getValue().role.toLowerCase());
+			}
+		}
+		return roles;
+	}
 	
 	private static boolean makeConnection() {
 		try {

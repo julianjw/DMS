@@ -3,13 +3,18 @@
  */
 package qut.endeavour.rest.factory;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import qut.endeavour.rest.bean.AuthResponse;
 import qut.endeavour.rest.bean.AuthRole;
+import qut.endeavour.rest.bean.AuthRole.Role;
 import qut.endeavour.rest.bean.AuthToken;
 import qut.endeavour.rest.bean.Verification;
 import qut.endeavour.rest.storage.DatabaseAccess;
+import qut.endeavour.rest.storage.RoleRecord;
 
 /**
  * AuthTokenFactory
@@ -42,15 +47,22 @@ public final class AuthFactory {
 
 	public static AuthRole createRole(String userId, String token) {
 		String role = DatabaseAccess.getRole(userId, token);
+		return new AuthRole(role);
+	}
+	
+//	private static Role AuthRole(String role) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+
+
+	public static List<AuthRole> createRoles(String user_id, String token) {
+		List<String> roles = DatabaseAccess.getRoles(user_id, token);
+		List<AuthRole> authRoles = new ArrayList<AuthRole>();
 		
-		if ( role.toLowerCase().equals(AuthRole.Role.CLIENT.getValue()) ) return new AuthRole(AuthRole.Role.CLIENT);
-		if ( role.toLowerCase().equals(AuthRole.Role.SW.getValue()) ) return new AuthRole(AuthRole.Role.SW);
-		if ( role.toLowerCase().equals(AuthRole.Role.SC.getValue()) ) return new AuthRole(AuthRole.Role.SC);
-		if ( role.toLowerCase().equals(AuthRole.Role.SDIM.getValue()) ) return new AuthRole(AuthRole.Role.SDIM);
-		if ( role.toLowerCase().equals(AuthRole.Role.SOM.getValue()) ) return new AuthRole(AuthRole.Role.SOM);
-		if ( role.toLowerCase().equals(AuthRole.Role.RDO.getValue()) ) return new AuthRole(AuthRole.Role.RDO);
+		for ( String role : roles ) authRoles.add( new AuthRole(role));
 		
-		return new AuthRole(AuthRole.Role.INVALID);
+		return authRoles;
 	}
 	
 	
