@@ -21,6 +21,11 @@
         			});
         		});
         	}
+        	if(document.URL!="http://"+window.location.hostname + ":8080/EndeavourDMS/personalplan.jsp") {
+        		if ($.cookie('currentClientPlanId') != null) {
+        			$.removeCookie('currentClientPlanId');
+        		}
+        	}
         </script>
 	</head>
 	

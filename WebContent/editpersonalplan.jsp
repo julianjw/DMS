@@ -39,7 +39,14 @@
 <script>
 $(document).ready(function(){
 	
+	$("#existingPlans").html("<table><tr><td>");
 	
+	
+	
+	for (var i=0; i<results.length-1;i++) {
+		
+		
+	}
 	
 	
 	

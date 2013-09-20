@@ -20,13 +20,16 @@
 	</div>
 <jsp:include page="partials/body.html" flush="true" />
 	<!-- page content -->
-
-	<div id="clientD"><jsp:include page="personalplan/client.html" flush="true" /></div>
-	<div id="healthD"><jsp:include page="personalplan/health.html" flush="true" /></div>
-	<div id="supportD"><jsp:include page="personalplan/support.html" flush="true" /></div>
-	<div id="communicationD"><jsp:include page="personalplan/communication.html" flush="true" /></div>
-	<div id="educationD"><jsp:include page="personalplan/education.html" flush="true" /></div>
- 	<div id="planningD"><jsp:include page="personalplan/planning.html" flush="true" /></div>
+	<button id='PageNavPrev' name='PageNavPrev' >Previous</button>	
+	<button id='PageNavNext' name='PageNavNext' >Next</button>
+	<button id='PageNavSubmitB' name='PageNavSubmitB'>Submit</button>
+	
+	<div id="clientD" class="hidden"><jsp:include page="personalplan/client.html" flush="true" /></div>
+	<div id="healthD" class="hidden"><jsp:include page="personalplan/health.html" flush="true" /></div>
+	<div id="supportD" class="hidden"><jsp:include page="personalplan/support.html" flush="true" /></div>
+	<div id="communicationD" class="hidden"><jsp:include page="personalplan/communication.html" flush="true" /></div>
+	<div id="educationD" class="hidden"><jsp:include page="personalplan/education.html" flush="true" /></div>
+ 	<div id="planningD" class="hidden"><jsp:include page="personalplan/planning.html" flush="true" /></div>
 <jsp:include page="partials/footer.html" flush="true" />
 <!-- Page specific scripts -->
 <script>
@@ -49,19 +52,14 @@ $(document).ready(function(){
 	
 	var navs = new Array("clientD", "healthD", "supportD", "communicationD", "educationD", "planningD");
 	
+	//show the first navigation
 	$("#"+navs[0]).show();
 	
-	for (var i=0; i<navs.length-1;i++) {
-		
-		$("#"+navs[i]).hide();
-		alert($("#"+navs[i]).attr("id"));
 
-	}
-
-	
+	//bind the navigation clicks
 	$('li.pageNav').bind('click', function(){
 		
-		for (var i=0; i<navs.length;i++) {
+		for (var i=0; i<navs.length-1;i++) {
 			
 			if (navs[i] != ($(this).attr('id')+"D")) {
 				$("#"+navs[i]).hide();

@@ -1,4 +1,3 @@
-
 	<button id='PageNavPrev' name='PageNavPrev' >Previous</button>	
 	<button id='PageNavNext' name='PageNavNext' >Next</button>
 	<button id='PageNavSubmitB' name='PageNavSubmitB'>Submit</button>
@@ -118,7 +117,7 @@
 
 		<label for='publicTransportT' class='toggle'>Public Transport: </label>
 		<div id='publicTransportD'>
-			<textarea id='publicTransportT' name'publicTransportT' rows="3" cols="50"></textarea>
+			<textarea id='publicTransportT' name='publicTransportT' rows="3" cols="50"></textarea>
 		</div>
 		<br />
 
@@ -309,6 +308,114 @@
 		$("#financialD").hide();
 		$("#activitiesD").hide();
 		$("#relaxationD").hide();
+		
+		"supportRequired": {
+			supportRequired.dailyActivities": {
+				dailyActivities.bathing": "C",
+				dailyActivities.bedTime": "C",
+				dailyActivities.cleaning": "C",
+				dailyActivities.cooking": "C",
+				dailyActivities.dressing": "C",
+				dailyActivities.friday": "C",
+				dailyActivities.mensuration": "C",
+				dailyActivities.monday": "C",
+				dailyActivities.otherThings": "C",
+				dailyActivities.routineAfternoon": "C",
+				dailyActivities.routineMealTime": "C",
+				dailyActivities.routineMorning": "C",
+				dailyActivities.routineSleeping": "C",
+				dailyActivities.routineWeekend": "C",
+				dailyActivities.saturday": "C",
+				dailyActivities.service": "C",
+				dailyActivities.sleeping": "C",
+				dailyActivities.sunday": "C",
+				dailyActivities.thursday": "C",
+				dailyActivities.toileting": "C",
+				dailyActivities.tuesday": "C",
+				dailyActivities.wednesday": "C"
+	        },
+	        supportRequired.financialSupport": {
+	            "budgetBills": "C",
+	            "budgetEmergency": "C",
+	            "budgetExpend": "C",
+	            "budgetGoals": "C",
+	            "budgetGroceries": "C",
+	            "budgetHouse": "C",
+	            "budgetSupportNetwork": "C",
+	            "budgetTransport": "C",
+	            "budgetUtilities": "C",
+	            "budgeting": "C",
+	            "financialAdmin": "C",
+	            "moneyHandlingSupport": "C",
+	            "otherRequirements": "C",
+	            "personalItemsSupport": "C"
+	        },
+	        supportRequired.generalSupport": {
+	            generalSupport.beliefs": "C",
+	            generalSupport.communications": "C",
+	            generalSupport.crowdSafety": "C",
+	            generalSupport.crowds": "C",
+	            generalSupport.eatingOut": "C",
+	            generalSupport.hazardRecognition": "C",
+	            generalSupport.leisure": "C",
+	            generalSupport.moneyHandling": "C",
+	            "otherSafetyInfo": "C",
+	            "socialNetworks": "C",
+	            "strangerDanger": "C",
+	            "usingApplicances": "C",
+	            "usingChemical": "C"
+	        },
+	        supportRequired.mobilityAndTransport": {
+	            mobilityAndTransport.height": "C",
+	            mobilityAndTransport.liftsAndEscalators": "C",
+	            mobilityAndTransport.mobilityAids": "C",
+	            mobilityAndTransport.otherTravelSupport": "C",
+	            mobilityAndTransport.publicTransport": "C",
+	            mobilityAndTransport.roadSafetySkills": "C",
+	            mobilityAndTransport.travelPreferences": "C",
+	            mobilityAndTransport.unevenSurfaces": "C"
+	        },
+	        supportRequired.relaxation": {
+	        	
+	        	relaxation.activities": "C",
+	        	relaxation.movie": "C",
+	        	relaxation.music": "C",
+	        	relaxation.otherActivities": "C",
+	        	relaxation.TVShow": "C"
+	        }
+	    }
+		
+		//click on the submit button
+		$("#PageNavSubmitB").click(function(){
+			var supportRequired = new Object();
+			supportRequired.dislikes = $("#dislikesT").val();
+			supportRequired.goodTopics = $("#goodTopicsT").val();
+			supportRequired.ICommunicate = $("#ICommunicateT").val();
+			supportRequired.independantDecisions = $("#independantDecisionsT").val();
+			supportRequired.likes = $("#likesT").val();
+			supportRequired.supportMeBy = $("#supportMeByT").val();
+			supportRequired.supportPeople = $("#supportPeopleT").val();
+			supportRequired.youCommunicate = $("#youCommunicateT").val();
+
+			
+			
+			var communication = new Object();
+			communication.comsAndDecisionMaking = comsAndDecisionMaking;
+			
+			var jsonText = JSON.stringify(communication);
+			$("#testing").html(jsonText);
+			
+			$.ajax({
+				url:'./rest/personalplan/communication/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/1',
+				type: 'POST',
+				contentType: 'application/json; charset=UTF-8',
+				dataType: 'json',
+				data: jsonText,
+				complete: function(jqXHR, textStatus) {
+					alert(textStatus);
+				}
+			});
+		});
 		
 	});
 </script>

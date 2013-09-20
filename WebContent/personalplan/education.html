@@ -226,9 +226,10 @@
 			$("#testing").html(jsonText);
 			
 			$.ajax({
-				url:'./rest/personalplan/educationemployment/' + $.cookie('auth_token')+ '/' + $.cookie('user_id') +'/1',
+				url:'./rest/personalplan/educationemployment/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/1',
 				type: 'POST',
-				contentType: 'application/json',
+				contentType: 'application/json; charset=UTF-8',
+				dataType: 'json',
 				data: jsonText,
 				complete: function(jqXHR, textStatus) {
 					alert(textStatus);

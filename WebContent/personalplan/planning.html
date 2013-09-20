@@ -170,9 +170,10 @@
             var jsonText = JSON.stringify(planning);
 
             $.ajax({
-				url:'./rest/personalplan/planning/' + $.cookie('auth_token') + '/' + $.cookie('user_id') +'/' + personDetails.clientId,
+				url:'./rest/personalplan/planning/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/1',
 				type: 'POST',
-				contentType: 'application/json',
+				contentType: 'application/json; charset=UTF-8',
+				dataType: 'json',
 				data: jsonText,
 				complete: function(jqXHR, textStatus) {
 					alert(textStatus);
