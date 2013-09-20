@@ -1,1 +1,1 @@
-database version 1.03 latest
+database version 1.04 latest
