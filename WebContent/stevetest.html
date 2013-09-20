@@ -36,7 +36,6 @@
 		DMSUser.password = "mahpassword";
 		DMSUser.role = "roleie";
 		
-		
 		var jsonText = JSON.stringify(DMSUser);
 		//alert(jsonText);
 		//$("#testing").html(jsonText);
@@ -47,7 +46,7 @@
 			contentType: 'application/json; charset=UTF-8',
 			dataType: 'json',
 			data: jsonText,
-			complete: function(jqXHR, textStatus) {
+			success: function(jqXHR, textStatus) {
 				//alert(textStatus);
 			}
 		});

@@ -16,11 +16,24 @@ public class DatabaseAccess {
 	
 	private final static String DBMS_LOCATION = "jdbc:mysql://localhost:3306/";
 	private final static String DATABASE_NAME = "endeavourdb";
-	
-	private final static String TBL_ACTIVE_SESSION = "active_session";
-
 	private final static String dbUsername = "root";
 	private final static String dbPassword = "";
+	
+	/* ADMIN */
+	private final static String TBL_ACTIVE_SESSION = "active_session";
+	
+	/* PERSONAL PLAN */
+		// CLIENT DETAILS
+	private final static String TBL_PERSONAL_DETAILS = "client_personal_details"; // personal details
+	private final static String TBL_ALERT_INFO = "client_alerts";
+	private final static String TBL_FORMAL_ORDERS = "client_formal_orders";
+	private final static String TBL_LIVING_ARRANGEMENTS = "client_living_arrangements";
+	private final static String TBL_CONTACTS = "client_contacts";
+	private final static String TBL_CONTACT_TYPE = "client_contact_type";
+	
+	
+
+	
 	
 	private static Connection  con = null;
 	

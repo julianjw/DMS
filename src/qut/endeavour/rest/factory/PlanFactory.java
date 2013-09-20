@@ -12,7 +12,7 @@ import qut.endeavour.rest.bean.plan.SupportRequired;
 import qut.endeavour.rest.bean.plan.clientdetails.AlertInformation;
 import qut.endeavour.rest.bean.plan.clientdetails.ContactDetails;
 import qut.endeavour.rest.bean.plan.clientdetails.FormalOrders;
-import qut.endeavour.rest.bean.plan.clientdetails.LivingArangements;
+import qut.endeavour.rest.bean.plan.clientdetails.LivingArrangements;
 import qut.endeavour.rest.bean.plan.clientdetails.PersonalDetails;
 import qut.endeavour.rest.bean.plan.communication.BadTopics;
 import qut.endeavour.rest.bean.plan.communication.ComsAndDecisionMaking;
@@ -31,13 +31,13 @@ import qut.endeavour.rest.bean.plan.support.Relaxation;
 
 public class PlanFactory {
 	public static ClientDetails createClientDetails(){
-		PersonalDetails pd = new PersonalDetails( "a", "a", "a", "a", "a", "a", "a" );
-		AlertInformation ai = new AlertInformation( "a", "a", "a", "a", "a", "a", "a", "a" );
-		ArrayList<ContactDetails> contd = new ArrayList<ContactDetails>();
-		contd.add(new ContactDetails("cd1","cd","cd"));
-		contd.add(new ContactDetails("cd2","cd","cd"));
-		contd.add(new ContactDetails("cd3","cd","cd"));
-		LivingArangements la = new LivingArangements("a", "a", "a", contd, "a", contd);
+		PersonalDetails pd = new PersonalDetails( "a", "a", "a", "a", "a", "a", "a", "a", "a" );
+		AlertInformation ai = new AlertInformation( "a", "a", "a", "a", "a", "a", "a", "a", "a" );
+		ArrayList<ContactDetails> contds = new ArrayList<ContactDetails>();
+		contds.add(new ContactDetails("cd1","cd","cd","cd"));
+		contds.add(new ContactDetails("cd1","cd","cd","cd"));
+		contds.add(new ContactDetails("cd1","cd","cd","cd"));
+		LivingArrangements la = new LivingArrangements("a", "a", "a", "a", 0, "a", contds, contds, contds.get(0));
 		FormalOrders fo = new FormalOrders("a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a");
 		
 		return new ClientDetails( pd, ai, la, fo );

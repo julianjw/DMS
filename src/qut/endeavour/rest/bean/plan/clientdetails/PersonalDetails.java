@@ -10,101 +10,39 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class PersonalDetails {
-	private String clientName;
-	private String preferredName;
-	private String clientId;
-	private String address;
-	private String photoURL;
-	private String creationDate;
-	private String reviewDate;
+	
+	// user_id
+	
+	public String clientName;
+	public String preferredName;
+	public String username;
+	
+	public String email;
+	public String phoneNumber;
+	public String mobileNumber;
+	
+	public String creationDate;
+	public String reviewDate;
 	
 	/**
-	 * 
-	 * @param clientName
-	 * @param preferredName
-	 * @param clientId
-	 * @param address
-	 * @param photoURL
-	 * @param creationDate
-	 * @param reviewDate
+	 * Does not go in database.
 	 */
-	public PersonalDetails(
-			String clientName,
-			String preferredName,
-			String clientId,
-			String address,
-			String photoURL,
-			String creationDate,
-			String reviewDate ) {
-		this.clientName = clientName;
-		this.preferredName = preferredName;
-		this.clientId = clientId;
-		this.address = address;
-		this.photoURL = photoURL;
-		this.creationDate = creationDate;
-		this.reviewDate = reviewDate;
-	}
+	public String photoURL;
 	
 	public PersonalDetails() {}
-	
-	public String getClientName() {
-		return this.clientName;
-	}
-	
-	public void setClientName( String clientName ) {
+
+	public PersonalDetails(String clientName, String preferredName,
+			String username, String email, String phoneNumber,
+			String mobileNumber, String creationDate, String reviewDate,
+			String photoURL) {
 		this.clientName = clientName;
-	}
-	
-	public String getPreferredName() {
-		return this.preferredName;
-	}
-	
-	public void setPreferredName( String preferredName ) {
 		this.preferredName = preferredName;
-	}
-	
-	
-	
-	public String getClientId() {
-		return this.clientId;
-	}
-	public void setClientId( String clientId ) {
-		this.clientId = clientId;
-	}
-	
-	
-	
-	public String getAddress() {
-		return this.address;
-	}
-	public void setAddress( String address ) {
-		this.address = address;
-	}
-	
-	
-	
-	public String getPhotoUrl() {
-		return this.photoURL;
-	}
-	
-	public void setPhotoUrl( String photoURL ) {
+		this.username = username;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.mobileNumber = mobileNumber;
+		this.creationDate = creationDate;
+		this.reviewDate = reviewDate;
 		this.photoURL = photoURL;
 	}
-	
-	public String getCreationDate() {
-		return this.creationDate;
-	}
-	
-	public void setCreationDate( String creationDate ) {
-		this.creationDate = creationDate;
-	}
-	
-	public String getReviewDate() {
-		return this.reviewDate;
-	}
-	
-	public void setReviewDate(String reviewDate) {
-		this.reviewDate = reviewDate;
-	}
-	
 }
