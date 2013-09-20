@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,7 +59,35 @@ public class DatabaseAccess {
 	
 		// EDUCATION AND EMPLOYMENT
 	private final static String TBL_EDUCATION = "education";
+	public static List<String> FLDS_EDUCATION = new ArrayList<String>() {{
+		add("s*edu_institution");
+		add("s*edu_address");
+		add("s*enrolled_course");
+		add("s*contact_person");
+		add("s*liason_guidance_officer");
+		add("s*support_persons");
+		add("s*lecturer");
+		add("s*edu_supp_plan");
+		add("s*other_supp");
+		add("s*agency_assist");
+		add("s*study_supp");
+	}};
+	
 	private final static String TBL_EMPLOYMENT = "employment";
+	public static List<String> FLDS_EMPLOYMENT = new ArrayList<String>() {{
+		add("s*employer");
+		add("s*emp_address");
+		add("s*supervisor");
+		add("s*pos_held");
+		add("s*work_arrangements");
+		add("s*transport");
+		add("s*holiday_plans");
+		add("s*sick_leave");
+		add("s*resources");
+	}};
+	
+	
+	
 	
 		// PLANNING
 	private final static String TBL_GOAL = "plan_goal";
@@ -143,7 +172,6 @@ public class DatabaseAccess {
 			int roleId = results.getInt("role_id");
 			String roleName = results.getString("role");
 			String roleDetails = results.getString("details");
-			System.out.println("--Storing: "+roleId+" "+roleName+" "+roleDetails);
 			roleByName.put(roleName, new RoleRecord(roleId,roleName,roleDetails));
 		}
 	}
@@ -384,5 +412,59 @@ public class DatabaseAccess {
 		}
 		
 		return false;
+	}
+
+	public static List<Map<String, Object>> getEmployment(
+			String username, String token, String clientid) {
+		if (!makeConnection()) return null;
+		if (!validateUser(username, token)) return null;
+		System.out.println("DatabaseAccess: Getting Employment.");
+		return getUserRelatedDetails( FLDS_EMPLOYMENT, TBL_EMPLOYMENT, clientid );
+	}
+
+	public static List<Map<String,Object>> getEducation(
+			String username, String token, String clientid) {
+		if (!makeConnection()) return null;
+		if (!validateUser(username, token)) return null;
+		System.out.println("DatabaseAccess: Getting Education.");
+		return getUserRelatedDetails( FLDS_EDUCATION, TBL_EDUCATION, clientid );
+	}
+	
+	
+	/**
+	 * Pulls everything from the database. transforms to a list of maps
+	 * @param fields
+	 * @param table
+	 * @param username
+	 * @return
+	 */
+	private static List<Map<String, Object>> getUserRelatedDetails( List<String> fields, String table, String username ) {
+		List<Map<String, Object>> resultMapList = new ArrayList<Map<String,Object>>();
+		
+		String sql = "SELECT tb.* from `"+table+"` tb natural join `"+TBL_USER_INFO+"` where "+TBL_USER_INFO+".username = ?";
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, username);
+			ResultSet results = ps.executeQuery();
+			
+			while (results.next()) {
+				Map<String, Object> resultMap = new HashMap<String, Object>();
+				for ( String field : fields ) {
+					char type = field.charAt(0);
+					field = field.substring(2); // get rid of type character and *
+					if ( type == 's' ) resultMap.put(field, results.getString(field)); else
+					if ( type == 'i' ) resultMap.put(field, results.getInt(field)); else
+					if ( type == 'b') resultMap.put(field, results.getBoolean(field));
+				}
+				resultMapList.add(resultMap);
+			}
+			if ( resultMapList.size() > 0 ) return resultMapList;
+			
+		} catch (SQLException e) {
+			System.out.println("DatabaseAccess: "+e);
+		}
+		
+		System.out.println("--Bad results map list.");
+		return null;
 	}
 }

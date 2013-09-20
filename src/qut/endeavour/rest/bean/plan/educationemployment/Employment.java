@@ -17,6 +17,18 @@ public class Employment {
 	
 	public Employment() {}
 
+	/**
+	 * 
+	 * @param employer
+	 * @param address
+	 * @param contactPerson
+	 * @param position
+	 * @param arrangements
+	 * @param transport
+	 * @param annualLeave
+	 * @param sickLeave
+	 * @param equipment
+	 */
 	public Employment(String employer, String address, String contactPerson,
 			String position, String arrangements, String transport,
 			String annualLeave, String sickLeave, String equipment) {

@@ -251,12 +251,13 @@ public class PlanResource {
 			@PathParam("clientid") String clientid
 			) {
 		
+		System.out.println();
 		System.out.println("Requesting: ClientDetails");
 		System.out.println("Token: "+token);
 		System.out.println("Username: "+username);
 		System.out.println("clientId: "+clientid);
 		
-		return PlanFactory.createEducationEmployment();
+		return PlanFactory.createEducationEmployment( username, token, clientid );
 	}
 	
 	@GET
@@ -273,7 +274,7 @@ public class PlanResource {
 		System.out.println("Username: "+username);
 		System.out.println("clientId: "+clientid);
 		
-		return PlanFactory.createPersonalPlan();
+		return PlanFactory.createPersonalPlan( username, token, clientid );
 	}
 	
 }

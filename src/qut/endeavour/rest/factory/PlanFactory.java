@@ -2,6 +2,7 @@ package qut.endeavour.rest.factory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import qut.endeavour.rest.bean.plan.ClientDetails;
 import qut.endeavour.rest.bean.plan.Communication;
@@ -29,6 +30,7 @@ import qut.endeavour.rest.bean.plan.support.FinancialSupport;
 import qut.endeavour.rest.bean.plan.support.GeneralSupport;
 import qut.endeavour.rest.bean.plan.support.MobilityAndTransport;
 import qut.endeavour.rest.bean.plan.support.Relaxation;
+import qut.endeavour.rest.storage.DatabaseAccess;
 
 public class PlanFactory {
 	public static ClientDetails createClientDetails(){
@@ -75,14 +77,79 @@ public class PlanFactory {
 		return new Communication(decision);
 	}
 	
-	
-	public static EducationEmployment createEducationEmployment() {
-		Education cadm = new Education("D", "D", "D", "D", "D", "D", "D", "D", "D", "D", "D");
-		Employment emp = new Employment("D", "D", "D", "D", "D", "D", "D", "D", "D");
+	/**
+	 * 
+	 * @param username
+	 * @param token
+	 * @param clientid
+	 * @return
+	 */
+	public static EducationEmployment createEducationEmployment(String username, String token, String clientid) {
+		Education cadm = PlanFactory.createEducation( username, token, clientid );
+		if ( cadm == null ) cadm = new Education();
+		
+		Employment emp = PlanFactory.createEmployment( username, token, clientid );
+		if ( emp == null ) emp = new Employment();
+		
 		return new EducationEmployment( cadm, emp );
 	}
 	
 	
+	private static Employment createEmployment(String username, String token,
+			String clientid) {
+		
+		List<Map<String, Object>> resultsList = DatabaseAccess.getEmployment( username, token, clientid );
+		if ( resultsList == null ) return null;
+
+		Map<String, Object> r = resultsList.get(0);
+		ArrayList<Object> fields = new ArrayList<Object>();
+		for ( String field: DatabaseAccess.FLDS_EMPLOYMENT) {
+			field=field.substring(2);
+			fields.add(r.get(field));
+		}
+		
+		return new Employment(
+				(String)fields.get(0),
+				(String)fields.get(1),
+				(String)fields.get(2),
+				(String)fields.get(3),
+				(String)fields.get(4),
+				(String)fields.get(5),
+				(String)fields.get(6),
+				(String)fields.get(7),
+				(String)fields.get(8)
+				);
+	}
+
+
+	private static Education createEducation(String username, String token, String clientid) {
+		
+		List<Map<String, Object>> resultsList = DatabaseAccess.getEducation( username, token, clientid );
+		
+		if ( resultsList == null ) return null;
+		Map<String, Object> r = resultsList.get(0);
+		ArrayList<Object> fields = new ArrayList<Object>();
+		for ( String field: DatabaseAccess.FLDS_EDUCATION) {
+			field=field.substring(2);
+			fields.add(r.get(field));
+		}
+		
+		return new Education(
+				(String)fields.get(0),
+				(String)fields.get(1),
+				(String)fields.get(2),
+				(String)fields.get(3),
+				(String)fields.get(4),
+				(String)fields.get(5),
+				(String)fields.get(6),
+				(String)fields.get(7),
+				(String)fields.get(8),
+				(String)fields.get(9),
+				(String)fields.get(10)
+				);
+	}
+
+
 	public static Planning createPlanning() {
 		HolidayPlan holPlan = new HolidayPlan("E", "E", "E", "E", "E", "E");
 		GoalPlan goaPlan = new GoalPlan("E", "E", "E", "E", "E", "E");
@@ -90,12 +157,12 @@ public class PlanFactory {
 	}
 	
 	
-	public static PersonalPlan createPersonalPlan() {
+	public static PersonalPlan createPersonalPlan(String username, String token, String clientid) {
 		ClientDetails cd = createClientDetails();
 		HealthDetails hd = createHealthDetails();
 		SupportRequired sr = createSupportRequired();
 		Communication com = createCommunication();
-		EducationEmployment ee = createEducationEmployment();
+		EducationEmployment ee = createEducationEmployment(username, token, clientid);
 		Planning plan = createPlanning();
 		return new PersonalPlan( cd, hd, sr, com, ee, plan );
 	}
