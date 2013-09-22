@@ -9,6 +9,21 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+	<!--
+	STAFF
+	Login Name: staff
+	Token: asdfasfdasdf
+	
+	LOGGED IN CLIENT
+	Login Name: client
+	Token: HsBijcboKZpa5MaMHl7ZHLFPl5aBsJMY
+	
+	CLIENT
+	Login Name: pewpew
+	<!-- -->
+
+	<!--
 	<p><a href="./rest/auth?auth_token=abcdef&user_id=steven">validate good</a></p>
 	<p><a href="./rest/auth?auth_token=12345">no user_id</a></p>
 	<p><a href="./rest/auth?user_id=12345">no auth_token</a></p>
@@ -21,6 +36,23 @@
 	<p><a href="./rest/personalplan/educationemployment/client/HsBijcboKZpa5MaMHl7ZHLFPl5aBsJMY/pewpew">fetch employment/education</a></p>
 	<br>
 	<p><a href="./rest/role?auth_token=HsBijcboKZpa5MaMHl7ZHLFPl5aBsJMY&user_id=client">get role</a></p>
+	<!-- -->
+	
+	<p>
+		<a href="./rest/role?auth_token=asdfasfdasdf&user_id=staff">Get staff role</a> <br>
+		<a href="./rest/role?auth_token=HsBijcboKZpa5MaMHl7ZHLFPl5aBsJMY&user_id=client">Get client role</a>
+	</p>
+	
+	<p>
+		<a href="./rest/personalplan/staff/asdfasfdasdf/coolbeans">Get 'coolbeans' whole personal plan as 'staff'</a> <br>
+		<a href="./rest/personalplan/planning/staff/asdfasfdasdf/coolbeans">Get 'coolbeans' planning as 'staff'</a> <br>
+		<a href="./rest/personalplan/communication/staff/asdfasfdasdf/coolbeans">Get 'coolbeans' communication as 'staff'</a> <br>
+		<a href="./rest/personalplan/supportrequired/staff/asdfasfdasdf/coolbeans">Get 'coolbeans' supportrequired as 'staff'</a> <br>
+		<a href="./rest/personalplan/healthdetails/staff/asdfasfdasdf/coolbeans">Get 'coolbeans' healthdetails as 'staff'</a> <br>
+		<a href="./rest/personalplan/clientdetails/staff/asdfasfdasdf/coolbeans">Get 'coolbeans' clientdetails as 'staff'</a> <br>
+		<a href="./rest/personalplan/educationemployment/staff/asdfasfdasdf/coolbeans">Get 'coolbeans' educationemployment as 'staff'</a> <br>
+	</p>
+	
 	
 	<form method="post" action="./rest/auth">
 		<p><strong>Authenticate</strong><p>
@@ -30,6 +62,7 @@
 	</form>
 	
 </body>
+	<!--  This section is used to test POSTing -->
 	<script type='text/javascript'>
 		var DMSUser = new Object();
 		DMSUser.user_id = "new userid";
@@ -41,6 +74,7 @@
 		//alert(jsonText);
 		//$("#testing").html(jsonText);
 		
+		/*
 		$.ajax({
 			url:'./rest/user/userid/token', // + $.cookie('auth_token')+ '/' + $.cookie('user_id') +'/1',
 			type: 'POST',
@@ -50,6 +84,6 @@
 			success: function(jqXHR, textStatus) {
 				//alert(textStatus);
 			}
-		});
+		}); /**/
 	</script>
 </html>
