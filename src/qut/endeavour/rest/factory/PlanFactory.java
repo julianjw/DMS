@@ -229,7 +229,7 @@ public class PlanFactory {
 	}
 
 
-	public static HealthDetails createHealthDetails(String username, String token, String clientid) { // TODO health details
+	public static HealthDetails createHealthDetails(String username, String token, String clientid) {
 		HealthInformation hi = PlanFactory.createHealthInformation( username, token, clientid );
 		HealthManagement hm = PlanFactory.createHealthManagement( username, token, clientid );
 		HealthDietary dr = PlanFactory.createHealthDietary( username, token, clientid );
@@ -302,8 +302,7 @@ public class PlanFactory {
 		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_DISABILITY );
 		List<Object> fields = rows.get(0);
 		if ( fields.size() != DatabaseNames.FLDS_DISABILITY.size() ) return null; // some problem chopping up data from database.
-		
-		System.out.println("***"+fields.get(2).toString());
+
 		
 		return new HealthInformation(
 				(String)fields.get(0),
@@ -317,18 +316,174 @@ public class PlanFactory {
 	}
 
 
-	public static SupportRequired createSupportRequired(){ // TODO support required
-		GeneralSupport gs = new GeneralSupport("C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C");
-		MobilityAndTransport mat = new MobilityAndTransport("C", "C", "C", "C", "C", "C", "C", "C");
-		FinancialSupport finsup = new FinancialSupport("C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C");
-		List<String> services = new ArrayList<String>();
-		services.add("C");
-		DailyActivities dailyact = new DailyActivities("C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", services);
-		Relaxation relax = new Relaxation("C","C","C","C","C");
+	public static SupportRequired createSupportRequired(String username,
+			String token, String clientid){
+		GeneralSupport gs = PlanFactory.createGeneralSupport( username, token, clientid );
+		MobilityAndTransport mat = PlanFactory.createMobilityAndTransport( username, token, clientid );
+		FinancialSupport finsup = PlanFactory.createFinancialSupport( username, token, clientid );
+		DailyActivities dailyact = PlanFactory.createDailyActivities( username, token, clientid );
+		Relaxation relax = PlanFactory.createRelaxation( username, token, clientid );
 		return new SupportRequired(gs, mat, finsup, dailyact, relax);
 	}
 	
 	
+	private static Relaxation createRelaxation(String username, String token,
+			String clientid) {
+
+		List<Map<String, Object>> resultsList = DatabaseAccess.getRelaxation( username, token, clientid );
+		if ( resultsList == null ) return null;
+		
+		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_RELAXATION );
+		List<Object> fields = rows.get(0);
+		if ( fields.size() != DatabaseNames.FLDS_RELAXATION.size() ) return null; // some problem chopping up data from database.
+
+		return new Relaxation(
+				(String)fields.get(0),
+				(String)fields.get(1),
+				(String)fields.get(2),
+				(String)fields.get(3),
+				(String)fields.get(4)
+				);
+	}
+
+
+	private static DailyActivities createDailyActivities(String username,
+			String token, String clientid) {
+		
+		List<String> services = PlanFactory.createServices( username, token, clientid );
+
+		List<Map<String, Object>> resultsList = DatabaseAccess.getDailyActivities( username, token, clientid );
+		if ( resultsList == null ) return null;
+		
+		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_ACTIVITIES );
+		List<Object> fields = rows.get(0);
+		if ( fields.size() != DatabaseNames.FLDS_ACTIVITIES.size() ) return null; // some problem chopping up data from database.
+
+		return new DailyActivities(
+				(String)fields.get(0),
+				(String)fields.get(1),
+				(String)fields.get(2),
+				(String)fields.get(3),
+				(String)fields.get(4),
+				(String)fields.get(5),
+				(String)fields.get(6),
+				(String)fields.get(7),
+				(String)fields.get(8),
+				(String)fields.get(9),
+				(String)fields.get(10),
+				(String)fields.get(11),
+				(String)fields.get(12),
+				(String)fields.get(13),
+				(String)fields.get(14),
+				(String)fields.get(15),
+				(String)fields.get(16),
+				(String)fields.get(17),
+				(String)fields.get(18),
+				(String)fields.get(19),
+				(String)fields.get(20),
+				services
+				);
+	}
+
+
+	private static List<String> createServices(String username, String token,
+			String clientid) {
+
+		List<Map<String, Object>> resultsList = DatabaseAccess.getSupportServices( username, token, clientid );
+		if ( resultsList == null ) return null;
+		
+		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_SUPPORT_SERVICES );
+		if ( rows.get(0).size() != DatabaseNames.FLDS_SUPPORT_SERVICES.size() ) return null; // some problem chopping up data from database.
+		
+		List<String> allServices = new ArrayList<String>();
+		for ( ArrayList<Object> row : rows ) {
+			if ( row == null ) return null;
+			allServices.add((String)row.get(0));
+		}
+		return allServices;
+	}
+
+
+	private static FinancialSupport createFinancialSupport(String username,
+			String token, String clientid) {
+
+		List<Map<String, Object>> resultsList = DatabaseAccess.getFinancialSupport( username, token, clientid );
+		if ( resultsList == null ) return null;
+		
+		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_FINANCIAL );
+		List<Object> fields = rows.get(0);
+		if ( fields.size() != DatabaseNames.FLDS_FINANCIAL.size() ) return null; // some problem chopping up data from database.
+
+		return new FinancialSupport(
+				(String)fields.get(0),
+				(String)fields.get(1),
+				(String)fields.get(2),
+				(String)fields.get(3),
+				(String)fields.get(4),
+				(String)fields.get(5),
+				(String)fields.get(6),
+				(String)fields.get(7),
+				(String)fields.get(8),
+				(String)fields.get(9),
+				(String)fields.get(10),
+				(String)fields.get(11),
+				(String)fields.get(12),
+				(String)fields.get(13)
+				);
+	}
+
+
+	private static MobilityAndTransport createMobilityAndTransport(
+			String username, String token, String clientid) {
+
+		List<Map<String, Object>> resultsList = DatabaseAccess.getMobilityAndTransport( username, token, clientid );
+		if ( resultsList == null ) return null;
+		
+		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_MOBILITY_TRANSPORT );
+		List<Object> fields = rows.get(0);
+		if ( fields.size() != DatabaseNames.FLDS_MOBILITY_TRANSPORT.size() ) return null; // some problem chopping up data from database.
+
+		return new MobilityAndTransport(
+				(String)fields.get(0),
+				(String)fields.get(1),
+				(String)fields.get(2),
+				(String)fields.get(3),
+				(String)fields.get(4),
+				(String)fields.get(5),
+				(String)fields.get(6),
+				(String)fields.get(7)
+				);
+	}
+
+
+	private static GeneralSupport createGeneralSupport(String username,
+			String token, String clientid) {
+
+		List<Map<String, Object>> resultsList = DatabaseAccess.getGeneralSupport( username, token, clientid );
+		if ( resultsList == null ) return null;
+		
+		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_SUPPORT_GENERAL );
+		List<Object> fields = rows.get(0);
+		if ( fields.size() != DatabaseNames.FLDS_SUPPORT_GENERAL.size() ) return null; // some problem chopping up data from database.
+
+		return new GeneralSupport(
+				(String)fields.get(0),
+				(String)fields.get(1),
+				(String)fields.get(2),
+				(String)fields.get(3),
+				(String)fields.get(4),
+				(String)fields.get(5),
+				(String)fields.get(6),
+				(String)fields.get(7),
+				(String)fields.get(8),
+				(String)fields.get(9),
+				(String)fields.get(10),
+				(String)fields.get(11),
+				(String)fields.get(12)
+				);
+	}
+
+
 	public static Communication createCommunication() { // TODO Communiation
 		ArrayList<BadTopics> badt = new ArrayList<BadTopics>();
 		badt.add( new BadTopics("C1","C") );
@@ -408,7 +563,7 @@ public class PlanFactory {
 	}
 
 
-	public static Planning createPlanning() {
+	public static Planning createPlanning() { // TODO Planning
 		HolidayPlan holPlan = new HolidayPlan("E", "E", "E", "E", "E", "E");
 		GoalPlan goaPlan = new GoalPlan("E", "E", "E", "E", "E", "E");
 		return new Planning( holPlan, goaPlan );
@@ -424,7 +579,7 @@ public class PlanFactory {
 	public static PersonalPlan createPersonalPlan(String username, String token, String clientid) { // TODO Personal Plan
 		ClientDetails cd = createClientDetails(username, token, clientid);
 		HealthDetails hd = createHealthDetails(username, token, clientid);
-		SupportRequired sr = createSupportRequired();
+		SupportRequired sr = createSupportRequired(username, token, clientid);
 		Communication com = createCommunication();
 		EducationEmployment ee = createEducationEmployment(username, token, clientid);
 		Planning plan = createPlanning();

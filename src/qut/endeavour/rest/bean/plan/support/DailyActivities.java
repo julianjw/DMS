@@ -38,7 +38,6 @@ public class DailyActivities {
 			String sunday, String otherThings, String routineMorning,
 			String routineMealTime, String routineAfternoon,
 			String routineSleeping, String routineWeekend, List<String> service) {
-		super();
 		this.sleeping = sleeping;
 		this.bedTime = bedTime;
 		this.bathing = bathing;

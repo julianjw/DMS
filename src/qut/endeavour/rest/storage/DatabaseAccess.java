@@ -588,4 +588,52 @@ public class DatabaseAccess {
 		System.out.println("DatabaseAccess: Getting Health Management Details.");
 		return getUserRelatedDetails( DatabaseNames.FLDS_MANAGEMENT, DatabaseNames.TBL_MANAGEMENT, clientid );
 	}
+
+	public static List<Map<String, Object>> getRelaxation(String username,
+			String token, String clientid) {
+		if (!makeConnection()) return null;
+		if (!validateUser(username, token)) return null;
+		System.out.println("DatabaseAccess: Getting Relaxation.");
+		return getUserRelatedDetails( DatabaseNames.FLDS_RELAXATION, DatabaseNames.TBL_RELAXATION, clientid );
+	}
+
+	public static List<Map<String, Object>> getDailyActivities(String username,
+			String token, String clientid) {
+		if (!makeConnection()) return null;
+		if (!validateUser(username, token)) return null;
+		System.out.println("DatabaseAccess: Getting Activities.");
+		return getUserRelatedDetails( DatabaseNames.FLDS_ACTIVITIES, DatabaseNames.TBL_ACTIVITIES, clientid );
+	}
+
+	public static List<Map<String, Object>> getSupportServices(String username,
+			String token, String clientid) {
+		if (!makeConnection()) return null;
+		if (!validateUser(username, token)) return null;
+		System.out.println("DatabaseAccess: Getting Support Services.");
+		return getUserRelatedDetails( DatabaseNames.FLDS_SUPPORT_SERVICES, DatabaseNames.TBL_SUPPORT_SERVICES, clientid );
+	}
+
+	public static List<Map<String, Object>> getFinancialSupport(
+			String username, String token, String clientid) {
+		if (!makeConnection()) return null;
+		if (!validateUser(username, token)) return null;
+		System.out.println("DatabaseAccess: Getting Financial Support.");
+		return getUserRelatedDetails( DatabaseNames.FLDS_FINANCIAL, DatabaseNames.TBL_FINANCIAL, clientid );
+	}
+
+	public static List<Map<String, Object>> getMobilityAndTransport(
+			String username, String token, String clientid) {
+		if (!makeConnection()) return null;
+		if (!validateUser(username, token)) return null;
+		System.out.println("DatabaseAccess: Getting Mobility and transport.");
+		return getUserRelatedDetails( DatabaseNames.FLDS_MOBILITY_TRANSPORT, DatabaseNames.TBL_MOBILITY_TRANSPORT, clientid );
+	}
+
+	public static List<Map<String, Object>> getGeneralSupport(String username,
+			String token, String clientid) {
+		if (!makeConnection()) return null;
+		if (!validateUser(username, token)) return null;
+		System.out.println("DatabaseAccess: Getting general support");
+		return getUserRelatedDetails( DatabaseNames.FLDS_SUPPORT_GENERAL, DatabaseNames.TBL_SUPPORT_GENERAL, clientid );
+	}
 }

@@ -205,7 +205,7 @@ public class PlanResource {
 		System.out.println("Username: "+username);
 		System.out.println("clientId: "+clientid);
 		
-		return PlanFactory.createSupportRequired();
+		return PlanFactory.createSupportRequired(username, token, clientid);
 	}
 	
 	@GET

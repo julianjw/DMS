@@ -229,7 +229,7 @@ public class DatabaseNames {
 	public final static String TBL_SUPPORT_SERVICES = "support_services";
 	public final static List<String> FLDS_SUPPORT_SERVICES = new ArrayList<String>() {{
 		add("s*service_name");
-		add("s*service_description");
+//		add("s*service_description");
 	}};
 	
 		// COMMUNICATION
