@@ -32,6 +32,7 @@ import qut.endeavour.rest.bean.plan.support.GeneralSupport;
 import qut.endeavour.rest.bean.plan.support.MobilityAndTransport;
 import qut.endeavour.rest.bean.plan.support.Relaxation;
 import qut.endeavour.rest.storage.DatabaseAccess;
+import qut.endeavour.rest.storage.DatabaseNames;
 
 public class PlanFactory {
 	/**
@@ -72,9 +73,9 @@ public class PlanFactory {
 		List<Map<String, Object>> resultsList = DatabaseAccess.getFormalOrders( username, token, clientid );
 		if ( resultsList == null ) return null;
 		
-		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseAccess.FLDS_FORMAL_ORDERS );
+		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_FORMAL_ORDERS );
 		List<Object> fields = rows.get(0);
-		if ( fields.size() != DatabaseAccess.FLDS_FORMAL_ORDERS.size() ) return null; // some problem chopping up data from database.
+		if ( fields.size() != DatabaseNames.FLDS_FORMAL_ORDERS.size() ) return null; // some problem chopping up data from database.
 		
 		return new FormalOrders(
 				(String)fields.get(0),
@@ -99,9 +100,9 @@ public class PlanFactory {
 		List<Map<String, Object>> resultsList = DatabaseAccess.getLivingArrangements( username, token, clientid );
 		if ( resultsList == null ) return null;
 		
-		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseAccess.FLDS_LIVING_ARRANGEMENTS );
+		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_LIVING_ARRANGEMENTS );
 		List<Object> fields = rows.get(0);
-		if ( fields.size() != DatabaseAccess.FLDS_LIVING_ARRANGEMENTS.size() ) return null; // some problem chopping up data from database.
+		if ( fields.size() != DatabaseNames.FLDS_LIVING_ARRANGEMENTS.size() ) return null; // some problem chopping up data from database.
 		
 		List<ContactDetails> allContacts = PlanFactory.createContactDetails( username, token, clientid );
 		
@@ -162,8 +163,8 @@ public class PlanFactory {
 		if ( resultsList == null ) return null;
 		
 		// get field names
-		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseAccess.FLDS_CLIENT_CONTACTS );
-		if ( rows.get(0).size() != DatabaseAccess.FLDS_CLIENT_CONTACTS.size() ) return null; // some problem chopping up data from database.
+		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_CLIENT_CONTACTS );
+		if ( rows.get(0).size() != DatabaseNames.FLDS_CLIENT_CONTACTS.size() ) return null; // some problem chopping up data from database.
 		
 		List<ContactDetails> allContacts = new ArrayList<ContactDetails>();
 		
@@ -188,9 +189,9 @@ public class PlanFactory {
 		List<Map<String, Object>> resultsList = DatabaseAccess.getAlertInformation( username, token, clientid );
 		if ( resultsList == null ) return null;
 		
-		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseAccess.FLD_ALERT_INFO );
+		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_ALERT_INFO );
 		List<Object> fields = rows.get(0);
-		if ( fields.size() != DatabaseAccess.FLD_ALERT_INFO.size() ) return null; // some problem chopping up data from database.
+		if ( fields.size() != DatabaseNames.FLDS_ALERT_INFO.size() ) return null; // some problem chopping up data from database.
 		
 		return new AlertInformation(
 				(String)fields.get(0),
@@ -212,9 +213,9 @@ public class PlanFactory {
 		List<Map<String, Object>> resultsList = DatabaseAccess.getPersonalDetails( username, token, clientid );
 		if ( resultsList == null ) return null;
 		
-		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseAccess.FLD_PERSONAL_DETAILS );
+		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_PERSONAL_DETAILS );
 		List<Object> fields = rows.get(0);
-		if ( fields.size() != DatabaseAccess.FLD_PERSONAL_DETAILS.size() ) return null; // some problem chopping up data from database.
+		if ( fields.size() != DatabaseNames.FLDS_PERSONAL_DETAILS.size() ) return null; // some problem chopping up data from database.
 		
 		return new PersonalDetails(
 				(String)fields.get(0),
@@ -228,16 +229,95 @@ public class PlanFactory {
 	}
 
 
-	public static HealthDetails createHealthDetails() {
-		HealthInformation healthInfo = new HealthInformation("b", "b", false, false, false, "b", "b");
-		HealthManagement healthManagement = new HealthManagement("b", "b", "b", "b", 0, "b", "b", "b", "b", "b");
-		HealthDietary dietaryReqs = new HealthDietary("b", "b", false, "b", "b", "b", "b", "b", "b", "b", "b", "b", "b");
-		return new HealthDetails(healthInfo, healthManagement, dietaryReqs);
+	public static HealthDetails createHealthDetails(String username, String token, String clientid) { // TODO health details
+		HealthInformation hi = PlanFactory.createHealthInformation( username, token, clientid );
+		HealthManagement hm = PlanFactory.createHealthManagement( username, token, clientid );
+		HealthDietary dr = PlanFactory.createHealthDietary( username, token, clientid );
+		return new HealthDetails(hi, hm, dr);
 		
 	}
 	
 	
-	public static SupportRequired createSupportRequired(){
+	private static HealthDietary createHealthDietary(String username,
+			String token, String clientid) {
+
+		List<Map<String, Object>> resultsList = DatabaseAccess.getHealthDietary(username, token, clientid);
+		if ( resultsList == null ) return null;
+		
+		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_DIETARY );
+		List<Object> fields = rows.get(0);
+		if ( fields.size() != DatabaseNames.FLDS_DIETARY.size() ) return null; // some problem chopping up data from database.
+		
+		return new HealthDietary(
+				(String)fields.get(0),
+				(String)fields.get(1),
+				(Boolean)fields.get(2),
+				(String)fields.get(3),
+				(String)fields.get(4),
+				(String)fields.get(5),
+				(String)fields.get(6),
+				(String)fields.get(7),
+				(String)fields.get(8),
+				(String)fields.get(9),
+				(String)fields.get(10),
+				(String)fields.get(11),
+				(String)fields.get(12)
+				);
+	}
+
+
+	private static HealthManagement createHealthManagement(String username,
+			String token, String clientid) {
+		
+		List<Map<String, Object>> resultsList = DatabaseAccess.getHealthManagement( username, token, clientid );
+		if ( resultsList == null ) return null;
+		
+		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_MANAGEMENT );
+		List<Object> fields = rows.get(0);
+		if ( fields.size() != DatabaseNames.FLDS_MANAGEMENT.size() ) return null; // some problem chopping up data from database.
+		
+		
+		
+		return new HealthManagement(
+				(String)fields.get(0),
+				(String)fields.get(1),
+				(String)fields.get(2),
+				(String)fields.get(3),
+				(Integer)fields.get(4),
+				DatabaseAccess.getPeriodById((Integer)fields.get(5)), // feed integer in and get string back
+				(String)fields.get(6),
+				(String)fields.get(7),
+				(String)fields.get(8),
+				(String)fields.get(9)
+				);
+	}
+
+
+	private static HealthInformation createHealthInformation(String username,
+			String token, String clientid) {
+		
+		List<Map<String, Object>> resultsList = DatabaseAccess.getHealthDisability( username, token, clientid );
+		if ( resultsList == null ) return null;
+		
+		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_DISABILITY );
+		List<Object> fields = rows.get(0);
+		if ( fields.size() != DatabaseNames.FLDS_DISABILITY.size() ) return null; // some problem chopping up data from database.
+		
+		System.out.println("***"+fields.get(2).toString());
+		
+		return new HealthInformation(
+				(String)fields.get(0),
+				(String)fields.get(1),
+				(Boolean)fields.get(2),
+				(Boolean)fields.get(3),
+				(Boolean)fields.get(4),
+				(String)fields.get(5),
+				(String)fields.get(6)
+				);
+	}
+
+
+	public static SupportRequired createSupportRequired(){ // TODO support required
 		GeneralSupport gs = new GeneralSupport("C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C");
 		MobilityAndTransport mat = new MobilityAndTransport("C", "C", "C", "C", "C", "C", "C", "C");
 		FinancialSupport finsup = new FinancialSupport("C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C");
@@ -249,7 +329,7 @@ public class PlanFactory {
 	}
 	
 	
-	public static Communication createCommunication() {
+	public static Communication createCommunication() { // TODO Communiation
 		ArrayList<BadTopics> badt = new ArrayList<BadTopics>();
 		badt.add( new BadTopics("C1","C") );
 		badt.add( new BadTopics("C2","C") );
@@ -283,9 +363,9 @@ public class PlanFactory {
 		if ( resultsList == null ) return null;
 
 		
-		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseAccess.FLDS_EMPLOYMENT );
+		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_EMPLOYMENT );
 		List<Object> fields = rows.get(0);
-		if ( fields.size() != DatabaseAccess.FLDS_EMPLOYMENT.size() ) return null; // some problem chopping up data from database.
+		if ( fields.size() != DatabaseNames.FLDS_EMPLOYMENT.size() ) return null; // some problem chopping up data from database.
 		
 		return new Employment(
 				(String)fields.get(0),
@@ -307,10 +387,10 @@ public class PlanFactory {
 		if ( resultsList == null ) return null;
 		
 		
-		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseAccess.FLDS_EDUCATION );
+		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_EDUCATION );
 		if ( rows.size() < 1 ) return null;
 		List<Object> fields = rows.get(0);
-		if ( fields.size() != DatabaseAccess.FLDS_EDUCATION.size() ) return null; // some problem chopping up data from database.
+		if ( fields.size() != DatabaseNames.FLDS_EDUCATION.size() ) return null; // some problem chopping up data from database.
 		
 		return new Education(
 				(String)fields.get(0),
@@ -341,9 +421,9 @@ public class PlanFactory {
 	 * @param clientid
 	 * @return
 	 */
-	public static PersonalPlan createPersonalPlan(String username, String token, String clientid) {
+	public static PersonalPlan createPersonalPlan(String username, String token, String clientid) { // TODO Personal Plan
 		ClientDetails cd = createClientDetails(username, token, clientid);
-		HealthDetails hd = createHealthDetails();
+		HealthDetails hd = createHealthDetails(username, token, clientid);
 		SupportRequired sr = createSupportRequired();
 		Communication com = createCommunication();
 		EducationEmployment ee = createEducationEmployment(username, token, clientid);

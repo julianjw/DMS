@@ -15,7 +15,16 @@ public class HealthInformation {
 	
 	public HealthInformation() {}
 
-
+	/**
+	 * 
+	 * @param historyAndInfo
+	 * @param conditions
+	 * @param takeMedication
+	 * @param assistanceWithMedication
+	 * @param selfMedicate
+	 * @param allMedicalInfo
+	 * @param additionalInfo
+	 */
 	public HealthInformation(String historyAndInfo, String conditions,
 			boolean takeMedication, boolean assistanceWithMedication,
 			boolean selfMedicate, String allMedicalInfo, String additionalInfo) {

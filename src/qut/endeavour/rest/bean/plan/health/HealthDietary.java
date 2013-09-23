@@ -20,6 +20,22 @@ public class HealthDietary {
 	
 	public HealthDietary() {}
 
+	/**
+	 * 
+	 * @param cannotEat
+	 * @param avoidFood
+	 * @param assessmentDone
+	 * @param usualDiet
+	 * @param snacks
+	 * @param dislikes
+	 * @param breakfast
+	 * @param lunch
+	 * @param dinner
+	 * @param supportDrinking
+	 * @param eatingSupport
+	 * @param otherInfo
+	 * @param location
+	 */
 	public HealthDietary(String cannotEat, String avoidFood,
 			boolean assessmentDone, String usualDiet, String snacks,
 			String dislikes, String breakfast, String lunch, String dinner,

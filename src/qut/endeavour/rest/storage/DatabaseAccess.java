@@ -13,24 +13,6 @@ import java.util.Map.Entry;
 
 import qut.endeavour.rest.exception.DMSClientErrorException;
 
-
-/*
- * public final static List<String> FLDS_LIVING_ARRANGEMENTS = new ArrayList<String>() {{
-		add("s*");
-		add("s*");
-		add("s*");
-		add("s*");
-		add("s*");
-		add("s*");
-		add("s*");
-		add("s*");
-		add("s*");
-		add("s*");
-		add("s*");
-		add("s*");
-	}};
- */
-
 public class DatabaseAccess {
 	
 	private final static String DBMS_LOCATION = "jdbc:mysql://localhost:3306/";
@@ -49,145 +31,15 @@ public class DatabaseAccess {
 	private final static String TBL_USER_INFO = "user_info";
 	
 	
-	/* ***** BEGIN PERSONAL PLAN ***** */
-		// CLIENT DETAILS
-	private final static String TBL_PERSONAL_DETAILS = "client_personal_details";
-	public final static List<String> FLD_PERSONAL_DETAILS = new ArrayList<String>() {{
-		add("s*nickname");
-		add("d*dob");
-		add("s*phoneno");
-		add("s*mobileno");
-		add("s*email");
-		add("d*creation_date");
-		add("d*review_date");
-//		add("s*photo");
-	}};
-	
-
-	private final static String TBL_ALERT_INFO = "client_alerts";
-	public final static List<String> FLD_ALERT_INFO = new ArrayList<String>() {{
-		add("s*allergies");
-		add("s*med_issues");
-		add("s*eating_alerts");
-		add("s*safety_concerns");
-		add("s*restrict_practices");
-		add("s*adult_guard_child_protection");
-		add("s*complex_supp_needs");
-		add("s*phobias");
-		add("s*other");
-	}};
-	
-	private final static String TBL_FORMAL_ORDERS = "client_formal_orders";
-	public final static List<String> FLDS_FORMAL_ORDERS = new ArrayList<String>() {{
-		add("s*order_for");
-		add("s*appointee");
-		add("s*details");
-		add("s*order_location");
-		add("s*order_info");
-		add("s*child_supp_officer");
-		add("s*community_visitor_info");
-		add("s*protection_order");
-		add("d*commencement_date");
-		add("s*justice_requirements");
-		add("s*family_contact");
-		add("s*contact_arrangement");
-		add("s*special_conditions");
-	}};
-	
-	
-	private final static String TBL_LIVING_ARRANGEMENTS = "client_living_arrangements";
-	public final static List<String> FLDS_LIVING_ARRANGEMENTS = new ArrayList<String>() {{
-		add("s*service");
-		add("s*street");
-		add("s*houseno");
-		add("s*suburb");
-		add("i*post_code");
-		add("s*city");
-	}};
-	
-	// This table is part of the LivingArrangements
-	private final static String TBL_CLIENT_CONTACTS = "client_contacts";
-	public final static List<String> FLDS_CLIENT_CONTACTS = new ArrayList<String>() {{
-		add("s*name");
-		add("s*relationship");
-		add("s*contact_arrangements");
-		add("i*contact_type_id");
-	}};
-	
-	// This table is part of the LivingArrangements
-	private final static String TBL_CONTACT_TYPE = "client_contact_type"; // subtable
-	public static List<String> FLDS_CONTACT_TYPE = new ArrayList<String>() {{
-		add("i*contact_type_id");
-		add("s*contact_type_name");
-		add("s*description");
-	}};
-	private static Map<String,ContactTypeRecord> cTypeByMap = null; //  get contact type record by name or (String)id
-	
-	
-	
-	
-	
-
-	
-	
-		// HEALTH
-	private final static String TBL_DIETARY = "health_dietary";
-	private final static String TBL_DISABILITY = "health_disability";
-	private final static String TBL_MANAGEMENT = "health_management";
-	private final static String TBL_FREQUENCY_PERIOD = "health_frequency_period"; //TODO PRELOAD
-	
-		// SUPPORT
-	private final static String TBL_SUPPORT_GENERAL = "support_general";
-	private final static String TBL_MOBILITY_TRANSPORT = "support_mobility_transport";
-	private final static String TBL_FINANCIAL = "support_financial";
-	private final static String TBL_ACTIVITIES = "support_activities";
-	private final static String TBL_RELAXATION = "support_relaxation";
-	
-		// COMMUNICATION
-	private final static String TBL_COMMUNICATION = "communication";
-	private final static String TBL_BAD_TOPICS = "communication_bad_topics";
-	
-		// EDUCATION AND EMPLOYMENT
-	private final static String TBL_EDUCATION = "education";
-	public static List<String> FLDS_EDUCATION = new ArrayList<String>() {{
-		add("s*edu_institution");
-		add("s*edu_address");
-		add("s*enrolled_course");
-		add("s*contact_person");
-		add("s*liason_guidance_officer");
-		add("s*support_persons");
-		add("s*lecturer");
-		add("s*edu_supp_plan");
-		add("s*other_supp");
-		add("s*agency_assist");
-		add("s*study_supp");
-	}};
-	
-	private final static String TBL_EMPLOYMENT = "employment";
-	public static List<String> FLDS_EMPLOYMENT = new ArrayList<String>() {{
-		add("s*employer");
-		add("s*emp_address");
-		add("s*supervisor");
-		add("s*pos_held");
-		add("s*work_arrangements");
-		add("s*transport");
-		add("s*holiday_plans");
-		add("s*sick_leave");
-		add("s*resources");
-	}};
-	
-	
-		// PLANNING
-	private final static String TBL_GOAL = "plan_goal";
-	private final static String TBL_HOLIDAY = "plan_holiday";
-	/* ***** END PERSONAL PLAN ***** */
-	
-	
-	
-	
-	
 	private static Connection  con = null;
 	private static Map<String,RoleRecord> roleByName = null;
+	private static Map<String,ContactTypeRecord> cTypeByMap = null; //  get contact type record by name or (String)id
+	private static Map<String,PeriodRecord> periodByMap = null; //  get contact type record by name or (String)id
+	
+	
+
+	
+	
 	
 	
 	/**
@@ -234,8 +86,10 @@ public class DatabaseAccess {
 				System.out.println("DatabaseAccess: Making a new connection to the database.");
 				con = DriverManager.getConnection(DBMS_LOCATION+DATABASE_NAME, dbUsername, dbPassword );
 				
+				//TODO refactor these
 				populateRoles();
 				populateContactTypes();
+				populatePeriods();
 			}
 			
 			return true;
@@ -268,6 +122,10 @@ public class DatabaseAccess {
 		return true;
 	}
 	
+	
+	/* **************************************** */
+	/* ***********PREFILLS********************* */
+	/* **************************************** */
 	
 	/**
 	 * 
@@ -313,6 +171,32 @@ public class DatabaseAccess {
 			cTypeByMap.put(contactTypeId.toString(), contactType);
 		}
 	}
+	
+	
+	private static void populatePeriods() throws SQLException {
+		System.out.println("DatabaseAccess: Keep valid period values stored for referencing.");
+		
+		// make new map
+		periodByMap = new HashMap<String,PeriodRecord>();
+		
+		String sql = "SELECT * from `health_frequency_period` order by frequency_period_id";
+
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet results = ps.executeQuery();
+		
+		while (results.next()) {
+			Integer periodId = results.getInt("frequency_period_id");
+			String periodName = results.getString("period_name");
+
+			PeriodRecord period = new PeriodRecord(periodId,periodName);
+			periodByMap.put(periodName, period );
+			periodByMap.put(periodId.toString(), period );
+		}
+	}
+
+	/* **************************************** */
+	/* ***********PREFILLS END***************** */
+	/* **************************************** */
 	
 	
 	
@@ -558,7 +442,7 @@ public class DatabaseAccess {
 		if (!makeConnection()) return null;
 		if (!validateUser(username, token)) return null;
 		System.out.println("DatabaseAccess: Getting Employment.");
-		return getUserRelatedDetails( FLDS_EMPLOYMENT, TBL_EMPLOYMENT, clientid );
+		return getUserRelatedDetails( DatabaseNames.FLDS_EMPLOYMENT, DatabaseNames.TBL_EMPLOYMENT, clientid );
 	}
 
 	public static List<Map<String,Object>> getEducation(
@@ -566,7 +450,7 @@ public class DatabaseAccess {
 		if (!makeConnection()) return null;
 		if (!validateUser(username, token)) return null;
 		System.out.println("DatabaseAccess: Getting Education.");
-		return getUserRelatedDetails( FLDS_EDUCATION, TBL_EDUCATION, clientid );
+		return getUserRelatedDetails( DatabaseNames.FLDS_EDUCATION, DatabaseNames.TBL_EDUCATION, clientid );
 	}
 	
 
@@ -576,7 +460,7 @@ public class DatabaseAccess {
 		if (!makeConnection()) return null;
 		if (!validateUser(username, token)) return null;
 		System.out.println("DatabaseAccess: Getting Formal Orders.");
-		return getUserRelatedDetails( FLDS_FORMAL_ORDERS, TBL_FORMAL_ORDERS, clientid );
+		return getUserRelatedDetails( DatabaseNames.FLDS_FORMAL_ORDERS, DatabaseNames.TBL_FORMAL_ORDERS, clientid );
 	}
 	
 	
@@ -625,9 +509,24 @@ public class DatabaseAccess {
 	 * @param key
 	 * @return
 	 */
-	public static String getContactTypeById(Integer key) {
+	public static String getContactTypeById(Integer contactTypeKey) {
 		try {
-			return cTypeByMap.get(key.toString()).cType;
+			return cTypeByMap.get(contactTypeKey.toString()).cType;
+		} catch (Exception e) {
+			return null;
+		}
+		
+	}
+	
+	/**
+	 * return period name for int key
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public static String getPeriodById(Integer key) {
+		try {
+			return periodByMap.get(key.toString()).periodName;
 		} catch (Exception e) {
 			return null;
 		}
@@ -639,7 +538,7 @@ public class DatabaseAccess {
 		if (!makeConnection()) return null;
 		if (!validateUser(username, token)) return null;
 		System.out.println("DatabaseAccess: Getting Living Arrangements.");
-		return getUserRelatedDetails( FLDS_LIVING_ARRANGEMENTS, TBL_LIVING_ARRANGEMENTS, clientid );
+		return getUserRelatedDetails( DatabaseNames.FLDS_LIVING_ARRANGEMENTS, DatabaseNames.TBL_LIVING_ARRANGEMENTS, clientid );
 	}
 
 	public static List<Map<String, Object>> getContactDetails(String username,
@@ -647,7 +546,7 @@ public class DatabaseAccess {
 		if (!makeConnection()) return null;
 		if (!validateUser(username, token)) return null;
 		System.out.println("DatabaseAccess: Getting Contact Details.");
-		return getUserRelatedDetails( FLDS_CLIENT_CONTACTS, TBL_CLIENT_CONTACTS, clientid );
+		return getUserRelatedDetails( DatabaseNames.FLDS_CLIENT_CONTACTS, DatabaseNames.TBL_CLIENT_CONTACTS, clientid );
 	}
 
 	public static List<Map<String, Object>> getAlertInformation(
@@ -655,7 +554,7 @@ public class DatabaseAccess {
 		if (!makeConnection()) return null;
 		if (!validateUser(username, token)) return null;
 		System.out.println("DatabaseAccess: Getting Alert Information.");
-		return getUserRelatedDetails( FLD_ALERT_INFO, TBL_ALERT_INFO, clientid );
+		return getUserRelatedDetails( DatabaseNames.FLDS_ALERT_INFO, DatabaseNames.TBL_ALERT_INFO, clientid );
 	}
 
 	public static List<Map<String, Object>> getPersonalDetails(String username,
@@ -663,6 +562,30 @@ public class DatabaseAccess {
 		if (!makeConnection()) return null;
 		if (!validateUser(username, token)) return null;
 		System.out.println("DatabaseAccess: Getting Personal Details.");
-		return getUserRelatedDetails( FLD_PERSONAL_DETAILS, TBL_PERSONAL_DETAILS, clientid );
+		return getUserRelatedDetails( DatabaseNames.FLDS_PERSONAL_DETAILS, DatabaseNames.TBL_PERSONAL_DETAILS, clientid );
+	}
+
+	public static List<Map<String, Object>> getHealthDietary(String username,
+			String token, String clientid) {
+		if (!makeConnection()) return null;
+		if (!validateUser(username, token)) return null;
+		System.out.println("DatabaseAccess: Getting Dietary Details.");
+		return getUserRelatedDetails( DatabaseNames.FLDS_DIETARY, DatabaseNames.TBL_DIETARY, clientid );
+	}
+
+	public static List<Map<String, Object>> getHealthDisability(String username,
+			String token, String clientid) {
+		if (!makeConnection()) return null;
+		if (!validateUser(username, token)) return null;
+		System.out.println("DatabaseAccess: Getting Disability Details.");
+		return getUserRelatedDetails( DatabaseNames.FLDS_DISABILITY, DatabaseNames.TBL_DISABILITY, clientid );
+	}
+
+	public static List<Map<String, Object>> getHealthManagement(String username,
+			String token, String clientid) {
+		if (!makeConnection()) return null;
+		if (!validateUser(username, token)) return null;
+		System.out.println("DatabaseAccess: Getting Health Management Details.");
+		return getUserRelatedDetails( DatabaseNames.FLDS_MANAGEMENT, DatabaseNames.TBL_MANAGEMENT, clientid );
 	}
 }

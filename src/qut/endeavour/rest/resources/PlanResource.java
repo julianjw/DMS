@@ -218,11 +218,11 @@ public class PlanResource {
 			) {
 		
 		System.out.println("Requesting: ClientDetails");
-		System.out.println("Token: "+token);
-		System.out.println("Username: "+username);
-		System.out.println("clientId: "+clientid);
+//		System.out.println("Token: "+token);
+//		System.out.println("Username: "+username);
+//		System.out.println("clientId: "+clientid);
 		
-		return PlanFactory.createHealthDetails();
+		return PlanFactory.createHealthDetails( username, token, clientid );
 	}
 	
 	@GET

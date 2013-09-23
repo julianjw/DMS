@@ -1,5 +1,8 @@
 package qut.endeavour.rest.bean.plan.health;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class HealthManagement {
 	private String medicalCondition;
 	private String symptom;
@@ -14,6 +17,19 @@ public class HealthManagement {
 	
 	public HealthManagement() {}
 
+	/**
+	 * 
+	 * @param medicalCondition
+	 * @param symptom
+	 * @param precurser
+	 * @param duration
+	 * @param frequency
+	 * @param frequencyPeriod
+	 * @param staffResponse
+	 * @param symptomAvoidance
+	 * @param seizureBrief
+	 * @param seizureNonBrief
+	 */
 	public HealthManagement(String medicalCondition, String symptom,
 			String precurser, String duration, int frequency,
 			String frequencyPeriod, String staffResponse,
