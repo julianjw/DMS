@@ -15,15 +15,30 @@ public class LivingArrangements {
 	public String city;
 	
 	public List<ContactDetails> familyMembers;
+	public List<ContactDetails> sickContact;
 	public List<ContactDetails> importantPerson;
-	public ContactDetails sickContact;
 	
 	public LivingArrangements() {}
 	
+	/**
+	 * 
+	 * @param service
+	 * @param houseNumber
+	 * @param street
+	 * @param suburb
+	 * @param postCode
+	 * @param city
+	 * @param familyMembers
+	 * @param sickContact
+	 * @param importantPerson
+	 */
 	public LivingArrangements(String service, String houseNumber,
 			String street, String suburb, int postCode, String city,
 			List<ContactDetails> familyMembers,
-			List<ContactDetails> importantPerson, ContactDetails sickContact) {
+			List<ContactDetails> sickContact,
+			List<ContactDetails> importantPerson
+			) {
+		
 		this.service = service;
 		this.houseNumber = houseNumber;
 		this.street = street;

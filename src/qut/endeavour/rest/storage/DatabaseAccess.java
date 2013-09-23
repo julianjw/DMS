@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,10 +11,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import qut.endeavour.rest.bean.AuthRole;
-import qut.endeavour.rest.bean.admin.DMSUser;
+import qut.endeavour.rest.exception.DMSClientErrorException;
 
 
+/*
+ * public final static List<String> FLDS_LIVING_ARRANGEMENTS = new ArrayList<String>() {{
+		add("s*");
+		add("s*");
+		add("s*");
+		add("s*");
+		add("s*");
+		add("s*");
+		add("s*");
+		add("s*");
+		add("s*");
+		add("s*");
+		add("s*");
+		add("s*");
+	}};
+ */
 
 public class DatabaseAccess {
 	
@@ -24,7 +38,11 @@ public class DatabaseAccess {
 	private final static String dbUsername = "root";
 	private final static String dbPassword = "";
 	
-	
+	private final static char BOOLEAN = 'b';
+	private final static char INTEGER = 'i';
+	private final static char STRING = 's';
+	private final static char DATE = 'd';
+	private final static char DERIVED = 'x';
 	
 	/* ***** ADMIN ***** */
 	private final static String TBL_ACTIVE_SESSION = "active_session";
@@ -34,11 +52,83 @@ public class DatabaseAccess {
 	/* ***** BEGIN PERSONAL PLAN ***** */
 		// CLIENT DETAILS
 	private final static String TBL_PERSONAL_DETAILS = "client_personal_details";
+	public final static List<String> FLD_PERSONAL_DETAILS = new ArrayList<String>() {{
+		add("s*nickname");
+		add("d*dob");
+		add("s*phoneno");
+		add("s*mobileno");
+		add("s*email");
+		add("d*creation_date");
+		add("d*review_date");
+//		add("s*photo");
+	}};
+	
+
 	private final static String TBL_ALERT_INFO = "client_alerts";
+	public final static List<String> FLD_ALERT_INFO = new ArrayList<String>() {{
+		add("s*allergies");
+		add("s*med_issues");
+		add("s*eating_alerts");
+		add("s*safety_concerns");
+		add("s*restrict_practices");
+		add("s*adult_guard_child_protection");
+		add("s*complex_supp_needs");
+		add("s*phobias");
+		add("s*other");
+	}};
+	
 	private final static String TBL_FORMAL_ORDERS = "client_formal_orders";
+	public final static List<String> FLDS_FORMAL_ORDERS = new ArrayList<String>() {{
+		add("s*order_for");
+		add("s*appointee");
+		add("s*details");
+		add("s*order_location");
+		add("s*order_info");
+		add("s*child_supp_officer");
+		add("s*community_visitor_info");
+		add("s*protection_order");
+		add("d*commencement_date");
+		add("s*justice_requirements");
+		add("s*family_contact");
+		add("s*contact_arrangement");
+		add("s*special_conditions");
+	}};
+	
+	
 	private final static String TBL_LIVING_ARRANGEMENTS = "client_living_arrangements";
-	private final static String TBL_CONTACTS = "client_contacts";
+	public final static List<String> FLDS_LIVING_ARRANGEMENTS = new ArrayList<String>() {{
+		add("s*service");
+		add("s*street");
+		add("s*houseno");
+		add("s*suburb");
+		add("i*post_code");
+		add("s*city");
+	}};
+	
+	// This table is part of the LivingArrangements
+	private final static String TBL_CLIENT_CONTACTS = "client_contacts";
+	public final static List<String> FLDS_CLIENT_CONTACTS = new ArrayList<String>() {{
+		add("s*name");
+		add("s*relationship");
+		add("s*contact_arrangements");
+		add("i*contact_type_id");
+	}};
+	
+	// This table is part of the LivingArrangements
 	private final static String TBL_CONTACT_TYPE = "client_contact_type"; // subtable
+	public static List<String> FLDS_CONTACT_TYPE = new ArrayList<String>() {{
+		add("i*contact_type_id");
+		add("s*contact_type_name");
+		add("s*description");
+	}};
+	private static Map<String,ContactTypeRecord> cTypeByMap = null; //  get contact type record by name or (String)id
+	
+	
+	
+	
+	
+
+	
 	
 		// HEALTH
 	private final static String TBL_DIETARY = "health_dietary";
@@ -87,8 +177,6 @@ public class DatabaseAccess {
 	}};
 	
 	
-	
-	
 		// PLANNING
 	private final static String TBL_GOAL = "plan_goal";
 	private final static String TBL_HOLIDAY = "plan_holiday";
@@ -102,6 +190,33 @@ public class DatabaseAccess {
 	private static Map<String,RoleRecord> roleByName = null;
 	
 	
+	/**
+	 * 
+	 * Used to poulate cTypeByName
+	 * client contact types details
+	 * 
+	 * @param user_id
+	 * @param token
+	 * @return
+	 */
+//	public static List<String> getContactTypes( String user_id, String token ) {
+//		List<String> contactTypes = new ArrayList<String>();
+//		if ( validateUser(user_id, token) ) {
+//			for ( Entry<String,ContactTypeRecord> record : cTypeByName.entrySet() ){
+//				contactTypes.add(record.getValue().cType.toLowerCase());
+//			}
+//		}
+//		return contactTypes;
+//	}
+	
+	
+	/**
+	 * Populate roleByName
+	 * 
+	 * @param user_id
+	 * @param token
+	 * @return
+	 */
 	public static List<String> getRoles( String user_id, String token ) {
 		List<String> roles = new ArrayList<String>();
 		if ( validateUser(user_id, token) ) {
@@ -120,6 +235,7 @@ public class DatabaseAccess {
 				con = DriverManager.getConnection(DBMS_LOCATION+DATABASE_NAME, dbUsername, dbPassword );
 				
 				populateRoles();
+				populateContactTypes();
 			}
 			
 			return true;
@@ -173,6 +289,28 @@ public class DatabaseAccess {
 			String roleName = results.getString("role");
 			String roleDetails = results.getString("details");
 			roleByName.put(roleName, new RoleRecord(roleId,roleName,roleDetails));
+		}
+	}
+	
+	
+	private static void populateContactTypes() throws SQLException {
+		System.out.println("DatabaseAccess: Keep valid contact types stored for contact type id referencing.");
+		
+		// make new map
+		cTypeByMap = new HashMap<String,ContactTypeRecord>();
+		
+		String sql = "SELECT * from `client_contact_type` order by contact_type_id";
+
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet results = ps.executeQuery();
+		
+		while (results.next()) {
+			Integer contactTypeId = results.getInt("contact_type_id");
+			String typeName = results.getString("contact_type_name");
+			String typeDescription = results.getString("description");
+			ContactTypeRecord contactType = new ContactTypeRecord(contactTypeId,typeName,typeDescription);
+			cTypeByMap.put(typeName, contactType );
+			cTypeByMap.put(contactTypeId.toString(), contactType);
 		}
 	}
 	
@@ -280,7 +418,8 @@ public class DatabaseAccess {
 		} catch (Exception e) {
 			// role doesn't exist in database
 			// this is case sensitive
-			return false;
+			throw new DMSClientErrorException("Incorrect role.");
+//			return false;
 		}
 		
 		// Refuse roles that aren't allowed to create users.
@@ -430,18 +569,29 @@ public class DatabaseAccess {
 		return getUserRelatedDetails( FLDS_EDUCATION, TBL_EDUCATION, clientid );
 	}
 	
+
+
+	public static List<Map<String, Object>> getFormalOrders(String username,
+			String token, String clientid) {
+		if (!makeConnection()) return null;
+		if (!validateUser(username, token)) return null;
+		System.out.println("DatabaseAccess: Getting Formal Orders.");
+		return getUserRelatedDetails( FLDS_FORMAL_ORDERS, TBL_FORMAL_ORDERS, clientid );
+	}
+	
 	
 	/**
 	 * Pulls everything from the database. transforms to a list of maps
 	 * @param fields
-	 * @param table
+	 * @param infoTable
 	 * @param username
 	 * @return
 	 */
-	private static List<Map<String, Object>> getUserRelatedDetails( List<String> fields, String table, String username ) {
+	private static List<Map<String, Object>> getUserRelatedDetails( List<String> fields, String infoTable, String username ) {
 		List<Map<String, Object>> resultMapList = new ArrayList<Map<String,Object>>();
 		
-		String sql = "SELECT tb.* from `"+table+"` tb natural join `"+TBL_USER_INFO+"` where "+TBL_USER_INFO+".username = ?";
+		String sql = "SELECT tb.* from `"+infoTable+"` tb inner join `"+TBL_USER_INFO+"` ui on tb.user_id=ui.user_id where ui.username = ?";
+		System.out.println(sql);
 		try {
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, username);
@@ -452,9 +602,11 @@ public class DatabaseAccess {
 				for ( String field : fields ) {
 					char type = field.charAt(0);
 					field = field.substring(2); // get rid of type character and *
-					if ( type == 's' ) resultMap.put(field, results.getString(field)); else
-					if ( type == 'i' ) resultMap.put(field, results.getInt(field)); else
-					if ( type == 'b') resultMap.put(field, results.getBoolean(field));
+					if ( type == STRING ) resultMap.put(field, results.getString(field)); else
+					if ( type == INTEGER ) resultMap.put(field, results.getInt(field)); else
+					if ( type == BOOLEAN) resultMap.put(field, results.getBoolean(field)); else
+					if ( type == DATE ) resultMap.put(field, results.getDate(field)); else 
+					if ( type == DERIVED ) resultMap.put(field, "?.derived.?");
 				}
 				resultMapList.add(resultMap);
 			}
@@ -464,7 +616,53 @@ public class DatabaseAccess {
 			System.out.println("DatabaseAccess: "+e);
 		}
 		
-		System.out.println("--Bad results map list.");
+		System.out.println("--(No rows returned)");
 		return null;
+	}
+
+	/**
+	 * Returns the contact name type by the ID of the name
+	 * @param key
+	 * @return
+	 */
+	public static String getContactTypeById(Integer key) {
+		try {
+			return cTypeByMap.get(key.toString()).cType;
+		} catch (Exception e) {
+			return null;
+		}
+		
+	}
+
+	public static List<Map<String, Object>> getLivingArrangements(
+			String username, String token, String clientid) {
+		if (!makeConnection()) return null;
+		if (!validateUser(username, token)) return null;
+		System.out.println("DatabaseAccess: Getting Living Arrangements.");
+		return getUserRelatedDetails( FLDS_LIVING_ARRANGEMENTS, TBL_LIVING_ARRANGEMENTS, clientid );
+	}
+
+	public static List<Map<String, Object>> getContactDetails(String username,
+			String token, String clientid) {
+		if (!makeConnection()) return null;
+		if (!validateUser(username, token)) return null;
+		System.out.println("DatabaseAccess: Getting Contact Details.");
+		return getUserRelatedDetails( FLDS_CLIENT_CONTACTS, TBL_CLIENT_CONTACTS, clientid );
+	}
+
+	public static List<Map<String, Object>> getAlertInformation(
+			String username, String token, String clientid) {
+		if (!makeConnection()) return null;
+		if (!validateUser(username, token)) return null;
+		System.out.println("DatabaseAccess: Getting Alert Information.");
+		return getUserRelatedDetails( FLD_ALERT_INFO, TBL_ALERT_INFO, clientid );
+	}
+
+	public static List<Map<String, Object>> getPersonalDetails(String username,
+			String token, String clientid) {
+		if (!makeConnection()) return null;
+		if (!validateUser(username, token)) return null;
+		System.out.println("DatabaseAccess: Getting Personal Details.");
+		return getUserRelatedDetails( FLD_PERSONAL_DETAILS, TBL_PERSONAL_DETAILS, clientid );
 	}
 }

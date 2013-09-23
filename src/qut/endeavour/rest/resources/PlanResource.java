@@ -239,7 +239,7 @@ public class PlanResource {
 		System.out.println("Username: "+username);
 		System.out.println("clientId: "+clientid);
 		
-		return PlanFactory.createClientDetails();
+		return PlanFactory.createClientDetails(username, token, clientid);
 	}
 	
 	@GET

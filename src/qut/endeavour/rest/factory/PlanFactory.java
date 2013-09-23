@@ -1,5 +1,6 @@
 package qut.endeavour.rest.factory;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,20 +34,200 @@ import qut.endeavour.rest.bean.plan.support.Relaxation;
 import qut.endeavour.rest.storage.DatabaseAccess;
 
 public class PlanFactory {
-	public static ClientDetails createClientDetails(){
-		PersonalDetails pd = new PersonalDetails( "a", "a", "a", "a", "a", "a", "a", "a", "a" );
-		AlertInformation ai = new AlertInformation( "a", "a", "a", "a", "a", "a", "a", "a", "a" );
-		ArrayList<ContactDetails> contds = new ArrayList<ContactDetails>();
-		contds.add(new ContactDetails("cd1","cd","cd","cd"));
-		contds.add(new ContactDetails("cd1","cd","cd","cd"));
-		contds.add(new ContactDetails("cd1","cd","cd","cd"));
-		LivingArrangements la = new LivingArrangements("a", "a", "a", "a", 0, "a", contds, contds, contds.get(0));
-		FormalOrders fo = new FormalOrders("a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a");
+	/**
+	 * Make client details. Drawn from database.
+	 * @param username
+	 * @param token
+	 * @param clientid
+	 * @return
+	 */
+	public static ClientDetails createClientDetails( String username, String token, String clientid) {
+		
+		PersonalDetails pd = PlanFactory.createPersonalDetails( username, token, clientid );
+		if ( pd == null ) pd = new PersonalDetails();
+		
+		AlertInformation ai = PlanFactory.createAlertInformation( username, token, clientid );
+		if ( ai == null ) ai = new AlertInformation();
+
+		LivingArrangements la = PlanFactory.createLivingArrangements( username, token, clientid );
+		if ( la == null ) la = new LivingArrangements();
+		
+		FormalOrders fo = PlanFactory.createFormalOrders( username, token, clientid );
+		if ( fo == null ) fo = new FormalOrders();
 		
 		return new ClientDetails( pd, ai, la, fo );
 	}
 	
+
+	/**
+	 * Pull formal orders from database, turn them into a FormalOrders object.
+	 * @param username
+	 * @param token
+	 * @param clientid
+	 * @return
+	 */
+	private static FormalOrders createFormalOrders(String username,
+			String token, String clientid) {
+		
+		List<Map<String, Object>> resultsList = DatabaseAccess.getFormalOrders( username, token, clientid );
+		if ( resultsList == null ) return null;
+		
+		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseAccess.FLDS_FORMAL_ORDERS );
+		List<Object> fields = rows.get(0);
+		if ( fields.size() != DatabaseAccess.FLDS_FORMAL_ORDERS.size() ) return null; // some problem chopping up data from database.
+		
+		return new FormalOrders(
+				(String)fields.get(0),
+				(String)fields.get(1),
+				(String)fields.get(2),
+				(String)fields.get(3),
+				(String)fields.get(4),
+				(String)fields.get(5),
+				(String)fields.get(6),
+				(String)fields.get(7),
+				((Date)fields.get(8)).toString(),
+				(String)fields.get(9),
+				(String)fields.get(10),
+				(String)fields.get(11),
+				(String)fields.get(12)
+				);
+	}
+
+	private static LivingArrangements createLivingArrangements(String username,
+			String token, String clientid) {
+		
+		List<Map<String, Object>> resultsList = DatabaseAccess.getLivingArrangements( username, token, clientid );
+		if ( resultsList == null ) return null;
+		
+		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseAccess.FLDS_LIVING_ARRANGEMENTS );
+		List<Object> fields = rows.get(0);
+		if ( fields.size() != DatabaseAccess.FLDS_LIVING_ARRANGEMENTS.size() ) return null; // some problem chopping up data from database.
+		
+		List<ContactDetails> allContacts = PlanFactory.createContactDetails( username, token, clientid );
+		
+		if ( allContacts == null ) allContacts = new ArrayList<ContactDetails>();
+		
+		// divide the contacts up into their groups.
+		List<ContactDetails> fContact = new ArrayList<ContactDetails>();
+		List<ContactDetails> eContact = new ArrayList<ContactDetails>();
+		List<ContactDetails> iContact = new ArrayList<ContactDetails>();
+		
+		for ( ContactDetails cd : allContacts ) {
+			
+			switch (cd.contactType) {
+			case "Family Member" :
+				fContact.add(cd);
+				break;
+				
+			case "Emergency Contact" :
+				eContact.add(cd);
+				break;
+				
+			case "Important Person" :
+				iContact.add(cd);
+				break;
+			}
+		}
+		
+		return new LivingArrangements(
+				(String)fields.get(0),
+				(String)fields.get(1),
+				(String)fields.get(2),
+				(String)fields.get(3),
+				(Integer)fields.get(4),
+				(String)fields.get(5),
+				fContact,
+				eContact,
+				iContact
+		);
+	}
+
+
 	
+
+	/**
+	 * Pull contacts from database 
+	 * 
+	 * @param username
+	 * @param token
+	 * @param clientid
+	 * @param contactType
+	 * @return
+	 */
+	private static List<ContactDetails> createContactDetails(String username,
+			String token, String clientid ) {
+		
+		// get results
+		List<Map<String, Object>> resultsList = DatabaseAccess.getContactDetails( username, token, clientid );
+		if ( resultsList == null ) return null;
+		
+		// get field names
+		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseAccess.FLDS_CLIENT_CONTACTS );
+		if ( rows.get(0).size() != DatabaseAccess.FLDS_CLIENT_CONTACTS.size() ) return null; // some problem chopping up data from database.
+		
+		List<ContactDetails> allContacts = new ArrayList<ContactDetails>();
+		
+		// put all results into a list of clients
+		for ( List<Object> row : rows ) {
+			allContacts.add(
+				new ContactDetails ( 
+						(String)row.get(0),
+						(String)row.get(1),
+						(String)row.get(2),
+						DatabaseAccess.getContactTypeById((Integer)row.get(3))
+						)
+				);
+		}
+		return allContacts;
+	}
+
+
+	private static AlertInformation createAlertInformation(String username,
+			String token, String clientid) {
+		
+		List<Map<String, Object>> resultsList = DatabaseAccess.getAlertInformation( username, token, clientid );
+		if ( resultsList == null ) return null;
+		
+		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseAccess.FLD_ALERT_INFO );
+		List<Object> fields = rows.get(0);
+		if ( fields.size() != DatabaseAccess.FLD_ALERT_INFO.size() ) return null; // some problem chopping up data from database.
+		
+		return new AlertInformation(
+				(String)fields.get(0),
+				(String)fields.get(1),
+				(String)fields.get(2),
+				(String)fields.get(3),
+				(String)fields.get(4),
+				(String)fields.get(5),
+				(String)fields.get(6),
+				(String)fields.get(7),
+				(String)fields.get(8)
+				);
+	}
+
+
+	private static PersonalDetails createPersonalDetails(String username,
+			String token, String clientid) {
+		
+		List<Map<String, Object>> resultsList = DatabaseAccess.getPersonalDetails( username, token, clientid );
+		if ( resultsList == null ) return null;
+		
+		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseAccess.FLD_PERSONAL_DETAILS );
+		List<Object> fields = rows.get(0);
+		if ( fields.size() != DatabaseAccess.FLD_PERSONAL_DETAILS.size() ) return null; // some problem chopping up data from database.
+		
+		return new PersonalDetails(
+				(String)fields.get(0),
+				((Date)fields.get(1)).toString(),
+				(String)fields.get(2),
+				(String)fields.get(3),
+				(String)fields.get(4),
+				((Date)fields.get(5)).toString(),
+				((Date)fields.get(6)).toString()
+				);
+	}
+
+
 	public static HealthDetails createHealthDetails() {
 		HealthInformation healthInfo = new HealthInformation("b", "b", false, false, false, "b", "b");
 		HealthManagement healthManagement = new HealthManagement("b", "b", "b", "b", 0, "b", "b", "b", "b", "b");
@@ -101,12 +282,10 @@ public class PlanFactory {
 		List<Map<String, Object>> resultsList = DatabaseAccess.getEmployment( username, token, clientid );
 		if ( resultsList == null ) return null;
 
-		Map<String, Object> r = resultsList.get(0);
-		ArrayList<Object> fields = new ArrayList<Object>();
-		for ( String field: DatabaseAccess.FLDS_EMPLOYMENT) {
-			field=field.substring(2);
-			fields.add(r.get(field));
-		}
+		
+		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseAccess.FLDS_EMPLOYMENT );
+		List<Object> fields = rows.get(0);
+		if ( fields.size() != DatabaseAccess.FLDS_EMPLOYMENT.size() ) return null; // some problem chopping up data from database.
 		
 		return new Employment(
 				(String)fields.get(0),
@@ -125,14 +304,13 @@ public class PlanFactory {
 	private static Education createEducation(String username, String token, String clientid) {
 		
 		List<Map<String, Object>> resultsList = DatabaseAccess.getEducation( username, token, clientid );
-		
 		if ( resultsList == null ) return null;
-		Map<String, Object> r = resultsList.get(0);
-		ArrayList<Object> fields = new ArrayList<Object>();
-		for ( String field: DatabaseAccess.FLDS_EDUCATION) {
-			field=field.substring(2);
-			fields.add(r.get(field));
-		}
+		
+		
+		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseAccess.FLDS_EDUCATION );
+		if ( rows.size() < 1 ) return null;
+		List<Object> fields = rows.get(0);
+		if ( fields.size() != DatabaseAccess.FLDS_EDUCATION.size() ) return null; // some problem chopping up data from database.
 		
 		return new Education(
 				(String)fields.get(0),
@@ -156,14 +334,42 @@ public class PlanFactory {
 		return new Planning( holPlan, goaPlan );
 	}
 	
-	
+	/**
+	 * Get full personal plan. Drawn from database.
+	 * @param username
+	 * @param token
+	 * @param clientid
+	 * @return
+	 */
 	public static PersonalPlan createPersonalPlan(String username, String token, String clientid) {
-		ClientDetails cd = createClientDetails();
+		ClientDetails cd = createClientDetails(username, token, clientid);
 		HealthDetails hd = createHealthDetails();
 		SupportRequired sr = createSupportRequired();
 		Communication com = createCommunication();
 		EducationEmployment ee = createEducationEmployment(username, token, clientid);
 		Planning plan = createPlanning();
 		return new PersonalPlan( cd, hd, sr, com, ee, plan );
+	}
+	
+	
+	/**
+	 * Work through results and generate values.
+	 * @param resultsList
+	 * @param columnNames
+	 * @return
+	 */
+	private static List<ArrayList<Object>> ProcessResults(List<Map<String, Object>> resultsList, List<String> columnNames) {
+		
+		List<ArrayList<Object>> rows = new ArrayList<ArrayList<Object>>();
+		
+		for ( Map<String, Object> result : resultsList) {
+			ArrayList<Object> row = new ArrayList<Object>();
+			for ( String columnName: columnNames ) {
+				columnName=columnName.substring(2);
+				row.add( result.get(columnName) );
+			}
+			rows.add(row);
+		}
+		return rows;
 	}
 }

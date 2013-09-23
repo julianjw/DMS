@@ -14,8 +14,20 @@ public class AlertInformation {
 	public String phobias;
 	public String otherInfo;
 	
-	AlertInformation() {}
+	public AlertInformation() {}
 
+	/**
+	 * 
+	 * @param allergies
+	 * @param medIssues
+	 * @param eatingAlerts
+	 * @param safetyConcerns
+	 * @param restrictive
+	 * @param guardianOrders
+	 * @param complexSupportNeeds
+	 * @param phobias
+	 * @param otherInfo
+	 */
 	public AlertInformation(String allergies, String medIssues,
 			String eatingAlerts, String safetyConcerns, String restrictive,
 			String guardianOrders, String complexSupportNeeds, String phobias,
