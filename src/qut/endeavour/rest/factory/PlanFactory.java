@@ -69,13 +69,11 @@ public class PlanFactory {
 	 */
 	private static FormalOrders createFormalOrders(String username,
 			String token, String clientid) {
-		
-		List<Map<String, Object>> resultsList = DatabaseAccess.getFormalOrders( username, token, clientid );
-		if ( resultsList == null ) return null;
-		
-		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_FORMAL_ORDERS );
-		List<Object> fields = rows.get(0);
-		if ( fields.size() != DatabaseNames.FLDS_FORMAL_ORDERS.size() ) return null; // some problem chopping up data from database.
+
+		List<Object> fields = PlanFactory.RetrieveFirstInfo( username, token, clientid,
+				DatabaseNames.FLDS_FORMAL_ORDERS,
+				DatabaseNames.TBL_FORMAL_ORDERS
+				);
 		
 		return new FormalOrders(
 				(String)fields.get(0),
@@ -96,13 +94,11 @@ public class PlanFactory {
 
 	private static LivingArrangements createLivingArrangements(String username,
 			String token, String clientid) {
-		
-		List<Map<String, Object>> resultsList = DatabaseAccess.getLivingArrangements( username, token, clientid );
-		if ( resultsList == null ) return null;
-		
-		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_LIVING_ARRANGEMENTS );
-		List<Object> fields = rows.get(0);
-		if ( fields.size() != DatabaseNames.FLDS_LIVING_ARRANGEMENTS.size() ) return null; // some problem chopping up data from database.
+
+		List<Object> fields = PlanFactory.RetrieveFirstInfo( username, token, clientid,
+				DatabaseNames.FLDS_LIVING_ARRANGEMENTS,
+				DatabaseNames.TBL_LIVING_ARRANGEMENTS
+				);
 		
 		List<ContactDetails> allContacts = PlanFactory.createContactDetails( username, token, clientid );
 		
@@ -157,14 +153,12 @@ public class PlanFactory {
 	 */
 	private static List<ContactDetails> createContactDetails(String username,
 			String token, String clientid ) {
-		
-		// get results
-		List<Map<String, Object>> resultsList = DatabaseAccess.getContactDetails( username, token, clientid );
-		if ( resultsList == null ) return null;
-		
-		// get field names
-		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_CLIENT_CONTACTS );
-		if ( rows.get(0).size() != DatabaseNames.FLDS_CLIENT_CONTACTS.size() ) return null; // some problem chopping up data from database.
+
+
+		List<ArrayList<Object>> rows = PlanFactory.RetrieveInfo( username, token, clientid,
+				DatabaseNames.FLDS_CLIENT_CONTACTS,
+				DatabaseNames.TBL_CLIENT_CONTACTS
+				);
 		
 		List<ContactDetails> allContacts = new ArrayList<ContactDetails>();
 		
@@ -185,13 +179,11 @@ public class PlanFactory {
 
 	private static AlertInformation createAlertInformation(String username,
 			String token, String clientid) {
-		
-		List<Map<String, Object>> resultsList = DatabaseAccess.getAlertInformation( username, token, clientid );
-		if ( resultsList == null ) return null;
-		
-		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_ALERT_INFO );
-		List<Object> fields = rows.get(0);
-		if ( fields.size() != DatabaseNames.FLDS_ALERT_INFO.size() ) return null; // some problem chopping up data from database.
+
+		List<Object> fields = PlanFactory.RetrieveFirstInfo( username, token, clientid,
+				DatabaseNames.FLDS_ALERT_INFO,
+				DatabaseNames.TBL_ALERT_INFO
+				);
 		
 		return new AlertInformation(
 				(String)fields.get(0),
@@ -209,13 +201,11 @@ public class PlanFactory {
 
 	private static PersonalDetails createPersonalDetails(String username,
 			String token, String clientid) {
-		
-		List<Map<String, Object>> resultsList = DatabaseAccess.getPersonalDetails( username, token, clientid );
-		if ( resultsList == null ) return null;
-		
-		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_PERSONAL_DETAILS );
-		List<Object> fields = rows.get(0);
-		if ( fields.size() != DatabaseNames.FLDS_PERSONAL_DETAILS.size() ) return null; // some problem chopping up data from database.
+
+		List<Object> fields = PlanFactory.RetrieveFirstInfo( username, token, clientid,
+				DatabaseNames.FLDS_PERSONAL_DETAILS,
+				DatabaseNames.TBL_PERSONAL_DETAILS
+				);
 		
 		return new PersonalDetails(
 				(String)fields.get(0),
@@ -241,12 +231,10 @@ public class PlanFactory {
 	private static HealthDietary createHealthDietary(String username,
 			String token, String clientid) {
 
-		List<Map<String, Object>> resultsList = DatabaseAccess.getHealthDietary(username, token, clientid);
-		if ( resultsList == null ) return null;
-		
-		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_DIETARY );
-		List<Object> fields = rows.get(0);
-		if ( fields.size() != DatabaseNames.FLDS_DIETARY.size() ) return null; // some problem chopping up data from database.
+		List<Object> fields = PlanFactory.RetrieveFirstInfo( username, token, clientid,
+				DatabaseNames.FLDS_DIETARY,
+				DatabaseNames.TBL_DIETARY
+				);
 		
 		return new HealthDietary(
 				(String)fields.get(0),
@@ -268,15 +256,11 @@ public class PlanFactory {
 
 	private static HealthManagement createHealthManagement(String username,
 			String token, String clientid) {
-		
-		List<Map<String, Object>> resultsList = DatabaseAccess.getHealthManagement( username, token, clientid );
-		if ( resultsList == null ) return null;
-		
-		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_MANAGEMENT );
-		List<Object> fields = rows.get(0);
-		if ( fields.size() != DatabaseNames.FLDS_MANAGEMENT.size() ) return null; // some problem chopping up data from database.
-		
-		
+
+		List<Object> fields = PlanFactory.RetrieveFirstInfo( username, token, clientid,
+				DatabaseNames.FLDS_MANAGEMENT,
+				DatabaseNames.TBL_MANAGEMENT
+				);
 		
 		return new HealthManagement(
 				(String)fields.get(0),
@@ -295,14 +279,11 @@ public class PlanFactory {
 
 	private static HealthInformation createHealthInformation(String username,
 			String token, String clientid) {
-		
-		List<Map<String, Object>> resultsList = DatabaseAccess.getHealthDisability( username, token, clientid );
-		if ( resultsList == null ) return null;
-		
-		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_DISABILITY );
-		List<Object> fields = rows.get(0);
-		if ( fields.size() != DatabaseNames.FLDS_DISABILITY.size() ) return null; // some problem chopping up data from database.
 
+		List<Object> fields = PlanFactory.RetrieveFirstInfo( username, token, clientid,
+				DatabaseNames.FLDS_DISABILITY,
+				DatabaseNames.TBL_DISABILITY
+				);
 		
 		return new HealthInformation(
 				(String)fields.get(0),
@@ -330,13 +311,11 @@ public class PlanFactory {
 	private static Relaxation createRelaxation(String username, String token,
 			String clientid) {
 
-		List<Map<String, Object>> resultsList = DatabaseAccess.getRelaxation( username, token, clientid );
-		if ( resultsList == null ) return null;
+		List<Object> fields = PlanFactory.RetrieveFirstInfo( username, token, clientid,
+				DatabaseNames.FLDS_RELAXATION,
+				DatabaseNames.TBL_RELAXATION
+				);
 		
-		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_RELAXATION );
-		List<Object> fields = rows.get(0);
-		if ( fields.size() != DatabaseNames.FLDS_RELAXATION.size() ) return null; // some problem chopping up data from database.
-
 		return new Relaxation(
 				(String)fields.get(0),
 				(String)fields.get(1),
@@ -349,15 +328,13 @@ public class PlanFactory {
 
 	private static DailyActivities createDailyActivities(String username,
 			String token, String clientid) {
+
+		List<Object> fields = PlanFactory.RetrieveFirstInfo( username, token, clientid,
+				DatabaseNames.FLDS_ACTIVITIES,
+				DatabaseNames.TBL_ACTIVITIES
+				);
 		
 		List<String> services = PlanFactory.createServices( username, token, clientid );
-
-		List<Map<String, Object>> resultsList = DatabaseAccess.getDailyActivities( username, token, clientid );
-		if ( resultsList == null ) return null;
-		
-		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_ACTIVITIES );
-		List<Object> fields = rows.get(0);
-		if ( fields.size() != DatabaseNames.FLDS_ACTIVITIES.size() ) return null; // some problem chopping up data from database.
 
 		return new DailyActivities(
 				(String)fields.get(0),
@@ -386,14 +363,14 @@ public class PlanFactory {
 	}
 
 
+	// DIFFERENT
 	private static List<String> createServices(String username, String token,
 			String clientid) {
 
-		List<Map<String, Object>> resultsList = DatabaseAccess.getSupportServices( username, token, clientid );
-		if ( resultsList == null ) return null;
-		
-		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_SUPPORT_SERVICES );
-		if ( rows.get(0).size() != DatabaseNames.FLDS_SUPPORT_SERVICES.size() ) return null; // some problem chopping up data from database.
+		List<ArrayList<Object>> rows = PlanFactory.RetrieveInfo( username, token, clientid,
+				DatabaseNames.FLDS_SUPPORT_SERVICES,
+				DatabaseNames.TBL_SUPPORT_SERVICES
+				);
 		
 		List<String> allServices = new ArrayList<String>();
 		for ( ArrayList<Object> row : rows ) {
@@ -407,12 +384,10 @@ public class PlanFactory {
 	private static FinancialSupport createFinancialSupport(String username,
 			String token, String clientid) {
 
-		List<Map<String, Object>> resultsList = DatabaseAccess.getFinancialSupport( username, token, clientid );
-		if ( resultsList == null ) return null;
-		
-		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_FINANCIAL );
-		List<Object> fields = rows.get(0);
-		if ( fields.size() != DatabaseNames.FLDS_FINANCIAL.size() ) return null; // some problem chopping up data from database.
+		List<Object> fields = PlanFactory.RetrieveFirstInfo( username, token, clientid,
+				DatabaseNames.FLDS_FINANCIAL,
+				DatabaseNames.TBL_FINANCIAL
+				);
 
 		return new FinancialSupport(
 				(String)fields.get(0),
@@ -436,13 +411,11 @@ public class PlanFactory {
 	private static MobilityAndTransport createMobilityAndTransport(
 			String username, String token, String clientid) {
 
-		List<Map<String, Object>> resultsList = DatabaseAccess.getMobilityAndTransport( username, token, clientid );
-		if ( resultsList == null ) return null;
+		List<Object> fields = PlanFactory.RetrieveFirstInfo( username, token, clientid,
+				DatabaseNames.FLDS_MOBILITY_TRANSPORT,
+				DatabaseNames.TBL_MOBILITY_TRANSPORT
+				);
 		
-		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_MOBILITY_TRANSPORT );
-		List<Object> fields = rows.get(0);
-		if ( fields.size() != DatabaseNames.FLDS_MOBILITY_TRANSPORT.size() ) return null; // some problem chopping up data from database.
-
 		return new MobilityAndTransport(
 				(String)fields.get(0),
 				(String)fields.get(1),
@@ -458,14 +431,12 @@ public class PlanFactory {
 
 	private static GeneralSupport createGeneralSupport(String username,
 			String token, String clientid) {
-
-		List<Map<String, Object>> resultsList = DatabaseAccess.getGeneralSupport( username, token, clientid );
-		if ( resultsList == null ) return null;
 		
-		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_SUPPORT_GENERAL );
-		List<Object> fields = rows.get(0);
-		if ( fields.size() != DatabaseNames.FLDS_SUPPORT_GENERAL.size() ) return null; // some problem chopping up data from database.
-
+		List<Object> fields = PlanFactory.RetrieveFirstInfo( username, token, clientid,
+				DatabaseNames.FLDS_SUPPORT_GENERAL,
+				DatabaseNames.TBL_SUPPORT_GENERAL
+				);
+	
 		return new GeneralSupport(
 				(String)fields.get(0),
 				(String)fields.get(1),
@@ -502,25 +473,17 @@ public class PlanFactory {
 	 */
 	public static EducationEmployment createEducationEmployment(String username, String token, String clientid) {
 		Education cadm = PlanFactory.createEducation( username, token, clientid );
-		if ( cadm == null ) cadm = new Education();
-		
 		Employment emp = PlanFactory.createEmployment( username, token, clientid );
-		if ( emp == null ) emp = new Employment();
-		
 		return new EducationEmployment( cadm, emp );
 	}
 	
 	
 	private static Employment createEmployment(String username, String token,
 			String clientid) {
-		
-		List<Map<String, Object>> resultsList = DatabaseAccess.getEmployment( username, token, clientid );
-		if ( resultsList == null ) return null;
-
-		
-		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_EMPLOYMENT );
-		List<Object> fields = rows.get(0);
-		if ( fields.size() != DatabaseNames.FLDS_EMPLOYMENT.size() ) return null; // some problem chopping up data from database.
+		List<Object> fields = PlanFactory.RetrieveFirstInfo( username, token, clientid,
+				DatabaseNames.FLDS_EMPLOYMENT,
+				DatabaseNames.TBL_EMPLOYMENT
+				);
 		
 		return new Employment(
 				(String)fields.get(0),
@@ -537,15 +500,10 @@ public class PlanFactory {
 
 
 	private static Education createEducation(String username, String token, String clientid) {
-		
-		List<Map<String, Object>> resultsList = DatabaseAccess.getEducation( username, token, clientid );
-		if ( resultsList == null ) return null;
-		
-		
-		List<ArrayList<Object>> rows = ProcessResults( resultsList, DatabaseNames.FLDS_EDUCATION );
-		if ( rows.size() < 1 ) return null;
-		List<Object> fields = rows.get(0);
-		if ( fields.size() != DatabaseNames.FLDS_EDUCATION.size() ) return null; // some problem chopping up data from database.
+		List<Object> fields = PlanFactory.RetrieveFirstInfo( username, token, clientid,
+				DatabaseNames.FLDS_EDUCATION,
+				DatabaseNames.TBL_EDUCATION
+				);
 		
 		return new Education(
 				(String)fields.get(0),
@@ -562,7 +520,33 @@ public class PlanFactory {
 				);
 	}
 
+	
+	
+	/**
+	 * Get information from given table
+	 * 
+	 * @param username
+	 * @param token
+	 * @param clientid
+	 * @param fieldNames
+	 * @param tableNames
+	 * @return
+	 */
+	private static List<Object> RetrieveFirstInfo(String username, String token, String clientid, List<String> fieldNames, String tableNames) {
+		List<ArrayList<Object>> objects = RetrieveInfo(username, token, clientid, fieldNames, tableNames);
+		if ( objects.size() < 1 ) return null;
+		List<Object> fields = objects.get(0);
+		if ( fields.size() != fieldNames.size() ) return null;
+		return fields;
+	}
 
+	private static List<ArrayList<Object>> RetrieveInfo(String username, String token, String clientid, List<String> fieldNames, String tableNames) {
+		List<Map<String, Object>> resultsList = DatabaseAccess.getTableContents( username, token, clientid, fieldNames, tableNames);
+		List<ArrayList<Object>> rows = ProcessResults( resultsList, fieldNames );
+		return rows;
+	}
+	
+	
 	public static Planning createPlanning() { // TODO Planning
 		HolidayPlan holPlan = new HolidayPlan("E", "E", "E", "E", "E", "E");
 		GoalPlan goaPlan = new GoalPlan("E", "E", "E", "E", "E", "E");

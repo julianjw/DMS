@@ -167,9 +167,6 @@ public class PlanResource {
 			) {
 		
 		System.out.println("Requesting: Planning");
-		System.out.println("Token: "+token);
-		System.out.println("Username: "+username);
-		System.out.println("clientId: "+clientid);
 		
 		return PlanFactory.createPlanning();
 	}
@@ -183,10 +180,7 @@ public class PlanResource {
 			@PathParam("clientid") String clientid
 			) {
 		
-		System.out.println("Requesting: ClientDetails");
-		System.out.println("Token: "+token);
-		System.out.println("Username: "+username);
-		System.out.println("clientId: "+clientid);
+		System.out.println("Requesting: communication");
 		
 		return PlanFactory.createCommunication();
 	}
@@ -200,10 +194,7 @@ public class PlanResource {
 			@PathParam("clientid") String clientid
 			) {
 		
-		System.out.println("Requesting: ClientDetails");
-		System.out.println("Token: "+token);
-		System.out.println("Username: "+username);
-		System.out.println("clientId: "+clientid);
+		System.out.println("Requesting: support required");
 		
 		return PlanFactory.createSupportRequired(username, token, clientid);
 	}
@@ -217,11 +208,8 @@ public class PlanResource {
 			@PathParam("clientid") String clientid
 			) {
 		
-		System.out.println("Requesting: ClientDetails");
-//		System.out.println("Token: "+token);
-//		System.out.println("Username: "+username);
-//		System.out.println("clientId: "+clientid);
-		
+		System.out.println("Requesting: health details");
+
 		return PlanFactory.createHealthDetails( username, token, clientid );
 	}
 	
@@ -233,12 +221,9 @@ public class PlanResource {
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
-		
+
 		System.out.println("Requesting: ClientDetails");
-		System.out.println("Token: "+token);
-		System.out.println("Username: "+username);
-		System.out.println("clientId: "+clientid);
-		
+
 		return PlanFactory.createClientDetails(username, token, clientid);
 	}
 	
@@ -250,13 +235,9 @@ public class PlanResource {
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
-		
-		System.out.println();
-		System.out.println("Requesting: ClientDetails");
-		System.out.println("Token: "+token);
-		System.out.println("Username: "+username);
-		System.out.println("clientId: "+clientid);
-		
+
+		System.out.println("Requesting: Education & Employment");
+
 		return PlanFactory.createEducationEmployment( username, token, clientid );
 	}
 	
@@ -270,10 +251,7 @@ public class PlanResource {
 			) {
 		
 		System.out.println("Requesting: PersonalPlan");
-		System.out.println("Token: "+token);
-		System.out.println("Username: "+username);
-		System.out.println("clientId: "+clientid);
-		
+
 		return PlanFactory.createPersonalPlan( username, token, clientid );
 	}
 	

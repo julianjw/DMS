@@ -437,31 +437,6 @@ public class DatabaseAccess {
 		return false;
 	}
 
-	public static List<Map<String, Object>> getEmployment(
-			String username, String token, String clientid) {
-		if (!makeConnection()) return null;
-		if (!validateUser(username, token)) return null;
-		System.out.println("DatabaseAccess: Getting Employment.");
-		return getUserRelatedDetails( DatabaseNames.FLDS_EMPLOYMENT, DatabaseNames.TBL_EMPLOYMENT, clientid );
-	}
-
-	public static List<Map<String,Object>> getEducation(
-			String username, String token, String clientid) {
-		if (!makeConnection()) return null;
-		if (!validateUser(username, token)) return null;
-		System.out.println("DatabaseAccess: Getting Education.");
-		return getUserRelatedDetails( DatabaseNames.FLDS_EDUCATION, DatabaseNames.TBL_EDUCATION, clientid );
-	}
-	
-
-
-	public static List<Map<String, Object>> getFormalOrders(String username,
-			String token, String clientid) {
-		if (!makeConnection()) return null;
-		if (!validateUser(username, token)) return null;
-		System.out.println("DatabaseAccess: Getting Formal Orders.");
-		return getUserRelatedDetails( DatabaseNames.FLDS_FORMAL_ORDERS, DatabaseNames.TBL_FORMAL_ORDERS, clientid );
-	}
 	
 	
 	/**
@@ -472,10 +447,12 @@ public class DatabaseAccess {
 	 * @return
 	 */
 	private static List<Map<String, Object>> getUserRelatedDetails( List<String> fields, String infoTable, String username ) {
+		
 		List<Map<String, Object>> resultMapList = new ArrayList<Map<String,Object>>();
 		
 		String sql = "SELECT tb.* from `"+infoTable+"` tb inner join `"+TBL_USER_INFO+"` ui on tb.user_id=ui.user_id where ui.username = ?";
 		System.out.println(sql);
+		
 		try {
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, username);
@@ -483,6 +460,7 @@ public class DatabaseAccess {
 			
 			while (results.next()) {
 				Map<String, Object> resultMap = new HashMap<String, Object>();
+				
 				for ( String field : fields ) {
 					char type = field.charAt(0);
 					field = field.substring(2); // get rid of type character and *
@@ -492,8 +470,10 @@ public class DatabaseAccess {
 					if ( type == DATE ) resultMap.put(field, results.getDate(field)); else 
 					if ( type == DERIVED ) resultMap.put(field, "?.derived.?");
 				}
+				
 				resultMapList.add(resultMap);
 			}
+			
 			if ( resultMapList.size() > 0 ) return resultMapList;
 			
 		} catch (SQLException e) {
@@ -532,108 +512,12 @@ public class DatabaseAccess {
 		}
 		
 	}
-
-	public static List<Map<String, Object>> getLivingArrangements(
-			String username, String token, String clientid) {
+	
+	public static List<Map<String, Object>> getTableContents(String username,
+			String token, String clientid, List<String> fieldNames,
+			String tableName) {
 		if (!makeConnection()) return null;
 		if (!validateUser(username, token)) return null;
-		System.out.println("DatabaseAccess: Getting Living Arrangements.");
-		return getUserRelatedDetails( DatabaseNames.FLDS_LIVING_ARRANGEMENTS, DatabaseNames.TBL_LIVING_ARRANGEMENTS, clientid );
-	}
-
-	public static List<Map<String, Object>> getContactDetails(String username,
-			String token, String clientid) {
-		if (!makeConnection()) return null;
-		if (!validateUser(username, token)) return null;
-		System.out.println("DatabaseAccess: Getting Contact Details.");
-		return getUserRelatedDetails( DatabaseNames.FLDS_CLIENT_CONTACTS, DatabaseNames.TBL_CLIENT_CONTACTS, clientid );
-	}
-
-	public static List<Map<String, Object>> getAlertInformation(
-			String username, String token, String clientid) {
-		if (!makeConnection()) return null;
-		if (!validateUser(username, token)) return null;
-		System.out.println("DatabaseAccess: Getting Alert Information.");
-		return getUserRelatedDetails( DatabaseNames.FLDS_ALERT_INFO, DatabaseNames.TBL_ALERT_INFO, clientid );
-	}
-
-	public static List<Map<String, Object>> getPersonalDetails(String username,
-			String token, String clientid) {
-		if (!makeConnection()) return null;
-		if (!validateUser(username, token)) return null;
-		System.out.println("DatabaseAccess: Getting Personal Details.");
-		return getUserRelatedDetails( DatabaseNames.FLDS_PERSONAL_DETAILS, DatabaseNames.TBL_PERSONAL_DETAILS, clientid );
-	}
-
-	public static List<Map<String, Object>> getHealthDietary(String username,
-			String token, String clientid) {
-		if (!makeConnection()) return null;
-		if (!validateUser(username, token)) return null;
-		System.out.println("DatabaseAccess: Getting Dietary Details.");
-		return getUserRelatedDetails( DatabaseNames.FLDS_DIETARY, DatabaseNames.TBL_DIETARY, clientid );
-	}
-
-	public static List<Map<String, Object>> getHealthDisability(String username,
-			String token, String clientid) {
-		if (!makeConnection()) return null;
-		if (!validateUser(username, token)) return null;
-		System.out.println("DatabaseAccess: Getting Disability Details.");
-		return getUserRelatedDetails( DatabaseNames.FLDS_DISABILITY, DatabaseNames.TBL_DISABILITY, clientid );
-	}
-
-	public static List<Map<String, Object>> getHealthManagement(String username,
-			String token, String clientid) {
-		if (!makeConnection()) return null;
-		if (!validateUser(username, token)) return null;
-		System.out.println("DatabaseAccess: Getting Health Management Details.");
-		return getUserRelatedDetails( DatabaseNames.FLDS_MANAGEMENT, DatabaseNames.TBL_MANAGEMENT, clientid );
-	}
-
-	public static List<Map<String, Object>> getRelaxation(String username,
-			String token, String clientid) {
-		if (!makeConnection()) return null;
-		if (!validateUser(username, token)) return null;
-		System.out.println("DatabaseAccess: Getting Relaxation.");
-		return getUserRelatedDetails( DatabaseNames.FLDS_RELAXATION, DatabaseNames.TBL_RELAXATION, clientid );
-	}
-
-	public static List<Map<String, Object>> getDailyActivities(String username,
-			String token, String clientid) {
-		if (!makeConnection()) return null;
-		if (!validateUser(username, token)) return null;
-		System.out.println("DatabaseAccess: Getting Activities.");
-		return getUserRelatedDetails( DatabaseNames.FLDS_ACTIVITIES, DatabaseNames.TBL_ACTIVITIES, clientid );
-	}
-
-	public static List<Map<String, Object>> getSupportServices(String username,
-			String token, String clientid) {
-		if (!makeConnection()) return null;
-		if (!validateUser(username, token)) return null;
-		System.out.println("DatabaseAccess: Getting Support Services.");
-		return getUserRelatedDetails( DatabaseNames.FLDS_SUPPORT_SERVICES, DatabaseNames.TBL_SUPPORT_SERVICES, clientid );
-	}
-
-	public static List<Map<String, Object>> getFinancialSupport(
-			String username, String token, String clientid) {
-		if (!makeConnection()) return null;
-		if (!validateUser(username, token)) return null;
-		System.out.println("DatabaseAccess: Getting Financial Support.");
-		return getUserRelatedDetails( DatabaseNames.FLDS_FINANCIAL, DatabaseNames.TBL_FINANCIAL, clientid );
-	}
-
-	public static List<Map<String, Object>> getMobilityAndTransport(
-			String username, String token, String clientid) {
-		if (!makeConnection()) return null;
-		if (!validateUser(username, token)) return null;
-		System.out.println("DatabaseAccess: Getting Mobility and transport.");
-		return getUserRelatedDetails( DatabaseNames.FLDS_MOBILITY_TRANSPORT, DatabaseNames.TBL_MOBILITY_TRANSPORT, clientid );
-	}
-
-	public static List<Map<String, Object>> getGeneralSupport(String username,
-			String token, String clientid) {
-		if (!makeConnection()) return null;
-		if (!validateUser(username, token)) return null;
-		System.out.println("DatabaseAccess: Getting general support");
-		return getUserRelatedDetails( DatabaseNames.FLDS_SUPPORT_GENERAL, DatabaseNames.TBL_SUPPORT_GENERAL, clientid );
+		return getUserRelatedDetails( fieldNames, tableName, clientid );
 	}
 }
