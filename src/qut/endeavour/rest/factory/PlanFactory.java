@@ -373,6 +373,8 @@ public class PlanFactory {
 				);
 		
 		List<String> allServices = new ArrayList<String>();
+
+
 		for ( ArrayList<Object> row : rows ) {
 			if ( row == null ) return null;
 			allServices.add((String)row.get(0));
@@ -455,15 +457,51 @@ public class PlanFactory {
 	}
 
 
-	public static Communication createCommunication() { // TODO Communiation
-		ArrayList<BadTopics> badt = new ArrayList<BadTopics>();
-		badt.add( new BadTopics("C1","C") );
-		badt.add( new BadTopics("C2","C") );
-		badt.add( new BadTopics("C3","C") );
-		ComsAndDecisionMaking decision = new ComsAndDecisionMaking("C", "C", "C", "C", "C", "C", "C", "C", badt);
-		return new Communication(decision);
+	public static Communication createCommunication(String username, String token, String clientid) {
+		
+		List<BadTopics> badTopics = PlanFactory.createBadTopics(username, token, clientid);
+		List<Object> fields = PlanFactory.RetrieveFirstInfo( username, token, clientid,
+				DatabaseNames.FLDS_COMMUNICATION,
+				DatabaseNames.TBL_COMMUNICATION
+				);
+	
+		ComsAndDecisionMaking coms = new ComsAndDecisionMaking(
+				(String)fields.get(0),
+				(String)fields.get(1),
+				(String)fields.get(2),
+				(String)fields.get(3),
+				(String)fields.get(4),
+				(String)fields.get(5),
+				(String)fields.get(6),
+				(String)fields.get(7),
+				badTopics
+				);
+		
+		return new Communication(coms);
 	}
 	
+	private static List<BadTopics> createBadTopics(String username,
+			String token, String clientid) {
+		
+		List<ArrayList<Object>> rows = PlanFactory.RetrieveInfo( username, token, clientid,
+				DatabaseNames.FLDS_BAD_TOPICS,
+				DatabaseNames.TBL_BAD_TOPICS
+				);
+		
+		List<BadTopics> badTopics = new ArrayList<BadTopics>();
+		
+		for ( ArrayList<Object> row : rows ) {
+			if ( row == null ) return null;
+			badTopics.add( new BadTopics (
+						(String)row.get(0),
+						(String)row.get(1)
+					) );
+		}
+			
+		return badTopics;
+	}
+
+
 	/**
 	 * 
 	 * @param username
@@ -546,13 +584,49 @@ public class PlanFactory {
 		return rows;
 	}
 	
-	
-	public static Planning createPlanning() { // TODO Planning
-		HolidayPlan holPlan = new HolidayPlan("E", "E", "E", "E", "E", "E");
-		GoalPlan goaPlan = new GoalPlan("E", "E", "E", "E", "E", "E");
+	public static Planning createPlanning(String username, String token, String clientid) {
+		HolidayPlan holPlan = PlanFactory.createHolidayPlan(username, token, clientid);
+		GoalPlan goaPlan = PlanFactory.createGoalPlan(username, token, clientid);
 		return new Planning( holPlan, goaPlan );
 	}
 	
+	private static GoalPlan createGoalPlan(String username, String token,
+			String clientid) {
+		List<Object> fields = PlanFactory.RetrieveFirstInfo( username, token, clientid,
+				DatabaseNames.FLDS_GOAL,
+				DatabaseNames.TBL_GOAL
+				);
+		
+		return new GoalPlan(
+				(String)fields.get(0),
+				(String)fields.get(1),
+				(String)fields.get(2),
+				(String)fields.get(3),
+				(String)fields.get(4),
+				(String)fields.get(5)
+				);
+	}
+
+
+	private static HolidayPlan createHolidayPlan(String username, String token,
+			String clientid) {
+
+		List<Object> fields = PlanFactory.RetrieveFirstInfo( username, token, clientid,
+				DatabaseNames.FLDS_HOLIDAY,
+				DatabaseNames.TBL_HOLIDAY
+				);
+		
+		return new HolidayPlan(
+				(String)fields.get(0),
+				(String)fields.get(1),
+				(String)fields.get(2),
+				(String)fields.get(3),
+				(String)fields.get(4),
+				(String)fields.get(5)
+				);
+	}
+
+
 	/**
 	 * Get full personal plan. Drawn from database.
 	 * @param username
@@ -560,13 +634,13 @@ public class PlanFactory {
 	 * @param clientid
 	 * @return
 	 */
-	public static PersonalPlan createPersonalPlan(String username, String token, String clientid) { // TODO Personal Plan
+	public static PersonalPlan createPersonalPlan(String username, String token, String clientid) {
 		ClientDetails cd = createClientDetails(username, token, clientid);
 		HealthDetails hd = createHealthDetails(username, token, clientid);
 		SupportRequired sr = createSupportRequired(username, token, clientid);
-		Communication com = createCommunication();
+		Communication com = createCommunication(username, token, clientid);
 		EducationEmployment ee = createEducationEmployment(username, token, clientid);
-		Planning plan = createPlanning();
+		Planning plan = createPlanning(username, token, clientid);
 		return new PersonalPlan( cd, hd, sr, com, ee, plan );
 	}
 	

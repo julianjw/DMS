@@ -168,7 +168,7 @@ public class PlanResource {
 		
 		System.out.println("Requesting: Planning");
 		
-		return PlanFactory.createPlanning();
+		return PlanFactory.createPlanning(username, token, clientid);
 	}
 	
 	@GET
@@ -182,7 +182,7 @@ public class PlanResource {
 		
 		System.out.println("Requesting: communication");
 		
-		return PlanFactory.createCommunication();
+		return PlanFactory.createCommunication( username, token, clientid );
 	}
 	
 	@GET
