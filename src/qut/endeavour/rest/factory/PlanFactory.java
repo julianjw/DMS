@@ -663,7 +663,7 @@ public class PlanFactory {
 		
 		List<ArrayList<Object>> rows = new ArrayList<ArrayList<Object>>();
 		
-		if (resultsList == null) return null;
+		if (resultsList == null) return rows;
 		
 		for ( Map<String, Object> result : resultsList) {
 			ArrayList<Object> row = new ArrayList<Object>();

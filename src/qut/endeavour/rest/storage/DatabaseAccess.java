@@ -451,7 +451,7 @@ public class DatabaseAccess {
 		List<Map<String, Object>> resultMapList = new ArrayList<Map<String,Object>>();
 		
 		String sql = "SELECT tb.* from `"+infoTable+"` tb inner join `"+TBL_USER_INFO+"` ui on tb.user_id=ui.user_id where ui.username = ?";
-//		System.out.println(sql);
+		System.out.println(sql);
 		
 		try {
 			PreparedStatement ps = con.prepareStatement(sql);
