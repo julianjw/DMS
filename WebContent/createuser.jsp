@@ -28,13 +28,14 @@
 		$(document).ready(function(){
 			//find the roles
 			$.ajax({
-				url: "./rest/roles/",
+				url: "./rest/role/all",
 				type: "get",
 				data: {auth_token:$.cookie("auth_token"), user_id:$.cookie("user_id")},
 				success: function(data) {
 					for (var i = 0; i < data.items.length; i++) {
-                		optionlist += "<option value='" + data.items[i].ProductId + "'>" + data.items[i].ProductName + "</option>";
+                		optionlist += "<select value='" + data.items[i] + "'>" + data.items[i] + "</option>";
                 	}
+					//document.write(optionlist);
 				},
 				error: function(response) {
 					//do something to handle error
@@ -49,18 +50,20 @@
 				details.user_id = $("#createUsername").val();
 				details.password = $("#createPassword").val();
 				details.fname=$("#createName").val();
-				details.role = $("#createRole").val();
+				//details.role = $("#createRole").val();
+				details.role = "CLIENT"; //testing purposes only
 
 				var jsonText = JSON.stringify(details);
 				
 				$.ajax({
-					url:'./rest/user/create' + $.cookie('auth_token')+ '/' + $.cookie('user_id') +'/1',
+					url:'./rest/user/' + $.cookie('user_id') + '/' + $.cookie('auth_token'),
 					type: 'POST',
 					contentType: 'application/json; charset=UTF-8',
 					dataType: 'json',
 					data: jsonText,
 					complete: function(jqXHR, textStatus) {
 						alert(textStatus);
+						alert(jqXHR.responseText);
 					}
 				});
 			});
