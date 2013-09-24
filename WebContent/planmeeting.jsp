@@ -128,6 +128,8 @@
 		$(document).ready(function(){
 			$("#SaveB").click(function(){
 				var planMeeting = new Object();
+				
+				
 
 				var jsonText = JSON.stringify(clientDetails);
 

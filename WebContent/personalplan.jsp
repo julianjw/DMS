@@ -6,7 +6,7 @@
 <jsp:include page="partials/nav.html" flush="true" />
 	<!-- navigation -->
 	<!-- 	<h3>Personal Plan Nav</h3> -->
-	<a href='editpersonalplan.jsp'>Edit Existing Plan</a>
+	<a href='personalplanedit.jsp'>Edit Existing Plan</a>
 	
 	<div class="horizontalNav">
 	<ul>
