@@ -11,7 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+
 import qut.endeavour.rest.exception.DMSClientErrorException;
+
 
 public class DatabaseAccess {
 	
@@ -100,6 +102,7 @@ public class DatabaseAccess {
 			System.out.println("Database error: " + e.toString());
 		}
 		
+//		throw new ServerErrorException(1);
 		return false;
 	}
 	
@@ -142,12 +145,15 @@ public class DatabaseAccess {
 		PreparedStatement ps = con.prepareStatement(sql);
 		ResultSet results = ps.executeQuery();
 		
+		System.out.print("Found roles: ");
 		while (results.next()) {
+			System.out.print(results.getString("role")+" ");
 			int roleId = results.getInt("role_id");
 			String roleName = results.getString("role");
 			String roleDetails = results.getString("details");
 			roleByName.put(roleName, new RoleRecord(roleId,roleName,roleDetails));
 		}
+		System.out.println();
 	}
 	
 	
@@ -210,7 +216,7 @@ public class DatabaseAccess {
 	public static boolean validateUser(String user_id, String token) {
 		if (!makeConnection()) return false;
 		
-		System.out.println("DatabaseAccess: Validating session token.");
+		System.out.print("DatabaseAccess: Validating session token->");
 		
 		String sql = "SELECT count(*) as count FROM `"+DATABASE_NAME+"`.`"+TBL_ACTIVE_SESSION+"` WHERE username = ? and token = ?";
 		
@@ -221,13 +227,16 @@ public class DatabaseAccess {
 			ResultSet countResult = ps.executeQuery();
 			countResult.next();
 			
-			if ( countResult.getInt("count")  == 1 ) return true; // valid authority
-			return false;
+			if ( countResult.getInt("count")  == 1 ) {
+				System.out.println("Validated.");
+				return true; // valid authority
+			}
 			
 		} catch (SQLException e) {
 			System.out.println("SQLException: " + e.toString());
 		}
 		
+		System.out.println("Not Validated.");
 		return false;
 	}
 
@@ -302,8 +311,8 @@ public class DatabaseAccess {
 		} catch (Exception e) {
 			// role doesn't exist in database
 			// this is case sensitive
-			throw new DMSClientErrorException("Incorrect role.");
-//			return false;
+//			throw new DMSClientErrorException("Incorrect role.");
+			return false;
 		}
 		
 		// Refuse roles that aren't allowed to create users.
@@ -517,7 +526,7 @@ public class DatabaseAccess {
 			String token, String clientid, List<String> fieldNames,
 			String tableName) {
 		if (!makeConnection()) return null;
-		if (!validateUser(username, token)) return null;
+		if (!validateUser(username, token)) return null;//throw new NotFoundException("Not using a valid session");
 		return getUserRelatedDetails( fieldNames, tableName, clientid );
 	}
 
