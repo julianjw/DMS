@@ -109,21 +109,29 @@ public class PlanFactory {
 		List<ContactDetails> eContact = new ArrayList<ContactDetails>();
 		List<ContactDetails> iContact = new ArrayList<ContactDetails>();
 		
+		
 		for ( ContactDetails cd : allContacts ) {
 			
-			switch (cd.contactType) {
-			case "Family Member" :
-				fContact.add(cd);
-				break;
-				
-			case "Emergency Contact" :
-				eContact.add(cd);
-				break;
-				
-			case "Important Person" :
-				iContact.add(cd);
-				break;
-			}
+//			switch (cd.contactType) {
+//			case "Family Member" :
+//				fContact.add(cd);
+//				break;
+//				
+//			case "Emergency Contact" :
+//				eContact.add(cd);
+//				break;
+//				
+//			case "Important Person" :
+//				iContact.add(cd);
+//				break;
+//			}
+			
+			if ( cd.contactType == "Family Member" ) fContact.add(cd); else
+			if ( cd.contactType == "Emergency Contact" ) eContact.add(cd); else
+			if ( cd.contactType == "Important Person" ) iContact.add(cd);
+			
+			
+			
 		}
 		
 		return new LivingArrangements(
