@@ -38,7 +38,7 @@ public class RoleResource {
 		if( token.length() < 1 ) throw new DMSClientErrorException("No token supplied");
 		
 
-		System.out.println("Getting user's role.");
+		System.out.println("Getting all user roles.");
 		System.out.println("user_id: " + userId );
 		System.out.println("Token: "+token);
 		

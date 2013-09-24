@@ -520,4 +520,32 @@ public class DatabaseAccess {
 		if (!validateUser(username, token)) return null;
 		return getUserRelatedDetails( fieldNames, tableName, clientid );
 	}
+
+	
+	
+	public static List<String> getUserInfo(String username) {
+		
+		String sql = "select ui.username, ui.name, ui.password, r.role from user_info ui inner join roles r on ui.role_id=r.role_id where ui.username=?";
+		
+		List<String> userInfo = new ArrayList<String>();
+		
+		try {
+			
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, username);
+			ResultSet results = ps.executeQuery();
+			
+			results.next();
+			
+			userInfo.add(results.getString("username"));
+			userInfo.add(results.getString("name"));
+			userInfo.add(results.getString("password"));
+			userInfo.add(results.getString("role"));
+			
+		} catch (SQLException e) {
+			return null;
+		}
+		
+		return userInfo;
+	}
 }
