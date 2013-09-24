@@ -18,6 +18,7 @@ import qut.endeavour.rest.bean.plan.PersonalPlan;
 import qut.endeavour.rest.bean.plan.Planning;
 import qut.endeavour.rest.bean.plan.SupportRequired;
 import qut.endeavour.rest.factory.PlanFactory;
+import qut.endeavour.rest.utility.PlanUtility;
 
 @Path("/personalplan")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -124,15 +125,18 @@ public class PlanResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Verification setJSONEducationEmployment(
+			EducationEmployment ee,
 			@PathParam("username") String username,
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
 		
 		System.out.println("Writing: EducationEmployment");
-		System.out.println("Token: "+token);
-		System.out.println("Username: "+username);
-		System.out.println("clientId: "+clientid);
+//		System.out.println("Token: "+token);
+//		System.out.println("Username: "+username);
+//		System.out.println("clientId: "+clientid);
+		
+		PlanUtility.storeEducationEmployment(ee);
 		
 		return new Verification(Verification.Verified.SUCCESS);
 	}

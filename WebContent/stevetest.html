@@ -69,6 +69,7 @@
 </body>
 	<!--  This section is used to test POSTing -->
 	<script type='text/javascript'>
+		/*	
 		var DMSUser = new Object();
 		DMSUser.user_id = "new userid";
 		DMSUser.rName = "new user name";
@@ -78,6 +79,10 @@
 		var jsonText = JSON.stringify(DMSUser);
 		//alert(jsonText);
 		//$("#testing").html(jsonText);
+		
+		// ./rest/personalplan/educationemployment/staff/asdfasdfasdf/client
+		
+		
 		
 		/*
 		$.ajax({
@@ -90,5 +95,50 @@
 				//alert(textStatus);
 			}
 		}); /**/
+		
+		
+		
+		var education = new Object();
+		education.address="1000 metres across bridge";
+		education.communityAssistance="Quicksilver Sloths";
+		education.contactPerson="Steven John Turner";
+		education.eduSupportPlan="Get this stuff completed asap";
+		education.enrolledCourse="Professional Gaming";
+		education.institutionName="Not University of Queensland";
+		education.liaison="Julian Filip Johansson-Walder";
+		education.otherSupportRequired="No one else";
+		education.studySupport="Matt Hargreaves";
+		education.supportPersons="Sean Dryland";
+		education.teacher="Hans Michel Tolentino";
+		
+		var employment = new Object();
+		employment.address="321 Fake Street";
+		employment.annualLeave="Stay home and play video games and watch anime";
+		employment.arrangements="Part time only";
+		employment.contactPerson="Maria";
+		employment.employer="Endeavour";
+		employment.equipment="Enter a value here";
+		employment.position="Professional Gamer";
+		employment.sickLeave="1 month of sick leave";
+		employment.transport="Mainly Public Transport";
+		
+		var educationEmployment = new Object();
+		educationEmployment.education = education;
+		educationEmployment.employment = employment;
+		
+		var jsonText = JSON.stringify(educationEmployment);
+		
+		$.ajax({
+			url:'./rest/personalplan/educationemployment/staff/asdfasdfasdf/client',
+			type: 'POST',
+			contentType: 'application/json; charset=UTF-8',
+			dataType: 'json',
+			data: jsonText,
+			success: function(jqXHR, textStatus) {
+				//alert(textStatus);
+			}
+		}); /**/
+		
+		
 	</script>
 </html>
