@@ -12,7 +12,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 
+
+
 import qut.endeavour.rest.exception.DMSClientErrorException;
+import qut.endeavour.rest.exception.DMSException;
 
 
 public class DatabaseAccess {
@@ -556,5 +559,19 @@ public class DatabaseAccess {
 		}
 		
 		return userInfo;
+	}
+
+	/**
+	 * Get a prepared statement ready.
+	 * 
+	 * @param sql
+	 * @return
+	 * @throws SQLException
+	 * @throws DMSException 
+	 */
+	public static PreparedStatement createPreparedStatement(String sql) throws SQLException, DMSException {
+		if ( makeConnection() )
+		return con.prepareStatement(sql);
+		throw new DMSException("Cannot connect to database.");
 	}
 }
