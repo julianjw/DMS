@@ -1,6 +1,9 @@
 package qut.endeavour.rest.factory;
 
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +13,7 @@ import qut.endeavour.rest.bean.plan.Communication;
 import qut.endeavour.rest.bean.plan.EducationEmployment;
 import qut.endeavour.rest.bean.plan.HealthDetails;
 import qut.endeavour.rest.bean.plan.PersonalPlan;
+import qut.endeavour.rest.bean.plan.ExistingPlanDetails;
 import qut.endeavour.rest.bean.plan.Planning;
 import qut.endeavour.rest.bean.plan.SupportRequired;
 import qut.endeavour.rest.bean.plan.clientdetails.AlertInformation;
@@ -31,6 +35,9 @@ import qut.endeavour.rest.bean.plan.support.FinancialSupport;
 import qut.endeavour.rest.bean.plan.support.GeneralSupport;
 import qut.endeavour.rest.bean.plan.support.MobilityAndTransport;
 import qut.endeavour.rest.bean.plan.support.Relaxation;
+import qut.endeavour.rest.exception.DMSClientErrorException;
+import qut.endeavour.rest.exception.DMSException;
+import qut.endeavour.rest.exception.DMSNotFoundException;
 import qut.endeavour.rest.storage.DatabaseAccess;
 import qut.endeavour.rest.storage.DatabaseNames;
 
@@ -674,5 +681,45 @@ public class PlanFactory {
 			rows.add(row);
 		}
 		return rows;
+	}
+
+
+	public static List<ExistingPlanDetails> createExistingPlanDetails(
+			String username, String token, String clientid) {
+		// TODO Authenticate against roles.
+		if (!DatabaseAccess.createAuthentication(username, token)) throw new DMSClientErrorException("Not logged in.");
+		
+		
+		List<ExistingPlanDetails> details = new ArrayList<ExistingPlanDetails>();
+		
+		String sql =
+			"select ui.username, ui.name, d.dob, d.phoneno, d.mobileno"+
+			"from user_info ui inner join client_personal_details d"+
+			"on ui.user_id=d.user_id"+
+			"order by creation_date desc";
+		
+		try {
+			PreparedStatement ps = DatabaseAccess.createPreparedStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			while ( rs.next() ) {
+				ExistingPlanDetails d = new ExistingPlanDetails();
+				
+				d.setUser_id(rs.getString("username"));
+				d.setrName(rs.getString("name"));
+				d.setDob(rs.getDate("dob").toString());
+				d.setTelephone(rs.getString("phoneno"));
+				d.setMobile(rs.getString("mobileno"));
+				
+				details.add(d);
+				
+			}
+		} catch (SQLException e) {
+			throw new DMSClientErrorException("Error getting personal plan list.");
+		} catch (DMSException e) {
+			throw new DMSClientErrorException(e.toString());
+		}
+		
+		return details;
 	}
 }

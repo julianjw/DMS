@@ -1,6 +1,8 @@
 package qut.endeavour.rest.resources;
 
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,6 +15,7 @@ import qut.endeavour.rest.bean.Verification;
 import qut.endeavour.rest.bean.plan.ClientDetails;
 import qut.endeavour.rest.bean.plan.Communication;
 import qut.endeavour.rest.bean.plan.EducationEmployment;
+import qut.endeavour.rest.bean.plan.ExistingPlanDetails;
 import qut.endeavour.rest.bean.plan.HealthDetails;
 import qut.endeavour.rest.bean.plan.PersonalPlan;
 import qut.endeavour.rest.bean.plan.Planning;
@@ -257,6 +260,20 @@ public class PlanResource {
 		System.out.println("Requesting: PersonalPlan");
 
 		return PlanFactory.createPersonalPlan( username, token, clientid );
+	}
+	
+	@GET
+	@Path("/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<ExistingPlanDetails> JSONExistingPlanDetails(
+			@PathParam("username") String username,
+			@PathParam("token") String token,
+			@PathParam("clientid") String clientid
+			) {
+		
+		System.out.println("Requesting: Existing plan details");
+
+		return PlanFactory.createExistingPlanDetails( username, token, clientid );
 	}
 	
 }
