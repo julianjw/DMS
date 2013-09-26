@@ -10,6 +10,7 @@
 	
 	<div class="horizontalNav">
 	<ul>
+		<li id="search" class='pageNav'><a href='#search'>Search</a></li>
 		<li id="client" class="pageNav"><a href='#client'>Client Details</a></li>
 		<li id="health" class="pageNav"><a href='#health'>Health Details</a></li>
 		<li id="support" class="pageNav"><a href='#support'>Support Required</a></li>
@@ -20,10 +21,7 @@
 	</div>
 <jsp:include page="partials/body.html" flush="true" />
 	<!-- page content -->
-	<button id='PageNavPrev' name='PageNavPrev' >Previous</button>	
-	<button id='PageNavNext' name='PageNavNext' >Next</button>
-	<button id='PageNavSubmitB' name='PageNavSubmitB'>Submit</button>
-	
+	<div id="searchD" ><jsp:include page="personalplan/search.html" flush="true" /></div>	
 	<div id="clientD" class="hidden"><jsp:include page="personalplan/client.html" flush="true" /></div>
 	<div id="healthD" class="hidden"><jsp:include page="personalplan/health.html" flush="true" /></div>
 	<div id="supportD" class="hidden"><jsp:include page="personalplan/support.html" flush="true" /></div>
@@ -33,45 +31,67 @@
 <jsp:include page="partials/footer.html" flush="true" />
 <!-- Page specific scripts -->
 <script>
+function PageNavigation(dir, navArr) {
+	for(var i=0; i<navArr.length; i++) {
+		if($("#" + navArr[i]).css('display') != 'none') {
+			//perform page navigation
+			if(dir=="next") {
+				$(this).prev().show();
+				$("#" + navArr[i+1]).show();
+				//show the submit button and hide next button if we are on the last page
+				if(i+1==navArr.length-1) {
+					$(this).hide();
+					$(this).next('.submitButton').show();
+				}
+			}else if(dir=='prev') {
+				$(this).next().show();
+				$(this).next('.submitButton').hide();
+				$("#" + navArr[i-1]).show();
+				//hide the previous button if we are on the first page
+				if(i-1==0) {
+					$(this).hide();
+				}
+			}
+			//hide the current div
+			$("#" + navArr[i]).hide();
+			break;
+		}
+	}
+};
+
+
+
+
 $(document).ready(function(){
+	//page load
+	//hide nav buttons
+	$(".submitButton").hide();
+	$(".prevButton").hide();
 	
-	//click on the previous button
-	$("#PageNavPrev").click(function(){
-		PageNavigation('prev');
-	});
-
-	//click on the next button
-	$("#PageNavNext").click(function(){
-		PageNavigation('next');
-	});
-
-	//click on toggle class element
-	$(".toggle").click(function(event){
-		$(this).next().toggle();
-	});
 	
-	var navs = new Array("clientD", "healthD", "supportD", "communicationD", "educationD", "planningD");
+	//TESTING
+	$.cookie('client_id', 'coolbeans');
 	
-	//show the first navigation
-	$("#"+navs[0]).show();
 	
-
+	
+	var navs = new Array("searchD", "clientD", "healthD", "supportD", "communicationD", "educationD", "planningD");	
 	//bind the navigation clicks
 	$('li.pageNav').bind('click', function(){
-		
 		for (var i=0; i<navs.length-1;i++) {
-			
 			if (navs[i] != ($(this).attr('id')+"D")) {
 				$("#"+navs[i]).hide();
 			} else {
 				$("#"+navs[i]).show();
 			}
 		}
-		
-		//$("#"+$(this).attr('id')+"D").show();
-		
-		//$(this).attr('id');
 	});
+	
+	
+	//click on toggle class element
+	$(".toggle").click(function(event){
+		$(this).next().toggle();
+	});
+	
 });
 </script>
 </html></head>

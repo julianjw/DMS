@@ -1,16 +1,19 @@
+	<button id='PageNavPrevClient' class='prevButton' >Previous</button>	
+	<button id='PageNavNextClient' class='nextButton' >Next</button>
+	<button id='PageNavSubmitBClient' class='submitButton'>Submit</button>
+	
 	<div id='detailsD'>
-		<label for='profilepic' id='profilepicL' class='toggle'>Picture: </label>
-		<div id='ppD'>
-			<img id="ppPreview" class='pp' /><br />
-			<input type="file" name="profilepic" id='profilepic' onchange="PreviewImage();">
-			<p class='error' id='profilepicE'></p>
-		</div>
-		<br>
-		
 		<label for='nameT' id='nameL' class='toggle'>Name: </label>
 		<div id='nameD' >
 			<input type='text' name='nameT' id='nameT' />
 			<p class='error' id='nameE' ></p>
+		</div>
+		<br />
+		
+		<label for='IDT' id='IDL' class='toggle'>ID: </label>
+		<div id='IDTD'>
+			<input type='text' name='IDT' id='IDT' />
+			<p class='error' id='IDE' ></p>
 		</div>
 		<br />
 
@@ -21,17 +24,27 @@
 		</div>
 		<br />
 
-		<label for='IDT' id='IDL' class='toggle'>ID: </label>
-		<div id='IDTD'>
-			<input type='text' name='IDT' id='IDT' />
-			<p class='error' id='IDE' ></p>
+		<label for='dobT' id='dobL' class='toggle'>Date of Birth: </label>
+		<div id='dobD' >
+			<input type='text' name='dobT' id='dobT' placeholder='dd/mm/yyyy' />
 		</div>
 		<br />
-
-		<label for='addressT' id='addressL' class='toggle'>Address: </label>
-		<div id='addressD' >
-			<input type='text' name='addressT' id='addressT' />
-			<p class='error' id='AddressE' ></p>
+		
+		<label for='emailT' id='emailL' class='toggle'>Email: </label>
+		<div id='emailD' >
+			<input type='text' name='emailT' id='emailT' />
+		</div>
+		<br />
+		
+		<label for='phoneT' id='phoneL' class='toggle'>Home Phone: </label>
+		<div id='phoneD' >
+			<input type='text' name='phoneT' id='phoneT' />
+		</div>
+		<br />
+		
+		<label for='mobileT' id='mobileL' class='toggle'>Mobile: </label>
+		<div id='mobileD' >
+			<input type='text' name='mobileT' id='mobileT' />
 		</div>
 		<br />
 
@@ -266,73 +279,60 @@
 
 
 <script type='text/javascript'>
-	var pageDivNav = new Array("detailsD", "alertInfoD", "livingD", "formalD");
-
-	
-	function PageNavigation(dir) {
-		for(var i=0; i<pageDivNav.length; i++) {
-			if($("#" + pageDivNav[i]).css('display') != 'none') {
-				//perform page navigation
-				if(dir=="next") {
-					$("#PageNavPrev").show();
-					$("#" + pageDivNav[i+1]).show();
-					//show the submit button and hide next button if we are on the last page
-					if(i+1==pageDivNav.length-1) {
-						$("#PageNavNext").hide();
-						$("#PageNavSubmitB").show();
-					}
-				}else if(dir=='prev') {
-					$("#PageNavNext").show();
-					$("#PageNavSubmitB").hide();
-					$("#" + pageDivNav[i-1]).show();
-					//hide the previous button if we are on the first page
-					if(i-1==0) {
-						$("#PageNavPrev").hide();
-					}
-				}
-				//hide the current div
-				$("#" + pageDivNav[i]).hide();
-				break;
-			}
-		}
-	};
-
-	
-
-
-
+	var clientPageDivNav = new Array("detailsD", "alertInfoD", "livingD", "formalD");
 
 	$(document).ready(function() {
 		//page load
 		//hide necessary elements
-//MAKE THIS INTO A FUNCTION BECAUSE YOU DO IT ON EVERY PAGE AND HAVE AN ARRAY OF THE PAGE NAV DIVS
-		$("#PageNavSubmitB").hide();
-		$("#PageNavPrev").hide();
 		$("#alertInfoD").hide();
 		$("#livingD").hide();
 		$("#formalD").hide();
+		
+		//click on the previous button
+		$("#PageNavPrevClient").click(function(){
+			PageNavigation('prev', clientPageDivNav);
+		});
 
-//populate date field this will need to be changed when u start pulling data from steven
+		//click on the next button
+		$("#PageNavNextClient").click(function(){
+			PageNavigation('next', clientPageDivNav);
+		});
+		
+		
+		//populate date field this will need to be changed when u start pulling data from steven
 		var d =  new Date();
 		var month = d.getMonth()+1;
 		var day = d.getDate();
 		var date = ((''+day).length<2 ? '0' : '') + day + '/' + ((''+month).length<2 ? '0' : '') + month + '/' + d.getFullYear();
 		$("#createDateT").val(date);
 		
-		//click on the previous button
-		$("#PageNavPrev").click(function(){
-			PageNavigation('prev');
+		
+		
+		
+		//page load
+		$.ajax({
+			url: "./rest/personalplan/clientdetails/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + $.cookie('client_id'),
+			type:"get",
+			contentType: "application/json",
+			success: function(d) {			
+				$("#nicknameT").val(d.clientDetails.personDetails.preferredName);
+				$("#createDateT").val(d.clientDetails.personDetails.creationDate);
+				$("#reviceDateT").val(d.clientDetails.personDetails.reviewDate);
+				$("#phoneT").val(d.clientDetails.personDetails.phoneNumber);
+				$("#mobileT").val(d.clientDetails.personDetails.mobileNumber);
+				$("#emailT").val(d.clientDetails.personDetails.email);
+				$("#dobT").val(d.clientDetails.personDetails.dob);
+			  
+			},
+			error: function(xhr) {
+				// do something to handle error
+				alert("error");
+			}
 		});
-
-		//click on the next button
-		$("#PageNavNext").click(function(){
-			PageNavigation('next');
-		});
-
-		//click on toggle class element
-		$(".toggle").click(function(event){
-			$(this).next().toggle();
-		});
+		
+		
+		
+		
 		
 		
 		//click on the submit button
@@ -375,13 +375,14 @@
 			livingArangements.sickContact = $("#sickContactT").val();
 			
 			var personDetails = new Object();
-			personDetails.address = $("#addressT").val();
-			personDetails.clientId = $("#IDT").val();
-			personDetails.clientName = $("#nameT").val();
 			personDetails.creationDate = $("#createDateT").val();
-			personDetails.photoUrl = $("#profilepic").val();
 			personDetails.preferredName = $("#nicknameT").val();
 			personDetails.reviewDate = $("#reviceDateT").val();
+			personalDetails.dob = $("#dobT").val();
+			personalDetails.email = $("#emailT").val();
+			personalDetails.phoneNumber = $("#phoneT").val();
+			personalDetails.mobileNumber = $("#mobileT").val();
+			
 			
 			var clientDetails = new Object();
 			clientDetails.alertInformation = alertInformation;

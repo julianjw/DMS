@@ -1,6 +1,6 @@
-	<button id='PageNavPrev' name='PageNavPrev' >Previous</button>	
-	<button id='PageNavNext' name='PageNavNext' >Next</button>
-	<button id='PageNavSubmitB' name='PageNavSubmitB'>Submit</button>
+	<button id='PageNavPrevComm' class='prevButton' >Previous</button>	
+	<button id='PageNavNextComm' class='nextButton' >Next</button>
+	<button id='PageNavSubmitBComm' class='submitButton'>Submit</button>
 	<div id='testing'></div>
 	
 	<div id='commD'>
@@ -47,47 +47,14 @@
 
 
 <script type='text/javascript'>
-	var pageDivNav = new Array("commD");
-
-	function PageNavigation(dir) {
-		for(var i=0; i<pageDivNav.length; i++) {
-			if($("#" + pageDivNav[i]).css('display') != 'none') {
-				//perform page navigation
-				if(dir=="next") {
-					$("#PageNavPrev").show();
-					$("#" + pageDivNav[i+1]).show();
-					//show the submit button and hide next button if we are on the last page
-					if(i+1==pageDivNav.length-1) {
-						$("#PageNavNext").hide();
-						$("#PageNavSubmitB").show();
-					}
-				}else if(dir=='prev') {
-					$("#PageNavNext").show();
-					$("#PageNavSubmitB").hide();
-					$("#" + pageDivNav[i-1]).show();
-					//hide the previous button if we are on the first page
-					if(i-1==0) {
-						$("#PageNavPrev").hide();
-					}
-				}
-				//hide the current div
-				$("#" + pageDivNav[i]).hide();
-				break;
-			}
-		}
-	};		
-
-
 	$(document).ready(function() {
 		//page load
-		//hide necessary elements
-//MAKE THIS INTO A FUNCTION BECAUSE YOU DO IT ON EVERY PAGE AND HAVE AN ARRAY OF THE PAGE NAV DIVS
-		$("#PageNavNext").hide();
-		$("#PageNavPrev").hide();
-
+		//show submit button (only have 1 tab)
+		$("PageNavSubmitBComm").show();
+		
 		
 		//click on the submit button
-		$("#PageNavSubmitB").click(function(){
+		$("#PageNavSubmitBComm").click(function(){
 			var comsAndDecisionMaking = new Object();
 			comsAndDecisionMaking.dislikes = $("#dislikesT").val();
 			comsAndDecisionMaking.goodTopics = $("#goodTopicsT").val();

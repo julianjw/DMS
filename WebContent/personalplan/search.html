@@ -1,0 +1,61 @@
+<div id='searchD'>
+	<label for='queryT' id='queryL' class='toggle'>ID: </label>
+	<input type='text' name='queryT' id='queryT' />
+	<button id='queryB'>Search</button>
+	
+	<div id='searchResults'>
+		<table border='1'>
+		<tr>
+		<th>Client ID</th>
+		<th>Name</th>
+		<th>DOB</th>
+		<th>Address</th>
+		<th>Telephone</th>
+		</tr>
+		
+		</table>
+	</div>
+</div>
+
+<script type='text/javascript'>
+$(document).ready(function(){
+	//page loads
+	//get list of existing clients
+	$.ajax({
+		url: "./rest/personalplan/allclientswithplans/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
+		type:"get",
+		contentType: "application/json",
+		success: function(d) {
+		    
+			alert(d.ExistingPlanDetails[0].rName);
+			
+			//WHEN THEY CLICK ON A PARTICULAR CUSTOMER ID MAKE A COOKIE
+		  
+		},
+		error: function(xhr) {
+			// do something to handle error
+			alert("error");
+		}
+	});
+	
+	
+	
+	//click on search button
+	$("#queryB").click(function(){
+		$.ajax({
+			url: "./rest/personalplan/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + $("#queryT").val(),
+			type:"get",
+			contentType: "application/json",
+			success: function(d) {
+			    alert(d.clientDetails.personalDetails.preferredName);
+				
+			  
+			},
+			error: function(xhr) {
+				// do something to handle error
+				alert("error");
+			}
+		});
+	});
+});
+</script>

@@ -1,7 +1,6 @@
-	<button id='PageNavPrev' name='PageNavPrev' >Previous</button>	
-	<button id='PageNavNext' name='PageNavNext' >Next</button>
-	<button id='PageNavSubmitB' name='PageNavSubmitB'>Submit</button>
-	<div id='testing'></div>
+	<button id='PageNavPrevSupport' class='nextButton' >Previous</button>	
+	<button id='PageNavNextSupport' class='prevButton' >Next</button>
+	<button id='PageNavSubmitBSupport' class='submitButton'>Submit</button>
 	
 	<div id='supportD'>
 		<label for='crowdT' class='toggle'>Crowd Safety: </label>
@@ -268,122 +267,29 @@
 
 
 <script type='text/javascript'>
-	var pageDivNav = new Array("supportD", "mobilityD", "financialD", "activitiesD", "relaxationD");
+	var supportPageDivNav = new Array("supportD", "mobilityD", "financialD", "activitiesD", "relaxationD");
 
-	function PageNavigation(dir) {
-		for(var i=0; i<pageDivNav.length; i++) {
-			if($("#" + pageDivNav[i]).css('display') != 'none') {
-				//perform page navigation
-				if(dir=="next") {
-					$("#PageNavPrev").show();
-					$("#" + pageDivNav[i+1]).show();
-					//show the submit button and hide next button if we are on the last page
-					if(i+1==pageDivNav.length-1) {
-						$("#PageNavNext").hide();
-						$("#PageNavSubmitB").show();
-					}
-				}else if(dir=='prev') {
-					$("#PageNavNext").show();
-					$("#PageNavSubmitB").hide();
-					$("#" + pageDivNav[i-1]).show();
-					//hide the previous button if we are on the first page
-					if(i-1==0) {
-						$("#PageNavPrev").hide();
-					}
-				}
-				//hide the current div
-				$("#" + pageDivNav[i]).hide();
-				break;
-			}
-		}
-	};
-
-
+	
 
 	$(document).ready(function() {
 		//page load
-		$("#PageNavSubmitB").hide();
-		$("#PageNavPrev").hide();
 		$("#mobilityD").hide();
 		$("#financialD").hide();
 		$("#activitiesD").hide();
 		$("#relaxationD").hide();
 		
-		"supportRequired": {
-			supportRequired.dailyActivities": {
-				dailyActivities.bathing": "C",
-				dailyActivities.bedTime": "C",
-				dailyActivities.cleaning": "C",
-				dailyActivities.cooking": "C",
-				dailyActivities.dressing": "C",
-				dailyActivities.friday": "C",
-				dailyActivities.mensuration": "C",
-				dailyActivities.monday": "C",
-				dailyActivities.otherThings": "C",
-				dailyActivities.routineAfternoon": "C",
-				dailyActivities.routineMealTime": "C",
-				dailyActivities.routineMorning": "C",
-				dailyActivities.routineSleeping": "C",
-				dailyActivities.routineWeekend": "C",
-				dailyActivities.saturday": "C",
-				dailyActivities.service": "C",
-				dailyActivities.sleeping": "C",
-				dailyActivities.sunday": "C",
-				dailyActivities.thursday": "C",
-				dailyActivities.toileting": "C",
-				dailyActivities.tuesday": "C",
-				dailyActivities.wednesday": "C"
-	        },
-	        supportRequired.financialSupport": {
-	            "budgetBills": "C",
-	            "budgetEmergency": "C",
-	            "budgetExpend": "C",
-	            "budgetGoals": "C",
-	            "budgetGroceries": "C",
-	            "budgetHouse": "C",
-	            "budgetSupportNetwork": "C",
-	            "budgetTransport": "C",
-	            "budgetUtilities": "C",
-	            "budgeting": "C",
-	            "financialAdmin": "C",
-	            "moneyHandlingSupport": "C",
-	            "otherRequirements": "C",
-	            "personalItemsSupport": "C"
-	        },
-	        supportRequired.generalSupport": {
-	            generalSupport.beliefs": "C",
-	            generalSupport.communications": "C",
-	            generalSupport.crowdSafety": "C",
-	            generalSupport.crowds": "C",
-	            generalSupport.eatingOut": "C",
-	            generalSupport.hazardRecognition": "C",
-	            generalSupport.leisure": "C",
-	            generalSupport.moneyHandling": "C",
-	            "otherSafetyInfo": "C",
-	            "socialNetworks": "C",
-	            "strangerDanger": "C",
-	            "usingApplicances": "C",
-	            "usingChemical": "C"
-	        },
-	        supportRequired.mobilityAndTransport": {
-	            mobilityAndTransport.height": "C",
-	            mobilityAndTransport.liftsAndEscalators": "C",
-	            mobilityAndTransport.mobilityAids": "C",
-	            mobilityAndTransport.otherTravelSupport": "C",
-	            mobilityAndTransport.publicTransport": "C",
-	            mobilityAndTransport.roadSafetySkills": "C",
-	            mobilityAndTransport.travelPreferences": "C",
-	            mobilityAndTransport.unevenSurfaces": "C"
-	        },
-	        supportRequired.relaxation": {
-	        	
-	        	relaxation.activities": "C",
-	        	relaxation.movie": "C",
-	        	relaxation.music": "C",
-	        	relaxation.otherActivities": "C",
-	        	relaxation.TVShow": "C"
-	        }
-	    }
+		//click on the previous button
+		$("#PageNavPrevClient").click(function(){
+			PageNavigation('prev', supportPageDivNav);
+		});
+
+		//click on the next button
+		$("#PageNavNextClient").click(function(){
+			PageNavigation('next', supportPageDivNav);
+		});
+		
+		
+		
 		
 		//click on the submit button
 		$("#PageNavSubmitB").click(function(){
@@ -403,7 +309,6 @@
 			communication.comsAndDecisionMaking = comsAndDecisionMaking;
 			
 			var jsonText = JSON.stringify(communication);
-			$("#testing").html(jsonText);
 			
 			$.ajax({
 				url:'./rest/personalplan/communication/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/1',
