@@ -214,7 +214,7 @@ public class DatabaseAccess {
 	 * 
 	 * @param token
 	 * @param user_id
-	 * @return
+	 * @return true if user logged in
 	 */
 	public static boolean validateUser(String user_id, String token) {
 		if (!makeConnection()) return false;

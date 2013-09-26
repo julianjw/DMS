@@ -685,18 +685,18 @@ public class PlanFactory {
 
 
 	public static List<ExistingPlanDetails> createExistingPlanDetails(
-			String username, String token, String clientid) {
+			String username, String token) {
 		// TODO Authenticate against roles.
-		if (!DatabaseAccess.createAuthentication(username, token)) throw new DMSClientErrorException("Not logged in.");
-		
+		if (!DatabaseAccess.validateUser(username, token)) throw new DMSClientErrorException("Not logged in.");
 		
 		List<ExistingPlanDetails> details = new ArrayList<ExistingPlanDetails>();
 		
 		String sql =
-			"select ui.username, ui.name, d.dob, d.phoneno, d.mobileno"+
-			"from user_info ui inner join client_personal_details d"+
-			"on ui.user_id=d.user_id"+
-			"order by creation_date desc";
+			"select ui.username, ui.name, d.dob, d.phoneno, d.mobileno "+
+			"from user_info ui inner join client_personal_details d "+
+			"on ui.user_id=d.user_id "+
+			"order by creation_date desc;";
+		
 		
 		try {
 			PreparedStatement ps = DatabaseAccess.createPreparedStatement(sql);

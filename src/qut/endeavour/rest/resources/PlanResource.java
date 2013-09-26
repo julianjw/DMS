@@ -262,18 +262,18 @@ public class PlanResource {
 		return PlanFactory.createPersonalPlan( username, token, clientid );
 	}
 	
+	
 	@GET
-	@Path("/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
+	@Path("allclientswithplans/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<ExistingPlanDetails> JSONExistingPlanDetails(
 			@PathParam("username") String username,
-			@PathParam("token") String token,
-			@PathParam("clientid") String clientid
+			@PathParam("token") String token
 			) {
-		
+
 		System.out.println("Requesting: Existing plan details");
 
-		return PlanFactory.createExistingPlanDetails( username, token, clientid );
-	}
+		return PlanFactory.createExistingPlanDetails( username, token );
+	}/**/
 	
 }
