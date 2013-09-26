@@ -56,7 +56,7 @@ $(document).ready(function(){
 		var details = new Object();
 		details.user_id = $("#createUsername").val();
 		details.password = $("#createPassword").val();
-		details.rName=$("#createName").val();
+		details.rname=$("#createName").val();
 		details.role = $("#createRole").val();
 
 		var jsonText = JSON.stringify(details);
@@ -67,9 +67,12 @@ $(document).ready(function(){
 			contentType: 'application/json; charset=UTF-8',
 			dataType: 'json',
 			data: jsonText,
-			complete: function(jqXHR, textStatus) {
+			success: function(jqXHR, textStatus) {
 				alert("User Created");
 				document.location.reload(true);
+			},
+			error : function(jqXHR) {
+				alert(jqXHR);
 			}
 		});
 	});

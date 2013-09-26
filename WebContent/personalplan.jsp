@@ -23,11 +23,11 @@
 	<!-- page content -->
 	<div id="searchD" ><jsp:include page="personalplan/search.html" flush="true" /></div>	
 	<div id="clientD" class="hidden"><jsp:include page="personalplan/client.html" flush="true" /></div>
-	<div id="healthD" class="hidden"><jsp:include page="personalplan/health.html" flush="true" /></div>
+	<%-- <div id="healthD" class="hidden"><jsp:include page="personalplan/health.html" flush="true" /></div>
 	<div id="supportD" class="hidden"><jsp:include page="personalplan/support.html" flush="true" /></div>
 	<div id="communicationD" class="hidden"><jsp:include page="personalplan/communication.html" flush="true" /></div>
 	<div id="educationD" class="hidden"><jsp:include page="personalplan/education.html" flush="true" /></div>
- 	<div id="planningD" class="hidden"><jsp:include page="personalplan/planning.html" flush="true" /></div>
+ 	<div id="planningD" class="hidden"><jsp:include page="personalplan/planning.html" flush="true" /></div> --%>
 <jsp:include page="partials/footer.html" flush="true" />
 <!-- Page specific scripts -->
 <script>

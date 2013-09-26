@@ -13,9 +13,11 @@
         		$(document).ready(function(){
         			$("#con-head-worder").html("<h2>" + $.cookie('user_id') + "</h2>");
         			$("#con-head-worder").append("<button id='logout'>Log Out</button>");
+        			
+        			
         			//add elements to page based off role
         			//support worker
-        			if($.cookie('user_role')=="sw") {
+        			if($.cookie('user_role')!="client" ) {
         				$("#main-nav").append("<li><a href='createuser.jsp'>Create User</a></li>");
         			}
         			

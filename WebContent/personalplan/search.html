@@ -3,17 +3,7 @@
 	<input type='text' name='queryT' id='queryT' />
 	<button id='queryB'>Search</button>
 	
-	<div id='searchResults'>
-		<table id='searchResultsT' border='1'>
-		<tr>
-		<th>Client ID</th>
-		<th>Name</th>
-		<th>DOB</th>
-		<th>Mobile</th>
-		<th>Telephone</th>
-		</tr>
-		</table>
-	</div>
+	<div id='searchResults'></div>
 </div>
 
 <script type='text/javascript'>
@@ -21,31 +11,57 @@ $(document).ready(function(){
 	//page loads
 	//get list of existing clients
 	$.ajax({
+		url: "./rest/personalplan/allclientswithplans/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
+		type:"get",
+		contentType: "application/json",
+		success: function(d) {
+			$("#searchResults").html("");
+			var content = "<table>"
+			content += "<tr><th>Client ID</th><th>Name</th><th>DOB</th><th>Mobile</th><th>Telephone</th></tr>";
+			for (var i = 0; i < d.existingPlanDetails.length; i++) {
+				content += "<tr><td>" + d.existingPlanDetails[i].user_id + "</td>";
+				content += "<td>" + d.existingPlanDetails[i].rName + "</td>";
+				content += "<td>" + d.existingPlanDetails[i].dob + "</td>";
+				content += "<td>" + d.existingPlanDetails[i].mobile + "</td>";
+				content += "<td>" + d.existingPlanDetails[i].telephone + "</td></tr>";
+			}
+			content += "</table>";
+			$("#searchResults").append(content);
+		},
+		error: function(xhr) {
+			// do something to handle error
+			alert("error getting existing personal plan details");
+		}
+	});
+	
+	
+	//click on search button
+	$("#queryB").click(function(){
+		$.ajax({
 			url: "./rest/personalplan/allclientswithplans/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
 			type:"get",
 			contentType: "application/json",
 			success: function(d) {
-				alert(d.existingPlanDetails.length);
+				$("#searchResults").html("");
+				var content = "<table>"
+				content += "<tr><th>Client ID</th><th>Name</th><th>DOB</th><th>Mobile</th><th>Telephone</th></tr>";
 				for (var i = 0; i < d.existingPlanDetails.length; i++) {
-					$("#searchResultsT").append("<tr>");
-					$("#searchResultsT").append("<td>" + d.existingPlanDetails[i].user_id + "</td>");
-					$("#searchResultsT").append("<td>" + d.existingPlanDetails[i].rName + "</td>");
-					$("#searchResultsT").append("<td>" + d.existingPlanDetails[i].dob + "</td>");
-					$("#searchResultsT").append("<td>" + d.existingPlanDetails[i].mobile + "</td>");
-					$("#searchResultsT").append("<td>" + d.existingPlanDetails[i].telephone + "</td>");
-					$("#searchResultsT").append("</tr>");
+					if(d.existingPlanDetails[i].user_id == $("#queryT").val() || $("#queryT").val()=="") {
+						content += "<tr><td>" + d.existingPlanDetails[i].user_id + "</td>";
+						content += "<td>" + d.existingPlanDetails[i].rName + "</td>";
+						content += "<td>" + d.existingPlanDetails[i].dob + "</td>";
+						content += "<td>" + d.existingPlanDetails[i].mobile + "</td>";
+						content += "<td>" + d.existingPlanDetails[i].telephone + "</td></tr>";
+					}
 				}
+				content += "</table>";
+				$("#searchResults").append(content);
 			},
 			error: function(xhr) {
 				// do something to handle error
 				alert("error getting existing personal plan details");
 			}
 		});
-	
-	
-	//click on search button
-	$("#queryB").click(function(){
-		
 	});
 });
 </script>
