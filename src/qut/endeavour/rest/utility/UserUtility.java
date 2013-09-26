@@ -9,6 +9,7 @@ public class UserUtility {
 		String newUser_id = user.getUser_id();
 		String password = user.getPassword();
 		String role_name = user.getRole();
+		
 		return DatabaseAccess.createUser(currentUser_id, token, personName, newUser_id, password, role_name);
 	}
 }

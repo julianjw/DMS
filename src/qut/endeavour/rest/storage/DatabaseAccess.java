@@ -14,6 +14,7 @@ import java.util.Map.Entry;
 
 
 
+
 import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.exception.DMSException;
 
@@ -78,7 +79,7 @@ public class DatabaseAccess {
 		List<String> roles = new ArrayList<String>();
 		if ( validateUser(user_id, token) ) {
 			for ( Entry<String,RoleRecord> record : roleByName.entrySet()){
-				roles.add(record.getValue().role.toLowerCase());
+				roles.add( record.getValue().role.toLowerCase() );
 			}
 		}
 		return roles;
@@ -154,8 +155,10 @@ public class DatabaseAccess {
 			int roleId = results.getInt("role_id");
 			String roleName = results.getString("role");
 			String roleDetails = results.getString("details");
-			roleByName.put(roleName, new RoleRecord(roleId,roleName,roleDetails));
+			roleByName.put(roleName.toLowerCase(), new RoleRecord(roleId,roleName,roleDetails));
+//			roleByName.put(Integer.toString(roleId), new RoleRecord(roleId,roleName,roleDetails));
 		}
+		
 		System.out.println();
 	}
 	
@@ -307,20 +310,37 @@ public class DatabaseAccess {
 	public static boolean createUser( String currentUser_id, String token, String personName, String newUser_id, String password, String role_name ){
 		String currentUserRole = getRole(currentUser_id, token);
 		
+		//TODO THIS IS BROKEN
+		
+		System.out.println("current user: "+currentUser_id);
+		System.out.println("new person's name: "+personName);
+		System.out.println("new username: "+newUser_id);
+		System.out.println("new person's role: "+password);
+		
+		System.out.println("Role name: \"" + role_name + "\"");
+		
 		int role_id;
 		
+//		
+//		for ( Entry<String,RoleRecord> es : roleByName.entrySet() ) {
+//			System.out.println("Role Record- Key: "+es.getKey()+", id: "+es.getValue().roleId+", role: "+es.getValue().role+", roleName: "+es.getValue().details);
+//		}
+		
+		
 		try {
-			role_id = roleByName.get(role_name).roleId;
+			role_id = roleByName.get(role_name.toLowerCase()).roleId;
 		} catch (Exception e) {
 			// role doesn't exist in database
 			// this is case sensitive
 //			throw new DMSClientErrorException("Incorrect role.");
-			return false;
+			 throw new DMSClientErrorException("Bad user role");//return false;
 		}
 		
+		System.out.println("Role id: " + Integer.toString(role_id));
+		
 		// Refuse roles that aren't allowed to create users.
-		if ( currentUserRole.equals("") ) return false;
-		if ( currentUserRole.equals("CLIENT") ) return false;
+		if ( currentUserRole.equals("") ) throw new DMSClientErrorException("Current cannot create a new user");//return false;
+		if ( currentUserRole.equals("CLIENT") ) throw new DMSClientErrorException("Current cannot create a new user");// return false;
 		
 		// TODO check if they are allowed to make a new client
 		
@@ -328,8 +348,10 @@ public class DatabaseAccess {
 		
 		System.out.println("DatabaseAccess: Creating new user.");
 		
-		String sql = "INSERT INTO `"+DATABASE_NAME+"`.`"+TBL_ACTIVE_SESSION+"` (`user_id`, `name`, `username`, `password`, `role_id`) VALUES (NULL, ?, ?, ?, ?);";
+		String sql = "INSERT INTO `"+DATABASE_NAME+"`.`user_info` (`user_id`, `name`, `username`, `password`, `role_id`) VALUES (NULL, ?, ?, ?, ?);";
 		PreparedStatement ps;
+		
+		System.out.println(sql);
 		
 		try {
 			ps = con.prepareStatement(sql);
@@ -344,7 +366,8 @@ public class DatabaseAccess {
 			System.out.println("DatabaseAccess: " +  e.toString());
 		}
 		
-		return false;
+		 throw new DMSClientErrorException("Unable to update database with new user information");
+//		return false;
 	}
 	
 	

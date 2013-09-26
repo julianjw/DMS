@@ -56,6 +56,8 @@ public class UsersResource {
 			@PathParam("token") String token
 			) {
 		
+//		throw new DMSClientErrorException("asldjf");
+		
 //		System.out.println("Existing user id: "+currentUser_id);
 //		System.out.println("Existing user auth: "+token);
 //		
@@ -63,6 +65,9 @@ public class UsersResource {
 //		System.out.println("new user name:"+newUser.getrName());
 //		System.out.println("new user password:"+newUser.getPassword());
 //		System.out.println("new user role:"+newUser.getRole());
+		
+		
+		
 		
 		// sanity checks
 		if( currentUser_id == null ) throw new DMSClientErrorException("No user_id supplied");
