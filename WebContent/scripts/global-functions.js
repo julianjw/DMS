@@ -25,14 +25,12 @@ function checkRole() {
 			type:"get",
 			contentType: "application/json",
 			data:{auth_token:$.cookie('auth_token'),user_id:$.cookie('user_id')},
-			success: function(response) {
-			    
-				//alert(response.role);
-			  
+			success: function(d) {  
+				$.cookie('user_role', d.role);
 			},
 			error: function(xhr) {
 				// do something to handle error
-				alert("no");
+				alert("error getting role");
 			}
 		});
 	}else {

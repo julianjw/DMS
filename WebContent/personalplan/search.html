@@ -4,15 +4,14 @@
 	<button id='queryB'>Search</button>
 	
 	<div id='searchResults'>
-		<table border='1'>
+		<table id='searchResultsT' border='1'>
 		<tr>
 		<th>Client ID</th>
 		<th>Name</th>
 		<th>DOB</th>
-		<th>Address</th>
+		<th>Mobile</th>
 		<th>Telephone</th>
 		</tr>
-		
 		</table>
 	</div>
 </div>
@@ -22,40 +21,31 @@ $(document).ready(function(){
 	//page loads
 	//get list of existing clients
 	$.ajax({
-		url: "./rest/personalplan/allclientswithplans/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
-		type:"get",
-		contentType: "application/json",
-		success: function(d) {
-		    
-			alert(d.ExistingPlanDetails[0].rName);
-			
-			//WHEN THEY CLICK ON A PARTICULAR CUSTOMER ID MAKE A COOKIE
-		  
-		},
-		error: function(xhr) {
-			// do something to handle error
-			alert("error");
-		}
-	});
-	
+			url: "./rest/personalplan/allclientswithplans/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
+			type:"get",
+			contentType: "application/json",
+			success: function(d) {
+				alert(d.existingPlanDetails.length);
+				for (var i = 0; i < d.existingPlanDetails.length; i++) {
+					$("#searchResultsT").append("<tr>");
+					$("#searchResultsT").append("<td>" + d.existingPlanDetails[i].user_id + "</td>");
+					$("#searchResultsT").append("<td>" + d.existingPlanDetails[i].rName + "</td>");
+					$("#searchResultsT").append("<td>" + d.existingPlanDetails[i].dob + "</td>");
+					$("#searchResultsT").append("<td>" + d.existingPlanDetails[i].mobile + "</td>");
+					$("#searchResultsT").append("<td>" + d.existingPlanDetails[i].telephone + "</td>");
+					$("#searchResultsT").append("</tr>");
+				}
+			},
+			error: function(xhr) {
+				// do something to handle error
+				alert("error getting existing personal plan details");
+			}
+		});
 	
 	
 	//click on search button
 	$("#queryB").click(function(){
-		$.ajax({
-			url: "./rest/personalplan/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + $("#queryT").val(),
-			type:"get",
-			contentType: "application/json",
-			success: function(d) {
-			    alert(d.clientDetails.personalDetails.preferredName);
-				
-			  
-			},
-			error: function(xhr) {
-				// do something to handle error
-				alert("error");
-			}
-		});
+		
 	});
 });
 </script>
