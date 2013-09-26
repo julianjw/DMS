@@ -12,9 +12,45 @@
 		//create cookies
 		$.cookie('user_id', user_id);
 		$.cookie('auth_token', auth_token, { expires: 1});
-
-		//re-direct to index page
-		window.location.replace("http://" + window.location.hostname + ":8080/EndeavourDMS/index.jsp");
 		
+// 		var role = "";
+		
+// 		$.ajax({
+// 			url: "./rest/role/",
+// 			type:"get",
+// 			contentType: "application/json",
+// 			data:{auth_token:$.cookie('auth_token'),user_id:$.cookie('user_id')},
+// 			success: function(response) {
+// 				// do something
+// //			    for (res in response) {
+// //			    	alert(response[0]);
+// //			    }
+				
+// 				role = response.role;
+			    
+// 			    //alert(response.responseText);
+// 				//alert(response.role);
+// 			    //Query the jQuery object for the values
+			  
+// 			},
+// 			error: function(xhr) {
+// 				// do something to handle error
+// 				alert("no");
+// 			}
+// 		});
+		
+		//re-direct to index page
+// 		if (role == "client") {
+			
+// 			window.location.replace("http://" + window.location.hostname + ":8080/EndeavourDMS/indexclient.jsp");
+
+// 		} else if (role == "sw") {
+			
+// 			window.location.replace("http://" + window.location.hostname + ":8080/EndeavourDMS/indexsupportworker.jsp");
+
+// 		} else {
+
+			window.location.replace("http://" + window.location.hostname + ":8080/EndeavourDMS/index.jsp");
+// 		}
 	});
 </script>

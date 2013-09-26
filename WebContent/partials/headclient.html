@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <title>Document Management System</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script type='text/javascript' src='scripts/jquery.js' ></script>
+        <script type='text/javascript' src='scripts/jquery.cookie.js' ></script>
+        <script type='text/javascript' src='scripts/json2.js' ></script>
+        <script type='text/javascript' src='scripts/global-functions.js' ></script>
+        <script type='text/javascript'>
+        	if(document.URL!="http://"+window.location.hostname + ":8080/EndeavourDMS/login.jsp") {
+        		checkRole();
+        		$(document).ready(function(){
+        			$("#con-head-worder").html("<h2>" + $.cookie('user_id') + "</h2>");
+        			$("#con-head-worder").append("<button id='logout'>Log Out</button>");	
+        			//click on logout button
+        			$("#logout").click(function(){
+        				$.removeCookie('user_id');
+        				$.removeCookie('auth_token');
+        				window.location.replace("http://" + window.location.hostname + ":8080/EndeavourDMS/login.jsp");
+        			});
+        		});
+        	}
+        	if(document.URL!="http://"+window.location.hostname + ":8080/EndeavourDMS/personalplan.jsp") {
+        		if ($.cookie('currentClientPlanId') != null) {
+        			$.removeCookie('currentClientPlanId');
+        		}
+        	}
+        </script>
+	</head>
+	
+	<body>
+        
+        
+        <div id="con-header">
+            <div id="con-head-logo"> <img src="images/endeavourLogo.jpg"> </div>
+            <div id="con-head-quote"> <em>"quote"</em> </div>
+            <div id="con-head-worder"> <h2>user</h2></div>
+		</div> 
+
+        <div id="con-body">
+            <div id="con-body-nav">
+             	<h2>Main Page<br />Navigation Menu</h2> 
+                <ul id="main-nav">
+				<li><a href="indexclient.jsp">Home</a></li>
+				<li><a href="goals.jsp">Goals</a></li>
+				</ul>
+            </div>
+            <div id="con-body-main">
+            	<div id="con-body-main-title"> <h2>
+                   

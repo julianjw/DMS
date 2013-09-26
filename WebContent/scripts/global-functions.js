@@ -29,6 +29,8 @@ function checkRole() {
 //			alert($.cookie('role'));
 //		}, "json");
 		
+		var role = "";
+		
 		$.ajax({
 			url: "./rest/role/",
 			type:"get",
@@ -39,9 +41,11 @@ function checkRole() {
 //			    for (res in response) {
 //			    	alert(response[0]);
 //			    }
+				
+				role = response.role;
 			    
 			    //alert(response.responseText);
-				alert(response.role);
+				//alert(response.role);
 			    //Query the jQuery object for the values
 			  
 			},
@@ -50,7 +54,31 @@ function checkRole() {
 				alert("no");
 			}
 		});
-//		
+		
+//		if (role == "client") {
+//			
+//			if(document.URL!="http://"+window.location.hostname + ":8080/EndeavourDMS/indexclient.jsp" &&
+//			   document.URL!="http://"+window.location.hostname + ":8080/EndeavourDMS/goals.jsp") {
+//				
+//				alert("You do not have the required privileges to access this page");
+//				window.location.replace("http://" + window.location.hostname + ":8080/EndeavourDMS/indexclient.jsp");
+//
+//			}
+//			
+//		} else if (role == "sw") {
+//			
+//			if(document.URL!="http://"+window.location.hostname + ":8080/EndeavourDMS/indexsupportworker.jsp" &&
+//			   document.URL!="http://"+window.location.hostname + ":8080/EndeavourDMS/goals.jsp" &&
+//			   document.URL!="http://"+window.location.hostname + ":8080/EndeavourDMS/personalplanedit.jsp" &&
+//			   document.URL!="http://"+window.location.hostname + ":8080/EndeavourDMS/riskassessment.jsp") {
+//						
+//				alert("You do not have the required privileges to access this page");
+//				window.location.replace("http://" + window.location.hostname + ":8080/EndeavourDMS/indexclient.jsp");
+//
+//			}
+//			
+//		}
+		
 //		$.get(window.location.hostname + "../rest/role?auth_token=" + $.cookie('auth_token') + "&" + "user_id=" + $.cookie('user_id') ,
 //				function(data, status) {
 //				alert("data: " + data + "\nStatus: " + status);
