@@ -306,9 +306,6 @@
 		var date = ((''+day).length<2 ? '0' : '') + day + '/' + ((''+month).length<2 ? '0' : '') + month + '/' + d.getFullYear();
 		$("#createDateT").val(date);
 		
-		
-		alert("hello");
-		
 		//page load
 		$.ajax({
 			url: "./rest/personalplan/clientdetails/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + $.cookie('client_id'),
@@ -316,7 +313,7 @@
 			contentType: "application/json",
 			success: function(d) {		
 				//alert(d.personalDetails.preferredName);
-				alert("do now");	
+				//alert("do now");	
 				//alert(d.personalDetails.preferredName);
 				
 				$("#nicknameT").val(d.personalDetails.preferredName);
@@ -327,7 +324,7 @@
 				$("#emailT").val(d.personalDetails.email);
 				$("#dobT").val(d.personalDetails.dob);
 				
-			  	alert("done");
+			  	//alert("done");
 			},
 			error: function(xhr) {
 				// do something to handle error
@@ -340,24 +337,12 @@
 			type:"get",
 			contentType: "application/json",
 			success: function(d) {		
-				//alert(d.personalDetails.preferredName);
-				alert("do now");	
-				//alert(d.personalDetails.preferredName);
-				
-				//alert(d.rName);
-				
+				//alert("do now");	
+
 				$("#nameT").val(d.rName);
 				$("#IDT").val(d.user_id);
 				
-// 				$("#nicknameT").val(d.personalDetails.preferredName);
-// 				$("#createDateT").val(d.personalDetails.creationDate);
-// 				$("#reviceDateT").val(d.personalDetails.reviewDate);
-// 				$("#phoneT").val(d.personalDetails.phoneNumber);
-// 				$("#mobileT").val(d.personalDetails.mobileNumber);
-// 				$("#emailT").val(d.personalDetails.email);
-// 				$("#dobT").val(d.personalDetails.dob);
-				
-			  	alert("done");
+			  	//alert("done");
 			},
 			error: function(xhr) {
 				// do something to handle error

@@ -49,6 +49,31 @@
 <script type='text/javascript'>
 	$(document).ready(function() {
 		//page load
+		$.ajax({
+			url: "./rest/personalplan/communication/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + $.cookie('client_id'),
+			type:"get",
+			contentType: "application/json",
+			success: function(d) {		
+				//alert(d.personalDetails.preferredName);
+// 				alert("do now");	
+				//alert(d.personalDetails.preferredName);
+				$("#ICommunicateT").val(d.comsAndDecisionMaking.iCommunicate)
+				$("#youCommunicateT").val(d.comsAndDecisionMaking.youCommunicate)
+				$("#supportPeopleT").val(d.comsAndDecisionMaking.supportPeople)
+				$("#supportMeByT").val(d.comsAndDecisionMaking.supportMeBy)
+				$("#independantDecisionsT").val(d.comsAndDecisionMaking.independantDecisions)
+				$("#goodTopicsT").val(d.comsAndDecisionMaking.goodTopics)
+				$("#likesT").val(d.comsAndDecisionMaking.likes)
+				$("#dislikesT").val(d.comsAndDecisionMaking.dislikes)
+				
+// 			  	alert("done");
+			},
+			error: function(xhr) {
+				// do something to handle error
+				alert("error");
+			}
+		});
+		
 		//show submit button (only have 1 tab)
 		$("PageNavSubmitBComm").show();
 		
