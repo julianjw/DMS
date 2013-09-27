@@ -56,7 +56,7 @@ $(document).ready(function(){
 		var details = new Object();
 		details.user_id = $("#createUsername").val();
 		details.password = $("#createPassword").val();
-		details.rname=$("#createName").val();
+		details.rName=$("#createName").val();
 		details.role = $("#createRole").val();
 
 		var jsonText = JSON.stringify(details);

@@ -307,22 +307,26 @@
 		$("#createDateT").val(date);
 		
 		
-		
+		alert("hello");
 		
 		//page load
 		$.ajax({
 			url: "./rest/personalplan/clientdetails/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + $.cookie('client_id'),
 			type:"get",
 			contentType: "application/json",
-			success: function(d) {			
-				$("#nicknameT").val(d.clientDetails.personDetails.preferredName);
-				$("#createDateT").val(d.clientDetails.personDetails.creationDate);
-				$("#reviceDateT").val(d.clientDetails.personDetails.reviewDate);
-				$("#phoneT").val(d.clientDetails.personDetails.phoneNumber);
-				$("#mobileT").val(d.clientDetails.personDetails.mobileNumber);
-				$("#emailT").val(d.clientDetails.personDetails.email);
-				$("#dobT").val(d.clientDetails.personDetails.dob);
-			  
+			success: function(d) {		
+				//alert(d.personalDetails.preferredName);
+				alert("do now");	
+				
+				$("#nicknameT").val(d.personDetails.preferredName);
+				$("#createDateT").val(d.personDetails.creationDate);
+				$("#reviceDateT").val(d.personDetails.reviewDate);
+				$("#phoneT").val(d.personDetails.phoneNumber);
+				$("#mobileT").val(d.personDetails.mobileNumber);
+				$("#emailT").val(d.personDetails.email);
+				$("#dobT").val(d.personDetails.dob);
+				
+			  	alert("done");
 			},
 			error: function(xhr) {
 				// do something to handle error
