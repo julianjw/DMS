@@ -68,6 +68,8 @@ $(document).ready(function(){
 			dataType: 'json',
 			data: jsonText,
 			success: function(jqXHR, textStatus) {
+				//check for bad return
+				
 				alert("User Created");
 				document.location.reload(true);
 			},

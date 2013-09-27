@@ -36,7 +36,8 @@ function PageNavigation(dir, navArr) {
 		if($("#" + navArr[i]).css('display') != 'none') {
 			//perform page navigation
 			if(dir=="next") {
-				$(this).prev().show();
+				var el = $(this).prev('.prevButton');
+				alert($(this));
 				$("#" + navArr[i+1]).show();
 				//show the submit button and hide next button if we are on the last page
 				if(i+1==navArr.length-1) {
