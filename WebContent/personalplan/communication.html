@@ -1,7 +1,4 @@
-	<button id='PageNavPrevComm' class='prevButton' >Previous</button>	
-	<button id='PageNavNextComm' class='nextButton' >Next</button>
-	<button id='PageNavSubmitBComm' class='submitButton'>Submit</button>
-	<div id='testing'></div>
+	<button id='PageNavSubmitBComm' >Submit</button>
 	
 	<div id='commD'>
 		<label for='ICommunicateT' class='toggle'>I communicate with others by: </label>
@@ -54,9 +51,6 @@
 			type:"get",
 			contentType: "application/json",
 			success: function(d) {		
-				//alert(d.personalDetails.preferredName);
-// 				alert("do now");	
-				//alert(d.personalDetails.preferredName);
 				$("#ICommunicateT").val(d.comsAndDecisionMaking.iCommunicate)
 				$("#youCommunicateT").val(d.comsAndDecisionMaking.youCommunicate)
 				$("#supportPeopleT").val(d.comsAndDecisionMaking.supportPeople)
@@ -65,17 +59,12 @@
 				$("#goodTopicsT").val(d.comsAndDecisionMaking.goodTopics)
 				$("#likesT").val(d.comsAndDecisionMaking.likes)
 				$("#dislikesT").val(d.comsAndDecisionMaking.dislikes)
-				
-// 			  	alert("done");
 			},
 			error: function(xhr) {
 				// do something to handle error
 				alert("error");
 			}
 		});
-		
-		//show submit button (only have 1 tab)
-		$("PageNavSubmitBComm").show();
 		
 		
 		//click on the submit button
@@ -96,7 +85,6 @@
 			communication.comsAndDecisionMaking = comsAndDecisionMaking;
 			
 			var jsonText = JSON.stringify(communication);
-			$("#testing").html(jsonText);
 			
 			$.ajax({
 				url:'./rest/personalplan/communication/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/1',
@@ -106,6 +94,7 @@
 				data: jsonText,
 				complete: function(jqXHR, textStatus) {
 					alert(textStatus);
+					nextNav('communicationD');
 				}
 			});
 		});

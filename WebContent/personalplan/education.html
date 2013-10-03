@@ -1,7 +1,6 @@
 	<button id='PageNavPrevEdu' class='prevButton' >Previous</button>	
 	<button id='PageNavNextEdu' class='nextButton'  >Next</button>
 	<button id='PageNavSubmitBEdu' class='submitButtonas' >Submit</button>
-	<div id='testing'></div>
 	
 	<div id='educationD'>
 		<label for='institutionNameT' class='toggle'>Education Institution: </label>
@@ -128,8 +127,6 @@
 	</div>
 
 <script type='text/javascript'>
-	var eduPageDivNav = new Array("educationD", "employmentD");
-
 	$(document).ready(function() {
 		//page load
 		//hide necessary elements
@@ -139,12 +136,12 @@
 
 		//click on the previous button
 		$("#PageNavPrev").click(function(){
-			PageNavigation('prev', eduPageDivNav);
+			PageNavigation('prev', 'edu', this);
 		});
 
 		//click on the next button
 		$("#PageNavNext").click(function(){
-			PageNavigation('next', eduPageDivNav);
+			PageNavigation('next', 'edu', this);
 		});
 		
 		//click on the submit button
@@ -181,7 +178,6 @@
 
 			
 			var jsonText = JSON.stringify(educationEmployment);
-			$("#testing").html(jsonText);
 			
 			$.ajax({
 				url:'./rest/personalplan/educationemployment/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/1',
@@ -191,6 +187,7 @@
 				data: jsonText,
 				complete: function(jqXHR, textStatus) {
 					alert(textStatus);
+					nextNav('educationD');
 				}
 			});
 		});

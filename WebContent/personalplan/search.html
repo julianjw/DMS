@@ -1,12 +1,31 @@
 <div id='searchD'>
-	<label for='queryT' id='queryL' class='toggle'>ID: </label>
-	<input type='text' name='queryT' id='queryT' />
-	<button id='queryB'>Search</button>
+	<table border=0>
+	<tr>
+		<td>
+			<label for='queryT' id='queryL' class='toggle'>ID: </label>
+			<input type='text' name='queryT' id='queryT' />
+			<button id='queryB'>Search</button>
 	
-	<div id='searchResults'></div>
+			<div id='searchResults'></div>
+		</td>
+		<td>OR</td>
+		<td><button id='createNewPPButton' >Create a new Personal Plan</button></td>
+	</tr>
+	</table>
 </div>
 
 <script type='text/javascript'>
+
+function selectPP(el) {
+	//create the cookie
+	$.cookie('client_id', $(el).attr("id"));
+	//continue to forms
+	$("#searchD").hide();
+	$("#clientD").show();
+}
+
+
+
 $(document).ready(function(){
 	//page loads
 	//get list of existing clients
@@ -19,7 +38,7 @@ $(document).ready(function(){
 			var content = "<table>"
 			content += "<tr><th>Client ID</th><th>Name</th><th>DOB</th><th>Mobile</th><th>Telephone</th></tr>";
 			for (var i = 0; i < d.existingPlanDetails.length; i++) {
-				content += "<tr><td>" + d.existingPlanDetails[i].user_id + "</td>";
+				content += "<tr><td class='fakeLink' id='" + d.existingPlanDetails[i].user_id + "'onClick='selectPP(this);'>" + d.existingPlanDetails[i].user_id + "</td>";
 				content += "<td>" + d.existingPlanDetails[i].rName + "</td>";
 				content += "<td>" + d.existingPlanDetails[i].dob + "</td>";
 				content += "<td>" + d.existingPlanDetails[i].mobile + "</td>";

@@ -86,7 +86,6 @@
 
 
 <script type='text/javascript'>
-	var planPageDivNav = new Array("holidayD", "goalsDiv");
 	var i=0;
 
 	function Duplicate(divName) {
@@ -105,12 +104,12 @@
 
 		//click on the previous button
 		$("#PageNavPrev").click(function(){
-			PageNavigation('prev', planPageDivNav);
+			PageNavigation('prev', 'planning', this);
 		});
 
 		//click on the next button
 		$("#PageNavNext").click(function(){
-			PageNavigation('next', planPageDivNav);
+			PageNavigation('next', 'planning', this);
 		});
 
 
@@ -142,6 +141,7 @@
 				data: jsonText,
 				complete: function(jqXHR, textStatus) {
 					alert(textStatus);
+					nextNav('planningD');
 				}
 			});
 		}

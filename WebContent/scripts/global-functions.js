@@ -43,14 +43,3 @@ function checkRole() {
 function Duplicate(divName) {
 	$("#"+divName).append($("#" + divName + "Template").children().clone());
 };
-	
-
-
-function PreviewImage() {
-    var oFReader = new FileReader();
-    
-    oFReader.onload = function (e) {
-        $('#ppPreview').attr('src', e.target.result);
-    };
-    oFReader.readAsDataURL($("#profilepic").files[0]);
-};

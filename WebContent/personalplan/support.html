@@ -267,10 +267,6 @@
 
 
 <script type='text/javascript'>
-	var supportPageDivNav = new Array("supportD", "mobilityD", "financialD", "activitiesD", "relaxationD");
-
-	
-
 	$(document).ready(function() {
 		//page load
 		$("#mobilityD").hide();
@@ -280,12 +276,12 @@
 		
 		//click on the previous button
 		$("#PageNavPrevClient").click(function(){
-			PageNavigation('prev', supportPageDivNav);
+			PageNavigation('prev', 'support' this);
 		});
 
 		//click on the next button
 		$("#PageNavNextClient").click(function(){
-			PageNavigation('next', supportPageDivNav);
+			PageNavigation('next', 'support' this);
 		});
 		
 		
@@ -318,6 +314,7 @@
 				data: jsonText,
 				complete: function(jqXHR, textStatus) {
 					alert(textStatus);
+					nextNav('supportD');
 				}
 			});
 		});

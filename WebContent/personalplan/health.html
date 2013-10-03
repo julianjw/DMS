@@ -1,7 +1,6 @@
 	<button id='PageNavPrevHealth' class='prevButton' >Previous</button>	
 	<button id='PageNavNextHealth' class='nextButton' >Next</button>
 	<button id='PageNavSubmitBHealth' class='submitButton'>Submit</button>
-	<div id='testing'></div>
 	
 	<div id='healthD'>
 		<label for='relevantT' class='toggle'>Relevant information and history about disability: </label>
@@ -195,8 +194,6 @@ DROPDOWN HERE + INLINE FORMATTING
 	</div>
 
 <script type='text/javascript'>
-	var healthPageDivNav = new Array("healthD", "hManagementD", "dietD");
-
 	$(document).ready(function() {
 		//page load
 		//hide necessary elements
@@ -211,12 +208,12 @@ DROPDOWN HERE + INLINE FORMATTING
 		
 		//click on the previous button
 		$("#PageNavPrevHealth").click(function(){
-			PageNavigation('prev', healthPageDivNav);
+			PageNavigation('prev', 'health' this);
 		});
 
 		//click on the next button
 		$("#PageNavNextHealth").click(function(){
-			PageNavigation('next', healthPageDivNav);
+			PageNavigation('next', 'health' this);
 		});
 		
 		
@@ -284,7 +281,6 @@ DROPDOWN HERE + INLINE FORMATTING
 			healthDetails.healthManagement = healthManagement;
 
 			var jsonText = JSON.stringify(healthDetails);
-			$("#testing").html(jsonText);
 			
 			$.ajax({
 				url:'./rest/personalplan/healthdetails/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/1',
@@ -294,6 +290,7 @@ DROPDOWN HERE + INLINE FORMATTING
 				data: jsonText,
 				complete: function(jqXHR, textStatus) {
 					alert(textStatus);
+					nextNav('healthD');
 				}
 			});
 		});

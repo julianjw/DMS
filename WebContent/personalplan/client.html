@@ -279,7 +279,13 @@
 
 
 <script type='text/javascript'>
-	var clientPageDivNav = new Array("detailsD", "alertInfoD", "livingD", "formalD");
+	function putDate() {
+		var d =  new Date();
+		var month = d.getMonth()+1;
+		var day = d.getDate();
+		var date = ((''+day).length<2 ? '0' : '') + day + '/' + ((''+month).length<2 ? '0' : '') + month + '/' + d.getFullYear();
+		$("#createDateT").val(date);
+	}
 
 	$(document).ready(function() {
 		//page load
@@ -290,21 +296,14 @@
 		
 		//click on the previous button
 		$("#PageNavPrevClient").click(function(){
-			PageNavigation('prev', clientPageDivNav);
+			PageNavigation('prev', 'client', this);
 		});
 
 		//click on the next button
 		$("#PageNavNextClient").click(function(){
-			PageNavigation('next', clientPageDivNav);
+			PageNavigation('next', 'client', this);
 		});
 		
-		
-		//populate date field this will need to be changed when u start pulling data from steven
-		var d =  new Date();
-		var month = d.getMonth()+1;
-		var day = d.getDate();
-		var date = ((''+day).length<2 ? '0' : '') + day + '/' + ((''+month).length<2 ? '0' : '') + month + '/' + d.getFullYear();
-		$("#createDateT").val(date);
 		
 		//page load
 		$.ajax({
@@ -317,7 +316,11 @@
 				//alert(d.personalDetails.preferredName);
 				
 				$("#nicknameT").val(d.personalDetails.preferredName);
-				$("#createDateT").val(d.personalDetails.creationDate);
+				if(d.personalDetails.creationDate=="") {
+					putDate();
+				}else {
+					$("#createDateT").val(d.personalDetails.creationDate);
+				}
 				$("#reviceDateT").val(d.personalDetails.reviewDate);
 				$("#phoneT").val(d.personalDetails.phoneNumber);
 				$("#mobileT").val(d.personalDetails.mobileNumber);
@@ -355,7 +358,7 @@
 		
 		
 		//click on the submit button
-		$("#PageNavSubmitB").click(function(){
+		$("#PageNavSubmitBClient").click(function(){
 			var alertInformation = new Object();
 			alertInformation.allergies = $("#allergiesT").val();
 			alertInformation.complexSupportNeeds = $("#supportNeedsT").val();
@@ -411,24 +414,20 @@
 			
 			var jsonText = JSON.stringify(clientDetails);
 			
-			//alert(jsonText);
-			
-			//var test = "./rest/personalplan/clientdetails/" + $.cookie('auth_token') + "/" + $.cookie('user_id') +"/" + personDetails.clientId;
-			//alert(test);
-			
 			$.ajax({
 				url:'./rest/personalplan/clientdetails/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/1',
 				type: 'POST',
 				contentType: 'application/json; charset=UTF-8',
 				dataType: 'json',
 				data: jsonText,
-				complete: function(jqXHR, textStatus) {
+				success: function(jqXHR, textStatus) {
+					alert(textStatus);
+					nextNav('clientD');
+				},
+				error: function(jqXHR, textStatus) {
 					alert(textStatus);
 				}
 			});
-			
-		});
-
-		
+		});	
 	});
 </script>
