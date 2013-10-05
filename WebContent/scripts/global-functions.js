@@ -16,6 +16,9 @@ $.extend({
 
 
 
+
+
+
 function checkRole() {
 	//check for a cookie...if there isn't re-direct to login.jsp
 	if($.cookie('user_id') && $.cookie('auth_token')) {

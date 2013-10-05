@@ -26,7 +26,7 @@ PUT THESE IN A TABLE!!!!!!!!!
 
 			<label for='reqAssist'>Do I require assistance?
 			<input type="radio" name="reqAssist" id='reqAssistYes' value="true"> Yes
-			<input type="radio" name="reqAssist" id='reqAssistYes' value="false"> No
+			<input type="radio" name="reqAssist" id='reqAssistNo' value="false"> No
 			<br />
 
 			<label for='selfMed'>Self medicate?
@@ -76,10 +76,10 @@ PUT THESE IN A TABLE!!!!!!!!!
 		<input type='text' id='freqT' name='freqT' placeholder='frequency' class='inline'>
 		<label>times a </label>
 		<select id='orderOfFreq' name='orderOfFreq'>
-		  <option value='day'>Day</option>
-		  <option value='week'>Week</option>
-		  <option value='month'>Month</option>
-		  <option value='year'>Year</option>
+		  <option value='Day'>Day</option>
+		  <option value='Week'>Week</option>
+		  <option value='Month'>Month</option>
+		  <option value='Year'>Year</option>
 		</select>
 		<br />
 <!--
@@ -267,7 +267,7 @@ DROPDOWN HERE + INLINE FORMATTING
 			healthManagement.duration = $("#durationT").val();
 			healthManagement.frequency = $("#freqT").val();
 			healthManagement.medicalCondition = $("#medConditionT").val();
-			healthManagement.orderOfFrequency = $("#orderOfFreq").val();
+			healthManagement.frequencyPeriod = $("#orderOfFreq").val();
 			healthManagement.precurser = $("#dinnerT").val();
 			healthManagement.seizureBrief = $("#seizureT").val();
 			healthManagement.seizureNonBrief = $("#seizure2T").val();

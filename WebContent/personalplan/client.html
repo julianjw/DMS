@@ -305,57 +305,8 @@
 		});
 		
 		
-		//page load
-		$.ajax({
-			url: "./rest/personalplan/clientdetails/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + $.cookie('client_id'),
-			type:"get",
-			contentType: "application/json",
-			success: function(d) {		
-				//alert(d.personalDetails.preferredName);
-				//alert("do now");	
-				//alert(d.personalDetails.preferredName);
-				
-				$("#nicknameT").val(d.personalDetails.preferredName);
-				if(d.personalDetails.creationDate=="") {
-					putDate();
-				}else {
-					$("#createDateT").val(d.personalDetails.creationDate);
-				}
-				$("#reviceDateT").val(d.personalDetails.reviewDate);
-				$("#phoneT").val(d.personalDetails.phoneNumber);
-				$("#mobileT").val(d.personalDetails.mobileNumber);
-				$("#emailT").val(d.personalDetails.email);
-				$("#dobT").val(d.personalDetails.dob);
-				
-			  	//alert("done");
-			},
-			error: function(xhr) {
-				// do something to handle error
-				alert("error");
-			}
-		});
 		
-		$.ajax({
-			url: "./rest/user/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + $.cookie('client_id'),
-			type:"get",
-			contentType: "application/json",
-			success: function(d) {		
-				//alert("do now");	
 
-				$("#nameT").val(d.rName);
-				$("#IDT").val(d.user_id);
-				
-			  	//alert("done");
-			},
-			error: function(xhr) {
-				// do something to handle error
-				alert("error");
-			}
-		});
-		
-		
-		
-		
 		
 		//click on the submit button
 		$("#PageNavSubmitBClient").click(function(){
@@ -363,11 +314,12 @@
 			alertInformation.allergies = $("#allergiesT").val();
 			alertInformation.complexSupportNeeds = $("#supportNeedsT").val();
 			alertInformation.eatingAlerts = $("#safeEatingT").val();
-			alertInformation.guardian = $("#guardianT").val();
+			alertInformation.guardianOrders = $("#guardianT").val();
 			alertInformation.medIssues = $("#meddicalT").val();
-			alertInformation.other = $("#otherT").val();
+			alertInformation.otherInfo = $("#otherT").val();
 			alertInformation.phobias = $("#phobiasT").val();
 			alertInformation.restrictive = $("#restrictiveT").val();
+			alertInformation.safetyConcerns = $("#safetyConcernsT").val();
 			
 			var formalOrders = new Object();
 			formalOrders.appointee = $("#appointeeT").val();
@@ -379,9 +331,9 @@
 			formalOrders.orderFor = $("#orderForT").val();
 			formalOrders.orderLocation = $("#orderLocationT").val();
 			formalOrders.otherInfo = $("#orderOtherInfoT").val();
-			formalOrders.protOrder = $("#protOrderT").val();
+			formalOrders.protectionOrder = $("#protOrderT").val();
 			formalOrders.specialConditions = $("#specialConT").val();
-			formalOrders.supportOfficer = $("#childSupportOfficerT").val();
+			formalOrders.childSupportOfficer = $("#childSupportOfficerT").val();
 			formalOrders.visitorInfo = $("#communityVisitorT").val();
 			
 			var livingArangements = new Object();

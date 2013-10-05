@@ -21,12 +21,22 @@ function selectPP(el) {
 	$.cookie('client_id', $(el).attr("id"));
 	//continue to forms
 	$("#searchD").hide();
+	pullData("clientD");
 	$("#clientD").show();
 }
 
 
-
 $(document).ready(function(){
+	
+	
+	//click on create new PP button
+	$("#createNewPPButton").click(function(){
+		$("#searchD").hide();
+		pullData("new");
+		$("#clientD").show();
+	});
+	
+	
 	//page loads
 	//get list of existing clients
 	$.ajax({
