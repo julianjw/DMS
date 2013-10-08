@@ -85,9 +85,9 @@ public class SqlWriteJob {
 			System.out.println(updateSql);
 			
 			System.out.println("Writing:");
-			for ( Map.Entry<String, Object> set : row.entrySet() ) {
-				System.out.println("--> \""+set.getKey()+"\" - \""+set.getValue().toString()+"\"");
-			}
+			//for ( Map.Entry<String, Object> set : row.entrySet() ) {
+			//	System.out.println("--> \""+set.getKey()+"\" - \""+set.getValue().toString()+"\"");
+			//}
 			
 			PreparedStatement countPs = populateValues(key, DatabaseAccess.createPreparedStatement(countSql) );
 			PreparedStatement insertPs = populateValues(table.get(0), DatabaseAccess.createPreparedStatement(insertSql));
@@ -155,7 +155,7 @@ public class SqlWriteJob {
 					ps.setNull(i, java.sql.Types.NULL);
 					break;
 			}
-		}	
+		}
 		return ps;
 	}
 	

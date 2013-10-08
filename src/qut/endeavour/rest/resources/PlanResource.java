@@ -144,9 +144,9 @@ public class PlanResource {
 			) {
 		
 		System.out.println("Writing: EducationEmployment");
-//		System.out.println("Token: "+token);
-//		System.out.println("Username: "+username);
-//		System.out.println("clientId: "+clientid);
+		System.out.println("Token: "+token);
+		System.out.println("Username: "+username);
+		System.out.println("clientId: "+clientid);
 		
 		PlanUtility.storeEducationEmployment(arg, clientid);
 		

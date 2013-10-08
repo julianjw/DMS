@@ -630,7 +630,7 @@ public class DatabaseAccess {
 	public static int getUserIdNumber(String clientid) throws DMSException, SQLException {
 		if ( !makeConnection() ) throw new DMSException("Database down."); 
 		
-		String sql = "SELECT user_id FROM `user_info` WHERE username = 'client';";
+		String sql = "SELECT user_id FROM `user_info` WHERE username = '"+clientid+"';";
 		PreparedStatement ps = con.prepareStatement(sql);
 		
 		ResultSet rs = ps.executeQuery();
