@@ -119,9 +119,9 @@ public class PlanFactory {
 		
 		for ( ContactDetails cd : allContacts ) {
 			
-			if ( cd.contactType == "Family Member" ) fContact.add(cd); else
-			if ( cd.contactType == "Emergency Contact" ) eContact.add(cd); else
-			if ( cd.contactType == "Important Person" ) iContact.add(cd);
+			if ( cd.getContactType() == "Family Member" ) fContact.add(cd); else
+			if ( cd.getContactType() == "Emergency Contact" ) eContact.add(cd); else
+			if ( cd.getContactType() == "Important Person" ) iContact.add(cd);
 			
 			
 			

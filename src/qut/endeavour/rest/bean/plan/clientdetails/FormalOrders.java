@@ -4,19 +4,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class FormalOrders {
-	public String orderFor; // varchar
-	public String appointee; // varchar
-	public String details;
-	public String orderLocation;
-	public String otherInfo;
-	public String childSupportOfficer; // varchar
-	public String visitorInfo;
-	public String protectionOrder;
-	public String commenceDate; // DATE
-	public String justiceRequirements;
-	public String familyContact;
-	public String contactArrangement;
-	public String specialConditions;
+	private String orderFor; // varchar
+	private String appointee; // varchar
+	private String details;
+	private String orderLocation;
+	private String otherInfo;
+	private String childSupportOfficer; // varchar
+	private String visitorInfo;
+	private String protectionOrder;
+	private String commenceDate; // DATE
+	private String justiceRequirements;
+	private String familyContact;
+	private String contactArrangement;
+	private String specialConditions;
 	
 	public FormalOrders() {}
 
@@ -39,6 +39,111 @@ public class FormalOrders {
 		this.contactArrangement = contactArrangement;
 		this.specialConditions = specialConditions;
 	}
+
+	public String getOrderFor() {
+		return orderFor;
+	}
+
+	public void setOrderFor(String orderFor) {
+		this.orderFor = orderFor;
+	}
+
+	public String getAppointee() {
+		return appointee;
+	}
+
+	public void setAppointee(String appointee) {
+		this.appointee = appointee;
+	}
+
+	public String getDetails() {
+		return details;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
+	}
+
+	public String getOrderLocation() {
+		return orderLocation;
+	}
+
+	public void setOrderLocation(String orderLocation) {
+		this.orderLocation = orderLocation;
+	}
+
+	public String getOtherInfo() {
+		return otherInfo;
+	}
+
+	public void setOtherInfo(String otherInfo) {
+		this.otherInfo = otherInfo;
+	}
+
+	public String getChildSupportOfficer() {
+		return childSupportOfficer;
+	}
+
+	public void setChildSupportOfficer(String childSupportOfficer) {
+		this.childSupportOfficer = childSupportOfficer;
+	}
+
+	public String getVisitorInfo() {
+		return visitorInfo;
+	}
+
+	public void setVisitorInfo(String visitorInfo) {
+		this.visitorInfo = visitorInfo;
+	}
+
+	public String getProtectionOrder() {
+		return protectionOrder;
+	}
+
+	public void setProtectionOrder(String protectionOrder) {
+		this.protectionOrder = protectionOrder;
+	}
+
+	public String getCommenceDate() {
+		return commenceDate;
+	}
+
+	public void setCommenceDate(String commenceDate) {
+		this.commenceDate = commenceDate;
+	}
+
+	public String getJusticeRequirements() {
+		return justiceRequirements;
+	}
+
+	public void setJusticeRequirements(String justiceRequirements) {
+		this.justiceRequirements = justiceRequirements;
+	}
+
+	public String getFamilyContact() {
+		return familyContact;
+	}
+
+	public void setFamilyContact(String familyContact) {
+		this.familyContact = familyContact;
+	}
+
+	public String getContactArrangement() {
+		return contactArrangement;
+	}
+
+	public void setContactArrangement(String contactArrangement) {
+		this.contactArrangement = contactArrangement;
+	}
+
+	public String getSpecialConditions() {
+		return specialConditions;
+	}
+
+	public void setSpecialConditions(String specialConditions) {
+		this.specialConditions = specialConditions;
+	}
+	
 	
 	
 }

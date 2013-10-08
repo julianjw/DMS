@@ -42,11 +42,8 @@ public class PlanResource {
 			) {
 		
 		System.out.println("Writing: Planning");
-
-		//PlanUtility.storePlanning(arg);
-		
-		return new Verification(Verification.Verified.SUCCESS);
-		//return PlanFactory.createPlanning();
+		if ( PlanUtility.storeBean(arg, clientid) ) return new Verification(Verification.Verified.SUCCESS);
+		return new Verification(Verification.Verified.FAILURE);
 		
 	}
 	
@@ -62,11 +59,10 @@ public class PlanResource {
 			@PathParam("clientid") String clientid
 			) {
 		
-		System.out.println("Writing: ClientDetails");
-
-		//PlanUtility.storeCommunication(arg);
-		
-		return new Verification(Verification.Verified.SUCCESS);
+		System.out.println("Writing: Communication");
+		if ( PlanUtility.storeBean(arg, clientid) ) return new Verification(Verification.Verified.SUCCESS);
+		System.out.println("Failure.");
+		return new Verification(Verification.Verified.FAILURE);
 	}
 	
 	@POST
@@ -74,20 +70,15 @@ public class PlanResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Verification setJSONSupportRequired(
-			SupportRequired sr,
+			SupportRequired arg,
 			@PathParam("username") String username,
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
 		
-		System.out.println("Writing: ClientDetails");
-//		System.out.println("Token: "+token);
-//		System.out.println("Username: "+username);
-//		System.out.println("clientId: "+clientid);
-		
-		//PlanUtility.storeSupportRequired(arg);
-		
-		return new Verification(Verification.Verified.SUCCESS);
+		System.out.println("Writing: Support Required");
+		if ( PlanUtility.storeBean(arg, clientid) ) return new Verification(Verification.Verified.SUCCESS);
+		return new Verification(Verification.Verified.FAILURE);
 	}
 	
 	@POST
@@ -101,14 +92,9 @@ public class PlanResource {
 			@PathParam("clientid") String clientid
 			) {
 		
-		System.out.println("Writing: ClientDetails");
-//		System.out.println("Token: "+token);
-//		System.out.println("Username: "+username);
-//		System.out.println("clientId: "+clientid);
-		
-		//PlanUtility.storeHealthDetails(arg);
-		
-		return new Verification(Verification.Verified.SUCCESS);
+		System.out.println("Writing: Health Details");
+		if ( PlanUtility.storeBean(arg, clientid) ) return new Verification(Verification.Verified.SUCCESS);
+		return new Verification(Verification.Verified.FAILURE);
 	}
 	
 	@POST
@@ -122,14 +108,9 @@ public class PlanResource {
 			@PathParam("clientid") String clientid
 			) {
 		
-		System.out.println("Writing: ClientDetails");
-//		System.out.println("Token: "+token);
-//		System.out.println("Username: "+username);
-//		System.out.println("clientId: "+clientid);
-		
-		//PlanUtility.storeClientDetails(arg);
-		
-		return new Verification(Verification.Verified.SUCCESS);
+		System.out.println("Writing: Client Details");
+		if ( PlanUtility.storeBean(arg, clientid) ) return new Verification(Verification.Verified.SUCCESS);
+		return new Verification(Verification.Verified.FAILURE);
 	}
 	
 	@POST
@@ -143,14 +124,9 @@ public class PlanResource {
 			@PathParam("clientid") String clientid
 			) {
 		
-		System.out.println("Writing: EducationEmployment");
-		System.out.println("Token: "+token);
-		System.out.println("Username: "+username);
-		System.out.println("clientId: "+clientid);
-		
-		PlanUtility.storeEducationEmployment(arg, clientid);
-		
-		return new Verification(Verification.Verified.SUCCESS);
+		System.out.println("Writing: Education & Employment");
+		if ( PlanUtility.storeBean(arg, clientid) ) return new Verification(Verification.Verified.SUCCESS);
+		return new Verification(Verification.Verified.FAILURE);
 	}
 	
 	@POST
@@ -164,11 +140,9 @@ public class PlanResource {
 			@PathParam("clientid") String clientid
 			) {
 		
-		System.out.println("Writing: PersonalPlan");
-
-		//PlanUtility.storePersonalPlan(arg);
-		
-		return new Verification(Verification.Verified.SUCCESS);
+		System.out.println("Writing: Personal Plan");
+		if ( PlanUtility.storeBean(arg, clientid) ) return new Verification(Verification.Verified.SUCCESS);
+		return new Verification(Verification.Verified.FAILURE);
 	}
 	
 	

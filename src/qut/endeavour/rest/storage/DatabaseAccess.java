@@ -576,6 +576,14 @@ public class DatabaseAccess {
 		}
 		
 	}
+	public static Integer getPeriodByName(String key) {
+		try {
+			return periodByMap.get(key).periodId;
+		} catch (Exception e) {
+			return null;
+		}
+		
+	}
 	
 	public static List<Map<String, Object>> getTableContents(String username,
 			String token, String clientid, List<String> fieldNames,
@@ -639,7 +647,7 @@ public class DatabaseAccess {
 		if ( rs.next() ) {
 			userIdNumber = rs.getInt("user_id");
 		} else {
-			throw new DMSException("User doesn't exist.");
+			throw new DMSException("User \""+clientid+"\" doesn't exist.");
 		}
 		
 		
