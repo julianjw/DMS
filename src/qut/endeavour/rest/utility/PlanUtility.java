@@ -17,6 +17,7 @@ import qut.endeavour.rest.bean.plan.clientdetails.AlertInformation;
 import qut.endeavour.rest.bean.plan.clientdetails.FormalOrders;
 import qut.endeavour.rest.bean.plan.clientdetails.LivingArrangements;
 import qut.endeavour.rest.bean.plan.clientdetails.PersonalDetails;
+import qut.endeavour.rest.bean.plan.communication.BadTopics;
 import qut.endeavour.rest.bean.plan.communication.ComsAndDecisionMaking;
 import qut.endeavour.rest.bean.plan.educationemployment.Education;
 import qut.endeavour.rest.bean.plan.educationemployment.Employment;
@@ -38,11 +39,29 @@ import qut.endeavour.rest.storage.DatabaseNames;
 
 public class PlanUtility {
 	
+	private static boolean userAllowed(String role){
+		boolean allowed = false;
+		String[] allowedRoles = Permissions.UpdatePersonalPlan;
+		for ( int i = 0; i < allowedRoles.length; i++ )
+			if ( role.toLowerCase().equals(allowedRoles[i].toLowerCase()) ) allowed = true;
+		return allowed;
+	}
+	
 	/* DATABASE STORAGE */
 	public static boolean storeBean(
+			String username,
+			String token, 
 			Object bean,
 			String clientid
 			) {
+
+		// check if user is allowed to do this
+		String role = DatabaseAccess.getRole(username, token);
+		if ( !userAllowed(role) ) {
+			System.out.println("User role \""+role+"\" not allowed to update personal plan.");
+			return false;
+		}
+		
 		
 		//System.out.println("About to check for bean class -" + bean.getClass().toString());
 		try {
@@ -80,54 +99,76 @@ public class PlanUtility {
 			int userNumber
 			) throws DMSException {
 		
-		System.out.println("*userIDNumber=** " + userNumber);
+		//System.out.println("*userIDNumber=** " + userNumber);
+		// if it's not in a list - put it in a list.
 		
-		Map<String, Object> row = null;
+		
+		
+		
+		List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
 		Map<String, Object> key = new HashMap<String, Object>();
 		key.put("i*user_id", userNumber);
 		
 		// education & employment
-		if ( bean.getClass() == Employment.class ) row = prepareEmployment((Employment)bean, fields);
-		else if ( bean.getClass() == Education.class ) row = prepareEducation((Education)bean, fields);
+		if ( bean.getClass() == Employment.class ) rows.addAll( prepareEmployment((Employment)bean, fields ) );
+		else if ( bean.getClass() == Education.class )rows.addAll( prepareEducation((Education)bean, fields));
 		
 		// health details
-		else if ( bean.getClass() == HealthDietary.class ) row = prepareHealthDietary((HealthDietary)bean, fields);
-		else if ( bean.getClass() == HealthInformation.class ) row = prepareHealthInformation((HealthInformation)bean, fields);
-		else if ( bean.getClass() == HealthManagement.class ) row = prepareHealthManagement((HealthManagement)bean, fields);
+		else if ( bean.getClass() == HealthDietary.class ) rows.addAll( prepareHealthDietary((HealthDietary)bean, fields));
+		else if ( bean.getClass() == HealthInformation.class ) rows.addAll( prepareHealthInformation((HealthInformation)bean, fields));
+		else if ( bean.getClass() == HealthManagement.class ) rows.addAll( prepareHealthManagement((HealthManagement)bean, fields));
 		
 		// communication
-		else if ( bean.getClass() == ComsAndDecisionMaking.class ) row = prepareComsAndDecisionMaking((ComsAndDecisionMaking)bean, fields);
+		else if ( bean.getClass() == ComsAndDecisionMaking.class ) rows.addAll( prepareComsAndDecisionMaking((ComsAndDecisionMaking)bean, fields));
+		//else if ( bean. .getClass() == List.class ) rows.addAll( prepareComsAndDecisionMaking((ComsAndDecisionMaking)bean, fields));
 		
 		// planning
-		else if ( bean.getClass() == GoalPlan.class ) row = prepareGoalPlan((GoalPlan)bean, fields);
-		else if ( bean.getClass() == HolidayPlan.class ) row = prepareHolidayPlan((HolidayPlan)bean, fields);
+		else if ( bean.getClass() == GoalPlan.class ) rows.addAll( prepareGoalPlan((GoalPlan)bean, fields));
+		else if ( bean.getClass() == HolidayPlan.class ) rows.addAll( prepareHolidayPlan((HolidayPlan)bean, fields));
 		
 		// client details
-		else if ( bean.getClass() == AlertInformation.class ) row = prepareAlertInformation((AlertInformation)bean, fields);
-		else if ( bean.getClass() == FormalOrders.class ) row = prepareFormalOrders((FormalOrders)bean, fields);
-		else if ( bean.getClass() == LivingArrangements.class ) row = prepareLivingArrangements((LivingArrangements)bean, fields);
-		else if ( bean.getClass() == PersonalDetails.class ) row = preparePersonalDetails((PersonalDetails)bean, fields);
+		else if ( bean.getClass() == AlertInformation.class ) rows.addAll( prepareAlertInformation((AlertInformation)bean, fields));
+		else if ( bean.getClass() == FormalOrders.class ) rows.addAll( prepareFormalOrders((FormalOrders)bean, fields));
+		else if ( bean.getClass() == LivingArrangements.class ) rows.addAll( prepareLivingArrangements((LivingArrangements)bean, fields));
+		else if ( bean.getClass() == PersonalDetails.class ) rows.addAll( preparePersonalDetails((PersonalDetails)bean, fields));
 		//TODO contact details
 		
 		// Support
-		else if ( bean.getClass() == DailyActivities.class ) row = prepareDailyActivities((DailyActivities)bean, fields);
-		else if ( bean.getClass() == FinancialSupport.class ) row = prepareFinancialSupport((FinancialSupport)bean, fields);
-		else if ( bean.getClass() == GeneralSupport.class ) row = prepareGeneralSupport((GeneralSupport)bean, fields);
-		else if ( bean.getClass() == MobilityAndTransport.class ) row = prepareMobilityAndTransport((MobilityAndTransport)bean, fields);
-		else if ( bean.getClass() == Relaxation.class ) row = prepareRelaxation((Relaxation)bean, fields);
+		else if ( bean.getClass() == DailyActivities.class ) rows.addAll( prepareDailyActivities((DailyActivities)bean, fields));
+		else if ( bean.getClass() == FinancialSupport.class ) rows.addAll( prepareFinancialSupport((FinancialSupport)bean, fields));
+		else if ( bean.getClass() == GeneralSupport.class ) rows.addAll( prepareGeneralSupport((GeneralSupport)bean, fields));
+		else if ( bean.getClass() == MobilityAndTransport.class ) rows.addAll( prepareMobilityAndTransport((MobilityAndTransport)bean, fields));
+		else if ( bean.getClass() == Relaxation.class ) rows.addAll( prepareRelaxation((Relaxation)bean, fields));
 		//TODO Support Services
+		
+		
+		//MULTI ROW TIME
+		else if ( ArrayList.class.isAssignableFrom( bean.getClass() ) ) {
+			List<Object> beans = (ArrayList<Object>)bean;
+			
+			for ( Object b: beans) {
+				     if ( b.getClass() == BadTopics.class ) rows.addAll( prepareBadTopics( (BadTopics)b , fields) );
+				else if ( b.getClass() == SupportServices.class ) rows.addAll( prepareSupportServices( (SupportServices)b , fields) );
+				else throw new DMSException("Cannot find sub-class:" + bean.getClass().toString());
+			}
+		}
 		
 		// not found
 		else throw new DMSException("Cannot find sub-class:" + bean.getClass().toString());
 		
 		//System.out.println("Found sub-bean.");
 		
-		row.putAll(key);
+		//row.putAll(key);
 		List<Map<String,Object>> table = new ArrayList<Map<String,Object>>();
-		table.add(row);
+		table.addAll(rows);
+		//table.add(row);
 		
 		return new SqlWriteJob( tableName, key, table );
 	}
+	
+	
+	
+	
 	
 	
 	
@@ -149,6 +190,7 @@ public class PlanUtility {
 		writeJobs.add( prepareBase( bean.getGeneralSupport(), DatabaseNames.FLDS_SUPPORT_GENERAL, DatabaseNames.TBL_SUPPORT_GENERAL, DatabaseAccess.getUserIdNumber(clientid)));
 		writeJobs.add( prepareBase( bean.getMobilityAndTransport(), DatabaseNames.FLDS_MOBILITY_TRANSPORT, DatabaseNames.TBL_MOBILITY_TRANSPORT, DatabaseAccess.getUserIdNumber(clientid)));
 		writeJobs.add( prepareBase( bean.getRelaxation(), DatabaseNames.FLDS_RELAXATION, DatabaseNames.TBL_RELAXATION, DatabaseAccess.getUserIdNumber(clientid)));
+		writeJobs.add( prepareBase( bean.getDailyActivities().getService(), DatabaseNames.FLDS_SUPPORT_SERVICES, DatabaseNames.TBL_SUPPORT_SERVICES, DatabaseAccess.getUserIdNumber(clientid)));
 		return writeJobs;
 	}
 	
@@ -174,7 +216,13 @@ public class PlanUtility {
 	private static List<SqlWriteJob> prepareCommunication( Communication bean, String clientid) throws DMSException, SQLException {
 		List<SqlWriteJob> writeJobs = new ArrayList<SqlWriteJob>();
 		writeJobs.add( prepareBase( bean.getComsAndDecisionMaking(), DatabaseNames.FLDS_COMMUNICATION, DatabaseNames.TBL_COMMUNICATION, DatabaseAccess.getUserIdNumber(clientid)));
-		//TODO bad topics
+		writeJobs.addAll( prepareDoNotTalkAbout( bean.getComsAndDecisionMaking().getDoNotTalkAbout(), clientid));
+		return writeJobs;
+	}
+	
+	private static List<SqlWriteJob> prepareDoNotTalkAbout( List<BadTopics> bean, String clientid) throws DMSException, SQLException {
+		List<SqlWriteJob> writeJobs = new ArrayList<SqlWriteJob>();
+		writeJobs.add( prepareBase( bean, DatabaseNames.FLDS_BAD_TOPICS, DatabaseNames.TBL_BAD_TOPICS, DatabaseAccess.getUserIdNumber(clientid)) );
 		return writeJobs;
 	}
 	
@@ -201,7 +249,7 @@ public class PlanUtility {
 	
 	/* ALLOCATING FIELDS AND VALUES */
 	
-	private static Map<String, Object> prepareEmployment(Employment bean,
+	private static List<Map<String, Object>> prepareEmployment(Employment bean,
 			List<String> fields) {
 		Map<String, Object> row = new HashMap<String, Object>();
 		row.put(fields.get(0), bean.getEmployer());
@@ -213,10 +261,13 @@ public class PlanUtility {
 		row.put(fields.get(6), bean.getAnnualLeave());
 		row.put(fields.get(7), bean.getSickLeave());
 		row.put(fields.get(8), bean.getEquipment());
-		return row;
+		
+		List<Map<String, Object>> rows = new ArrayList<Map<String,Object>>();
+		rows.add(row);
+		return rows;
 	}
 
-	private static Map<String, Object> prepareEducation( Education bean, List<String> fields) {
+	private static List<Map<String, Object>> prepareEducation( Education bean, List<String> fields) {
 		Map<String, Object> row = new HashMap<String, Object>();
 		row.put(fields.get(0), bean.getInstitutionName());
 		row.put(fields.get(1), bean.getAddress());
@@ -229,10 +280,13 @@ public class PlanUtility {
 		row.put(fields.get(8), bean.getOtherSupportRequired());
 		row.put(fields.get(9), bean.getCommunityAssistance());
 		row.put(fields.get(10), bean.getStudySupport());
-		return row;
+		
+		List<Map<String, Object>> rows = new ArrayList<Map<String,Object>>();
+		rows.add(row);
+		return rows;
 	}
 	
-	private static Map<String, Object> prepareHealthManagement( HealthManagement bean, List<String> fields) {
+	private static List<Map<String, Object>> prepareHealthManagement( HealthManagement bean, List<String> fields) {
 		Map<String, Object> row = new HashMap<String, Object>();
 		row.put(fields.get(0), bean.getMedicalCondition());
 		row.put(fields.get(1), bean.getSymptom());
@@ -244,10 +298,13 @@ public class PlanUtility {
 		row.put(fields.get(7), bean.getSymptomAvoidance());
 		row.put(fields.get(8), bean.getSeizureBrief());
 		row.put(fields.get(9), bean.getSeizureNonBrief());
-		return row;
+		
+		List<Map<String, Object>> rows = new ArrayList<Map<String,Object>>();
+		rows.add(row);
+		return rows;
 	}
 
-	private static Map<String, Object> prepareHealthInformation( HealthInformation bean, List<String> fields) {
+	private static List<Map<String, Object>> prepareHealthInformation( HealthInformation bean, List<String> fields) {
 		Map<String, Object> row = new HashMap<String, Object>();
 		row.put(fields.get(0), bean.getHistoryAndInfo());
 		row.put(fields.get(1), bean.getConditions());
@@ -256,10 +313,13 @@ public class PlanUtility {
 		row.put(fields.get(4), bean.isSelfMedicate());
 		row.put(fields.get(5), bean.getAllMedicalInfo());
 		row.put(fields.get(6), bean.getAdditionalInfo());
-		return row;
+		
+		List<Map<String, Object>> rows = new ArrayList<Map<String,Object>>();
+		rows.add(row);
+		return rows;
 	}
 
-	private static Map<String, Object> prepareHealthDietary(HealthDietary bean, List<String> fields) {
+	private static List<Map<String, Object>> prepareHealthDietary(HealthDietary bean, List<String> fields) {
 		Map<String, Object> row = new HashMap<String, Object>();
 		row.put(fields.get(0), bean.getCannotEat());
 		row.put(fields.get(1), bean.getAvoidFood());
@@ -274,10 +334,13 @@ public class PlanUtility {
 		row.put(fields.get(10), bean.getEatingSupport());
 		row.put(fields.get(11), bean.getOtherInfo());
 		row.put(fields.get(12), bean.getLocation());
-		return row;
+		
+		List<Map<String, Object>> rows = new ArrayList<Map<String,Object>>();
+		rows.add(row);
+		return rows;
 	}
 
-	private static Map<String, Object> prepareComsAndDecisionMaking(ComsAndDecisionMaking bean, List<String> fields) {
+	private static List<Map<String, Object>> prepareComsAndDecisionMaking(ComsAndDecisionMaking bean, List<String> fields) {
 		Map<String, Object> row = new HashMap<String, Object>();
 		row.put(fields.get(0), bean.getiCommunicate());
 		row.put(fields.get(1), bean.getYouCommunicate());
@@ -287,10 +350,13 @@ public class PlanUtility {
 		row.put(fields.get(5), bean.getGoodTopics());
 		row.put(fields.get(6), bean.getLikes());
 		row.put(fields.get(7), bean.getDislikes());
-		return row;
+		
+		List<Map<String, Object>> rows = new ArrayList<Map<String,Object>>();
+		rows.add(row);
+		return rows;
 	}
 
-	private static Map<String, Object> prepareGoalPlan(GoalPlan bean, List<String> fields) {
+	private static List<Map<String, Object>> prepareGoalPlan(GoalPlan bean, List<String> fields) {
 		Map<String, Object> row = new HashMap<String, Object>();
 		row.put(fields.get(0), bean.getGoalToAchieve());
 		row.put(fields.get(1), bean.getStrategies());
@@ -298,10 +364,13 @@ public class PlanUtility {
 		row.put(fields.get(3), bean.getTimeframes());
 		row.put(fields.get(4), bean.getOutcomes());
 		row.put(fields.get(5), bean.getResourcesRequired());
-		return row;
+		
+		List<Map<String, Object>> rows = new ArrayList<Map<String,Object>>();
+		rows.add(row);
+		return rows;
 	}
 
-	private static Map<String, Object> prepareHolidayPlan(HolidayPlan bean, List<String> fields) {
+	private static List<Map<String, Object>> prepareHolidayPlan(HolidayPlan bean, List<String> fields) {
 		Map<String, Object> row = new HashMap<String, Object>();
 		row.put(fields.get(0), bean.getHolidayType());
 		row.put(fields.get(1), bean.getStrategies());
@@ -309,10 +378,13 @@ public class PlanUtility {
 		row.put(fields.get(3), bean.getTimeframes());
 		row.put(fields.get(4), bean.getDetailsAndInfo());
 		row.put(fields.get(5), bean.getResourcesRequired());
-		return row;
+		
+		List<Map<String, Object>> rows = new ArrayList<Map<String,Object>>();
+		rows.add(row);
+		return rows;
 	}
 
-	private static Map<String, Object> prepareAlertInformation(AlertInformation bean, List<String> fields) {
+	private static List<Map<String, Object>> prepareAlertInformation(AlertInformation bean, List<String> fields) {
 		Map<String, Object> row = new HashMap<String, Object>();
 		row.put(fields.get(0), bean.getAllergies());
 		row.put(fields.get(1), bean.getMedIssues());
@@ -323,10 +395,13 @@ public class PlanUtility {
 		row.put(fields.get(6), bean.getComplexSupportNeeds());
 		row.put(fields.get(7), bean.getPhobias());
 		row.put(fields.get(8), bean.getOtherInfo());
-		return row;
+		
+		List<Map<String, Object>> rows = new ArrayList<Map<String,Object>>();
+		rows.add(row);
+		return rows;
 	}
 
-	private static Map<String, Object> prepareFormalOrders(FormalOrders bean, List<String> fields) {
+	private static List<Map<String, Object>> prepareFormalOrders(FormalOrders bean, List<String> fields) {
 		Map<String, Object> row = new HashMap<String, Object>();
 		row.put(fields.get(0), bean.getOrderFor());
 		row.put(fields.get(1), bean.getAppointee());
@@ -341,10 +416,13 @@ public class PlanUtility {
 		row.put(fields.get(10), bean.getFamilyContact());
 		row.put(fields.get(11), bean.getContactArrangement());
 		row.put(fields.get(12), bean.getSpecialConditions());
-		return row;
+		
+		List<Map<String, Object>> rows = new ArrayList<Map<String,Object>>();
+		rows.add(row);
+		return rows;
 	}
 
-	private static Map<String, Object> prepareLivingArrangements(LivingArrangements bean, List<String> fields) {
+	private static List<Map<String, Object>> prepareLivingArrangements(LivingArrangements bean, List<String> fields) {
 		Map<String, Object> row = new HashMap<String, Object>();
 		row.put(fields.get(0), bean.getService());
 		row.put(fields.get(1), bean.getStreet());
@@ -352,10 +430,13 @@ public class PlanUtility {
 		row.put(fields.get(3), bean.getSuburb());
 		row.put(fields.get(4), bean.getPostCode());
 		row.put(fields.get(5), bean.getCity());
-		return row;
+		
+		List<Map<String, Object>> rows = new ArrayList<Map<String,Object>>();
+		rows.add(row);
+		return rows;
 	}
 
-	private static Map<String, Object> preparePersonalDetails(PersonalDetails bean, List<String> fields) {
+	private static List<Map<String, Object>> preparePersonalDetails(PersonalDetails bean, List<String> fields) {
 		Map<String, Object> row = new HashMap<String, Object>();
 		row.put(fields.get(0), bean.getPreferredName());
 		row.put(fields.get(1), bean.getDob());
@@ -364,10 +445,13 @@ public class PlanUtility {
 		row.put(fields.get(4), bean.getEmail());
 		row.put(fields.get(5), bean.getCreationDate());
 		row.put(fields.get(6), bean.getReviewDate());
-		return row;
+		
+		List<Map<String, Object>> rows = new ArrayList<Map<String,Object>>();
+		rows.add(row);
+		return rows;
 	}
 
-	private static Map<String, Object> prepareDailyActivities(DailyActivities bean, List<String> fields) {
+	private static List<Map<String, Object>> prepareDailyActivities(DailyActivities bean, List<String> fields) {
 		Map<String, Object> row = new HashMap<String, Object>();
 		row.put(fields.get(0), bean.getSleeping());
 		row.put(fields.get(1), bean.getBedTime());
@@ -390,10 +474,13 @@ public class PlanUtility {
 		row.put(fields.get(18), bean.getRoutineAfternoon());
 		row.put(fields.get(19), bean.getRoutineSleeping());
 		row.put(fields.get(20), bean.getRoutineWeekend());
-		return row;
+		
+		List<Map<String, Object>> rows = new ArrayList<Map<String,Object>>();
+		rows.add(row);
+		return rows;
 	}
 
-	private static Map<String, Object> prepareFinancialSupport(FinancialSupport bean, List<String> fields) {
+	private static List<Map<String, Object>> prepareFinancialSupport(FinancialSupport bean, List<String> fields) {
 		Map<String, Object> row = new HashMap<String, Object>();
 		row.put(fields.get(0), bean.getFinancialAdmin());
 		row.put(fields.get(1), bean.getBudgetExpend());
@@ -409,10 +496,13 @@ public class PlanUtility {
 		row.put(fields.get(11), bean.getBudgetEmergency());
 		row.put(fields.get(12), bean.getBudgetSupportNetwork());
 		row.put(fields.get(13), bean.getOtherRequirements());
-		return row;
+		
+		List<Map<String, Object>> rows = new ArrayList<Map<String,Object>>();
+		rows.add(row);
+		return rows;
 	}
 
-	private static Map<String, Object> prepareGeneralSupport(GeneralSupport bean, List<String> fields) {
+	private static List<Map<String, Object>> prepareGeneralSupport(GeneralSupport bean, List<String> fields) {
 		Map<String, Object> row = new HashMap<String, Object>();
 		row.put(fields.get(0), bean.getCrowdSafety());
 		row.put(fields.get(1), bean.getStrangerDanger());
@@ -427,10 +517,13 @@ public class PlanUtility {
 		row.put(fields.get(10), bean.getUsingChemical());
 		row.put(fields.get(11), bean.getHazardRecognition());
 		row.put(fields.get(12), bean.getOtherSafetyInfo());
-		return row;
+		
+		List<Map<String, Object>> rows = new ArrayList<Map<String,Object>>();
+		rows.add(row);
+		return rows;
 	}
 
-	private static Map<String, Object> prepareMobilityAndTransport(MobilityAndTransport bean, List<String> fields) {
+	private static List<Map<String, Object>> prepareMobilityAndTransport(MobilityAndTransport bean, List<String> fields) {
 		Map<String, Object> row = new HashMap<String, Object>();
 		row.put(fields.get(0), bean.getLiftsAndEscalators());
 		row.put(fields.get(1), bean.getUnevenSurfaces());
@@ -440,17 +533,45 @@ public class PlanUtility {
 		row.put(fields.get(5), bean.getPublicTransport());
 		row.put(fields.get(6), bean.getTravelPreferences());
 		row.put(fields.get(7), bean.getOtherTravelSupport());
-		return row;
+		
+		List<Map<String, Object>> rows = new ArrayList<Map<String,Object>>();
+		rows.add(row);
+		return rows;
 	}
 
-	private static Map<String, Object> prepareRelaxation(Relaxation bean, List<String> fields) {
+	private static List<Map<String, Object>> prepareRelaxation(Relaxation bean, List<String> fields) {
 		Map<String, Object> row = new HashMap<String, Object>();
 		row.put(fields.get(0), bean.getActivities());
 		row.put(fields.get(1), bean.getMusic());
 		row.put(fields.get(2), bean.getMovie());
 		row.put(fields.get(3), bean.gettVShow());
 		row.put(fields.get(4), bean.getOtherActivities());
-		return row;
+		
+		List<Map<String, Object>> rows = new ArrayList<Map<String,Object>>();
+		rows.add(row);
+		return rows;
+	}
+
+	private static List<Map<String, Object>> prepareBadTopics(BadTopics bean, List<String> fields) {
+		Map<String, Object> row = new HashMap<String, Object>();
+		row.put(fields.get(0), bean.getTopic());
+		row.put(fields.get(1), bean.getTranslation());
+		row.put(fields.get(2), null);   // auto increment - special bad topics row
+		
+		List<Map<String, Object>> rows = new ArrayList<Map<String,Object>>();
+		rows.add(row);
+		return rows;
+	}
+
+	private static List<Map<String, Object>> prepareSupportServices(SupportServices bean, List<String> fields) {
+		Map<String, Object> row = new HashMap<String, Object>();
+		row.put(fields.get(0), bean.getServiceName());
+		row.put(fields.get(1), bean.getServiceDesc());
+		row.put(fields.get(2), null);   // auto increment field
+		
+		List<Map<String, Object>> rows = new ArrayList<Map<String,Object>>();
+		rows.add(row);
+		return rows;
 	}
 	
 	

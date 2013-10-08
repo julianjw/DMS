@@ -1,6 +1,5 @@
 package qut.endeavour.rest.utility;
 
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,6 +17,7 @@ public class SqlWriteJob {
 	private final static char INTEGER = 'i';
 	private final static char STRING = 's';
 	private final static char DATE = 'd';
+	private final static char AUTOINCREMENT = 'a';
 	
 	private String tableName;
 	private Map<String,Object> key;
@@ -35,6 +35,8 @@ public class SqlWriteJob {
 	 */
 	public SqlWriteJob(String tableName, Map<String,Object> key,
 			List<Map<String, Object>> table) throws DMSException {
+		
+		//TODO MODIFY FOR NO KEY IN MAIN ARRAY
 		
 		if ( tableName == null )  throw new DMSException();
 		if ( key == null)  throw new DMSException();
@@ -87,18 +89,11 @@ public class SqlWriteJob {
 			System.out.println(insertSql);
 			System.out.println(updateSql);
 			
-			System.out.println("Writing:");
-			//for ( Map.Entry<String, Object> set : row.entrySet() ) {
-			//	System.out.println("--> \""+set.getKey()+"\" - \""+set.getValue().toString()+"\"");
-			//}
-			
 			PreparedStatement countPs = populateValues(key, null, DatabaseAccess.createPreparedStatement(countSql) );
 			PreparedStatement insertPs = populateValues(table.get(0), null, DatabaseAccess.createPreparedStatement(insertSql));
 			PreparedStatement updatePs = populateValues(table.get(0), keyName, DatabaseAccess.createPreparedStatement(updateSql));
 			
 			ResultSet countRs = countPs.executeQuery(); // count how many times it is in the database
-			
-			System.out.println("");
 			
 			if( countRs.next() ) {
 				System.out.println( "number of times user id number found in table: " + countRs.getInt(1));
@@ -115,7 +110,7 @@ public class SqlWriteJob {
 			System.out.println("Finished writing.");
 			
 		}  else { // END ONE ROW ONLY, begin multiple rows.
-			System.out.println("Multiple rows to be written to \""+ tableName +"\" - Ignoring.");
+			System.out.println("Multiple rows to be written to \""+ tableName +"\" - Ignoring for now.");
 		}
 		
 	}
@@ -169,20 +164,19 @@ public class SqlWriteJob {
 		
 		switch (type) {
 			case STRING:
-				//System.out.println(field.getKey()+"-->String " +(String)data);
 				ps.setString(i, (String)data);
 				break;
 			case INTEGER:
-				//System.out.println(field.getKey()+"-->Integer " +(Integer)data);
 				ps.setInt(i, (Integer)data);
 				break;
 			case BOOLEAN:
-				//System.out.println(field.getKey()+"-->Boolean " +(Boolean)data);
 				ps.setBoolean(i, (Boolean)data);
 				break;
 			case DATE:
-				//System.out.println(field.getKey()+"-->Date " +Date.valueOf( (String)data));
 				ps.setDate(i, Date.valueOf( (String)data) );
+				break;
+			case AUTOINCREMENT:
+				ps.setNull(i, java.sql.Types.NULL);
 				break;
 			default:
 				ps.setNull(i, java.sql.Types.NULL);
