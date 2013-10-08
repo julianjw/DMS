@@ -622,8 +622,7 @@ public class DatabaseAccess {
 	 * @throws DMSException 
 	 */
 	public static PreparedStatement createPreparedStatement(String sql) throws SQLException, DMSException {
-		if ( makeConnection() )
-		return con.prepareStatement(sql);
+		if ( makeConnection() ) return con.prepareStatement(sql);
 		throw new DMSException("Cannot connect to database.");
 	}
 
