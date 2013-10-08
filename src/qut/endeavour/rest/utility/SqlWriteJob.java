@@ -63,13 +63,13 @@ public class SqlWriteJob {
 		if ( table.size() == 1) { // BEGIN ONE ROW ONLY
 			Map<String, Object> row = table.get(0);
 			
-			String insertSqlFields = "`"+keyName+"`";
+			String insertSqlFields = "`"+keyName.substring(2)+"`";
 			String insertSqlValues = "?";
-			String updateSqlSet = "`"+keyName+"`=?";
+			String updateSqlSet = "`"+keyName.substring(2)+"`=?";
 			
 			for ( Entry<String, Object> field : row.entrySet() ) {
 				insertSqlFields += ",`"+field.getKey().substring(2)+"`";
-				insertSqlValues += "?,";
+				insertSqlValues += ",?";
 				
 				updateSqlSet += ",`"+field.getKey().substring(2)+"`=?";
 			}
