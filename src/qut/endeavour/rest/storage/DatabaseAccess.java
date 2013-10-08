@@ -15,8 +15,12 @@ import java.util.Map.Entry;
 
 
 
+
+import java.util.Vector;
+
 import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.exception.DMSException;
+import qut.endeavour.rest.utility.SqlWriteJob;
 
 
 public class DatabaseAccess {
@@ -56,6 +60,7 @@ public class DatabaseAccess {
 	 * @param user_id
 	 * @param token
 	 * @return
+	 * @throws DMSException 
 	 */
 //	public static List<String> getContactTypes( String user_id, String token ) {
 //		List<String> contactTypes = new ArrayList<String>();
@@ -67,6 +72,30 @@ public class DatabaseAccess {
 //		return contactTypes;
 //	}
 	
+	
+	public static boolean performSqlJobs( List<SqlWriteJob> jobs ) {
+		
+		try {
+			con.setAutoCommit(false);
+		
+			for ( SqlWriteJob job : jobs ) {
+				job.execute();
+			}
+			
+			con.commit();
+			
+			
+		} catch (Exception e) { // any exception, do the same thing
+			try {
+				con.rollback();
+				con.setAutoCommit(true);
+				return false;
+				
+			} catch (SQLException e1) {}
+			
+		}
+		return true;
+	}
 	
 	/**
 	 * Populate roleByName
@@ -562,7 +591,7 @@ public class DatabaseAccess {
 		
 		String sql = "select ui.username, ui.name, ui.password, r.role from user_info ui inner join roles r on ui.role_id=r.role_id where ui.username=?";
 		
-		List<String> userInfo = new ArrayList<String>();
+		List<String> userInfo = new Vector<String>();
 		
 		try {
 			
@@ -572,10 +601,10 @@ public class DatabaseAccess {
 			
 			results.next();
 			
-			userInfo.add(results.getString("username"));
-			userInfo.add(results.getString("name"));
-			userInfo.add(results.getString("password"));
-			userInfo.add(results.getString("role"));
+			userInfo.add( results.getString("username"));
+			userInfo.add( results.getString("name"));
+			userInfo.add( results.getString("password"));
+			userInfo.add( results.getString("role"));
 			
 		} catch (SQLException e) {
 			return null;
@@ -596,5 +625,25 @@ public class DatabaseAccess {
 		if ( makeConnection() )
 		return con.prepareStatement(sql);
 		throw new DMSException("Cannot connect to database.");
+	}
+
+	public static int getUserIdNumber(String clientid) throws DMSException, SQLException {
+		if ( !makeConnection() ) throw new DMSException("Database down."); 
+		
+		String sql = "SELECT user_id FROM `user_info` WHERE username = 'client';";
+		PreparedStatement ps = con.prepareStatement(sql);
+		
+		ResultSet rs = ps.executeQuery();
+		
+		int userIdNumber = 0;
+		
+		if ( rs.next() ) {
+			userIdNumber = rs.getInt("user_id");
+		} else {
+			throw new DMSException("User doesn't exist.");
+		}
+		
+		
+		return userIdNumber;
 	}
 }

@@ -35,15 +35,15 @@ public class PlanResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Verification setJSONPlanning(
+			Planning arg,
 			@PathParam("user_id") String username,
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
 		
 		System.out.println("Writing: Planning");
-		System.out.println("Token: "+token);
-		System.out.println("user_id: "+username);
-		System.out.println("clientId: "+clientid);
+
+		//PlanUtility.storePlanning(arg);
 		
 		return new Verification(Verification.Verified.SUCCESS);
 		//return PlanFactory.createPlanning();
@@ -56,15 +56,15 @@ public class PlanResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Verification setJSONCommunication(
+			Communication arg,
 			@PathParam("username") String username,
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
 		
 		System.out.println("Writing: ClientDetails");
-		System.out.println("Token: "+token);
-		System.out.println("Username: "+username);
-		System.out.println("clientId: "+clientid);
+
+		//PlanUtility.storeCommunication(arg);
 		
 		return new Verification(Verification.Verified.SUCCESS);
 	}
@@ -74,15 +74,18 @@ public class PlanResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Verification setJSONSupportRequired(
+			SupportRequired sr,
 			@PathParam("username") String username,
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
 		
 		System.out.println("Writing: ClientDetails");
-		System.out.println("Token: "+token);
-		System.out.println("Username: "+username);
-		System.out.println("clientId: "+clientid);
+//		System.out.println("Token: "+token);
+//		System.out.println("Username: "+username);
+//		System.out.println("clientId: "+clientid);
+		
+		//PlanUtility.storeSupportRequired(arg);
 		
 		return new Verification(Verification.Verified.SUCCESS);
 	}
@@ -92,15 +95,18 @@ public class PlanResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Verification setJSONHealthDetails(
+			HealthDetails arg,
 			@PathParam("username") String username,
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
 		
 		System.out.println("Writing: ClientDetails");
-		System.out.println("Token: "+token);
-		System.out.println("Username: "+username);
-		System.out.println("clientId: "+clientid);
+//		System.out.println("Token: "+token);
+//		System.out.println("Username: "+username);
+//		System.out.println("clientId: "+clientid);
+		
+		//PlanUtility.storeHealthDetails(arg);
 		
 		return new Verification(Verification.Verified.SUCCESS);
 	}
@@ -110,15 +116,18 @@ public class PlanResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Verification setJSONClientDetails(
+			ClientDetails arg,
 			@PathParam("username") String username,
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
 		
 		System.out.println("Writing: ClientDetails");
-		System.out.println("Token: "+token);
-		System.out.println("Username: "+username);
-		System.out.println("clientId: "+clientid);
+//		System.out.println("Token: "+token);
+//		System.out.println("Username: "+username);
+//		System.out.println("clientId: "+clientid);
+		
+		//PlanUtility.storeClientDetails(arg);
 		
 		return new Verification(Verification.Verified.SUCCESS);
 	}
@@ -128,7 +137,7 @@ public class PlanResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Verification setJSONEducationEmployment(
-			EducationEmployment ee,
+			EducationEmployment arg,
 			@PathParam("username") String username,
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
@@ -139,7 +148,7 @@ public class PlanResource {
 //		System.out.println("Username: "+username);
 //		System.out.println("clientId: "+clientid);
 		
-		PlanUtility.storeEducationEmployment(ee);
+		PlanUtility.storeEducationEmployment(arg, clientid);
 		
 		return new Verification(Verification.Verified.SUCCESS);
 	}
@@ -149,15 +158,15 @@ public class PlanResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Verification setJSONPersonalPlan(
+			PersonalPlan arg,
 			@PathParam("username") String username,
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
 		
 		System.out.println("Writing: PersonalPlan");
-		System.out.println("Token: "+token);
-		System.out.println("Username: "+username);
-		System.out.println("clientId: "+clientid);
+
+		//PlanUtility.storePersonalPlan(arg);
 		
 		return new Verification(Verification.Verified.SUCCESS);
 	}

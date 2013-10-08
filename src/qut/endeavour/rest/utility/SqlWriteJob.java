@@ -19,10 +19,23 @@ public class SqlWriteJob {
 	private final static char STRING = 's';
 	private final static char DATE = 'd';
 	
-	public SqlWriteJob(Connection con, String tableName, Map<String,Object> key,
+	private String tableName;
+	private Map<String,Object> key;
+	private List<Map<String,Object>> table;
+	
+	
+	/**
+	 * One table at a time write job.
+	 * 
+	 * @param con
+	 * @param tableName
+	 * @param key
+	 * @param table
+	 * @throws DMSException
+	 */
+	public SqlWriteJob(String tableName, Map<String,Object> key,
 			List<Map<String, Object>> table) throws DMSException {
 		
-		if ( con == null ) throw new DMSException();
 		if ( tableName == null )  throw new DMSException();
 		if ( key == null)  throw new DMSException();
 		if ( key.size() != 1 ) throw new DMSException();
@@ -31,13 +44,14 @@ public class SqlWriteJob {
 		if ( table.get(0) == null )  throw new DMSException();
 		if ( table.get(0).size() < 1 )  throw new DMSException();
 		
-		prepare( con, tableName, key, table);
+		this.tableName = tableName;
+		this.key = key;
+		this.table = table;
 		
 	}
 	
 	
-	private void prepare(Connection con, String tableName, Map<String,Object> key,
-		List<Map<String, Object>> table) {
+	public void execute() throws SQLException, DMSException {
 		
 		String keyName;
 		
@@ -46,7 +60,7 @@ public class SqlWriteJob {
 			keyName = entry.getKey();
 		}
 		
-		if ( table.size() == 1) {
+		if ( table.size() == 1) { // BEGIN ONE ROW ONLY
 			Map<String, Object> row = table.get(0);
 			
 			String insertSqlFields = "`"+keyName+"`";
@@ -70,29 +84,27 @@ public class SqlWriteJob {
 			
 			
 			
-			try {
-				PreparedStatement countPs = populateValues(key, DatabaseAccess.createPreparedStatement(countSql) );
-				PreparedStatement insertPs = populateValues(table.get(0), DatabaseAccess.createPreparedStatement(insertSql));
-				PreparedStatement updatePs = populateValues(table.get(0), DatabaseAccess.createPreparedStatement(updateSql));
-				
-				ResultSet countRs = countPs.executeQuery();
-				
-				if( countRs.next() ) {
-					if ( countRs.getInt(1) == 0 ) { // if the count is 0, we need to insert it.
-						insertPs.executeUpdate();
-					} else {
-						updatePs.executeUpdate();
-					}
+			
+			PreparedStatement countPs = populateValues(key, DatabaseAccess.createPreparedStatement(countSql) );
+			PreparedStatement insertPs = populateValues(table.get(0), DatabaseAccess.createPreparedStatement(insertSql));
+			PreparedStatement updatePs = populateValues(table.get(0), DatabaseAccess.createPreparedStatement(updateSql));
+			
+			ResultSet countRs = countPs.executeQuery(); // count how many times it is in the database
+			
+			if( countRs.next() ) {
+				if ( countRs.getInt(1) == 0 ) { // if the count is 0, we need to insert it.
+					insertPs.executeUpdate();
+				} else {
+					updatePs.executeUpdate();
 				}
-				
-			} catch (SQLException e) {
-	
-				e.printStackTrace();
-			} catch (DMSException e) {
-	
-				e.printStackTrace();
 			}
+				
+			
+			
+		}  else { // END ONE ROW ONLY, begin multiple rows.
+			System.out.println("Multiple rows to be written to \""+ tableName +"\" - Ignoring.");
 		}
+		
 	}
 
 
