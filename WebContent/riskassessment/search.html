@@ -1,0 +1,96 @@
+<div id='searchD'>
+	<table border=0>
+	<tr>
+		<td>
+			<label for='queryT' id='queryL' class='toggle'>ID: </label>
+			<input type='text' name='queryT' id='queryT' />
+			<button id='queryB'>Search</button>
+	
+			<div id='searchResults'></div>
+		</td>
+		<td>OR</td>
+		<td><button id='createNewRiskButton' >Create a new Risk Assessment</button></td>
+	</tr>
+	</table>
+</div>
+
+<script type='text/javascript'>
+
+function selectRisk(el) {
+	//create the cookie
+	$.cookie('risk_id', $(el).attr("id"));
+	//continue to forms
+	$("#searchD").hide();
+	pullData("risk");
+	$("#riskD").show();
+}
+
+
+$(document).ready(function(){
+	
+	
+	//click on create new PP button
+	$("#createNewRiskButton").click(function(){
+		$("#searchD").hide();
+		pullData("new");
+		$("#riskD").show();
+	});
+	
+	
+	//page loads
+	//get list of existing clients
+	$.ajax({
+		url: "./rest/personalplan/allclientswithplans/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
+		type:"get",
+		contentType: "application/json",
+		success: function(d) {
+			$("#searchResults").html("");
+			var content = "<table>"
+			content += "<tr><th>Client ID</th><th>Name</th><th>DOB</th><th>Mobile</th><th>Telephone</th></tr>";
+			for (var i = 0; i < d.existingPlanDetails.length; i++) {
+				content += "<tr><td class='fakeLink' id='" + d.existingPlanDetails[i].user_id + "'onClick='selectPP(this);'>" + d.existingPlanDetails[i].user_id + "</td>";
+				content += "<td>" + d.existingPlanDetails[i].rName + "</td>";
+				content += "<td>" + d.existingPlanDetails[i].dob + "</td>";
+				content += "<td>" + d.existingPlanDetails[i].mobile + "</td>";
+				content += "<td>" + d.existingPlanDetails[i].telephone + "</td></tr>";
+			}
+			content += "</table>";
+			$("#searchResults").append(content);
+		},
+		error: function(xhr) {
+			// do something to handle error
+			alert("error getting existing personal plan details");
+		}
+	});
+	
+	
+	//click on search button
+	$("#queryB").click(function(){
+		$.ajax({
+			url: "./rest/personalplan/allclientswithplans/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
+			type:"get",
+			contentType: "application/json",
+			success: function(d) {
+				$("#searchResults").html("");
+				var content = "<table>"
+				content += "<tr><th>Client ID</th><th>Name</th><th>DOB</th><th>Mobile</th><th>Telephone</th></tr>";
+				for (var i = 0; i < d.existingPlanDetails.length; i++) {
+					if(d.existingPlanDetails[i].user_id == $("#queryT").val() || $("#queryT").val()=="") {
+						content += "<tr><td>" + d.existingPlanDetails[i].user_id + "</td>";
+						content += "<td>" + d.existingPlanDetails[i].rName + "</td>";
+						content += "<td>" + d.existingPlanDetails[i].dob + "</td>";
+						content += "<td>" + d.existingPlanDetails[i].mobile + "</td>";
+						content += "<td>" + d.existingPlanDetails[i].telephone + "</td></tr>";
+					}
+				}
+				content += "</table>";
+				$("#searchResults").append(content);
+			},
+			error: function(xhr) {
+				// do something to handle error
+				alert("error getting existing personal plan details");
+			}
+		});
+	});
+});
+</script>

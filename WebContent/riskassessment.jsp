@@ -3,15 +3,57 @@
 	Risk Assessment
 <jsp:include page="partials/nav.html" flush="true" />
 	<!-- navigation -->
-<!-- 	<h3>Personal Plan Nav</h3> -->
-	<a href='newassessments.html'>New Assessment</a>
-	<a href='savedassessments.html'>Saved Assessments</a>
+<div class="horizontalNav">
+<ul>
+	<li id="search" class='pageNav'><a href='#search'>Existing Risk Assessments</a></li>
+	<li id="risk" class="pageNav"><a href='#risk'>Risk Assessment</a></li>
+</ul>
+</div>
 <jsp:include page="partials/body.html" flush="true" />
 	<!-- page content -->
-	
+	<div id="searchD" ><jsp:include page="riskassessment/search.html" flush="true" /></div>
+	<div id="riskD" class="hidden"><jsp:include page="riskassessment/risk.html" flush="true" /></div>
 <jsp:include page="partials/footer.html" flush="true" />
 <!-- Page specific scripts -->
-</html></head>
-<body>
-</body>
+<script type='text/javascript'>
+
+function pullData(page) {
+	switch(page) {
+	case "new":
+		
+		break;
+	
+	case "riskD":
+		
+		break;
+	
+	}	
+	
+}
+$(document).ready(function(){
+	//page load	
+	
+	//click on existing risk assessments nav link
+	$("#search").click(function(){
+		$("#riskD").hide();
+		$("#searchD").show();
+	});
+	
+	//click on risk assessment nav link
+	$("#risk").click(function(){
+		$("#searchD").hide();
+		$("#riskD").show();
+	});
+	
+	
+	//click on toggle class element
+	$(".toggle").click(function(event){
+		$(this).next().toggle();
+	});
+	
+	
+});
+
+
+</script>
 </html>

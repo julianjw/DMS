@@ -5,9 +5,6 @@
 	
 <jsp:include page="partials/nav.html" flush="true" />
 	<!-- navigation -->
-	<!-- 	<h3>Personal Plan Nav</h3> -->
-	<a href='personalplanedit.jsp'>Edit Existing Plan</a>
-	
 	<div class="horizontalNav">
 	<ul>
 		<li id="search" class='pageNav'><a href='#search'>Personal Plan</a></li>
@@ -24,7 +21,7 @@
 	<div id="searchD" ><jsp:include page="personalplan/search.html" flush="true" /></div>
 	<div id="clientD" class="hidden"><jsp:include page="personalplan/client.html" flush="true" /></div>
 	<div id="healthD" class="hidden"><jsp:include page="personalplan/health.html" flush="true" /></div>
-	<div id="supportD" class="hidden"><jsp:include page="personalplan/support.html" flush="true" /></div>
+	<div id="supportD" class='hidden'><jsp:include page="personalplan/support.html" flush="true" /></div>
 	<div id="communicationD" class="hidden"><jsp:include page="personalplan/communication.html" flush="true" /></div>
 	<div id="educationD" class="hidden"><jsp:include page="personalplan/education.html" flush="true" /></div>
  	<div id="planningD" class="hidden"><jsp:include page="personalplan/planning.html" flush="true" /></div>
@@ -179,10 +176,75 @@ function pullData(page) {
 		
 		
 		
+		//support required
+		$("#crowdT").val("");
+		$("#strangerT").val("");
+		$("#moneyT").val("");
+		$("#crowdsT").val("");
+		$("#socialT").val("");
+		$("#teleT").val("");
+		$("#eatingoutT").val("");
+		$("#beliefsT").val("");
+		$("#leisureT").val("");
+		$("#appliancesT").val("");
+		$("#chemicalT").val("");
+		$("#recoginitionT").val("");
+		$("#otherSafetyT").val("");
 		
+		//mobility and transport
+		$("#heightT").val("");
+		$("#elevatorT").val("");
+		$("#mobilityT").val("");
+		$("#otherMobilityT").val("");
+		$("#publicTransportT").val("");
+		$("#roadSafetyT").val("");
+		$("#seatingT").val("");
+		$("#unevenT").val("");
 		
+		//financial support
+		$("#budgetBillsT").val(""); 
+		$("#budgetContraintsT").val("");
+		$("#budgetSafetyT").val("");
+		$("#budgetAvailableT").val("");
+		$("#budgetFoodT").val("");
+		$("#budgetHouseT").val("");
+		$("#budgetSupportNetworkT").val("");
+		$("#budgetTransportT").val("");
+		$("#budgetUtilT").val("");
+		$("#budgetSupportT").val("");
+		$("#financialAdminT").val("");
+		$("#budgetSupportHandleT").val("");
+		$("#otherBudgetT").val("");
+		$("#personalItemsT").val("");
 		
-		
+		$("#bathingCareT").val("");
+		$("#btrT").val("");
+		$("#cleaningT").val("");
+		$("#cookingT").val("");
+		$("#dressingT").val("");
+		$("#FridayT").val("");
+		$("#MenstruationT").val("");
+		$("#MondayT").val("");
+		$("#weeklyOtherT").val("");
+		$("#arvoRoutineT").val("");
+		$("#mealTimeT").val("");
+		$("#morningT").val("");
+		$("#overnightT").val("");
+		$("#weekendT").val("");
+		$("#SaturdayT").val("");
+		$("#sleepingT").val("");
+		$("#SundayT").val("");
+		$("#ThursdayT").val("");
+		$("#toiletT").val("");
+		$("#TuesdayT").val("");
+		$("#WednesdayT").val("");
+	
+		//relaxation
+		$("#relaxPrefT").val("");
+		$("#relaxMovieT").val("");
+		$("#relaxMusicT").val("");
+		$("#relaxOtherT").val("");
+		$("#relaxTVT").val("");
 		
 		
 		
@@ -221,6 +283,22 @@ function pullData(page) {
 		$("#positionT").val("");
 		$("#sickLeaveT").val("");
 		$("#transportT").val("");
+		
+		
+		//planning
+		$("#holidayT").val("");
+		$("#stratT").val("");
+		$("#howT").val("");
+		$("#timeframesT").val("");
+		$("#detailsT").val("");
+		$("#resourcesT").val("");
+		
+		$("#myGoalT").val("");
+		$("#goalStratT").val("");
+		$("#goalHowT").val("");
+		$("#goalTimesframesT").val("");
+		$("#goalOutcomeT").val("");
+		$("#goalResourcesT").val("");
 		
 		break;
 	
@@ -374,8 +452,90 @@ function pullData(page) {
 		break;
 		
 	case "supportD":
+		$.ajax({
+			url: "./rest/personalplan/supportrequired/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + $.cookie('client_id'),
+			type:"get",
+			contentType: "application/json",
+			success: function(d) {		
+				
+				//support required
+				$("#crowdT").val(d.generalSupport.crowdSafety);
+				$("#strangerT").val(d.generalSupport.strangerDanger);
+				$("#moneyT").val(d.generalSupport.moneyHandling);
+				$("#crowdsT").val(d.generalSupport.crowds);
+				$("#socialT").val(d.generalSupport.socialNetworks);
+				$("#teleT").val(d.generalSupport.communications);
+				$("#eatingoutT").val(d.generalSupport.eatingOut);
+				$("#beliefsT").val(d.generalSupport.beliefs);
+				$("#leisureT").val(d.generalSupport.leisure);
+				$("#appliancesT").val(d.generalSupport.usingApplicances);
+				$("#chemicalT").val(d.generalSupport.usingChemical);
+				$("#recoginitionT").val(d.generalSupport.hazardRecognition);
+				$("#otherSafetyT").val(d.generalSupport.otherSafetyInfo);
+				
+				//mobility and transport
+				$("#heightT").val(d.mobilityAndTransport.height);
+				$("#elevatorT").val(d.mobilityAndTransport.liftsAndEscalators);
+				$("#mobilityT").val(d.mobilityAndTransport.mobilityAids);
+				$("#otherMobilityT").val(d.mobilityAndTransport.otherTravelSupport);
+				$("#publicTransportT").val(d.mobilityAndTransport.publicTransport);
+				$("#roadSafetyT").val(d.mobilityAndTransport.roadSafetySkills);
+				$("#seatingT").val(d.mobilityAndTransport.travelPreferences);
+				$("#unevenT").val(d.mobilityAndTransport.unevenSurfaces);
+				
+				//financial support
+				$("#budgetBillsT").val(d.financialSupport.budgetBills); 
+				$("#budgetContraintsT").val(d.financialSupport.budgetConstraintGoal);
+				$("#budgetSafetyT").val(d.financialSupport.budgetEmergency);
+				$("#budgetAvailableT").val(d.financialSupport.budgetExpend);
+				$("#budgetFoodT").val(d.financialSupport.budgetGroceries);
+				$("#budgetHouseT").val(d.financialSupport.budgetHouse);
+				$("#budgetSupportNetworkT").val(d.financialSupport.budgetSupportNetwork);
+				$("#budgetTransportT").val(d.financialSupport.budgetTransport);
+				$("#budgetUtilT").val(d.financialSupport.budgetUtilities);
+				$("#budgetSupportT").val(d.financialSupport.budgeting);
+				$("#financialAdminT").val(d.financialSupport.financialAdmin);
+				$("#budgetSupportHandleT").val(d.financialSupport.moneyHandlingSupport);
+				$("#otherBudgetT").val(d.financialSupport.otherRequirements);
+				$("#personalItemsT").val(d.financialSupport.personalItemsSupport);
+				
+				$("#bathingCareT").val(d.dailyActivities.bathing);
+				$("#btrT").val(d.dailyActivities.bedTime);
+				$("#cleaningT").val(d.dailyActivities.cleaning);
+				$("#cookingT").val(d.dailyActivities.cooking);
+				$("#dressingT").val(d.dailyActivities.dressing);
+				$("#FridayT").val(d.dailyActivities.friday);
+				$("#MenstruationT").val(d.dailyActivities.menstruation);
+				$("#MondayT").val(d.dailyActivities.monday);
+				$("#weeklyOtherT").val(d.dailyActivities.otherThings);
+				$("#arvoRoutineT").val(d.dailyActivities.routineAfternoon);
+				$("#mealTimeT").val(d.dailyActivities.routineMealTime);
+				$("#morningT").val(d.dailyActivities.routineMorning);
+				$("#overnightT").val(d.dailyActivities.routineSleeping);
+				$("#weekendT").val(d.dailyActivities.routineWeekend);
+				$("#SaturdayT").val(d.dailyActivities.saturday);
+				$("#sleepingT").val(d.dailyActivities.sleeping);
+				$("#SundayT").val(d.dailyActivities.sunday);
+				$("#ThursdayT").val(d.dailyActivities.thursday);
+				$("#toiletT").val(d.dailyActivities.toileting);
+				$("#TuesdayT").val(d.dailyActivities.tuesday);
+				$("#WednesdayT").val(d.dailyActivities.wednesday);
 			
-			break;
+				//relaxation
+				$("#relaxPrefT").val(d.relaxation.activities);
+				$("#relaxMovieT").val(d.relaxation.movie);
+				$("#relaxMusicT").val(d.relaxation.music);
+				$("#relaxOtherT").val(d.relaxation.otherActivities);
+				$("#relaxTVT").val(d.relaxation.tVShow);
+				
+				
+			},
+			error: function(xhr) {
+				// do something to handle error
+				alert("error support");
+			}
+		});
+		break;
 		
 	case "communicationD":
 		$.ajax({
@@ -437,7 +597,19 @@ function pullData(page) {
 		
 	
 	case "planningD":
+		$("#holidayT").val(d.holidayPlan.holidayType);
+		$("#stratT").val(d.holidayPlan.strategies);
+		$("#howT").val(d.holidayPlan.howWhoWhere);
+		$("#timeframesT").val(d.holidayPlan.timeframes);
+		$("#detailsT").val(d.holidayPlan.detailsAndInfo);
+		$("#resourcesT").val(d.holidayPlan.resourcesRequired);
 		
+		$("#myGoalT").val(d.goalPlan.goalToAchieve);
+		$("#goalStratT").val(d.goalPlan.strategies);
+		$("#goalHowT").val(d.goalPlan.howWhoWhere);
+		$("#goalTimesframesT").val(d.goalPlan.timeframes);
+		$("#goalOutcomeT").val(d.goalPlan.outcomes);
+		$("#goalResourcesT").val(d.goalPlan.resourcesRequired);
 		break;
 		
 	};
@@ -495,7 +667,4 @@ $(document).ready(function(){
 	
 });
 </script>
-</html></head>
-<body>
-</body>
 </html>

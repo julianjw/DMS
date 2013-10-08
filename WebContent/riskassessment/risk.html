@@ -1,0 +1,68 @@
+<label class='title'>Service User Name</label><span id='serviceUsername'></span>
+<br />
+<label class='title'>Service User ID</label><span id='serviceID'></span>
+<br />
+<label class='bold inline'>Service: </label>
+<input type='text' id='serviceT' class='inline'/>
+
+<label class='bold inline'>Area: </label>
+<input type='text' id='areaT' class='inline'/>
+
+<label class='bold inline'>Date: </label>
+<input type='text' id='dateT' class='inline' placeholder='dd/mm/yyyy'/>
+
+<p class='bold'>Location and Description of Hazardous Condition and/or Procedure:</p>
+<textarea id='locationDescT' rows="6" cols="75"></textarea>
+
+<p class='bold'>Risk Score</p>
+<br />
+<label class='inline'>Probability</label>
+<input type='text' id='probabilityT' class='inline'>
+<br />
+
+<label class='inline'>Exposure</label>
+<input type='text' id='exposureT' class='inline'>
+<br />
+
+<label class='inline'>Consequence</label>
+<input type='text' id='consequenceT' class='inline'>
+<br />
+<br />
+
+<p class='bold'>Risk Controls:</p>
+<textarea id='riskControlsT' rows="6" cols="75"></textarea>
+<br />
+
+
+<table border=0>
+<tr>
+<td>
+	<label class='bold inline'>Service Manager</label>
+	<input type='text' id='serviceManagerT' class='inline' >
+	<br />
+	<label class='bold inline'>Date: </label>
+	<input type='text' id='serviceManagerDateT' class='inline' placeholder='dd/mm/yyyy'/>
+</td>
+<td>
+	<label class='bold inline'>Delegated Manager</label>
+	<input type='text' id='delegatedManagerT' class='inline' >
+	<br />
+	<label class='bold inline'>Date: </label>
+	<input type='text' id='delegatedManagerDateT' class='inline' placeholder='dd/mm/yyyy'/>
+</td>
+</tr>
+</table>
+
+<br />
+<br />
+
+<label class='bold inline'>Target Date: </label>
+<input type='text' id='targetDateT' class='inline' placeholder='dd/mm/yyyy'/>
+
+<label class='bold inline'>Authority to proceed?</label>
+<input type="radio"  id='authYes' value="true"> Yes
+<input type="radio" id='authNo' value="false"> No
+<br />
+<br />
+
+<button id='saveB'>Save</button>

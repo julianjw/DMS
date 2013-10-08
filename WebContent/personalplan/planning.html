@@ -41,12 +41,6 @@
 	</div>
 
 	<div id='goalsDiv'>
-		<button id='goalsAddRecord' name='goalsAddRecord' onclick="Duplicate('goalsD');">Add Another</button>
-		<div id='goalsD'></div>
-	</div>
-
-
-	<div id='goalsDTemplate' class='formTemplate'>
 		<label for='myGoalT' class='toggle'>What goal I want to achieve: </label>
 		<div id='myGoalD'>
 			<textarea id='myGoalT' name='myGoalT' rows="3" cols="50"></textarea>
@@ -85,6 +79,8 @@
 	</div>
 
 
+
+
 <script type='text/javascript'>
 	var i=0;
 
@@ -116,15 +112,21 @@
 		//click on the submit button
 		$("#PageNavSubmitB").click(function(){
 			var holidayPlan = new Object();
-			holidayPlan.detailsAndInfo = $("#holidayT").val();
-			holidayPlan.holidayType = $("#detailsT").val();
+			holidayPlan.holidayType = $("#holidayT").val();
+			holidayPlan.detailsAndInfo = $("#detailsT").val();
 			holidayPlan.howWhoWhere = $("#howT").val();
 			holidayPlan.resourcesRequired = $("#resourcesT").val();
 			holidayPlan.strategies = $("#stratT").val();
 			holidayPlan.timeframes = $("#timeframeT").val();
 
             var goalPlan = new Object();
-//NEEDS TO BE DYNAMIC
+			goalPlan.goalToAchieve = $("#myGoalT").val();
+			goalPlan.howWhoWhere = $("#goalHowT").val();
+			goalPlan.outcomes = $("#goalOutcomeT").val();
+			goalPlan.resourcesRequired = $("#goalResourcesT").val();
+			goalPlan.strategies = $("#goalStratT").val();
+			goalPlan.timeframes = $("#goalTimesframesT").val();
+			
 
 
             var planning = new Object();

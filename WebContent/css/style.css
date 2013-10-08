@@ -179,5 +179,14 @@ background-color:#7A991A;
 }
 
 .bold {
-	font-style:bold;
+	font-weight:bold;
+}
+
+.title {
+	font-weight:bold;
+	font-size: 20pt;
+}
+
+.inline {
+	display: inline-block;
 }
