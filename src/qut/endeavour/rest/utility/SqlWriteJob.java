@@ -74,7 +74,9 @@ public class SqlWriteJob {
 				updateSqlSet += ",`"+field.getKey().substring(2)+"`=?";
 			}
 			
-			String countSql = "SELECT count(tb."+keyName.substring(2)+") as `count` FROM `"+tableName+"` tb WHERE tb"+keyName.substring(2)+" = ?";
+			
+			
+			String countSql = "SELECT count(tb."+keyName.substring(2)+") as `count` FROM `"+tableName+"` tb WHERE tb."+keyName.substring(2)+" = ?";
 			String insertSql = "INSERT INTO `"+tableName+"`("+insertSqlFields+") VALUES ("+insertSqlValues+")";
 			String updateSql = "UPDATE `"+tableName+"` SET "+updateSqlSet;
 	
@@ -82,8 +84,10 @@ public class SqlWriteJob {
 			System.out.println(insertSql);
 			System.out.println(updateSql);
 			
-			
-			
+			System.out.println("Writing:");
+			for ( Map.Entry<String, Object> set : row.entrySet() ) {
+				System.out.println("--> \""+set.getKey()+"\" - \""+set.getValue().toString()+"\"");
+			}
 			
 			PreparedStatement countPs = populateValues(key, DatabaseAccess.createPreparedStatement(countSql) );
 			PreparedStatement insertPs = populateValues(table.get(0), DatabaseAccess.createPreparedStatement(insertSql));
@@ -91,15 +95,21 @@ public class SqlWriteJob {
 			
 			ResultSet countRs = countPs.executeQuery(); // count how many times it is in the database
 			
+			System.out.println("");
+			
 			if( countRs.next() ) {
+				System.out.println( "number of times user id number found in table: " + countRs.getInt(1));
 				if ( countRs.getInt(1) == 0 ) { // if the count is 0, we need to insert it.
+					System.out.println("Executing an insert.");
 					insertPs.executeUpdate();
 				} else {
+					System.out.println("Executin an update.");
 					updatePs.executeUpdate();
 				}
 			}
-				
 			
+			
+			System.out.println("Finished writing.");
 			
 		}  else { // END ONE ROW ONLY, begin multiple rows.
 			System.out.println("Multiple rows to be written to \""+ tableName +"\" - Ignoring.");
