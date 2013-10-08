@@ -145,7 +145,7 @@
 		});
 		
 		//click on the submit button
-		$("#PageNavSubmitB").click(function(){
+		$("#PageNavSubmitBEdu").click(function(){
 			var education = new Object();
 			education.address = $("#addressT").val();
 			education.communityAssistance = $("#communityAssistanceT").val();
@@ -179,15 +179,21 @@
 			
 			var jsonText = JSON.stringify(educationEmployment);
 			
+			alert('./rest/personalplan/educationemployment/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/' + $.cookie('client_id'));
+			
+			
 			$.ajax({
-				url:'./rest/personalplan/educationemployment/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/1',
+				url:'./rest/personalplan/educationemployment/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/' + $.cookie('client_id'),
 				type: 'POST',
 				contentType: 'application/json; charset=UTF-8',
 				dataType: 'json',
 				data: jsonText,
-				complete: function(jqXHR, textStatus) {
+				success: function(jqXHR, textStatus) {
 					alert(textStatus);
-					nextNav('educationD');
+					nextNav('planningD');
+				},
+				error: function(jqXHR, textStatus) {
+					alert(textStatus);
 				}
 			});
 		});

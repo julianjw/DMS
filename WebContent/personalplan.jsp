@@ -620,7 +620,7 @@ function pullData(page) {
 
 function nextNav(current) {
 	var nav = new Array("searchD", "clientD", "healthD", "supportD", "communicationD", "educationD", "planningD");	
-		
+	
 	for(var i=0; i<nav.length-1; i++) {		
 		if(nav[i]==current) {
 			$("#"+nav[i]).hide();
