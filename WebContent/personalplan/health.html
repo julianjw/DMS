@@ -3,6 +3,7 @@
 	<button id='PageNavSubmitBHealth' class='submitButton'>Submit</button>
 	
 	<div id='healthD'>
+		<h4>Health Details</h4>
 		<label for='relevantT' class='toggle'>Relevant information and history about disability: </label>
 		<div id='relevantD'>
 			<textarea id='relevantT' name'relevantT' rows="3" cols="50"></textarea>
@@ -49,7 +50,8 @@ PUT THESE IN A TABLE!!!!!!!!!
 
 	</div>
 
-	<div id='hManagementD'>
+	<div id='hManagementD' class='hidden'>
+		<h4>Health Management</h4>
 		<label for='medConditionT' id='medConditionL' >My medical condition is called: </label>
 		<div id='nameD' >
 			<input type='text' id='medConditionT' name='medConditionT' placeholder='medical condition' >
@@ -114,7 +116,8 @@ DROPDOWN HERE + INLINE FORMATTING
 		</div>
 	</div>
 
-	<div id='dietD'>
+	<div id='dietD' class='hidden'>
+		<h4>Diet Information</h4>
 		<label for='foodCantEatT' class='toggle' >Food I cannot eat:</label>
 			<div id='foodCantEatD'>
 				<textarea id='foodCantEatT' name='foodCantEatT' rows="3" cols="50"></textarea>
@@ -196,9 +199,7 @@ DROPDOWN HERE + INLINE FORMATTING
 <script type='text/javascript'>
 	$(document).ready(function() {
 		//page load
-		//hide necessary elements
-		$("#hManagementD").hide();
-		$("#dietD").hide();
+		$(".medCon").html($("#medConditionT").val());
 
 		
 		//entering a medical condition
@@ -208,12 +209,12 @@ DROPDOWN HERE + INLINE FORMATTING
 		
 		//click on the previous button
 		$("#PageNavPrevHealth").click(function(){
-			PageNavigation('prev', 'health' this);
+			PageNavigation('prev', 'health', this);
 		});
 
 		//click on the next button
 		$("#PageNavNextHealth").click(function(){
-			PageNavigation('next', 'health' this);
+			PageNavigation('next', 'health', this);
 		});
 		
 		
@@ -283,13 +284,13 @@ DROPDOWN HERE + INLINE FORMATTING
 			var jsonText = JSON.stringify(healthDetails);
 			
 			$.ajax({
-				url:'./rest/personalplan/healthdetails/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/1',
+				url:'./rest/personalplan/healthdetails/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/' + $.cookie("client_id"),
 				type: 'POST',
 				contentType: 'application/json; charset=UTF-8',
 				dataType: 'json',
 				data: jsonText,
 				complete: function(jqXHR, textStatus) {
-					alert(textStatus);
+					alert("health details saved!");
 					nextNav('healthD');
 				}
 			});

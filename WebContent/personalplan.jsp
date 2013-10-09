@@ -59,6 +59,7 @@ function PageNavigation(dir, nav, el) {
 			//perform page navigation
 			if(dir=="next") {
 				//show the next div and previous button
+				alert("showing element: " + navArr[i+1]);
 				$("#" + navArr[i+1]).show();
 				$(el).prev().show();
 				//show the submit button and hide next button if we are on the last page
@@ -334,7 +335,7 @@ function pullData(page) {
 				}else {
 					$("#createDateT").val(d.personalDetails.creationDate);
 				}
-				$("#reviceDateT").val(d.personalDetails.reviewDate);
+				$("#reviseDateT").val(d.personalDetails.reviewDate);
 				$("#phoneT").val(d.personalDetails.phoneNumber);
 				$("#mobileT").val(d.personalDetails.mobileNumber);
 				$("#emailT").val(d.personalDetails.email);
@@ -352,7 +353,7 @@ function pullData(page) {
 				$("#safetyConcernsT").val(d.alertInformation.safetyConcerns);
 				
 
-				$("#addressT").val(d.livingArangements.address);
+				$("#addressLivingT").val(d.livingArangements.address);
 				$("#phoneT").val(d.livingArangements.phoneNumber);
 				$("#serviceT").val(d.livingArangements.service);
 				$("#sickContactT").val(d.livingArangements.sickContact);
@@ -619,8 +620,7 @@ function pullData(page) {
 
 
 function nextNav(current) {
-	var nav = new Array("searchD", "clientD", "healthD", "supportD", "communicationD", "educationD", "planningD");	
-	
+	var nav = new Array("lastD", "searchD", "clientD", "healthD", "supportD", "communicationD", "educationD", "planningD");	
 	for(var i=0; i<nav.length-1; i++) {		
 		if(nav[i]==current) {
 			$("#"+nav[i]).hide();

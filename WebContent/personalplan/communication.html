@@ -1,6 +1,7 @@
 	<button id='PageNavSubmitBComm' >Submit</button>
 	
 	<div id='commD'>
+		<h4>Communication</h4>
 		<label for='ICommunicateT' class='toggle'>I communicate with others by: </label>
 		<div id='ICommunicateD'>
 			<textarea id='ICommunicateT' name='ICommunicateT' rows="3" cols="50"></textarea>
@@ -65,14 +66,17 @@
 			var jsonText = JSON.stringify(communication);
 			
 			$.ajax({
-				url:'./rest/personalplan/communication/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/1',
+				url:'./rest/personalplan/communication/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/' $.cookie("client_id"),
 				type: 'POST',
 				contentType: 'application/json; charset=UTF-8',
 				dataType: 'json',
 				data: jsonText,
-				complete: function(jqXHR, textStatus) {
-					alert(textStatus);
+				success: function(jqXHR, textStatus) {
+					alert("communication details saved!"");
 					nextNav('communicationD');
+				},
+				error: function(jqXHR, textStatus) {
+					alert("error saving communication details");
 				}
 			});
 		});

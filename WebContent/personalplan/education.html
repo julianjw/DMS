@@ -3,6 +3,7 @@
 	<button id='PageNavSubmitBEdu' class='submitButtonas' >Submit</button>
 	
 	<div id='educationD'>
+		<h4>Education</h4>
 		<label for='institutionNameT' class='toggle'>Education Institution: </label>
 		<div id='institutionNameD'>
 			<textarea id='institutionNameT' name='institutionNameT' rows="3" cols="50"></textarea>
@@ -70,7 +71,8 @@
 		<br />
 	</div>
 
-	<div id='employmentD'>
+	<div id='employmentD' class='hidden'>
+		<h4>Employment</h4>
 		<label for='employerT' class='toggle'>Employer: </label>
 		<div id='employerD'>
 			<textarea id='employerT' name='employerT' rows="3" cols="50"></textarea>
@@ -129,8 +131,6 @@
 <script type='text/javascript'>
 	$(document).ready(function() {
 		//page load
-		//hide necessary elements
-		$("#employmentD").hide();
 		
 
 
@@ -179,7 +179,6 @@
 			
 			var jsonText = JSON.stringify(educationEmployment);
 			
-			alert('./rest/personalplan/educationemployment/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/' + $.cookie('client_id'));
 			
 			
 			$.ajax({
@@ -189,11 +188,11 @@
 				dataType: 'json',
 				data: jsonText,
 				success: function(jqXHR, textStatus) {
-					alert(textStatus);
-					nextNav('planningD');
+					alert("education and employment details saved!");
+					nextNav('educationD');
 				},
 				error: function(jqXHR, textStatus) {
-					alert(textStatus);
+					alert("error saving education and employment details");
 				}
 			});
 		});

@@ -84,7 +84,7 @@
 	</div>
 
 
-	<div id='mobilityD'>
+	<div id='mobilityD' class='hidden'>
 	<h4>Mobility & Transport</h4>
 		<label for='elevatorT' class='toggle'>Stairs/Escalators/Elevators: </label>
 		<div id='elevatorD'>
@@ -136,7 +136,7 @@
 	</div>
 
 
-	<div id='financialD'>
+	<div id='financialD' class='hidden'>
 	<h4>Financial Support</h4>
 		<label for='financialAdminT' class='toggle'>Financial Administrator: </label>
 		<div id='financialAdminD'>
@@ -224,7 +224,7 @@
 	</div>
 
 
-	<div id='activitiesD'>
+	<div id='activitiesD' class='hidden'>
 	<h4>Daily Activities</h4>
 		<label class='toggle'>Sleeping: </label>
 		<div id='sleepingD'>
@@ -355,7 +355,7 @@
 		<br />
 	</div>
 
-	<div id='relaxationD'>
+	<div id='relaxationD' class='hidden'>
 		<h4>Relaxation</h4>
 		<label for='relaxPrefT' class='toggle'>I prefer to relax by doing the following: </label>
 		<div id='relaxPrefD'>
@@ -394,26 +394,22 @@
 <script type='text/javascript'>
 	$(document).ready(function() {
 		//page load
-		$("#mobilityD").hide();
-		$("#financialD").hide();
-		$("#activitiesD").hide();
-		$("#relaxationD").hide();
 		
 		//click on the previous button
 		$("#PageNavPrevClient").click(function(){
-			PageNavigation('prev', 'support' this);
+			PageNavigation('prev', 'support', this);
 		});
 
 		//click on the next button
 		$("#PageNavNextClient").click(function(){
-			PageNavigation('next', 'support' this);
+			PageNavigation('next', 'support', this);
 		});
 		
 		
 		
 		
 		//click on the submit button
-		$("#PageNavSubmitB").click(function(){
+		$("#PageNavSubmitBSupport").click(function(){
 			var supportRequired = new Object();
 			supportRequired.dislikes = $("#dislikesT").val();
 			supportRequired.goodTopics = $("#goodTopicsT").val();
@@ -432,14 +428,17 @@
 			var jsonText = JSON.stringify(communication);
 			
 			$.ajax({
-				url:'./rest/personalplan/supportrequired/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/1',
+				url:'./rest/personalplan/supportrequired/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/' + $.cookie("client_id"),
 				type: 'POST',
 				contentType: 'application/json; charset=UTF-8',
 				dataType: 'json',
 				data: jsonText,
-				complete: function(jqXHR, textStatus) {
-					alert(textStatus);
+				success: function(jqXHR, textStatus) {
+					alert("support details saved!"");
 					nextNav('supportD');
+				},
+				error: function(jqXHR, textStatus) {
+					alert("error saving support details");
 				}
 			});
 		});

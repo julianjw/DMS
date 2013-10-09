@@ -3,6 +3,7 @@
 	<button id='PageNavSubmitBPlan' class='submitButton' >Submit</button>
 	
 	<div id='holidayD'>
+		<h4>Holiday Details</h4>
 		<label for='holidayT' class='toggle'>Holiday (Where I want to go/what I want to do): </label>
 		<div id='holidayD'>
 			<textarea id='holidayT' name='holidayT' rows="3" cols="50"></textarea>
@@ -40,7 +41,8 @@
 		<br />
 	</div>
 
-	<div id='goalsDiv'>
+	<div id='goalsDiv' class='hidden'>
+		<h4>Goals</h4>
 		<label for='myGoalT' class='toggle'>What goal I want to achieve: </label>
 		<div id='myGoalD'>
 			<textarea id='myGoalT' name='myGoalT' rows="3" cols="50"></textarea>
@@ -96,7 +98,6 @@
 
 	$(document).ready(function() {
 		//page load
-		$("#goalsDiv").hide();
 
 		//click on the previous button
 		$("#PageNavPrev").click(function(){
@@ -136,14 +137,17 @@
             var jsonText = JSON.stringify(planning);
 
             $.ajax({
-				url:'./rest/personalplan/planning/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/1',
+				url:'./rest/personalplan/planning/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/' + $.cookie("client_id"),
 				type: 'POST',
 				contentType: 'application/json; charset=UTF-8',
 				dataType: 'json',
 				data: jsonText,
 				complete: function(jqXHR, textStatus) {
-					alert(textStatus);
-					nextNav('planningD');
+					alert("planning details saved!");
+					nextNav('lastD');
+				},
+				error: function(jqXHR, textStatus) {
+					alert("error saving planning details");
 				}
 			});
 		}
