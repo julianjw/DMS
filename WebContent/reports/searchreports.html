@@ -321,9 +321,8 @@ function selectPP(el) {
 			
 		//do shit (add shit to pdf)
 		var doc = new jsPDF();
-
 		
-			
+		//set document properties
 		doc.setProperties({
 			title: clientName +  ' Personal Plan', // client id + personal plan $(el).attr("id")+
 			subject: 'Client Personal Plan',	//personal plan	
@@ -333,9 +332,9 @@ function selectPP(el) {
 		doc.setFontType("bold");
 		doc.text(90, 10, 'Personal Plan');
 		
-		//Write client details to pdf
+		/* -------------------------------- CLIENT DETAILS --------------------------------------*/
 		doc.text(10, 15, 'Client Details');
-		//personal details
+		//Personal details
 		doc.text(10, 20, 'Personal Details');
 		doc.setFontType("normal"); //set font type back to normal
 		doc.text(10, 25, 'Creation Date: ' + personalPlan.clientDetails.personalDetails.creationDate);
@@ -345,10 +344,45 @@ function selectPP(el) {
 		doc.text(10, 45, 'Email Address: ' + personalPlan.clientDetails.personalDetails.email);
 		doc.text(10, 50, 'Phone Number: ' + personalPlan.clientDetails.personalDetails.phoneNumber);
 		doc.text(10, 55, 'Mobile Number: ' + personalPlan.clientDetails.personalDetails.mobileNumber);
-		//alert information
+		//Alert information
 		doc.setFontType("bold");
 		doc.text(10, 65, 'Alert Information');
-		doc.setFontType("normal"); //set font type back to normal
+		doc.setFontType("normal");
+		
+		//Formal orders
+		doc.setFontType("bold");
+		doc.text(10, 75, 'Formal Orders');
+		doc.setFontType("normal"); 
+		
+		//Living arrangements
+		doc.setFontType("bold");
+		doc.text(10, 85, 'Living Arrangements');
+		doc.setFontType("normal"); 
+		
+		
+		/* -------------------------------- HEALTH DETAILS --------------------------------------*/
+		doc.setFontType("bold");
+		doc.text(10, 95, 'Health Details');
+		//Dietary requirements
+		doc.text(10, 100, 'Dietary Requirements');
+		doc.setFontType("normal");
+		
+		//Health information
+		doc.text(10, 105, 'Health Information');
+		doc.setFontType("normal");
+		
+		//Health management
+		doc.text(10, 110, 'Health Management');
+		doc.setFontType("normal");
+		
+		
+		/* -------------------------------- COMMUNICATION --------------------------------------*/
+		doc.setFontType("bold");
+		doc.text(10, 120, 'Communication');
+		doc.setFontType("normal");
+		
+		
+		
 		
 		//Prompt the user to save the pdf
 		doc.save($(el).attr("id") + '_personal_plan' + date);
