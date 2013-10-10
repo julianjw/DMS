@@ -66,13 +66,13 @@
 			var jsonText = JSON.stringify(communication);
 			
 			$.ajax({
-				url:'./rest/personalplan/communication/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/' $.cookie("client_id"),
+				url:'./rest/personalplan/communication/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/' + $.cookie("client_id"),
 				type: 'POST',
 				contentType: 'application/json; charset=UTF-8',
 				dataType: 'json',
 				data: jsonText,
 				success: function(jqXHR, textStatus) {
-					alert("communication details saved!"");
+					alert("communication details saved!");
 					nextNav('communicationD');
 				},
 				error: function(jqXHR, textStatus) {
