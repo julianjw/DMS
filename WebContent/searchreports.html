@@ -1,0 +1,214 @@
+<div id='searchD'>
+	<table border=0>
+	<tr>
+		<td>
+			<label for='queryT' id='queryL' class='toggle'>ID: </label>
+			<input type='text' name='queryT' id='queryT' />
+			<button id='queryB'>Search</button>
+	
+			<div id='searchResults'></div>
+		</td>
+	</tr>
+	</table>
+</div>
+
+<script type='text/javascript'>
+
+function selectPP(el) {
+	
+	//create new pdf(report) of personal plan clicked
+	
+	//Create new personal plan object
+	var personalPlan = new Object();
+	
+	//get the personal plan of the selected client
+	
+	//pull details
+	$.ajax({
+		url: "./rest/personalplan/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + $(el).attr("id"),
+		type:"get",
+		contentType: "application/json",
+		success: function(d) { // d = json returned
+			
+			//Client Details
+			//Personal details
+			var personalDetails = new Object();		
+			personalDetails.creationDate = d.clientDetails.personalDetails.creationDate;
+			personalDetails.preferredName = d.clientDetails.personalDetails.preferredName;
+			personalDetails.reviewDate = d.clientDetails.personalDetails.reviewDate;
+			personalDetails.dob = d.clientDetails.personalDetails.dob;
+			personalDetails.email = d.clientDetails.personalDetails.email;
+			personalDetails.phoneNumber = d.clientDetails.personalDetails.phoneNumber;
+			personalDetails.mobileNumber = d.clientDetails.personalDetails.mobileNumber;
+			
+			//Alert information
+			var alertInformation = new Object();
+			alertInformation.allergies = d.clientDetails.alertInformation.allergies;
+			alertInformation.complexSupportNeeds = d.clientDetails.alertInformation.complexSupportNeeds;
+			alertInformation.eatingAlerts = d.clientDetails.alertInformation.eatingAlerts;
+			alertInformation.guardianOrders = d.clientDetails.alertInformation.guardianOrders;
+			alertInformation.medIssues = d.clientDetails.alertInformation.medIssues;
+			alertInformation.otherInfo = d.clientDetails.alertInformation.otherInfo;
+			alertInformation.phobias = d.clientDetails.alertInformation.phobias;
+			alertInformation.restrictive = d.clientDetails.alertInformation.restrictive;
+			alertInformation.safetyConcerns = d.clientDetails.alertInformation.safetyConcerns;
+			
+			//Formal orders
+			var formalOrders = new Object();
+			formalOrders.appointee = d.clientDetails.formalOrders.appointee;
+			formalOrders.commenceDate = d.clientDetails.formalOrders.commenceDate;
+			formalOrders.contactArrangement = d.clientDetails.formalOrders.contactArrangement;
+			formalOrders.details = d.clientDetails.formalOrders.details;
+			formalOrders.familyContact = d.clientDetails.formalOrders.familyContact;
+			formalOrders.justiceRequirements = d.clientDetails.formalOrders.justiceRequirements;
+			formalOrders.orderFor = d.clientDetails.formalOrders.orderFor;
+			formalOrders.orderLocation = d.clientDetails.formalOrders.orderLocation;
+			formalOrders.otherInfo = d.clientDetails.formalOrders.otherInfo;
+			formalOrders.protectionOrder = d.clientDetails.formalOrders.protectionOrder;
+			formalOrders.specialConditions = d.clientDetails.formalOrders.specialConditions;
+			formalOrders.childSupportOfficer = d.clientDetails.formalOrders.childSupportOfficer;
+			formalOrders.visitorInfo = d.clientDetails.formalOrders.visitorInfo;
+			
+			//Living arrangements
+			var livingArangements = new Object();
+			livingArangements.address = d.clientDetails.livingArangements.address;		
+			livingArangements.phoneNumber = d.clientDetails.livingArangements.phoneNumber;
+			livingArangements.service = d.clientDetails.livingArangements.service;
+			livingArangements.sickContact = d.clientDetails.livingArangements.sickContact;
+			
+			alert("add data to client details");
+			//Add data to the clientdetails object
+			var clientDetails = new Object();
+			clientDetails.personalDetails = personalDetails;
+			clientDetails.alertInformation = alertInformation;
+			clientDetails.formalOrders = formalOrders;
+			clientDetails.livingArangements = livingArangements;
+			alert("done");
+			
+			//Health details
+			
+			//Communication
+			
+			
+			//Add data to personal plan
+			personalPlan.clientDetails = clientDetails;
+			//personalPlan.healthDetails = healthDetails;
+			//personalPlan.communication = communication;
+			//personalPlan.edcuationEmployment = educationEmployment;
+ 			//personalPlan.planning = planning;
+ 			//personalPlan.supportRequired = supportRequired;
+			
+		},
+		error: function(xhr) {
+			// do something to handle error
+			
+		}
+	});
+	
+	if (personalPlan != null) {
+		
+		//Create the PDF
+		alert("PDF Being Generated");
+		
+		//Create today's date
+		var d =  new Date();
+		var month = d.getMonth()+1;
+		var day = d.getDate();
+		var date = ((''+day).length<2 ? '0' : '') + day + '/' + ((''+month).length<2 ? '0' : '') + month + '/' + d.getFullYear();
+			
+		//do shit (add shit to pdf)
+		var doc = new jsPDF();
+
+		var clientName = personalPlan.clientDetails.personalDetails.preferredName;
+			
+		doc.setProperties({
+			title: clientName +  ' Personal Plan', // client id + personal plan $(el).attr("id")+
+			subject: 'Client Personal Plan',	//personal plan	
+			author: $.cookie('user_id'), //user id
+		});
+		
+		doc.setFontType("bold");
+		doc.text(90, 10, 'Personal Plan');
+		
+		//Write client details to pdf
+		doc.text(10, 15, 'Client Details');
+		//personal details
+		doc.text(10, 20, 'Personal Details');
+		doc.setFontType("normal"); //set font type back to normal
+		doc.text(10, 25, 'Creation Date: ' + personalPlan.clientDetails.personalDetails.creationDate);
+		doc.text(10, 30, 'Preferred Name: ' + personalPlan.clientDetails.personalDetails.preferredName);
+		doc.text(10, 35, 'Review Date: ' + personalPlan.clientDetails.personalDetails.reviewDate);
+		doc.text(10, 40, 'Date of Birth: ' + personalPlan.clientDetails.personalDetails.dob);
+		doc.text(10, 45, 'Email Address: ' + personalPlan.clientDetails.personalDetails.email);
+		doc.text(10, 50, 'Phone Number: ' + personalPlan.clientDetails.personalDetails.phoneNumber);
+		doc.text(10, 55, 'Mobile Number: ' + personalPlan.clientDetails.personalDetails.mobileNumber);
+		//alert information
+		doc.setFontType("bold");
+		doc.text(10, 65, 'Alert Information');
+		doc.setFontType("normal"); //set font type back to normal
+		
+		//Prompt the user to save the pdf
+		doc.save($(el).attr("id") + '_personal_plan' + date);
+	}
+}
+
+
+$(document).ready(function(){
+	
+	//page loads
+	//get list of existing clients
+	$.ajax({
+		url: "./rest/personalplan/allclientswithplans/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
+		type:"get",
+		contentType: "application/json",
+		success: function(d) {
+			$("#searchResults").html("");
+			var content = "<table>"
+			content += "<tr><th>Client ID</th><th>Name</th><th>DOB</th><th>Mobile</th><th>Telephone</th></tr>";
+			for (var i = 0; i < d.existingPlanDetails.length; i++) {
+				content += "<tr><td class='fakeLink' id='" + d.existingPlanDetails[i].user_id + "'onClick='selectPP(this);'>" + d.existingPlanDetails[i].user_id + "</td>";
+				content += "<td>" + d.existingPlanDetails[i].rName + "</td>";
+				content += "<td>" + d.existingPlanDetails[i].dob + "</td>";
+				content += "<td>" + d.existingPlanDetails[i].mobile + "</td>";
+				content += "<td>" + d.existingPlanDetails[i].telephone + "</td></tr>";
+			}
+			content += "</table>";
+			$("#searchResults").append(content);
+		},
+		error: function(xhr) {
+			// do something to handle error
+			alert("error getting existing personal plan details");
+		}
+	});
+	
+	
+	//click on search button
+	$("#queryB").click(function(){
+		$.ajax({
+			url: "./rest/personalplan/allclientswithplans/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
+			type:"get",
+			contentType: "application/json",
+			success: function(d) {
+				$("#searchResults").html("");
+				var content = "<table>"
+				content += "<tr><th>Client ID</th><th>Name</th><th>DOB</th><th>Mobile</th><th>Telephone</th></tr>";
+				for (var i = 0; i < d.existingPlanDetails.length; i++) {
+					if(d.existingPlanDetails[i].user_id == $("#queryT").val() || $("#queryT").val()=="") {
+						content += "<tr><td>" + d.existingPlanDetails[i].user_id + "</td>";
+						content += "<td>" + d.existingPlanDetails[i].rName + "</td>";
+						content += "<td>" + d.existingPlanDetails[i].dob + "</td>";
+						content += "<td>" + d.existingPlanDetails[i].mobile + "</td>";
+						content += "<td>" + d.existingPlanDetails[i].telephone + "</td></tr>";
+					}
+				}
+				content += "</table>";
+				$("#searchResults").append(content);
+			},
+			error: function(xhr) {
+				// do something to handle error
+				alert("error getting existing personal plan details");
+			}
+		});
+	});
+});
+</script>
