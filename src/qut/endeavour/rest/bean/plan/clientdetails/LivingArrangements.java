@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class LivingArrangements {
-	private String service;
 
+	private String service;
 	private String houseNumber;
 	private String street;
 	private String suburb;

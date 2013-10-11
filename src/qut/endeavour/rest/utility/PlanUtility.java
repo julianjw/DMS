@@ -53,7 +53,6 @@ public class PlanUtility {
 				return false;
 			}
 		}
-		//if ( )
 		
 		//System.out.println("About to check for bean class -" + bean.getClass().toString());
 		try {
