@@ -193,7 +193,6 @@ public class BeansUtility {
 	private static List<SqlWriteJob> prepareCommunication( Communication bean, String clientid) throws DMSException, SQLException {
 		List<SqlWriteJob> writeJobs = new ArrayList<SqlWriteJob>();
 		writeJobs.add( prepareBase( bean.getComsAndDecisionMaking(), DatabaseNames.FLDS_COMMUNICATION, DatabaseNames.TBL_COMMUNICATION, DatabaseAccess.getUserIdNumber(clientid)));
-		//TODO bad topics
 		return writeJobs;
 	}
 	
@@ -306,6 +305,7 @@ public class BeansUtility {
 		row.put(fields.get(5), bean.getGoodTopics());
 		row.put(fields.get(6), bean.getLikes());
 		row.put(fields.get(7), bean.getDislikes());
+		row.put(fields.get(8), bean.getDoNotTalkAbout());
 		return row;
 	}
 

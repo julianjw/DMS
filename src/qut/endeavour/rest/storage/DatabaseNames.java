@@ -243,13 +243,14 @@ public class DatabaseNames {
 		add("s*good_topics");
 		add("s*likes");
 		add("s*dislikes");
+		add("s*comm_bad_topics");
 	}};
 	
-	public final static String TBL_BAD_TOPICS = "communication_bad_topics";
-	public final static List<String> FLDS_BAD_TOPICS = new ArrayList<String>() {{
-		add("s*topics");
-		add("s*translation");
-	}};
+//	public final static String TBL_BAD_TOPICS = "communication_bad_topics";
+//	public final static List<String> FLDS_BAD_TOPICS = new ArrayList<String>() {{
+//		add("s*topics");
+//		add("s*translation");
+//	}};
 	
 		// EDUCATION AND EMPLOYMENT
 	public final static String TBL_EDUCATION = "education";

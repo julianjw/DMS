@@ -14,14 +14,14 @@ public class ComsAndDecisionMaking {
 	private String goodTopics;
 	private String likes;
 	private String dislikes;
-	private List<BadTopics> doNotTalkAbout;
+	private String doNotTalkAbout;
 	
 	public ComsAndDecisionMaking(){}
 
 	public ComsAndDecisionMaking(String iCommunicate, String youCommunicate,
 			String supportPeople, String supportMeBy,
 			String independantDecisions, String goodTopics, String likes,
-			String dislikes, List<BadTopics> doNotTalkAbout) {
+			String dislikes, String doNotTalkAbout) {
 		this.iCommunicate = iCommunicate;
 		this.youCommunicate = youCommunicate;
 		this.supportPeople = supportPeople;
@@ -97,11 +97,11 @@ public class ComsAndDecisionMaking {
 		this.dislikes = dislikes;
 	}
 
-	public List<BadTopics> getDoNotTalkAbout() {
+	public String getDoNotTalkAbout() {
 		return doNotTalkAbout;
 	}
 
-	public void setDoNotTalkAbout(List<BadTopics> doNotTalkAbout) {
+	public void setDoNotTalkAbout(String doNotTalkAbout) {
 		this.doNotTalkAbout = doNotTalkAbout;
 	}
 	

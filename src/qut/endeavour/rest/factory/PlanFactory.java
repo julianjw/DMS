@@ -21,7 +21,6 @@ import qut.endeavour.rest.bean.plan.clientdetails.ContactDetails;
 import qut.endeavour.rest.bean.plan.clientdetails.FormalOrders;
 import qut.endeavour.rest.bean.plan.clientdetails.LivingArrangements;
 import qut.endeavour.rest.bean.plan.clientdetails.PersonalDetails;
-import qut.endeavour.rest.bean.plan.communication.BadTopics;
 import qut.endeavour.rest.bean.plan.communication.ComsAndDecisionMaking;
 import qut.endeavour.rest.bean.plan.educationemployment.Education;
 import qut.endeavour.rest.bean.plan.educationemployment.Employment;
@@ -460,7 +459,7 @@ public class PlanFactory {
 
 	public static Communication createCommunication(String username, String token, String clientid) {
 		
-		List<BadTopics> badTopics = PlanFactory.createBadTopics(username, token, clientid);
+		//List<BadTopics> badTopics = PlanFactory.createBadTopics(username, token, clientid);
 		List<Object> fields = PlanFactory.RetrieveFirstInfo( username, token, clientid,
 				DatabaseNames.FLDS_COMMUNICATION,
 				DatabaseNames.TBL_COMMUNICATION
@@ -475,32 +474,32 @@ public class PlanFactory {
 				(String)fields.get(5),
 				(String)fields.get(6),
 				(String)fields.get(7),
-				badTopics
+				(String)fields.get(7)
 				);
 		
 		return new Communication(coms);
 	}
 	
-	private static List<BadTopics> createBadTopics(String username,
-			String token, String clientid) {
-		
-		List<ArrayList<Object>> rows = PlanFactory.RetrieveInfo( username, token, clientid,
-				DatabaseNames.FLDS_BAD_TOPICS,
-				DatabaseNames.TBL_BAD_TOPICS
-				);
-		
-		List<BadTopics> badTopics = new ArrayList<BadTopics>();
-		
-		for ( ArrayList<Object> row : rows ) {
-			if ( row == null ) return null;
-			badTopics.add( new BadTopics (
-						(String)row.get(0),
-						(String)row.get(1)
-					) );
-		}
-			
-		return badTopics;
-	}
+//	private static List<BadTopics> createBadTopics(String username,
+//			String token, String clientid) {
+//		
+//		List<ArrayList<Object>> rows = PlanFactory.RetrieveInfo( username, token, clientid,
+//				DatabaseNames.FLDS_BAD_TOPICS,
+//				DatabaseNames.TBL_BAD_TOPICS
+//				);
+//		
+//		List<BadTopics> badTopics = new ArrayList<BadTopics>();
+//		
+//		for ( ArrayList<Object> row : rows ) {
+//			if ( row == null ) return null;
+//			badTopics.add( new BadTopics (
+//						(String)row.get(0),
+//						(String)row.get(1)
+//					) );
+//		}
+//			
+//		return badTopics;
+//	}
 
 
 	/**
