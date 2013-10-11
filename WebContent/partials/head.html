@@ -29,9 +29,18 @@
         			
         			//click on logout button
         			$("#logout").click(function(){
-        				$.removeCookie('user_id');
-        				$.removeCookie('auth_token');
-        				window.location.replace("http://" + window.location.hostname + ":8080/EndeavourDMS/login.jsp");
+        				$.ajax({
+        				    url: "./rest/auth?user_id=" + $.cookie('user_id') + "&auth_token=" + $.cookie('auth_token'),
+        				    type: 'DELETE',
+        				    success: function(result) {
+        				    	$.removeCookie('user_id');
+     	        				$.removeCookie('auth_token');
+     	        				window.location.replace("http://" + window.location.hostname + ":8080/EndeavourDMS/login.jsp");
+        				    },
+        				    error: function(){
+        				    	alert("failed to hit logout service");
+        				    }
+        				});	
         			});
         		});
         	}
