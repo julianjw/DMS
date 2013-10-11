@@ -27,12 +27,7 @@ function selectPP(el) {
 			type:"get",
 			contentType: "application/json",
 			async: false,
-			success: callback,
-// 			success: function(d) { // d = json returned
-				
-				
-				
-// 			},
+			success: callback, //synchronous request (wait for data to be returned before creating pdf)
 			error: function(xhr) {
 				// do something to handle error
 				
@@ -41,10 +36,10 @@ function selectPP(el) {
 	};
 	
 	a(function(data) {
-		console.log(data);
+		console.log(data); //outputing json object into console
 		
 		//Create the PDF
-		alert("PDF Being Generated");
+		alert("PDF Being Generated"); //testing only
 		
 		//Create today's date
 		var d =  new Date();
@@ -114,20 +109,27 @@ function selectPP(el) {
 		doc.setFontType("bold");
 		doc.text(10, 195, 'Living Arrangements');
 		doc.setFontType("normal"); 
-		
+		doc.text(10, 205, 'Address: ');
+		doc.text(33, 205, data.clientDetails.livingArangements.houseNumber + ' '
+						+ data.clientDetails.livingArangements.street);
+		doc.text(33, 210, data.clientDetails.livingArangements.suburb);
+		doc.text(33, 215, data.clientDetails.livingArangements.city + ', '
+						+ data.clientDetails.livingArangements.postCode);		
+		doc.text(10, 220, 'Service: ' + data.clientDetails.livingArangements.service);
+
 		
 		doc.addPage();
 		
 		/* -------------------------------- HEALTH DETAILS --------------------------------------*/
 		doc.setFontType("bold");
-		doc.text(10, 200, 'Health Details');
+		doc.text(10, 10, 'Health Details');
 		//Dietary requirements
-		doc.text(10, 205, 'Dietary Requirements');
+		doc.text(10, 15, 'Dietary Requirements');
 		doc.setFontType("normal");
 		
 		//Health information
 		doc.setFontType("bold");
-		doc.text(10, 215, 'Health Information');
+		doc.text(10, 25, 'Health Information');
 		doc.setFontType("normal");
 		
 		//Health management
@@ -174,10 +176,7 @@ function selectPP(el) {
 		
 		//Living arrangements
 		var livingArangements = new Object();
-		livingArangements.address = data.clientDetails.livingArangements.address;		
-		livingArangements.phoneNumber = data.clientDetails.livingArangements.phoneNumber;
-		livingArangements.service = data.clientDetails.livingArangements.service;
-		livingArangements.sickContact = data.clientDetails.livingArangements.sickContact;
+
 		
 // 		//Add data to the clientdetails object
 // 		var clientDetails = new Object();
