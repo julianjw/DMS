@@ -56,10 +56,14 @@ public class AuthResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Verification logout( @Context UriInfo uriInfo ) {
 		
+		
+		
 		MultivaluedMap<String, String> params = uriInfo.getQueryParameters();
 		
 		String token = params.getFirst(AUTH_TOKEN_FIELD);
 		String user_id = params.getFirst(USER_ID_FIELD);
+		
+		System.out.println("Deleting a user " +user_id + " with token " + token);
 		
 		// sanity checks
 		if( user_id == null ) throw new DMSClientErrorException("No user_id supplied");

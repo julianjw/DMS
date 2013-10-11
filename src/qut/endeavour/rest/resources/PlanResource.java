@@ -43,6 +43,7 @@ public class PlanResource {
 		
 		System.out.println("Writing: Planning");
 		if ( PlanUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
+		System.out.println("Failure.");
 		return new Verification(Verification.Verified.FAILURE);
 		
 	}
@@ -78,6 +79,7 @@ public class PlanResource {
 		
 		System.out.println("Writing: Support Required");
 		if ( PlanUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
+		System.out.println("Failure.");
 		return new Verification(Verification.Verified.FAILURE);
 	}
 	
@@ -94,6 +96,7 @@ public class PlanResource {
 		
 		System.out.println("Writing: Health Details");
 		if ( PlanUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
+		System.out.println("Failure.");
 		return new Verification(Verification.Verified.FAILURE);
 	}
 	
@@ -110,6 +113,7 @@ public class PlanResource {
 		
 		System.out.println("Writing: Client Details");
 		if ( PlanUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
+		System.out.println("Failure.");
 		return new Verification(Verification.Verified.FAILURE);
 	}
 	
@@ -126,6 +130,7 @@ public class PlanResource {
 		
 		System.out.println("Writing: Education & Employment");
 		if ( PlanUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
+		System.out.println("Failure.");
 		return new Verification(Verification.Verified.FAILURE);
 	}
 	
@@ -142,6 +147,7 @@ public class PlanResource {
 		
 		System.out.println("Writing: Personal Plan");
 		if ( PlanUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
+		System.out.println("Failure.");
 		return new Verification(Verification.Verified.FAILURE);
 	}
 	

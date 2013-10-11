@@ -145,11 +145,6 @@ public class PlanUtility {
 	
 	
 	
-	
-	
-	
-	
-	
 	/* PREPARATION OF ROOT BEANS */
 	
 	private static List<SqlWriteJob> prepareSupportRequired(
