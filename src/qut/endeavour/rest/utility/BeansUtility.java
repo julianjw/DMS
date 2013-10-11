@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import qut.endeavour.rest.bean.meeting.ScheduledMeeting;
 import qut.endeavour.rest.bean.plan.ClientDetails;
 import qut.endeavour.rest.bean.plan.Communication;
 import qut.endeavour.rest.bean.plan.EducationEmployment;
@@ -36,7 +37,7 @@ import qut.endeavour.rest.exception.DMSException;
 import qut.endeavour.rest.storage.DatabaseAccess;
 import qut.endeavour.rest.storage.DatabaseNames;
 
-public class PlanUtility {
+public class BeansUtility {
 	
 	/* DATABASE STORAGE */
 	public static boolean storeBean(
@@ -65,6 +66,7 @@ public class PlanUtility {
 			else if ( bean.getClass() == Planning.class ) writeJobs.addAll( preparePlanning( (Planning)bean, clientid ) );
 			else if ( bean.getClass() == ClientDetails.class ) writeJobs.addAll( prepareClientDetails( (ClientDetails)bean, clientid ) );
 			else if ( bean.getClass() == SupportRequired.class ) writeJobs.addAll( prepareSupportRequired( (SupportRequired)bean, clientid ) );
+			else if ( bean.getClass() == ScheduledMeeting.class ) writeJobs.addAll( prepareScheduledMeeting( (ScheduledMeeting)bean, clientid ) );
 			
 			else {
 				System.out.println("Cannot handle class: " + bean.getClass().toString());
@@ -91,11 +93,13 @@ public class PlanUtility {
 			int userNumber
 			) throws DMSException {
 		
-		System.out.println("*userIDNumber=** " + userNumber);
+		//System.out.println("*userIDNumber=** " + userNumber);
 		
 		Map<String, Object> row = null;
 		Map<String, Object> key = new HashMap<String, Object>();
 		key.put("i*user_id", userNumber);
+		
+		
 		
 		// education & employment
 		if ( bean.getClass() == Employment.class ) row = prepareEmployment((Employment)bean, fields);
@@ -128,6 +132,8 @@ public class PlanUtility {
 		else if ( bean.getClass() == Relaxation.class ) row = prepareRelaxation((Relaxation)bean, fields);
 		//TODO Support Services
 		
+		else if ( bean.getClass() == ScheduledMeeting.class ) row = prepareScheduledMeeting((ScheduledMeeting)bean, fields);
+		
 		// not found
 		else throw new DMSException("Cannot find sub-class:" + bean.getClass().toString());
 		
@@ -146,6 +152,13 @@ public class PlanUtility {
 	
 	
 	/* PREPARATION OF ROOT BEANS */
+	
+	private static List<SqlWriteJob> prepareScheduledMeeting(
+			ScheduledMeeting bean, String clientid) throws DMSException, SQLException {
+		List<SqlWriteJob> writeJobs = new ArrayList<SqlWriteJob>();
+		writeJobs.add( prepareBase( bean, DatabaseNames.FLDS_SCHEDULE_MEETING, DatabaseNames.TBL_SCHEDULE_MEETING, DatabaseAccess.getUserIdNumber(clientid)));
+		return writeJobs;
+	}
 	
 	private static List<SqlWriteJob> prepareSupportRequired(
 			SupportRequired bean, String clientid) throws DMSException, SQLException {
@@ -459,6 +472,53 @@ public class PlanUtility {
 		return row;
 	}
 	
+
+
+	private static Map<String, Object> prepareScheduledMeeting(ScheduledMeeting bean, List<String> fields) {
+		Map<String, Object> row = new HashMap<String, Object>();
+		row.put(fields.get(0), bean.isEducation());
+		row.put(fields.get(1), bean.isLearnLife());
+		row.put(fields.get(2), bean.isPostSchool());
+		row.put(fields.get(3), bean.getMeetingDate());
+		row.put(fields.get(4), bean.getPrelimMeetingDate());
+		row.put(fields.get(5), bean.getDiscussion_record());
+		row.put(fields.get(6), bean.isParticipation());
+		row.put(fields.get(7), bean.isInfoCompleted());
+		row.put(fields.get(8), bean.isFamily());
+		row.put(fields.get(9), bean.isGuardian());
+		row.put(fields.get(10), bean.isDecisionMaker());
+		row.put(fields.get(11), bean.isAdvocate());
+		row.put(fields.get(12), bean.isServiceReps());
+		row.put(fields.get(13), bean.isPbsPlan());
+		row.put(fields.get(14), bean.isAdaptFuncAssessment());
+		row.put(fields.get(15), bean.isChapWellbeingInfo());
+		row.put(fields.get(16), bean.isCurrentPersonalPlan());
+		row.put(fields.get(17), bean.isServiceActivityOptions());
+		row.put(fields.get(18), bean.isOtherInfo());
+		row.put(fields.get(19), bean.isMedication());
+		row.put(fields.get(20), bean.isUserBudget());
+		row.put(fields.get(21), bean.isReflections());
+		row.put(fields.get(22), bean.isPhotoRelease());
+		row.put(fields.get(23), bean.isClientServiceAgree());
+		row.put(fields.get(24), bean.isAllSuppAgree());
+		row.put(fields.get(25), bean.isCimsInfo());
+		row.put(fields.get(26), bean.isMediInfoAuth());
+		row.put(fields.get(27), bean.isSchedPersonalBelongings());
+		row.put(fields.get(28), bean.isPbsMaintenancePlan());
+		row.put(fields.get(29), bean.getPersonalMeetingPlanComments());
+		row.put(fields.get(30), bean.isPersonalMeetingPlanOutcomes());
+		row.put(fields.get(31), bean.isPersonalPlanComplete());
+		row.put(fields.get(32), bean.isCompletePlanSigned());
+		row.put(fields.get(33), bean.isPlanMeetingThanks());
+		row.put(fields.get(34), bean.getPersonalPlanComments());
+		row.put(fields.get(35), bean.isUserChoicesImplemented());
+		row.put(fields.get(36), bean.isRiskAssessForms());
+		row.put(fields.get(37), bean.isSuppProgrssNotes());
+		row.put(fields.get(38), bean.isGoalProgressSummary());
+		row.put(fields.get(39), bean.isResourcesForImplementation());
+		row.put(fields.get(40), bean.getImplementComment());
+		return row;
+	}
 	
 	
 	

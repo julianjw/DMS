@@ -23,7 +23,7 @@ import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.factory.AuthFactory;
 import qut.endeavour.rest.factory.MeetingFactory;
 import qut.endeavour.rest.factory.PlanFactory;
-import qut.endeavour.rest.utility.PlanUtility;
+import qut.endeavour.rest.utility.BeansUtility;
 
 
 @Path("/planmeeting")
@@ -41,7 +41,7 @@ public class MeetingsResource {
 			) {
 		
 		System.out.println("Writing: Plan Meeting");
-		//if ( MeetingUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
+		if ( BeansUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
 		System.out.println("Failure.");
 		return new Verification(Verification.Verified.FAILURE);
 		
