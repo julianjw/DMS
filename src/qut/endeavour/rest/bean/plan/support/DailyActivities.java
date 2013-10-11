@@ -27,7 +27,7 @@ public class DailyActivities {
 	private String routineAfternoon;
 	private String routineSleeping;
 	private String routineWeekend;
-	private List<String> service;
+	private String services;
 	
 	public DailyActivities() {}
 
@@ -37,7 +37,7 @@ public class DailyActivities {
 			String wednesday, String thursday, String friday, String saturday,
 			String sunday, String otherThings, String routineMorning,
 			String routineMealTime, String routineAfternoon,
-			String routineSleeping, String routineWeekend, List<String> service) {
+			String routineSleeping, String routineWeekend, String services) {
 		this.sleeping = sleeping;
 		this.bedTime = bedTime;
 		this.bathing = bathing;
@@ -59,7 +59,7 @@ public class DailyActivities {
 		this.routineAfternoon = routineAfternoon;
 		this.routineSleeping = routineSleeping;
 		this.routineWeekend = routineWeekend;
-		this.service = service;
+		this.services = services;
 	}
 
 	public String getSleeping() {
@@ -230,12 +230,12 @@ public class DailyActivities {
 		this.routineWeekend = routineWeekend;
 	}
 
-	public List<String> getService() {
-		return service;
+	public String getServices() {
+		return services;
 	}
 
-	public void setService(List<String> service) {
-		this.service = service;
+	public void setService(String services) {
+		this.services = services;
 	}
 	
 	

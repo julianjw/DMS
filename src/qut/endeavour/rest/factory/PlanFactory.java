@@ -334,7 +334,7 @@ public class PlanFactory {
 				DatabaseNames.TBL_ACTIVITIES
 				);
 		
-		List<String> services = PlanFactory.createServices( username, token, clientid );
+//		List<String> services = PlanFactory.createServices( username, token, clientid );
 
 		return new DailyActivities(
 				(String)fields.get(0),
@@ -358,29 +358,29 @@ public class PlanFactory {
 				(String)fields.get(18),
 				(String)fields.get(19),
 				(String)fields.get(20),
-				services
+				(String)fields.get(21)
 				);
 	}
 
 
 	// DIFFERENT
-	private static List<String> createServices(String username, String token,
-			String clientid) {
-
-		List<ArrayList<Object>> rows = PlanFactory.RetrieveInfo( username, token, clientid,
-				DatabaseNames.FLDS_SUPPORT_SERVICES,
-				DatabaseNames.TBL_SUPPORT_SERVICES
-				);
-		
-		List<String> allServices = new ArrayList<String>();
-
-
-		for ( ArrayList<Object> row : rows ) {
-			if ( row == null ) return null;
-			allServices.add((String)row.get(0));
-		}
-		return allServices;
-	}
+//	private static List<String> createServices(String username, String token,
+//			String clientid) {
+//
+//		List<ArrayList<Object>> rows = PlanFactory.RetrieveInfo( username, token, clientid,
+//				DatabaseNames.FLDS_SUPPORT_SERVICES,
+//				DatabaseNames.TBL_SUPPORT_SERVICES
+//				);
+//		
+//		List<String> allServices = new ArrayList<String>();
+//
+//
+//		for ( ArrayList<Object> row : rows ) {
+//			if ( row == null ) return null;
+//			allServices.add((String)row.get(0));
+//		}
+//		return allServices;
+//	}
 
 
 	private static FinancialSupport createFinancialSupport(String username,

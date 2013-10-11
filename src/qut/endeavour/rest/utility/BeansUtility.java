@@ -409,6 +409,7 @@ public class BeansUtility {
 		row.put(fields.get(18), bean.getRoutineAfternoon());
 		row.put(fields.get(19), bean.getRoutineSleeping());
 		row.put(fields.get(20), bean.getRoutineWeekend());
+		row.put(fields.get(21), bean.getServices());
 		return row;
 	}
 

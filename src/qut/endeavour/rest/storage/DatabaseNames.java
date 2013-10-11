@@ -214,6 +214,7 @@ public class DatabaseNames {
 		add("s*afternoon_evening");
 		add("s*sleeping_overnight");
 		add("s*weekend");
+		add("s*services");
 	}};
 	
 	public final static String TBL_RELAXATION = "support_relaxation";
@@ -226,11 +227,11 @@ public class DatabaseNames {
 	}};
 	
 	
-	public final static String TBL_SUPPORT_SERVICES = "support_services";
-	public final static List<String> FLDS_SUPPORT_SERVICES = new ArrayList<String>() {{
-		add("s*service_name");
-//		add("s*service_description");
-	}};
+//	public final static String TBL_SUPPORT_SERVICES = "support_services";
+//	public final static List<String> FLDS_SUPPORT_SERVICES = new ArrayList<String>() {{
+//		add("s*service_name");
+////		add("s*service_description");
+//	}};
 	
 		// COMMUNICATION
 	public final static String TBL_COMMUNICATION = "communication";
