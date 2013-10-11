@@ -130,11 +130,6 @@ DROPDOWN HERE + INLINE FORMATTING
 			</div>
 		<br />
 
-		<label for='safeEatingCy'>Safe eating assessment done?
-		<input type="checkbox" name="safeEatingCy" id='safeEatingCy' value="safeEatingY">yes
-		<input type="checkbox" name="safeEatingCn" id='safeEatingCn' value="safeEatingN">no
-		<br />
-
 		<label for='generalEatT' class='toggle' >During the day I generally eat:</label>
 			<div id='generalEatD'>
 				<textarea id='generalEatT' name='generalEatT' rows="3" cols="50"></textarea>
@@ -183,9 +178,9 @@ DROPDOWN HERE + INLINE FORMATTING
 			</div>
 		<br />
 
-		<label for='otherT' class='toggle' >Other important information:</label>
-			<div id='otherD'>
-				<textarea id='otherT' name='otherT' rows="3" cols="50"></textarea>
+		<label for='healthOtherT' class='toggle' >Other important information:</label>
+			<div id='healthOtherD'>
+				<textarea id='healthOtherT' name='healthOtherT' rows="3" cols="50"></textarea>
 			</div>
 		<br />
 
@@ -193,6 +188,12 @@ DROPDOWN HERE + INLINE FORMATTING
 			<div id='locationD'>
 				<textarea id='locationT' name='locationT' rows="3" cols="50"></textarea>
 			</div>
+		<br />
+		
+		
+		<label >Safe eating assessment done?
+		<input type="radio"  name='safeEating' id='safeEatingCy' value="safeEatingY" /> Yes
+		<input type="radio" name='safeEating' id='safeEatingCn' value="safeEatingN" /> No
 		<br />
 	</div>
 
@@ -235,7 +236,7 @@ DROPDOWN HERE + INLINE FORMATTING
 			dietaryRequirements.eatingSupport = $("#supportEatT").val();
 			dietaryRequirements.location = $("#locationT").val();
 			dietaryRequirements.lunch = $("#lunchT").val();
-			dietaryRequirements.otherInfo = $("#otherT").val();
+			dietaryRequirements.otherInfo = $("#healthOtherT").val();
 			dietaryRequirements.snacks = $("#snacksT").val();
 			dietaryRequirements.supportDrinking = $("#supportDrinkT").val();
 			dietaryRequirements.usualDiet = $("#generalEatT").val();
@@ -289,9 +290,16 @@ DROPDOWN HERE + INLINE FORMATTING
 				contentType: 'application/json; charset=UTF-8',
 				dataType: 'json',
 				data: jsonText,
-				complete: function(jqXHR, textStatus) {
-					alert("health details saved!");
-					nextNav('healthD');
+				success: function(data, textStatus, jqXHR) {
+					if(data.verified=="failure") {
+						alert("failure");
+					}else {
+						alert("health details saved!");
+						nextNav('healthD');
+					}				
+				},
+				error: function(jqXHR, textStatus) {
+					alert("error saving health details");
 				}
 			});
 		});

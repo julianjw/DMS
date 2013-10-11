@@ -37,9 +37,9 @@
 		</div>
 		<br />
 		
-		<label for='phoneT' id='phoneL' class='toggle'>Home Phone: </label>
-		<div id='phoneD' >
-			<input type='text' name='phoneT' id='phoneT' />
+		<label class='toggle'>Home Phone: </label>
+		<div id='homePhoneD' >
+			<input type='text' name='homePhoneT' id='homePhoneT' />
 		</div>
 		<br />
 		
@@ -316,7 +316,7 @@
 			personalDetails.reviewDate = $("#reviseDateT").val();
 			personalDetails.dob = $("#dobT").val();
 			personalDetails.email = $("#emailT").val();
-			personalDetails.phoneNumber = $("#phoneT").val();
+			personalDetails.phoneNumber = $("#homePhoneT").val();
 			personalDetails.mobileNumber = $("#mobileT").val();
 			
 			var alertInformation = new Object();
@@ -367,9 +367,13 @@
 				contentType: 'application/json; charset=UTF-8',
 				dataType: 'json',
 				data: jsonText,
-				success: function(jqXHR, textStatus) {
-					alert("client details saved!");
-					nextNav('clientD');
+				success: function(data, textStatus, jqXHR) {
+					if(data.verified=="failure") {
+						alert("failure");
+					}else {
+						alert("client details saved!");
+						nextNav('clientD');
+					}				
 				},
 				error: function(jqXHR, textStatus) {
 					alert("error saving client details");
@@ -386,20 +390,21 @@
 			
 			
 			//push the name
-			//$.ajax({
-				//url: "./rest/user/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + $.cookie('client_id'),
-				//type:"POST",
-				//contentType: "application/json; charset=UTF-8",
-				//dataType: 'json',
-				//data: jsonText2,
-				//success: function(d) {		
-					//alert("name and ID saved!");
-				//},
-				//error: function(xhr, textStatus) {
-					// do something to handle error
-					//alert("error saving name and ID");
-				//}
-			//});
+			$.ajax({
+				url: "./rest/user/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + $.cookie('client_id'),
+				type:"POST",
+				contentType: "application/json; charset=UTF-8",
+				dataType: 'json',
+				data: jsonText2,
+				success: function(data, textStatus, jqXHR) {
+					if(data.verified=="failure") {
+						alert("failure saving name and id");
+					}				
+				},
+				error: function(jqXHR, textStatus) {
+					alert("error saving client name and id");
+				}
+			});
 			
 		});	
 	});

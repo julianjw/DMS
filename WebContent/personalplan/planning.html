@@ -22,9 +22,9 @@
 		</div>
 		<br />
 
-		<label for='timeframesT' class='toggle'>Timeframes: </label>
-		<div id='timeframesD'>
-			<textarea id='timeframesT' name='timeframesT' rows="3" cols="50"></textarea>
+		<label class='toggle'>Timeframes: </label>
+		<div id='holidayTimeframesD'>
+			<textarea id='holidayTimeframesT' name='holidayTimeframesT' rows="3" cols="50"></textarea>
 		</div>
 		<br />
 
@@ -61,7 +61,7 @@
 		</div>
 		<br />
 
-		<label for='goalTimeframesT' class='toggle'>Resources required: </label>
+		<label for='goalTimeframesT' class='toggle'>Timeframe: </label>
 		<div id='goalTimeframesD'>
 			<textarea id='goalTimeframesT' name='goalTimeframesT' rows="3" cols="50"></textarea>
 		</div>
@@ -99,24 +99,23 @@
 
 
 		//click on the submit button
-		$("#PageNavSubmitB").click(function(){
+		$("#PageNavSubmitBPlan").click(function(){
 			var holidayPlan = new Object();
 			holidayPlan.holidayType = $("#holidayT").val();
 			holidayPlan.detailsAndInfo = $("#detailsT").val();
 			holidayPlan.howWhoWhere = $("#howT").val();
 			holidayPlan.resourcesRequired = $("#resourcesT").val();
 			holidayPlan.strategies = $("#stratT").val();
-			holidayPlan.timeframes = $("#timeframeT").val();
-
+			holidayPlan.timeframes = $("#holidayTimeframesT").val();
+			
             var goalPlan = new Object();
 			goalPlan.goalToAchieve = $("#myGoalT").val();
 			goalPlan.howWhoWhere = $("#goalHowT").val();
 			goalPlan.outcomes = $("#goalOutcomeT").val();
 			goalPlan.resourcesRequired = $("#goalResourcesT").val();
 			goalPlan.strategies = $("#goalStratT").val();
-			goalPlan.timeframes = $("#goalTimesframesT").val();
+			goalPlan.timeframes = $("#goalTimeframesT").val();
 			
-
 
             var planning = new Object();
             planning.holidayPlan = holidayPlan;
@@ -130,9 +129,14 @@
 				contentType: 'application/json; charset=UTF-8',
 				dataType: 'json',
 				data: jsonText,
-				complete: function(jqXHR, textStatus) {
-					alert("planning details saved!");
-					nextNav('lastD');
+				success: function(data, textStatus, jqXHR) {
+					if(data.verified=="failure") {
+						alert("failure");
+					}else {
+						alert("planning details saved!");
+						$("#goalsD").hide();
+						nextNav('lastD');
+					}				
 				},
 				error: function(jqXHR, textStatus) {
 					alert("error saving planning details");

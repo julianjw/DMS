@@ -99,7 +99,7 @@ function pullData(page) {
 		$("#nicknameT").val("");
 		putDate();
 		$("#reviceDateT").val("");
-		$("#phoneT").val("");
+		$("#homePhoneT").val("");
 		$("#mobileT").val("");
 		$("#emailT").val("");
 		$("#dobT").val("");	
@@ -147,7 +147,7 @@ function pullData(page) {
 		$("#supportEatT").val("");
 		$("#locationT").val("");
 		$("#lunchT").val("");
-		$("#otherT").val("");
+		$("#healthOtherT").val("");
 		$("#snacksT").val("");
 		$("#supportDrinkT").val("");
 		$("#generalEatT").val("");
@@ -289,14 +289,14 @@ function pullData(page) {
 		$("#holidayT").val("");
 		$("#stratT").val("");
 		$("#howT").val("");
-		$("#timeframesT").val("");
+		$("#holidayTimeframesT").val("");
 		$("#detailsT").val("");
 		$("#resourcesT").val("");
 		
 		$("#myGoalT").val("");
 		$("#goalStratT").val("");
 		$("#goalHowT").val("");
-		$("#goalTimesframesT").val("");
+		$("#goalTimeframesT").val("");
 		$("#goalOutcomeT").val("");
 		$("#goalResourcesT").val("");
 		
@@ -335,7 +335,7 @@ function pullData(page) {
 					$("#createDateT").val(d.personalDetails.creationDate);
 				}
 				$("#reviseDateT").val(d.personalDetails.reviewDate);
-				$("#phoneT").val(d.personalDetails.phoneNumber);
+				$("#homePhoneT").val(d.personalDetails.phoneNumber);
 				$("#mobileT").val(d.personalDetails.mobileNumber);
 				$("#emailT").val(d.personalDetails.email);
 				$("#dobT").val(d.personalDetails.dob);
@@ -402,7 +402,7 @@ function pullData(page) {
 				$("#supportEatT").val(d.dietaryRequirements.eatingSupport);
 				$("#locationT").val(d.dietaryRequirements.location);
 				$("#lunchT").val(d.dietaryRequirements.lunch);
-				$("#otherT").val(d.dietaryRequirements.otherInfo);
+				$("#healthOtherT").val(d.dietaryRequirements.otherInfo);
 				$("#snacksT").val(d.dietaryRequirements.snacks);
 				$("#supportDrinkT").val(d.dietaryRequirements.supportDrinking);
 				$("#generalEatT").val(d.dietaryRequirements.usualDiet);
@@ -605,7 +605,7 @@ function pullData(page) {
 				$("#holidayT").val(d.holidayPlan.holidayType);
 				$("#stratT").val(d.holidayPlan.strategies);
 				$("#howT").val(d.holidayPlan.howWhoWhere);
-				$("#timeframesT").val(d.holidayPlan.timeframes);
+				$("#holidayTimeframesT").val(d.holidayPlan.timeframes);
 				$("#holidayDetailsT").val(d.holidayPlan.detailsAndInfo);
 				$("#resourcesT").val(d.holidayPlan.resourcesRequired);				
 				

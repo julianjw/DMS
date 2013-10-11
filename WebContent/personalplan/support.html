@@ -433,9 +433,13 @@
 				contentType: 'application/json; charset=UTF-8',
 				dataType: 'json',
 				data: jsonText,
-				success: function(jqXHR, textStatus) {
-					alert("support details saved!");
-					nextNav('supportD');
+				success: function(data, textStatus, jqXHR) {
+					if(data.verified=="failure") {
+						alert("failure");
+					}else {
+						alert("support details saved!");
+						nextNav('supportD');
+					}				
 				},
 				error: function(jqXHR, textStatus) {
 					alert("error saving support details");

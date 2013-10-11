@@ -187,9 +187,13 @@
 				contentType: 'application/json; charset=UTF-8',
 				dataType: 'json',
 				data: jsonText,
-				success: function(jqXHR, textStatus) {
-					alert("education and employment details saved!");
-					nextNav('educationD');
+				success: function(data, textStatus, jqXHR) {
+					if(data.verified=="failure") {
+						alert("failure");
+					}else {
+						alert("education and employment details saved!");
+						nextNav('educationD');
+					}				
 				},
 				error: function(jqXHR, textStatus) {
 					alert("error saving education and employment details");
