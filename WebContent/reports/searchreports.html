@@ -16,299 +16,32 @@
 
 function selectPP(el) {
 	
-	//create new pdf(report) of personal plan clicked
-	
-	//Create clientname variable
-	var clientName = "";
-	//Create new personal plan object
-	var personalPlan = new Object();
-	
 	//get the personal plan of the selected client
 	
-	//pull details
-	$.ajax({
-		url: "./rest/personalplan/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + $(el).attr("id"),
-		type:"get",
-		contentType: "application/json",
-		success: function(d) { // d = json returned
-			
-			clientName = d.clientDetails.personalDetails.preferredName;
-			
-			/* ------------------------------ CLIENT DETAILS --------------------------------------- */
-			//Personal details
-			var personalDetails = new Object();		
-			personalDetails.creationDate = d.clientDetails.personalDetails.creationDate;
-			personalDetails.preferredName = d.clientDetails.personalDetails.preferredName;
-			personalDetails.reviewDate = d.clientDetails.personalDetails.reviewDate;
-			personalDetails.dob = d.clientDetails.personalDetails.dob;
-			personalDetails.email = d.clientDetails.personalDetails.email;
-			personalDetails.phoneNumber = d.clientDetails.personalDetails.phoneNumber;
-			personalDetails.mobileNumber = d.clientDetails.personalDetails.mobileNumber;
-			
-			//Alert information
-			var alertInformation = new Object();
-			alertInformation.allergies = d.clientDetails.alertInformation.allergies;
-			alertInformation.complexSupportNeeds = d.clientDetails.alertInformation.complexSupportNeeds;
-			alertInformation.eatingAlerts = d.clientDetails.alertInformation.eatingAlerts;
-			alertInformation.guardianOrders = d.clientDetails.alertInformation.guardianOrders;
-			alertInformation.medIssues = d.clientDetails.alertInformation.medIssues;
-			alertInformation.otherInfo = d.clientDetails.alertInformation.otherInfo;
-			alertInformation.phobias = d.clientDetails.alertInformation.phobias;
-			alertInformation.restrictive = d.clientDetails.alertInformation.restrictive;
-			alertInformation.safetyConcerns = d.clientDetails.alertInformation.safetyConcerns;
-			
-			//Formal orders
-			var formalOrders = new Object();
-			formalOrders.appointee = d.clientDetails.formalOrders.appointee;
-			formalOrders.commenceDate = d.clientDetails.formalOrders.commenceDate;
-			formalOrders.contactArrangement = d.clientDetails.formalOrders.contactArrangement;
-			formalOrders.details = d.clientDetails.formalOrders.details;
-			formalOrders.familyContact = d.clientDetails.formalOrders.familyContact;
-			formalOrders.justiceRequirements = d.clientDetails.formalOrders.justiceRequirements;
-			formalOrders.orderFor = d.clientDetails.formalOrders.orderFor;
-			formalOrders.orderLocation = d.clientDetails.formalOrders.orderLocation;
-			formalOrders.otherInfo = d.clientDetails.formalOrders.otherInfo;
-			formalOrders.protectionOrder = d.clientDetails.formalOrders.protectionOrder;
-			formalOrders.specialConditions = d.clientDetails.formalOrders.specialConditions;
-			formalOrders.childSupportOfficer = d.clientDetails.formalOrders.childSupportOfficer;
-			formalOrders.visitorInfo = d.clientDetails.formalOrders.visitorInfo;
-			
-			//Living arrangements
-			var livingArangements = new Object();
-			livingArangements.address = d.clientDetails.livingArangements.address;		
-			livingArangements.phoneNumber = d.clientDetails.livingArangements.phoneNumber;
-			livingArangements.service = d.clientDetails.livingArangements.service;
-			livingArangements.sickContact = d.clientDetails.livingArangements.sickContact;
-			
-			//Add data to the clientdetails object
-			var clientDetails = new Object();
-			clientDetails.personalDetails = personalDetails;
-			clientDetails.alertInformation = alertInformation;
-			clientDetails.formalOrders = formalOrders;
-			clientDetails.livingArangements = livingArangements;
-			
-			/* ----------------------------- HEALTH DETAILS --------------------------------------- */
-			//Dietary requirements
-			var dietaryRequirements = new Object();
-			dietaryRequirements.assessmentDone = d.healthDetails.dietaryRequirements.assessmentDone;
-			dietaryRequirements.avoidFood = d.healthDetails.dietaryRequirements.avoidFood;
-			dietaryRequirements.breakfast = d.healthDetails.dietaryRequirements.breakfast;
-			dietaryRequirements.cannotEat = d.healthDetails.dietaryRequirements.cannotEat;
-			dietaryRequirements.dinner = d.healthDetails.dietaryRequirements.dinner;
-			dietaryRequirements.dislikes = d.healthDetails.dietaryRequirements.dislikes;
-			dietaryRequirements.eatingSupport = d.healthDetails.dietaryRequirements.eatingSupport;
-			dietaryRequirements.location = d.healthDetails.dietaryRequirements.location;
-			dietaryRequirements.lunch = d.healthDetails.dietaryRequirements.lunch;
-			dietaryRequirements.otherInfo = d.healthDetails.dietaryRequirements.otherInfo;
-			dietaryRequirements.snacks = d.healthDetails.dietaryRequirements.snacks;
-			dietaryRequirements.supportDrinking = d.healthDetails.dietaryRequirements.supportDrinking;
-			dietaryRequirements.usualDiet = d.healthDetails.dietaryRequirements.usualDiet;
-			
-			//Health information
-			var healthInformation = new Object();
-			healthInformation.additionalInfo = d.healthDetails.healthInformation.additionalInfo;
-			healthInformation.assistanceWithMedication = d.healthDetails.healthInformation.assistanceWithMedication;
-			healthInformation.conditions = d.healthDetails.healthInformation.conditions;
-			healthInformation.historyAndInfo = d.healthDetails.healthInformation.historyAndInfo;
-			healthInformation.selfMedicate = d.healthDetails.healthInformation.selfMedicate;
-			healthInformation.takeMedication = d.healthDetails.healthInformation.takeMedication;
-			
-			//Health management
-			var healthManagement = new Object();
-			healthManagement.duration = d.healthDetails.healthManagement.duration;
-			healthManagement.frequency = d.healthDetails.healthManagement.frequency;
-			healthManagement.frequencyPeriod = d.healthDetails.healthManagement.frequencyPeriod;
-			healthManagement.medicalCondition = d.healthDetails.healthManagement.medicalCondition;
-			healthManagement.precurser = d.healthDetails.healthManagement.precurser;
-			healthManagement.seizureBrief = d.healthDetails.healthManagement.seizureBrief;
-			healthManagement.seizureNonBrief = d.healthDetails.healthManagement.seizureNonBrief;
-			healthManagement.staffRespsonse = d.healthDetails.healthManagement.staffResponse;
-			healthManagement.symptom = d.healthDetails.healthManagement.symptom;
-			healthManagement.symptomAvoidance = d.healthDetails.healthManagement.symptomAvoidance;
-					
-			//Add data to the health details object
-			var healthDetails = new Object();
-			healthDetails.dietaryRequirements = dietaryRequirements;
-			healthDetails.healthInformation = healthInformation;
-			healthDetails.healthManagement = healthManagement;
-			
-			/* ---------------------------- COMMUNICATION --------------------------------------- */
-			//Coms and decision making
-			var comsAndDecisionMaking = new Object();
-// 			comsAndDecisionMaking.dislikes = d.communication.comsAndDecisionMaking.dislikes;
-// 			//do not talk about object
-// 			var doNotTalkAbout = new Object();
-// 			doNotTalkAbout.topic = d.communication.comsAndDecisionMaking.doNotTalkAbout.topic;
-// 			doNotTalkAbout.translation = d.communication.comsAndDecisionMaking.doNotTalkAbout.translation;
-// 			//add 
-// 			comsAndDecisionMaking.doNotTalkAbout = doNotTalkAbout;
-			
-			comsAndDecisionMaking.dislikes = d.communication.comsAndDecisionMaking.dislikes;
-			comsAndDecisionMaking.goodTopics = d.communication.comsAndDecisionMaking.goodTopics;
-			comsAndDecisionMaking.iCommunicate = d.communication.comsAndDecisionMaking.iCommunicate;
-			comsAndDecisionMaking.independantDecisions = d.communication.comsAndDecisionMaking.independantDecisions;
-			comsAndDecisionMaking.likes = d.communication.comsAndDecisionMaking.likes;
-			comsAndDecisionMaking.supportMeBy = d.communication.comsAndDecisionMaking.supportMeBy;
-			comsAndDecisionMaking.supportPeople = d.communication.comsAndDecisionMaking.supportPeople;
-			comsAndDecisionMaking.youCommunicate = d.communication.comsAndDecisionMaking.youCommunicate;
-			
-			var communication = new Object();
-			communication.comsAndDecisionMaking = comsAndDecisionMaking;
-			
-			/* ------------------------- EDUCATION EMPLOYMENT --------------------------------------- */
-			//Education
-			var education = new Object();
-			education.address = d.educationEmployment.education.address;
-			education.communityAssistance = d.educationEmployment.education.communityAssistance;
-			education.contactPerson = d.educationEmployment.education.contactPerson;
-			education.eduSupportPlan = d.educationEmployment.education.eduSupportPlan;
-			education.enrolledCourse = d.educationEmployment.education.enrolledCourse;
-			education.institutionName = d.educationEmployment.education.institutionName;
-			education.liaison = d.educationEmployment.education.liason;
-			education.otherSupportRequired = d.educationEmployment.education.otherSupportRequired;
-			education.studySupport = d.educationEmployment.education.studySupport;
-			education.supportPersons = d.educationEmployment.education.supportPersons;
-			education.teacher = d.educationEmployment.education.teacher;
-			
-			//Employment
-			var employment = new Object();
-			employment.address = d.educationEmployment.employment.address;
-			employment.annualLeave = d.educationEmployment.employment.annualLeave;
-			employment.arrangements = d.educationEmployment.employment.arrangements;
-			employment.contactPerson = d.educationEmployment.employment.contactPerson;
-			employment.employer = d.educationEmployment.employment.employer;
-			employment.equipment = d.educationEmployment.employment.equipment;
-			employment.position = d.educationEmployment.employment.position;
-			employment.sickLeave = d.educationEmployment.employment.sickLeave;
-			employment.transport = d.educationEmployment.employment.transport;
-			
-			//Add data to education employment object
-			var educationEmployment = new Object();
-			educationEmployment.education = education;
-			educationEmployment.employment = employment;
-			
-			/* --------------------------- PLANNING ------------------------------------------------- */
-			//Holiday plan
-			var holidayPlan = new Object();
-			holidayPlan.holidayType = $("#holidayT").val();
-			holidayPlan.detailsAndInfo = $("#detailsT").val();
-			holidayPlan.howWhoWhere = $("#howT").val();
-			holidayPlan.resourcesRequired = $("#resourcesT").val();
-			holidayPlan.strategies = $("#stratT").val();
-			holidayPlan.timeframes = $("#timeframeT").val();
-			//Goal plan
-            var goalPlan = new Object();
-			goalPlan.goalToAchieve = $("#myGoalT").val();
-			goalPlan.howWhoWhere = $("#goalHowT").val();
-			goalPlan.outcomes = $("#goalOutcomeT").val();
-			goalPlan.resourcesRequired = $("#goalResourcesT").val();
-			goalPlan.strategies = $("#goalStratT").val();
-			goalPlan.timeframes = $("#goalTimesframesT").val();
-		
-            var planning = new Object();
-            planning.holidayPlan = holidayPlan;
-            planning.goalPlan = goalPlan;
-			
-			/* ---------------------- SUPPORT REQUIRED ---------------------------------------------- */
-			//General support
-			var generalSupport = new Object();
-			generalSupport.crowdSafety = d.supportRequired.generalSupport.crowdSafety;
-			generalSupport.strangerDanger = d.supportRequired.generalSupport.strangerDanger;
-			generalSupport.moneyHandling = d.supportRequired.generalSupport.moneyHandling;
-			generalSupport.crowds = d.supportRequired.generalSupport.crowds;
-			generalSupport.socialNetworks = d.supportRequired.generalSupport.socialNetworks;
-			generalSupport.communications = d.supportRequired.generalSupport.communications;
-			generalSupport.eatingOut = d.supportRequired.generalSupport.eatingOut;
-			generalSupport.beliefs = d.supportRequired.generalSupport.beliefs;
-			generalSupport.lesiure = d.supportRequired.generalSupport.leisure;
-			generalSupport.usingApplicances = d.supportRequired.generalSupport.usingApplicances;
-			generalSupport.usingChemical = d.supportRequired.generalSupport.usingChemical;
-			generalSupport.hazardRecognition = d.supportRequired.generalSupport.hazardRecognition;
-			generalSupport.otherSafetyInfo = d.supportRequired.generalSupport.otherSafetyInfo;
-		
-			//mobility and transport
-			var mobilityAndTransport = new Object();
-			mobilityAndTransport.height = d.supportRequired.mobilityAndTransport.height;
-			mobilityAndTransport.liftsAndEscalators = d.supportRequired.mobilityAndTransport.liftsAndEscalators;
-			mobilityAndTransport.mobilityAids = d.supportRequired.mobilityAndTransport.mobilityAids;
-			mobilityAndTransport.otherTravelSupport = d.supportRequired.mobilityAndTransport.otherTravelSupport;
-			mobilityAndTransport.publicTransport = d.supportRequired.mobilityAndTransport.publicTransport;
-			mobilityAndTransport.roadSafetySkills = d.supportRequired.mobilityAndTransport.roadSafetySkills;
-			mobilityAndTransport.travelPreferences = d.supportRequired.mobilityAndTransport.travelPreferences;
-			mobilityAndTransport.unevenSurfaces = d.supportRequired.mobilityAndTransport.unevenSurfaces;
-			
-			//financial support
-			var financialSupport = new Object();
-			financialSupport.budgetBills = d.supportRequired.financialSupport.budgetBills; 
-			financialSupport.budgetConstraintGoal = d.supportRequired.financialSupport.budgetConstraintGoal;
-			financialSupport.budgetEmergency = d.supportRequired.financialSupport.budgetEmergency;
-			financialSupport.budgetExpend = d.supportRequired.financialSupport.budgetExpend;
-			financialSupport.budgetGroceries = d.supportRequired.financialSupport.budgetGroceries;
-			financialSupport.budgetHouse = d.supportRequired.financialSupport.budgetHouse;
-			financialSupport.budgetSupportNetwork = d.supportRequired.financialSupport.budgetSupportNetwork;
-			financialSupport.budgetTransport = d.supportRequired.financialSupport.budgetTransport;
-			financialSupport.budgetUtilities = d.supportRequired.financialSupport.budgetUtilities;
-			financialSupport.budgeting = d.supportRequired.financialSupport.budgeting;
-			financialSupport.financialAdmin = d.supportRequired.financialSupport.financialAdmin;
-			financialSupport.moneyHandlingSupport = d.supportRequired.financialSupport.moneyHandlingSupport;
-			financialSupport.otherRequirements = d.supportRequired.financialSupport.otherRequirements;
-			financialSupport.personalItemsSupport = d.supportRequired.financialSupport.personalItemsSupport;
-			
-			//Daily activities
-			var dailyActivities = new Object();
-			dailyActivities.bathing = d.supportRequired.dailyActivities.bathing;
-			dailyActivities.bedTime = d.supportRequired.dailyActivities.bedTime;
-			dailyActivities.cleaning = d.supportRequired.dailyActivities.cleaning;
-			dailyActivities.cooking = d.supportRequired.dailyActivities.cooking;
-			dailyActivities.dressing = d.supportRequired.dailyActivities.dressing;
-			dailyActivities.friday = d.supportRequired.dailyActivities.friday;
-			dailyActivities.menstruation = d.supportRequired.dailyActivities.menstruation;
-			dailyActivities.monday = d.supportRequired.dailyActivities.monday;
-			dailyActivities.otherThings = d.supportRequired.dailyActivities.otherThings;
-			dailyActivities.routineAfternoon = d.supportRequired.dailyActivities.routineAfternoon;
-			dailyActivities.routineMealTime = d.supportRequired.dailyActivities.routineMealTime;
-			dailyActivities.routineMorning = d.supportRequired.dailyActivities.routineMorning;
-			dailyActivities.routineSleeping = d.supportRequired.dailyActivities.routineSleeping;
-			dailyActivities.routineWeekend = d.supportRequired.dailyActivities.routineWeekend;
-			dailyActivities.saturday = d.supportRequired.dailyActivities.saturday;
-			dailyActivities.sleeping = d.supportRequired.dailyActivities.sleeping;
-			dailyActivities.sunday = d.supportRequired.dailyActivities.sunday;
-			dailyActivities.thursday = d.supportRequired.dailyActivities.thursday;
-			dailyActivities.toileting = d.supportRequired.dailyActivities.toileting;
-			dailyActivities.tuesday = d.supportRequired.dailyActivities.tuesday;
-			dailyActivities.wednesday = d.supportRequired.dailyActivities.wednesday;
-		
-			//relaxation
-			var relaxation = new Object();
-			relaxation.activities = d.supportRequired.relaxation.activities;
-			relaxation.movie = d.supportRequired.relaxation.movie;
-			relaxation.music = d.supportRequired.relaxation.music;
-			relaxation.otherActivities = d.supportRequired.relaxation.otherActivities;
-			relaxation.tVShow = d.supportRequired.relaxation.tVShow;
-			
-			var supportRequired = new Object();
-			supportRequired.generalSupport = generalSupport;
-			supportRequired.mobilityAndTransport = mobilityAndTransport;
-			supportRequired.financialSupport = financialSupport;
-			supportRequired.dailyActivities = dailyActivities;
-			supportRequired.relaxation = relaxation;
-			
-			//Add data to personal plan
-			personalPlan.clientDetails = clientDetails;
-			personalPlan.healthDetails = healthDetails;
-			personalPlan.communication = communication;
-			personalPlan.edcuationEmployment = educationEmployment;
- 			personalPlan.planning = planning;
- 			personalPlan.supportRequired = supportRequired;
-			
-		},
-		error: function(xhr) {
-			// do something to handle error
-			
-		}
-	});
+	var a = function(callback)
+	{
 	
-	if (personalPlan != null) {
+		//pull details
+		$.ajax({
+			url: "./rest/personalplan/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + $(el).attr("id"),
+			type:"get",
+			contentType: "application/json",
+			async: false,
+			success: callback,
+// 			success: function(d) { // d = json returned
+				
+				
+				
+// 			},
+			error: function(xhr) {
+				// do something to handle error
+				
+			}
+		});
+	};
+	
+	a(function(data) {
+		console.log(data);
 		
 		//Create the PDF
 		alert("PDF Being Generated");
@@ -324,11 +57,12 @@ function selectPP(el) {
 		
 		//set document properties
 		doc.setProperties({
-			title: clientName +  ' Personal Plan', // client id + personal plan $(el).attr("id")+
-			subject: 'Client Personal Plan',	//personal plan	
-			author: $.cookie('user_id'), //user id
+			title: data.clientDetails.personalDetails.preferredName +  ' Personal Plan', 
+			subject: 'Client Personal Plan',
+			author: $.cookie('user_id'),
 		});
 		
+		//Personal plan title centered
 		doc.setFontType("bold");
 		doc.text(90, 10, 'Personal Plan');
 		
@@ -337,58 +71,341 @@ function selectPP(el) {
 		//Personal details
 		doc.text(10, 20, 'Personal Details');
 		doc.setFontType("normal"); //set font type back to normal
-		doc.text(10, 25, 'Creation Date: ' + personalPlan.clientDetails.personalDetails.creationDate);
-		doc.text(10, 30, 'Preferred Name: ' + personalPlan.clientDetails.personalDetails.preferredName);
-		doc.text(10, 35, 'Review Date: ' + personalPlan.clientDetails.personalDetails.reviewDate);
-		doc.text(10, 40, 'Date of Birth: ' + personalPlan.clientDetails.personalDetails.dob);
-		doc.text(10, 45, 'Email Address: ' + personalPlan.clientDetails.personalDetails.email);
-		doc.text(10, 50, 'Phone Number: ' + personalPlan.clientDetails.personalDetails.phoneNumber);
-		doc.text(10, 55, 'Mobile Number: ' + personalPlan.clientDetails.personalDetails.mobileNumber);
+		doc.text(10, 25, 'Creation Date: ' + data.clientDetails.personalDetails.creationDate);
+		doc.text(10, 30, 'Preferred Name: ' + data.clientDetails.personalDetails.preferredName);
+		doc.text(10, 35, 'Review Date: ' + data.clientDetails.personalDetails.reviewDate);
+		doc.text(10, 40, 'Date of Birth: ' + data.clientDetails.personalDetails.dob);
+		doc.text(10, 45, 'Email Address: ' + data.clientDetails.personalDetails.email);
+		doc.text(10, 50, 'Phone Number: ' + data.clientDetails.personalDetails.phoneNumber);
+		doc.text(10, 55, 'Mobile Number: ' + data.clientDetails.personalDetails.mobileNumber);
 		//Alert information
 		doc.setFontType("bold");
 		doc.text(10, 65, 'Alert Information');
 		doc.setFontType("normal");
+		doc.text(10, 70, 'Allergies: ' +  data.clientDetails.alertInformation.allergies);
+		doc.text(10, 75, 'Complex Support Needs: ' +  data.clientDetails.alertInformation.complexSupportNeeds);
+		doc.text(10, 80, 'Eating Alerts: ' +  data.clientDetails.alertInformation.eatingAlerts);
+		doc.text(10, 85, 'Guardian Orders: ' +  data.clientDetails.alertInformation.guardianOrders);
+		doc.text(10, 90, 'Medical Issues: ' +  data.clientDetails.alertInformation.medIssues);
+		doc.text(10, 95, 'Other Info: ' +  data.clientDetails.alertInformation.otherInfo);
+		doc.text(10, 100, 'Phobias: ' +  data.clientDetails.alertInformation.phobias);
+		doc.text(10, 105, 'Restrictive: ' +  data.clientDetails.alertInformation.restrictive);
+		doc.text(10, 110, 'Safety Concerns: ' +  data.clientDetails.alertInformation.safetyConcerns);
 		
 		//Formal orders
 		doc.setFontType("bold");
-		doc.text(10, 75, 'Formal Orders');
+		doc.text(10, 120, 'Formal Orders');
 		doc.setFontType("normal"); 
+		doc.text(10, 125, 'Appointee: ' + data.clientDetails.formalOrders.appointee);
+		doc.text(10, 130, 'Commence Date: ' + data.clientDetails.formalOrders.commenceDate);
+		doc.text(10, 135, 'Contact Arrangement: ' + data.clientDetails.formalOrders.contactArrangement);
+		doc.text(10, 140, 'Details: ' + data.clientDetails.formalOrders.details);
+		doc.text(10, 145, 'Family Contact: ' + data.clientDetails.formalOrders.familyContact);
+		doc.text(10, 150, 'Justice Requirements: ' + data.clientDetails.formalOrders.justiceRequirements);
+		doc.text(10, 155, 'Order For: ' + data.clientDetails.formalOrders.orderFor);
+		doc.text(10, 160, 'Order Location: ' + data.clientDetails.formalOrders.orderLocation);
+		doc.text(10, 165, 'Other Information: ' + data.clientDetails.formalOrders.otherInfo);
+		doc.text(10, 170, 'Protection Order: ' + data.clientDetails.formalOrders.protectionOrder);
+		doc.text(10, 175, 'Special Conditions: ' + data.clientDetails.formalOrders.specialConditions);
+		doc.text(10, 180, 'Child Support Officer: ' + data.clientDetails.formalOrders.childSupportOfficer);
+		doc.text(10, 185, 'Visitor Information: ' + data.clientDetails.formalOrders.visitorInfo);
 		
 		//Living arrangements
 		doc.setFontType("bold");
-		doc.text(10, 85, 'Living Arrangements');
+		doc.text(10, 195, 'Living Arrangements');
 		doc.setFontType("normal"); 
 		
 		
+		doc.addPage();
+		
 		/* -------------------------------- HEALTH DETAILS --------------------------------------*/
 		doc.setFontType("bold");
-		doc.text(10, 95, 'Health Details');
+		doc.text(10, 200, 'Health Details');
 		//Dietary requirements
-		doc.text(10, 105, 'Dietary Requirements');
+		doc.text(10, 205, 'Dietary Requirements');
 		doc.setFontType("normal");
 		
 		//Health information
 		doc.setFontType("bold");
-		doc.text(10, 115, 'Health Information');
+		doc.text(10, 215, 'Health Information');
 		doc.setFontType("normal");
 		
 		//Health management
 		doc.setFontType("bold");
-		doc.text(10, 125, 'Health Management');
+		doc.text(10, 225, 'Health Management');
 		doc.setFontType("normal");
 		
 		
 		/* -------------------------------- COMMUNICATION --------------------------------------*/
 		doc.setFontType("bold");
-		doc.text(10, 140, 'Communication');
+		doc.text(10, 240, 'Communication');
 		doc.setFontType("normal");
 		
 		
 		
 		
+
+		
+		
+		
+		
+		
+		
+		
+		
+		/* ------------------------------ CLIENT DETAILS --------------------------------------- */
+// 			//Personal details
+// 			var personalDetails = new Object();		
+// 			personalDetails.creationDate = data.clientDetails.personalDetails.creationDate;
+// 			personalDetails.preferredName = data.clientDetails.personalDetails.preferredName;
+// 			personalDetails.reviewDate = data.clientDetails.personalDetails.reviewDate;
+// 			personalDetails.dob = data.clientDetails.personalDetails.dob;
+// 			personalDetails.email = data.clientDetails.personalDetails.email;
+// 			personalDetails.phoneNumber = data.clientDetails.personalDetails.phoneNumber;
+// 			personalDetails.mobileNumber = data.clientDetails.personalDetails.mobileNumber;
+		
+		//Alert information
+		var alertInformation = new Object();
+
+		
+		//Formal orders
+		var formalOrders = new Object();
+
+		
+		//Living arrangements
+		var livingArangements = new Object();
+		livingArangements.address = data.clientDetails.livingArangements.address;		
+		livingArangements.phoneNumber = data.clientDetails.livingArangements.phoneNumber;
+		livingArangements.service = data.clientDetails.livingArangements.service;
+		livingArangements.sickContact = data.clientDetails.livingArangements.sickContact;
+		
+// 		//Add data to the clientdetails object
+// 		var clientDetails = new Object();
+// 		clientDetails.personalDetails = personalDetails;
+// 		clientDetails.alertInformation = alertInformation;
+// 		clientDetails.formalOrders = formalOrders;
+// 		clientDetails.livingArangements = livingArangements;
+		
+		/* ----------------------------- HEALTH DETAILS --------------------------------------- */
+		//Dietary requirements
+		var dietaryRequirements = new Object();
+		dietaryRequirements.assessmentDone = data.healthDetails.dietaryRequirements.assessmentDone;
+		dietaryRequirements.avoidFood = data.healthDetails.dietaryRequirements.avoidFood;
+		dietaryRequirements.breakfast = data.healthDetails.dietaryRequirements.breakfast;
+		dietaryRequirements.cannotEat = data.healthDetails.dietaryRequirements.cannotEat;
+		dietaryRequirements.dinner = data.healthDetails.dietaryRequirements.dinner;
+		dietaryRequirements.dislikes = data.healthDetails.dietaryRequirements.dislikes;
+		dietaryRequirements.eatingSupport = data.healthDetails.dietaryRequirements.eatingSupport;
+		dietaryRequirements.location = data.healthDetails.dietaryRequirements.location;
+		dietaryRequirements.lunch = data.healthDetails.dietaryRequirements.lunch;
+		dietaryRequirements.otherInfo = data.healthDetails.dietaryRequirements.otherInfo;
+		dietaryRequirements.snacks = data.healthDetails.dietaryRequirements.snacks;
+		dietaryRequirements.supportDrinking = data.healthDetails.dietaryRequirements.supportDrinking;
+		dietaryRequirements.usualDiet = data.healthDetails.dietaryRequirements.usualDiet;
+		
+		//Health information
+		var healthInformation = new Object();
+		healthInformation.additionalInfo = data.healthDetails.healthInformation.additionalInfo;
+		healthInformation.assistanceWithMedication = data.healthDetails.healthInformation.assistanceWithMedication;
+		healthInformation.conditions = data.healthDetails.healthInformation.conditions;
+		healthInformation.historyAndInfo = data.healthDetails.healthInformation.historyAndInfo;
+		healthInformation.selfMedicate = data.healthDetails.healthInformation.selfMedicate;
+		healthInformation.takeMedication = data.healthDetails.healthInformation.takeMedication;
+		
+		//Health management
+		var healthManagement = new Object();
+		healthManagement.duration = data.healthDetails.healthManagement.duration;
+		healthManagement.frequency = data.healthDetails.healthManagement.frequency;
+		healthManagement.frequencyPeriod = data.healthDetails.healthManagement.frequencyPeriod;
+		healthManagement.medicalCondition = data.healthDetails.healthManagement.medicalCondition;
+		healthManagement.precurser = data.healthDetails.healthManagement.precurser;
+		healthManagement.seizureBrief = data.healthDetails.healthManagement.seizureBrief;
+		healthManagement.seizureNonBrief = data.healthDetails.healthManagement.seizureNonBrief;
+		healthManagement.staffRespsonse = data.healthDetails.healthManagement.staffResponse;
+		healthManagement.symptom = data.healthDetails.healthManagement.symptom;
+		healthManagement.symptomAvoidance = data.healthDetails.healthManagement.symptomAvoidance;
+				
+		//Add data to the health details object
+		var healthDetails = new Object();
+		healthDetails.dietaryRequirements = dietaryRequirements;
+		healthDetails.healthInformation = healthInformation;
+		healthDetails.healthManagement = healthManagement;
+		
+		/* ---------------------------- COMMUNICATION --------------------------------------- */
+		//Coms and decision making
+		var comsAndDecisionMaking = new Object();
+// 			comsAndDecisionMaking.dislikes = data.communication.comsAndDecisionMaking.dislikes;
+// 			//do not talk about object
+// 			var doNotTalkAbout = new Object();
+// 			doNotTalkAbout.topic = data.communication.comsAndDecisionMaking.doNotTalkAbout.topic;
+// 			doNotTalkAbout.translation = data.communication.comsAndDecisionMaking.doNotTalkAbout.translation;
+// 			//add 
+// 			comsAndDecisionMaking.doNotTalkAbout = doNotTalkAbout;
+		
+		comsAndDecisionMaking.dislikes = data.communication.comsAndDecisionMaking.dislikes;
+		comsAndDecisionMaking.goodTopics = data.communication.comsAndDecisionMaking.goodTopics;
+		comsAndDecisionMaking.iCommunicate = data.communication.comsAndDecisionMaking.iCommunicate;
+		comsAndDecisionMaking.independantDecisions = data.communication.comsAndDecisionMaking.independantDecisions;
+		comsAndDecisionMaking.likes = data.communication.comsAndDecisionMaking.likes;
+		comsAndDecisionMaking.supportMeBy = data.communication.comsAndDecisionMaking.supportMeBy;
+		comsAndDecisionMaking.supportPeople = data.communication.comsAndDecisionMaking.supportPeople;
+		comsAndDecisionMaking.youCommunicate = data.communication.comsAndDecisionMaking.youCommunicate;
+		
+		var communication = new Object();
+		communication.comsAndDecisionMaking = comsAndDecisionMaking;
+		
+		/* ------------------------- EDUCATION EMPLOYMENT --------------------------------------- */
+		//Education
+		var education = new Object();
+		education.address = data.educationEmployment.education.address;
+		education.communityAssistance = data.educationEmployment.education.communityAssistance;
+		education.contactPerson = data.educationEmployment.education.contactPerson;
+		education.eduSupportPlan = data.educationEmployment.education.eduSupportPlan;
+		education.enrolledCourse = data.educationEmployment.education.enrolledCourse;
+		education.institutionName = data.educationEmployment.education.institutionName;
+		education.liaison = data.educationEmployment.education.liason;
+		education.otherSupportRequired = data.educationEmployment.education.otherSupportRequired;
+		education.studySupport = data.educationEmployment.education.studySupport;
+		education.supportPersons = data.educationEmployment.education.supportPersons;
+		education.teacher = data.educationEmployment.education.teacher;
+		
+		//Employment
+		var employment = new Object();
+		employment.address = data.educationEmployment.employment.address;
+		employment.annualLeave = data.educationEmployment.employment.annualLeave;
+		employment.arrangements = data.educationEmployment.employment.arrangements;
+		employment.contactPerson = data.educationEmployment.employment.contactPerson;
+		employment.employer = data.educationEmployment.employment.employer;
+		employment.equipment = data.educationEmployment.employment.equipment;
+		employment.position = data.educationEmployment.employment.position;
+		employment.sickLeave = data.educationEmployment.employment.sickLeave;
+		employment.transport = data.educationEmployment.employment.transport;
+		
+		//Add data to education employment object
+		var educationEmployment = new Object();
+		educationEmployment.education = education;
+		educationEmployment.employment = employment;
+		
+		/* --------------------------- PLANNING ------------------------------------------------- */
+		//Holiday plan
+		var holidayPlan = new Object();
+		holidayPlan.holidayType = data.planning.holidayPlan.holidayType;
+		holidayPlan.detailsAndInfo = data.planning.holidayPlan.detailsAndInfo;
+		holidayPlan.howWhoWhere = data.planning.holidayPlan.howWhoWhere;
+		holidayPlan.resourcesRequired = data.planning.holidayPlan.resourcesRequired;
+		holidayPlan.strategies = data.planning.holidayPlan.strategies;
+		holidayPlan.timeframes = data.planning.holidayPlan.timeframes;
+		//Goal plan
+        var goalPlan = new Object();
+		goalPlan.goalToAchieve = data.planning.goalPlan.goalToAchieve;
+		goalPlan.howWhoWhere = data.planning.goalPlan.howWhoWhere;
+		goalPlan.outcomes = data.planning.goalPlan.outcomes;
+		goalPlan.resourcesRequired = data.planning.goalPlan.resourcesRequired;
+		goalPlan.strategies = data.planning.goalPlan.strategies;
+		goalPlan.timeframes = data.planning.goalPlan.timeframes;
+	
+        var planning = new Object();
+        planning.holidayPlan = holidayPlan;
+        planning.goalPlan = goalPlan;
+		
+		/* ---------------------- SUPPORT REQUIRED ---------------------------------------------- */
+		//General support
+		var generalSupport = new Object();
+		generalSupport.crowdSafety = data.supportRequired.generalSupport.crowdSafety;
+		generalSupport.strangerDanger = data.supportRequired.generalSupport.strangerDanger;
+		generalSupport.moneyHandling = data.supportRequired.generalSupport.moneyHandling;
+		generalSupport.crowds = data.supportRequired.generalSupport.crowds;
+		generalSupport.socialNetworks = data.supportRequired.generalSupport.socialNetworks;
+		generalSupport.communications = data.supportRequired.generalSupport.communications;
+		generalSupport.eatingOut = data.supportRequired.generalSupport.eatingOut;
+		generalSupport.beliefs = data.supportRequired.generalSupport.beliefs;
+		generalSupport.lesiure = data.supportRequired.generalSupport.leisure;
+		generalSupport.usingApplicances = data.supportRequired.generalSupport.usingApplicances;
+		generalSupport.usingChemical = data.supportRequired.generalSupport.usingChemical;
+		generalSupport.hazardRecognition = data.supportRequired.generalSupport.hazardRecognition;
+		generalSupport.otherSafetyInfo = data.supportRequired.generalSupport.otherSafetyInfo;
+	
+		//mobility and transport
+		var mobilityAndTransport = new Object();
+		mobilityAndTransport.height = data.supportRequired.mobilityAndTransport.height;
+		mobilityAndTransport.liftsAndEscalators = data.supportRequired.mobilityAndTransport.liftsAndEscalators;
+		mobilityAndTransport.mobilityAids = data.supportRequired.mobilityAndTransport.mobilityAids;
+		mobilityAndTransport.otherTravelSupport = data.supportRequired.mobilityAndTransport.otherTravelSupport;
+		mobilityAndTransport.publicTransport = data.supportRequired.mobilityAndTransport.publicTransport;
+		mobilityAndTransport.roadSafetySkills = data.supportRequired.mobilityAndTransport.roadSafetySkills;
+		mobilityAndTransport.travelPreferences = data.supportRequired.mobilityAndTransport.travelPreferences;
+		mobilityAndTransport.unevenSurfaces = data.supportRequired.mobilityAndTransport.unevenSurfaces;
+		
+		//financial support
+		var financialSupport = new Object();
+		financialSupport.budgetBills = data.supportRequired.financialSupport.budgetBills; 
+		financialSupport.budgetConstraintGoal = data.supportRequired.financialSupport.budgetConstraintGoal;
+		financialSupport.budgetEmergency = data.supportRequired.financialSupport.budgetEmergency;
+		financialSupport.budgetExpend = data.supportRequired.financialSupport.budgetExpend;
+		financialSupport.budgetGroceries = data.supportRequired.financialSupport.budgetGroceries;
+		financialSupport.budgetHouse = data.supportRequired.financialSupport.budgetHouse;
+		financialSupport.budgetSupportNetwork = data.supportRequired.financialSupport.budgetSupportNetwork;
+		financialSupport.budgetTransport = data.supportRequired.financialSupport.budgetTransport;
+		financialSupport.budgetUtilities = data.supportRequired.financialSupport.budgetUtilities;
+		financialSupport.budgeting = data.supportRequired.financialSupport.budgeting;
+		financialSupport.financialAdmin = data.supportRequired.financialSupport.financialAdmin;
+		financialSupport.moneyHandlingSupport = data.supportRequired.financialSupport.moneyHandlingSupport;
+		financialSupport.otherRequirements = data.supportRequired.financialSupport.otherRequirements;
+		financialSupport.personalItemsSupport = data.supportRequired.financialSupport.personalItemsSupport;
+		
+		//Daily activities
+		var dailyActivities = new Object();
+		dailyActivities.bathing = data.supportRequired.dailyActivities.bathing;
+		dailyActivities.bedTime = data.supportRequired.dailyActivities.bedTime;
+		dailyActivities.cleaning = data.supportRequired.dailyActivities.cleaning;
+		dailyActivities.cooking = data.supportRequired.dailyActivities.cooking;
+		dailyActivities.dressing = data.supportRequired.dailyActivities.dressing;
+		dailyActivities.friday = data.supportRequired.dailyActivities.friday;
+		dailyActivities.menstruation = data.supportRequired.dailyActivities.menstruation;
+		dailyActivities.monday = data.supportRequired.dailyActivities.monday;
+		dailyActivities.otherThings = data.supportRequired.dailyActivities.otherThings;
+		dailyActivities.routineAfternoon = data.supportRequired.dailyActivities.routineAfternoon;
+		dailyActivities.routineMealTime = data.supportRequired.dailyActivities.routineMealTime;
+		dailyActivities.routineMorning = data.supportRequired.dailyActivities.routineMorning;
+		dailyActivities.routineSleeping = data.supportRequired.dailyActivities.routineSleeping;
+		dailyActivities.routineWeekend = data.supportRequired.dailyActivities.routineWeekend;
+		dailyActivities.saturday = data.supportRequired.dailyActivities.saturday;
+		dailyActivities.sleeping = data.supportRequired.dailyActivities.sleeping;
+		dailyActivities.sunday = data.supportRequired.dailyActivities.sunday;
+		dailyActivities.thursday = data.supportRequired.dailyActivities.thursday;
+		dailyActivities.toileting = data.supportRequired.dailyActivities.toileting;
+		dailyActivities.tuesday = data.supportRequired.dailyActivities.tuesday;
+		dailyActivities.wednesday = data.supportRequired.dailyActivities.wednesday;
+	
+		//relaxation
+		var relaxation = new Object();
+		relaxation.activities = data.supportRequired.relaxation.activities;
+		relaxation.movie = data.supportRequired.relaxation.movie;
+		relaxation.music = data.supportRequired.relaxation.music;
+		relaxation.otherActivities = data.supportRequired.relaxation.otherActivities;
+		relaxation.tVShow = data.supportRequired.relaxation.tVShow;
+		
+		var supportRequired = new Object();
+		supportRequired.generalSupport = generalSupport;
+		supportRequired.mobilityAndTransport = mobilityAndTransport;
+		supportRequired.financialSupport = financialSupport;
+		supportRequired.dailyActivities = dailyActivities;
+		supportRequired.relaxation = relaxation;
+		
+// 		//Add data to personal plan
+// 		personalPlan.clientDetails = clientDetails;
+// 		personalPlan.healthDetails = healthDetails;
+// 		personalPlan.communication = communication;
+// 		personalPlan.edcuationEmployment = educationEmployment;
+// 		personalPlan.planning = planning;
+// 		personalPlan.supportRequired = supportRequired;
+			
+			
+			
 		//Prompt the user to save the pdf
 		doc.save($(el).attr("id") + '_personal_plan' + date);
-	}
+	});
+
 }
 
 
