@@ -202,58 +202,72 @@ function selectPP(el) {
 		doc.addPage(); //add new page
 				
 		/* ------------------------- EDUCATION EMPLOYMENT --------------------------------------- */
+		
+		doc.setFontType("bold");
+		doc.setFontSize(18);
+		doc.text(10, 10, 'Communication');
 		//Education
-		var education = new Object();
-		education.address = data.educationEmployment.education.address;
-		education.communityAssistance = data.educationEmployment.education.communityAssistance;
-		education.contactPerson = data.educationEmployment.education.contactPerson;
-		education.eduSupportPlan = data.educationEmployment.education.eduSupportPlan;
-		education.enrolledCourse = data.educationEmployment.education.enrolledCourse;
-		education.institutionName = data.educationEmployment.education.institutionName;
-		education.liaison = data.educationEmployment.education.liason;
-		education.otherSupportRequired = data.educationEmployment.education.otherSupportRequired;
-		education.studySupport = data.educationEmployment.education.studySupport;
-		education.supportPersons = data.educationEmployment.education.supportPersons;
-		education.teacher = data.educationEmployment.education.teacher;
+		doc.setFontSize(16);
+		doc.text(10, 15, 'Education');
+		doc.setFontType("normal");
+		doc.setFontSize(14);
+		doc.text(10, 20, 'Address: ' + data.educationEmployment.education.address);
+		doc.text(10, 25, 'Community Assistance: ' + data.educationEmployment.education.communityAssistance);
+		doc.text(10, 30, 'Contact Person: ' + data.educationEmployment.education.contactPerson);
+		doc.text(10, 35, 'Education Support Plan: ' + data.educationEmployment.education.eduSupportPlan);
+		doc.text(10, 40, 'Enrolled Course: ' + data.educationEmployment.education.enrolledCourse);
+		doc.text(10, 45, 'Instution Name: ' + data.educationEmployment.education.institutionName);
+		doc.text(10, 50, 'Liason: ' + data.educationEmployment.education.liason);
+		doc.text(10, 55, 'Other Support Required: ' + data.educationEmployment.education.otherSupportRequired);
+		doc.text(10, 60, 'Study Support: ' + data.educationEmployment.education.studySupport);
+		doc.text(10, 65, 'Support Persons: ' + data.educationEmployment.education.supportPersons);
+		doc.text(10, 70, 'Teacher: ' + data.educationEmployment.education.teacher);
 		
 		//Employment
-		var employment = new Object();
-		employment.address = data.educationEmployment.employment.address;
-		employment.annualLeave = data.educationEmployment.employment.annualLeave;
-		employment.arrangements = data.educationEmployment.employment.arrangements;
-		employment.contactPerson = data.educationEmployment.employment.contactPerson;
-		employment.employer = data.educationEmployment.employment.employer;
-		employment.equipment = data.educationEmployment.employment.equipment;
-		employment.position = data.educationEmployment.employment.position;
-		employment.sickLeave = data.educationEmployment.employment.sickLeave;
-		employment.transport = data.educationEmployment.employment.transport;
-		
-		//Add data to education employment object
-		var educationEmployment = new Object();
-		educationEmployment.education = education;
-		educationEmployment.employment = employment;
+		doc.setFontType("bold");
+		doc.setFontSize(16);
+		doc.text(10, 80, 'Employment');
+		doc.setFontType("normal");
+		doc.setFontSize(14);
+		doc.text(10, 85, 'Address: ' + data.educationEmployment.employment.address);
+		doc.text(10, 90, 'Annual Leave: ' + data.educationEmployment.employment.annualLeave);
+		doc.text(10, 95, 'Arrangements: ' + data.educationEmployment.employment.arrangements);
+		doc.text(10, 100, 'Contact Person: ' + data.educationEmployment.employment.contactPerson);
+		doc.text(10, 105, 'Employer: ' + data.educationEmployment.employment.employer);
+		doc.text(10, 110, 'Equipment: ' + data.educationEmployment.employment.equipment);
+		doc.text(10, 115, 'Position: ' + data.educationEmployment.employment.position);
+		doc.text(10, 120, 'Sick Leave: ' + data.educationEmployment.employment.sickLeave);
+		doc.text(10, 125, 'Transport: ' + data.educationEmployment.employment.transport);
 		
 		/* --------------------------- PLANNING ------------------------------------------------- */
+		doc.setFontType("bold");
+		doc.setFontSize(18);
+		doc.text(10, 135, 'Planning');
 		//Holiday plan
-		var holidayPlan = new Object();
-		holidayPlan.holidayType = data.planning.holidayPlan.holidayType;
-		holidayPlan.detailsAndInfo = data.planning.holidayPlan.detailsAndInfo;
-		holidayPlan.howWhoWhere = data.planning.holidayPlan.howWhoWhere;
-		holidayPlan.resourcesRequired = data.planning.holidayPlan.resourcesRequired;
-		holidayPlan.strategies = data.planning.holidayPlan.strategies;
-		holidayPlan.timeframes = data.planning.holidayPlan.timeframes;
+		doc.setFontSize(16);
+		doc.text(10, 140, 'Holiday Plan');
+		doc.setFontType("normal");
+		doc.setFontSize(14);
+		doc.text(10, 145, 'Holiday Type: ' + data.planning.holidayPlan.holidayType);
+		doc.text(10, 150, 'Details and Info: ' + data.planning.holidayPlan.detailsAndInfo);
+		doc.text(10, 155, 'How, Who and Where: ' + data.planning.holidayPlan.howWhoWhere);
+		doc.text(10, 160, 'Resources Required: ' + data.planning.holidayPlan.resourcesRequired);
+		doc.text(10, 165, 'Strategies: ' + data.planning.holidayPlan.strategies);
+		doc.text(10, 170, 'Timeframes: ' + data.planning.holidayPlan.timeframes);
+		
 		//Goal plan
-        var goalPlan = new Object();
-		goalPlan.goalToAchieve = data.planning.goalPlan.goalToAchieve;
-		goalPlan.howWhoWhere = data.planning.goalPlan.howWhoWhere;
-		goalPlan.outcomes = data.planning.goalPlan.outcomes;
-		goalPlan.resourcesRequired = data.planning.goalPlan.resourcesRequired;
-		goalPlan.strategies = data.planning.goalPlan.strategies;
-		goalPlan.timeframes = data.planning.goalPlan.timeframes;
-	
-        var planning = new Object();
-        planning.holidayPlan = holidayPlan;
-        planning.goalPlan = goalPlan;
+        doc.setFontSize(16);
+		doc.text(10, 180, 'Goal Plan');
+		doc.setFontType("normal");
+		doc.setFontSize(14);
+		doc.text(10, 185, 'Goal to Achieve: ' + data.planning.goalPlan.goalToAchieve);
+		doc.text(10, 190, 'How, Who and Where: ' + data.planning.goalPlan.howWhoWhere);
+		doc.text(10, 195, 'Outcomes: ' + data.planning.goalPlan.outcomes);
+		doc.text(10, 200, 'Resouces Required: ' + data.planning.goalPlan.resourcesRequired);
+		doc.text(10, 205, 'Strategies: ' + data.planning.goalPlan.strategies);
+		doc.text(10, 210, 'Timeframes: ' + data.planning.goalPlan.timeframes);
+		
+		doc.addPage(); //add new page
 		
 		/* ---------------------- SUPPORT REQUIRED ---------------------------------------------- */
 		//General support
