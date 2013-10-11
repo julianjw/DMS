@@ -205,7 +205,7 @@ function selectPP(el) {
 		
 		doc.setFontType("bold");
 		doc.setFontSize(18);
-		doc.text(10, 10, 'Communication');
+		doc.text(10, 10, 'Education and Employment');
 		//Education
 		doc.setFontSize(16);
 		doc.text(10, 15, 'Education');
@@ -256,6 +256,7 @@ function selectPP(el) {
 		doc.text(10, 170, 'Timeframes: ' + data.planning.holidayPlan.timeframes);
 		
 		//Goal plan
+		doc.setFontType("bold");
         doc.setFontSize(16);
 		doc.text(10, 180, 'Goal Plan');
 		doc.setFontType("normal");
@@ -270,101 +271,108 @@ function selectPP(el) {
 		doc.addPage(); //add new page
 		
 		/* ---------------------- SUPPORT REQUIRED ---------------------------------------------- */
+		doc.setFontType("bold");
+		doc.setFontSize(18);
+		doc.text(10, 10, 'Support Required');
 		//General support
-		var generalSupport = new Object();
-		generalSupport.crowdSafety = data.supportRequired.generalSupport.crowdSafety;
-		generalSupport.strangerDanger = data.supportRequired.generalSupport.strangerDanger;
-		generalSupport.moneyHandling = data.supportRequired.generalSupport.moneyHandling;
-		generalSupport.crowds = data.supportRequired.generalSupport.crowds;
-		generalSupport.socialNetworks = data.supportRequired.generalSupport.socialNetworks;
-		generalSupport.communications = data.supportRequired.generalSupport.communications;
-		generalSupport.eatingOut = data.supportRequired.generalSupport.eatingOut;
-		generalSupport.beliefs = data.supportRequired.generalSupport.beliefs;
-		generalSupport.lesiure = data.supportRequired.generalSupport.leisure;
-		generalSupport.usingApplicances = data.supportRequired.generalSupport.usingApplicances;
-		generalSupport.usingChemical = data.supportRequired.generalSupport.usingChemical;
-		generalSupport.hazardRecognition = data.supportRequired.generalSupport.hazardRecognition;
-		generalSupport.otherSafetyInfo = data.supportRequired.generalSupport.otherSafetyInfo;
+		doc.setFontSize(16);
+		doc.text(10, 15, 'General Support');
+		doc.setFontType("normal");
+		doc.setFontSize(14);
+		doc.text(10, 20, 'Crowd Safety: ' + data.supportRequired.generalSupport.crowdSafety);
+		doc.text(10, 25, 'Stranger Danger: ' + data.supportRequired.generalSupport.strangerDanger);
+		doc.text(10, 30, 'Money Handling: ' + data.supportRequired.generalSupport.moneyHandling);
+		doc.text(10, 35, 'Crowds: ' + data.supportRequired.generalSupport.crowds);
+		doc.text(10, 40, 'Social Networks: ' + data.supportRequired.generalSupport.socialNetworks);
+		doc.text(10, 45, 'Communications: ' + data.supportRequired.generalSupport.communications);
+		doc.text(10, 50, 'Eating Out: ' + data.supportRequired.generalSupport.eatingOut);
+		doc.text(10, 55, 'Beliefs: ' + data.supportRequired.generalSupport.beliefs);
+		doc.text(10, 60, 'Leisure: ' + data.supportRequired.generalSupport.leisure);
+		doc.text(10, 65, 'Using Appliances: ' + data.supportRequired.generalSupport.usingApplicances);
+		doc.text(10, 70, 'Using Chemical: ' + data.supportRequired.generalSupport.usingChemical);
+		doc.text(10, 75, 'Hazard Recognition: ' + data.supportRequired.generalSupport.hazardRecognition);
+		doc.text(10, 80, 'Other Safety Info: ' + data.supportRequired.generalSupport.otherSafetyInfo);
 	
 		//mobility and transport
-		var mobilityAndTransport = new Object();
-		mobilityAndTransport.height = data.supportRequired.mobilityAndTransport.height;
-		mobilityAndTransport.liftsAndEscalators = data.supportRequired.mobilityAndTransport.liftsAndEscalators;
-		mobilityAndTransport.mobilityAids = data.supportRequired.mobilityAndTransport.mobilityAids;
-		mobilityAndTransport.otherTravelSupport = data.supportRequired.mobilityAndTransport.otherTravelSupport;
-		mobilityAndTransport.publicTransport = data.supportRequired.mobilityAndTransport.publicTransport;
-		mobilityAndTransport.roadSafetySkills = data.supportRequired.mobilityAndTransport.roadSafetySkills;
-		mobilityAndTransport.travelPreferences = data.supportRequired.mobilityAndTransport.travelPreferences;
-		mobilityAndTransport.unevenSurfaces = data.supportRequired.mobilityAndTransport.unevenSurfaces;
+		doc.setFontType("bold");
+		doc.setFontSize(16);
+		doc.text(10, 90, 'Mobility and Transport');
+		doc.setFontType("normal");
+		doc.setFontSize(14);
+		doc.text(10, 95, 'Height: ' + data.supportRequired.mobilityAndTransport.height);
+		doc.text(10, 100, 'Lifts and Escalators: ' + data.supportRequired.mobilityAndTransport.liftsAndEscalators);
+		doc.text(10, 105, 'Mobility Aids: ' + data.supportRequired.mobilityAndTransport.mobilityAids);
+		doc.text(10, 110, 'Other Travel Support: ' + data.supportRequired.mobilityAndTransport.otherTravelSupport);
+		doc.text(10, 115, 'Public Transport: ' + data.supportRequired.mobilityAndTransport.publicTransport);
+		doc.text(10, 120, 'Road Safety Skills: ' + data.supportRequired.mobilityAndTransport.roadSafetySkills);
+		doc.text(10, 125, 'Travel Preferences: ' + data.supportRequired.mobilityAndTransport.travelPreferences);
+		doc.text(10, 130, 'Uneven Surfaces: ' + data.supportRequired.mobilityAndTransport.unevenSurfaces);
 		
 		//financial support
-		var financialSupport = new Object();
-		financialSupport.budgetBills = data.supportRequired.financialSupport.budgetBills; 
-		financialSupport.budgetConstraintGoal = data.supportRequired.financialSupport.budgetConstraintGoal;
-		financialSupport.budgetEmergency = data.supportRequired.financialSupport.budgetEmergency;
-		financialSupport.budgetExpend = data.supportRequired.financialSupport.budgetExpend;
-		financialSupport.budgetGroceries = data.supportRequired.financialSupport.budgetGroceries;
-		financialSupport.budgetHouse = data.supportRequired.financialSupport.budgetHouse;
-		financialSupport.budgetSupportNetwork = data.supportRequired.financialSupport.budgetSupportNetwork;
-		financialSupport.budgetTransport = data.supportRequired.financialSupport.budgetTransport;
-		financialSupport.budgetUtilities = data.supportRequired.financialSupport.budgetUtilities;
-		financialSupport.budgeting = data.supportRequired.financialSupport.budgeting;
-		financialSupport.financialAdmin = data.supportRequired.financialSupport.financialAdmin;
-		financialSupport.moneyHandlingSupport = data.supportRequired.financialSupport.moneyHandlingSupport;
-		financialSupport.otherRequirements = data.supportRequired.financialSupport.otherRequirements;
-		financialSupport.personalItemsSupport = data.supportRequired.financialSupport.personalItemsSupport;
+		doc.setFontType("bold");
+		doc.setFontSize(16);
+		doc.text(10, 140, 'Financial Support');
+		doc.setFontType("normal");
+		doc.setFontSize(14);
+		doc.text(10, 145, 'Budget Bills: ' + data.supportRequired.financialSupport.budgetBills); 
+		doc.text(10, 150, 'Budget Constraint Goal: ' + data.supportRequired.financialSupport.budgetConstraintGoal);
+		doc.text(10, 155, 'Budget Emergency: ' + data.supportRequired.financialSupport.budgetEmergency);
+		doc.text(10, 160, 'Budget Expenditure: ' + data.supportRequired.financialSupport.budgetExpend);
+		doc.text(10, 165, 'Budget Groceries: ' + data.supportRequired.financialSupport.budgetGroceries);
+		doc.text(10, 170, 'Budget House: ' + data.supportRequired.financialSupport.budgetHouse);
+		doc.text(10, 175, 'Budget Support Network: ' + data.supportRequired.financialSupport.budgetSupportNetwork);
+		doc.text(10, 180, 'Budget Transport: ' + data.supportRequired.financialSupport.budgetTransport);
+		doc.text(10, 185, 'Budget Utilities: ' + data.supportRequired.financialSupport.budgetUtilities);
+		doc.text(10, 190, 'Budgeting: ' + data.supportRequired.financialSupport.budgeting);
+		doc.text(10, 195, 'Financial Admin: ' + data.supportRequired.financialSupport.financialAdmin);
+		doc.text(10, 200, 'Money Handling Support: ' + data.supportRequired.financialSupport.moneyHandlingSupport);
+		doc.text(10, 205, 'Other Requirements: ' + data.supportRequired.financialSupport.otherRequirements);
+		doc.text(10, 210, 'Personal Items Support: ' + data.supportRequired.financialSupport.personalItemsSupport);
+		
+		doc.addPage(); //add new page
 		
 		//Daily activities
-		var dailyActivities = new Object();
-		dailyActivities.bathing = data.supportRequired.dailyActivities.bathing;
-		dailyActivities.bedTime = data.supportRequired.dailyActivities.bedTime;
-		dailyActivities.cleaning = data.supportRequired.dailyActivities.cleaning;
-		dailyActivities.cooking = data.supportRequired.dailyActivities.cooking;
-		dailyActivities.dressing = data.supportRequired.dailyActivities.dressing;
-		dailyActivities.friday = data.supportRequired.dailyActivities.friday;
-		dailyActivities.menstruation = data.supportRequired.dailyActivities.menstruation;
-		dailyActivities.monday = data.supportRequired.dailyActivities.monday;
-		dailyActivities.otherThings = data.supportRequired.dailyActivities.otherThings;
-		dailyActivities.routineAfternoon = data.supportRequired.dailyActivities.routineAfternoon;
-		dailyActivities.routineMealTime = data.supportRequired.dailyActivities.routineMealTime;
-		dailyActivities.routineMorning = data.supportRequired.dailyActivities.routineMorning;
-		dailyActivities.routineSleeping = data.supportRequired.dailyActivities.routineSleeping;
-		dailyActivities.routineWeekend = data.supportRequired.dailyActivities.routineWeekend;
-		dailyActivities.saturday = data.supportRequired.dailyActivities.saturday;
-		dailyActivities.sleeping = data.supportRequired.dailyActivities.sleeping;
-		dailyActivities.sunday = data.supportRequired.dailyActivities.sunday;
-		dailyActivities.thursday = data.supportRequired.dailyActivities.thursday;
-		dailyActivities.toileting = data.supportRequired.dailyActivities.toileting;
-		dailyActivities.tuesday = data.supportRequired.dailyActivities.tuesday;
-		dailyActivities.wednesday = data.supportRequired.dailyActivities.wednesday;
+		doc.setFontType("bold");
+		doc.setFontSize(16);
+		doc.text(10, 10, 'Daily Activities');
+		doc.setFontType("normal");
+		doc.setFontSize(14);
+		doc.text(10, 15, 'Bathing: ' + data.supportRequired.dailyActivities.bathing);
+		doc.text(10, 20, 'Bedtime: ' + data.supportRequired.dailyActivities.bedTime);
+		doc.text(10, 25, 'Cleaning: ' + data.supportRequired.dailyActivities.cleaning);
+		doc.text(10, 30, 'Cooking: ' + data.supportRequired.dailyActivities.cooking);
+		doc.text(10, 35, 'Dressing: ' + data.supportRequired.dailyActivities.dressing);
+		doc.text(10, 40, 'Friday: ' + data.supportRequired.dailyActivities.friday);
+		doc.text(10, 45, 'Menstruation: ' + data.supportRequired.dailyActivities.menstruation);
+		doc.text(10, 50, 'Monday: ' + data.supportRequired.dailyActivities.monday);
+		doc.text(10, 55, 'Other Things: ' + data.supportRequired.dailyActivities.otherThings);
+		doc.text(10, 60, 'Routine Afternoon: ' + data.supportRequired.dailyActivities.routineAfternoon);
+		doc.text(10, 65, 'Routine Mealtime: ' + data.supportRequired.dailyActivities.routineMealTime);
+		doc.text(10, 70, 'Routine Morning: ' + data.supportRequired.dailyActivities.routineMorning);
+		doc.text(10, 75, 'Routine Sleeping: ' + data.supportRequired.dailyActivities.routineSleeping);
+		doc.text(10, 80, 'Routine Weekend: ' + data.supportRequired.dailyActivities.routineWeekend);
+		doc.text(10, 85, 'Saturday: ' + data.supportRequired.dailyActivities.saturday);
+		doc.text(10, 90, 'Sleeping: ' + data.supportRequired.dailyActivities.sleeping);
+		doc.text(10, 95, 'Sunday: ' + data.supportRequired.dailyActivities.sunday);
+		doc.text(10, 100, 'Thursday: ' + data.supportRequired.dailyActivities.thursday);
+		doc.text(10, 105, 'Toileting: ' + data.supportRequired.dailyActivities.toileting);
+		doc.text(10, 110, 'Tuesday: ' + data.supportRequired.dailyActivities.tuesday);
+		doc.text(10, 115, 'Wednesday: ' + data.supportRequired.dailyActivities.wednesday);
 	
 		//relaxation
-		var relaxation = new Object();
-		relaxation.activities = data.supportRequired.relaxation.activities;
-		relaxation.movie = data.supportRequired.relaxation.movie;
-		relaxation.music = data.supportRequired.relaxation.music;
-		relaxation.otherActivities = data.supportRequired.relaxation.otherActivities;
-		relaxation.tVShow = data.supportRequired.relaxation.tVShow;
-		
-		var supportRequired = new Object();
-// 		supportRequired.generalSupport = generalSupport;
-// 		supportRequired.mobilityAndTransport = mobilityAndTransport;
-// 		supportRequired.financialSupport = financialSupport;
-// 		supportRequired.dailyActivities = dailyActivities;
-// 		supportRequired.relaxation = relaxation;
-		
-// 		//Add data to personal plan
-// 		personalPlan.clientDetails = clientDetails;
-// 		personalPlan.healthDetails = healthDetails;
-// 		personalPlan.communication = communication;
-// 		personalPlan.edcuationEmployment = educationEmployment;
-// 		personalPlan.planning = planning;
-// 		personalPlan.supportRequired = supportRequired;
-			
-			
+		doc.setFontType("bold");
+		doc.setFontSize(16);
+		doc.text(10, 125, 'Relaxation');
+		doc.setFontType("normal");
+		doc.setFontSize(14);
+		doc.text(10, 130, 'Activities: ' + data.supportRequired.relaxation.activities);
+		doc.text(10, 135, 'Movie: ' + data.supportRequired.relaxation.movie);
+		doc.text(10, 140, 'Music: ' + data.supportRequired.relaxation.music);
+		doc.text(10, 145, 'Other Activities: ' + data.supportRequired.relaxation.otherActivities);
+		doc.text(10, 150, 'TV Show: ' + data.supportRequired.relaxation.tVShow);
 			
 		//Prompt the user to save the pdf
-		doc.save($(el).attr("id") + '_personal_plan' + date);
+		doc.save($(el).attr("id") + '_personal_plan' + date + '.pdf');
 	});
 
 }
