@@ -41,8 +41,19 @@ public class PlanUtility {
 	/* DATABASE STORAGE */
 	public static boolean storeBean(
 			Object bean,
-			String clientid
+			String clientid,
+			String username,
+			String token
 			) {
+		
+		{
+			String role = DatabaseAccess.getRole(username, token);
+			if ( !Permissions.canUpdatePersonalPlan(role) ) {
+				System.out.println("A "+role.toUpperCase()+" cannot update/add a personal plan.");
+				return false;
+			}
+		}
+		//if ( )
 		
 		//System.out.println("About to check for bean class -" + bean.getClass().toString());
 		try {
