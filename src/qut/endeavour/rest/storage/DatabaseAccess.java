@@ -123,7 +123,7 @@ public class DatabaseAccess {
 				
 				//TODO refactor these
 				populateRoles();
-				populateContactTypes();
+				//populateContactTypes();
 				populatePeriods();
 			}
 			
@@ -192,26 +192,26 @@ public class DatabaseAccess {
 	}
 	
 	
-	private static void populateContactTypes() throws SQLException {
-		System.out.println("DatabaseAccess: Keep valid contact types stored for contact type id referencing.");
-		
-		// make new map
-		cTypeByMap = new HashMap<String,ContactTypeRecord>();
-		
-		String sql = "SELECT * from `client_contact_type` order by contact_type_id";
-
-		PreparedStatement ps = con.prepareStatement(sql);
-		ResultSet results = ps.executeQuery();
-		
-		while (results.next()) {
-			Integer contactTypeId = results.getInt("contact_type_id");
-			String typeName = results.getString("contact_type_name");
-			String typeDescription = results.getString("description");
-			ContactTypeRecord contactType = new ContactTypeRecord(contactTypeId,typeName,typeDescription);
-			cTypeByMap.put(typeName, contactType );
-			cTypeByMap.put(contactTypeId.toString(), contactType);
-		}
-	}
+//	private static void populateContactTypes() throws SQLException {
+//		System.out.println("DatabaseAccess: Keep valid contact types stored for contact type id referencing.");
+//		
+//		// make new map
+//		cTypeByMap = new HashMap<String,ContactTypeRecord>();
+//		
+//		//String sql = "SELECT * from `client_contact_type` order by contact_type_id";
+//
+//		PreparedStatement ps = con.prepareStatement(sql);
+//		ResultSet results = ps.executeQuery();
+//		
+//		while (results.next()) {
+//			Integer contactTypeId = results.getInt("contact_type_id");
+//			String typeName = results.getString("contact_type_name");
+//			String typeDescription = results.getString("description");
+//			ContactTypeRecord contactType = new ContactTypeRecord(contactTypeId,typeName,typeDescription);
+//			cTypeByMap.put(typeName, contactType );
+//			cTypeByMap.put(contactTypeId.toString(), contactType);
+//		}
+//	}
 	
 	
 	private static void populatePeriods() throws SQLException {
@@ -590,6 +590,14 @@ public class DatabaseAccess {
 			String tableName) {
 		if (!makeConnection()) return null;
 		if (!validateUser(username, token)) return null;//throw new NotFoundException("Not using a valid session");
+		return getUserRelatedDetails( fieldNames, tableName, clientid );
+	}
+	
+	public static List<Map<String, Object>> getTableContents(
+			String clientid,
+			List<String> fieldNames,
+			String tableName) {
+		if (!makeConnection()) throw new DMSClientErrorException("Cannot access database.");
 		return getUserRelatedDetails( fieldNames, tableName, clientid );
 	}
 

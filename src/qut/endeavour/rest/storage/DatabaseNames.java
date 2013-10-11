@@ -310,8 +310,8 @@ public class DatabaseNames {
 		add("b*education");
 		add("b*learn_life");
 		add("b*post_school");
-		add("d*meeting_d");
-		add("d*prelim_meeting_d");
+		add("d*meeting_date");
+		add("d*prelim_meeting_date");
 		add("s*discussion_record");
 		add("b*participation");
 		add("b*info_completed");

@@ -48,7 +48,7 @@ public class PlanUtility {
 		
 		{
 			String role = DatabaseAccess.getRole(username, token);
-			if ( !Permissions.canUpdatePersonalPlan(role) ) {
+			if ( !Permissions.canPostPersonalPlan(role) ) {
 				System.out.println("A "+role.toUpperCase()+" cannot update/add a personal plan.");
 				return false;
 			}

@@ -1,7 +1,19 @@
 package qut.endeavour.rest.utility;
 
 public class Permissions {
-	public static boolean canUpdatePersonalPlan( String role ) {
+	public static boolean canPostPersonalPlan( String role ) {
+		String[] allowed = {"SW","R&DO","SDIM","SOM"};
+		return testRole( allowed, role );
+		
+	}
+	
+	public static boolean canGetMeeting( String role ) {
+		String[] allowed = {"SW","R&DO","SDIM","SOM"};
+		return testRole( allowed, role );
+		
+	}
+	
+	public static boolean canPostMeeting( String role ) {
 		String[] allowed = {"SW","R&DO","SDIM","SOM"};
 		return testRole( allowed, role );
 		
