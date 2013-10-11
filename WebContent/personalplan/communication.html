@@ -57,30 +57,32 @@
 			comsAndDecisionMaking.supportMeBy = $("#supportMeByT").val();
 			comsAndDecisionMaking.supportPeople = $("#supportPeopleT").val();
 			comsAndDecisionMaking.youCommunicate = $("#youCommunicateT").val();
-
-			
 			
 			var communication = new Object();
-			communication.comsAndDecisionMaking = comsAndDecisionMaking;
+			
+			communication.comsAndDecisionMaking=comsAndDecisionMaking;
+			
 			
 			var jsonText = JSON.stringify(communication);
 			
 			$.ajax({
-				url:'./rest/personalplan/communication/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/' + $.cookie("client_id"),
+				url:"./rest/personalplan/communication/" + $.cookie('user_id') + "/" + $.cookie('auth_token') +"/" + $.cookie('client_id'),
 				type: 'POST',
-				contentType: 'application/json; charset=UTF-8',
+				contentType: 'application/json',
 				dataType: 'json',
 				data: jsonText,
-				success: function(jqXHR, textStatus) {
-					alert("communication details saved!");
-					nextNav('communicationD');
+				success: function(data, textStatus, jqXHR) {
+					if(data.verified=="failure") {
+						alert("failure");
+					}else {
+						alert("communication details saved!");
+						nextNav('communicationD');
+					}				
 				},
 				error: function(jqXHR, textStatus) {
 					alert("error saving communication details");
 				}
 			});
-		});
-
-		
+		});	
 	});
 </script>

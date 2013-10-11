@@ -5,7 +5,7 @@
 	<div id='holidayD'>
 		<h4>Holiday Details</h4>
 		<label for='holidayT' class='toggle'>Holiday (Where I want to go/what I want to do): </label>
-		<div id='holidayD'>
+		<div id='holidayDivhhahah'>
 			<textarea id='holidayT' name='holidayT' rows="3" cols="50"></textarea>
 		</div>
 		<br />
@@ -28,9 +28,9 @@
 		</div>
 		<br />
 
-		<label for='detailsT' class='toggle'>Details and other information: </label>
-		<div id='detailsD'>
-			<textarea id='detailsT' name='detailsT' rows="3" cols="50"></textarea>
+		<label for='holidayDetailsT' class='toggle'>Details and other information: </label>
+		<div id='holidayDetailsD'>
+			<textarea id='holidayDetailsT' name='holidayDetailsT' rows="3" cols="50"></textarea>
 		</div>
 		<br />
 
@@ -84,28 +84,16 @@
 
 
 <script type='text/javascript'>
-	var i=0;
-
-	function Duplicate(divName) {
-		//$("#"+divName).append($("#" + divName + "Template").children().clone());
-		var newaddress= $("#" + divName + "Template").eq(0).clone();
-		newaddress.find('textarea').each(function() {
-		    this.id= this.id.replace('[0]', '['+i+']');
-		});
-		$('#' + divName).append(newaddress);
-		i++;
-	};
-
 	$(document).ready(function() {
 		//page load
 
 		//click on the previous button
-		$("#PageNavPrev").click(function(){
+		$("#PageNavPrevPlan").click(function(){
 			PageNavigation('prev', 'planning', this);
 		});
 
 		//click on the next button
-		$("#PageNavNext").click(function(){
+		$("#PageNavNextPlan").click(function(){
 			PageNavigation('next', 'planning', this);
 		});
 

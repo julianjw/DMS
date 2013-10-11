@@ -30,10 +30,10 @@
 <script>
 function PageNavigation(dir, nav, el) {
 	var clientPageDivNav = new Array("detailsD", "alertInfoD", "livingD", "formalD");
-	var eduPageDivNav = new Array("educationD", "employmentD");
-	var healthPageDivNav = new Array("healthD", "hManagementD", "dietD");
+	var eduPageDivNav = new Array("educationD2", "employmentD");
+	var healthPageDivNav = new Array("healthD2", "hManagementD", "dietD");
 	var planPageDivNav = new Array("holidayD", "goalsDiv");
-	var supportPageDivNav = new Array("supportD", "mobilityD", "financialD", "activitiesD", "relaxationD");
+	var supportPageDivNav = new Array("supportReqD", "mobilityD", "financialD", "activitiesD", "relaxationD");
 	
 	switch(nav) {
 		case "client":
@@ -59,7 +59,6 @@ function PageNavigation(dir, nav, el) {
 			//perform page navigation
 			if(dir=="next") {
 				//show the next div and previous button
-				alert("showing element: " + navArr[i+1]);
 				$("#" + navArr[i+1]).show();
 				$(el).prev().show();
 				//show the submit button and hide next button if we are on the last page
@@ -598,21 +597,32 @@ function pullData(page) {
 		
 	
 	case "planningD":
-		$("#holidayT").val(d.holidayPlan.holidayType);
-		$("#stratT").val(d.holidayPlan.strategies);
-		$("#howT").val(d.holidayPlan.howWhoWhere);
-		$("#timeframesT").val(d.holidayPlan.timeframes);
-		$("#detailsT").val(d.holidayPlan.detailsAndInfo);
-		$("#resourcesT").val(d.holidayPlan.resourcesRequired);
-		
-		$("#myGoalT").val(d.goalPlan.goalToAchieve);
-		$("#goalStratT").val(d.goalPlan.strategies);
-		$("#goalHowT").val(d.goalPlan.howWhoWhere);
-		$("#goalTimesframesT").val(d.goalPlan.timeframes);
-		$("#goalOutcomeT").val(d.goalPlan.outcomes);
-		$("#goalResourcesT").val(d.goalPlan.resourcesRequired);
+		$.ajax({
+			url: "./rest/personalplan/planning/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + $.cookie('client_id'),
+			type:"get",
+			contentType: "application/json",
+			success: function(d) {		
+				$("#holidayT").val(d.holidayPlan.holidayType);
+				$("#stratT").val(d.holidayPlan.strategies);
+				$("#howT").val(d.holidayPlan.howWhoWhere);
+				$("#timeframesT").val(d.holidayPlan.timeframes);
+				$("#holidayDetailsT").val(d.holidayPlan.detailsAndInfo);
+				$("#resourcesT").val(d.holidayPlan.resourcesRequired);				
+				
+				$("#myGoalT").val(d.goalPlan.goalToAchieve);
+				$("#goalStratT").val(d.goalPlan.strategies);
+				$("#goalHowT").val(d.goalPlan.howWhoWhere);
+				$("#goalTimeframesT").val(d.goalPlan.timeframes);
+				$("#goalOutcomeT").val(d.goalPlan.outcomes);
+				$("#goalResourcesT").val(d.goalPlan.resourcesRequired);
+				
+			},
+			error: function(xhr) {
+				// do something to handle error
+				
+			}
+		});
 		break;
-		
 	};
 }
 
@@ -621,7 +631,7 @@ function pullData(page) {
 
 function nextNav(current) {
 	var nav = new Array("lastD", "searchD", "clientD", "healthD", "supportD", "communicationD", "educationD", "planningD");	
-	for(var i=0; i<nav.length-1; i++) {		
+	for(var i=0; i<nav.length; i++) {		
 		if(nav[i]==current) {
 			$("#"+nav[i]).hide();
 			pullData(nav[i+1]);
@@ -639,15 +649,16 @@ $(document).ready(function(){
 	$(".prevButton").hide();
 	
 	
-	var navs = new Array("searchD", "clientD", "healthD", "supportD", "communicationD", "educationD", "planningD");	
+	var navs = new Array("lastD", "searchD", "clientD", "healthD", "supportD", "communicationD", "educationD", "planningD");	
 	//bind the navigation clicks
 	$('li.pageNav').bind('click', function(){
-		for (var i=0; i<navs.length-1;i++) {
+		for (var i=0; i<navs.length;i++) {
 			if (navs[i] != ($(this).attr('id')+"D")) {
 				$("#"+navs[i]).hide();
 			} else {
 				pullData(navs[i]);
 				$("#"+navs[i]).show();
+				$("#"+navs[i]).css("display", "block");					//change css too
 			}
 		}
 	});
