@@ -21,7 +21,6 @@ public class LivingArrangements {
 	public LivingArrangements() {}
 	
 	/**
-	 * 
 	 * @param service
 	 * @param houseNumber
 	 * @param street

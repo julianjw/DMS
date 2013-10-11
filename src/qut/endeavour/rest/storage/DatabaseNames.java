@@ -41,9 +41,9 @@ public class DatabaseNames {
 	public final static List<String> FLDS_PERSONAL_DETAILS = new ArrayList<String>() {{
 		add("s*nickname");
 		add("d*dob");
+		add("s*email");
 		add("s*phoneno");
 		add("s*mobileno");
-		add("s*email");
 		add("d*creation_date");
 		add("d*review_date");
 	//	add("s*photo");
