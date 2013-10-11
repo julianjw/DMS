@@ -59,13 +59,17 @@ function selectPP(el) {
 		
 		//Personal plan title centered
 		doc.setFontType("bold");
-		doc.text(90, 10, 'Personal Plan');
+		doc.setFontSize(22);
+		doc.text(85, 10, 'Personal Plan');
 		
 		/* -------------------------------- CLIENT DETAILS --------------------------------------*/
+		doc.setFontSize(18);
 		doc.text(10, 15, 'Client Details');
 		//Personal details
+		doc.setFontSize(16);
 		doc.text(10, 20, 'Personal Details');
 		doc.setFontType("normal"); //set font type back to normal
+		doc.setFontSize(14);
 		doc.text(10, 25, 'Creation Date: ' + data.clientDetails.personalDetails.creationDate);
 		doc.text(10, 30, 'Preferred Name: ' + data.clientDetails.personalDetails.preferredName);
 		doc.text(10, 35, 'Review Date: ' + data.clientDetails.personalDetails.reviewDate);
@@ -75,8 +79,10 @@ function selectPP(el) {
 		doc.text(10, 55, 'Mobile Number: ' + data.clientDetails.personalDetails.mobileNumber);
 		//Alert information
 		doc.setFontType("bold");
+		doc.setFontSize(16);
 		doc.text(10, 65, 'Alert Information');
 		doc.setFontType("normal");
+		doc.setFontSize(14);
 		doc.text(10, 70, 'Allergies: ' +  data.clientDetails.alertInformation.allergies);
 		doc.text(10, 75, 'Complex Support Needs: ' +  data.clientDetails.alertInformation.complexSupportNeeds);
 		doc.text(10, 80, 'Eating Alerts: ' +  data.clientDetails.alertInformation.eatingAlerts);
@@ -89,8 +95,10 @@ function selectPP(el) {
 		
 		//Formal orders
 		doc.setFontType("bold");
+		doc.setFontSize(16);
 		doc.text(10, 120, 'Formal Orders');
 		doc.setFontType("normal"); 
+		doc.setFontSize(14);
 		doc.text(10, 125, 'Appointee: ' + data.clientDetails.formalOrders.appointee);
 		doc.text(10, 130, 'Commence Date: ' + data.clientDetails.formalOrders.commenceDate);
 		doc.text(10, 135, 'Contact Arrangement: ' + data.clientDetails.formalOrders.contactArrangement);
@@ -107,152 +115,92 @@ function selectPP(el) {
 		
 		//Living arrangements
 		doc.setFontType("bold");
+		doc.setFontSize(16);
 		doc.text(10, 195, 'Living Arrangements');
-		doc.setFontType("normal"); 
-		doc.text(10, 205, 'Address: ');
-		doc.text(33, 205, data.clientDetails.livingArangements.houseNumber + ' '
+		doc.setFontType("normal");
+		doc.setFontSize(14);
+		doc.text(10, 200, 'Address: ');
+		doc.text(31, 200, data.clientDetails.livingArangements.houseNumber + ' '
 						+ data.clientDetails.livingArangements.street);
-		doc.text(33, 210, data.clientDetails.livingArangements.suburb);
-		doc.text(33, 215, data.clientDetails.livingArangements.city + ', '
+		doc.text(31, 205, data.clientDetails.livingArangements.suburb);
+		doc.text(31, 210, data.clientDetails.livingArangements.city + ', '
 						+ data.clientDetails.livingArangements.postCode);		
-		doc.text(10, 220, 'Service: ' + data.clientDetails.livingArangements.service);
+		doc.text(10, 215, 'Service: ' + data.clientDetails.livingArangements.service);
 
 		
-		doc.addPage();
+		doc.addPage(); //add new page
 		
 		/* -------------------------------- HEALTH DETAILS --------------------------------------*/
+		doc.setFontSize(18);
 		doc.setFontType("bold");
 		doc.text(10, 10, 'Health Details');
 		//Dietary requirements
+		doc.setFontSize(16);
 		doc.text(10, 15, 'Dietary Requirements');
 		doc.setFontType("normal");
+		doc.setFontSize(14);
+		doc.text(10, 20, 'Assessment Done: ' + data.healthDetails.dietaryRequirements.assessmentDone);
+		doc.text(10, 25, 'Avoid Food: ' + data.healthDetails.dietaryRequirements.avoidFood);
+		doc.text(10, 30, 'Breakfast: ' + data.healthDetails.dietaryRequirements.breakfast);
+		doc.text(10, 35, 'Cannot Eat: ' + data.healthDetails.dietaryRequirements.cannotEat);
+		doc.text(10, 40, 'Dinner: ' + data.healthDetails.dietaryRequirements.dinner);
+		doc.text(10, 45, 'Dislikes: ' + data.healthDetails.dietaryRequirements.dislikes);
+		doc.text(10, 50, 'Eating Support: ' + data.healthDetails.dietaryRequirements.eatingSupport);
+		doc.text(10, 55, 'Location: ' + data.healthDetails.dietaryRequirements.location);
+		doc.text(10, 60, 'Lunch: ' + data.healthDetails.dietaryRequirements.lunch);
+		doc.text(10, 65, 'Other Information: ' + data.healthDetails.dietaryRequirements.otherInfo);
+		doc.text(10, 70, 'Snacks: ' + data.healthDetails.dietaryRequirements.snacks);
+		doc.text(10, 75, 'Drinking Support: ' + data.healthDetails.dietaryRequirements.supportDrinking);
+		doc.text(10, 80, 'Usual Diet: ' + data.healthDetails.dietaryRequirements.usualDiet);
 		
 		//Health information
 		doc.setFontType("bold");
-		doc.text(10, 25, 'Health Information');
+		doc.setFontSize(16);
+		doc.text(10, 90, 'Health Information');
 		doc.setFontType("normal");
+		doc.setFontSize(14);
+		doc.text(10, 95, 'Additional Information: ' +  data.healthDetails.healthInformation.additionalInfo);
+		doc.text(10, 100, 'Assistance With Medication: ' +  data.healthDetails.healthInformation.assistanceWithMedication);
+		doc.text(10, 105, 'Conditions: ' +  data.healthDetails.healthInformation.conditions);
+		doc.text(10, 110, 'History and Information: ' +  data.healthDetails.healthInformation.historyAndInfo);
+		doc.text(10, 115, 'Self Medicate: ' +  data.healthDetails.healthInformation.selfMedicate);
+		doc.text(10, 120, 'Take Medication: ' +  data.healthDetails.healthInformation.takeMedication);
+		
 		
 		//Health management
 		doc.setFontType("bold");
-		doc.text(10, 225, 'Health Management');
+		doc.setFontSize(16);
+		doc.text(10, 130, 'Health Management');
 		doc.setFontType("normal");
+		doc.setFontSize(14);
+		doc.text(10, 135, 'Duration: ' +  data.healthDetails.healthManagement.duration);
+		doc.text(10, 140, 'Frequency: ' +  data.healthDetails.healthManagement.frequency);
+		doc.text(10, 145, 'Medical Condition: ' +  data.healthDetails.healthManagement.medicalCondition);
+		doc.text(10, 150, 'Precurser: ' +  data.healthDetails.healthManagement.precurser);
+		doc.text(10, 155, 'Seziure Brief: ' +  data.healthDetails.healthManagement.seizureBrief);
+		doc.text(10, 160, 'Seizure Non-Brief: ' +  data.healthDetails.healthManagement.seizureNonBrief);
+		doc.text(10, 165, 'Staff Response: ' +  data.healthDetails.healthManagement.staffResponse);
+		doc.text(10, 170, 'Symptom: ' +  data.healthDetails.healthManagement.symptom);
+		doc.text(10, 175, 'Symptom Avoidance: ' +  data.healthDetails.healthManagement.symptomAvoidance);
 		
 		
 		/* -------------------------------- COMMUNICATION --------------------------------------*/
 		doc.setFontType("bold");
-		doc.text(10, 240, 'Communication');
+		doc.setFontSize(18);
+		doc.text(10, 185, 'Communication');
 		doc.setFontType("normal");
+		doc.setFontSize(14);
+		doc.text(10, 190, 'Dislikes: ' + data.communication.comsAndDecisionMaking.dislikes);
+		doc.text(10, 195, 'Good Topics: ' + data.communication.comsAndDecisionMaking.goodTopics);
+		doc.text(10, 200, 'I Communicate: ' + data.communication.comsAndDecisionMaking.iCommunicate);
+		doc.text(10, 205, 'Independant Decisions: ' + data.communication.comsAndDecisionMaking.independantDecisions);
+		doc.text(10, 210, 'Likes: ' + data.communication.comsAndDecisionMaking.likes);
+		doc.text(10, 215, 'Support Me By: ' + data.communication.comsAndDecisionMaking.supportMeBy);
+		doc.text(10, 220, 'Support People: ' + data.communication.comsAndDecisionMaking.supportPeople);
+		doc.text(10, 225, 'You Communicate: ' + data.communication.comsAndDecisionMaking.youCommunicate);
 		
-		
-		
-		
-
-		
-		
-		
-		
-		
-		
-		
-		
-		/* ------------------------------ CLIENT DETAILS --------------------------------------- */
-// 			//Personal details
-// 			var personalDetails = new Object();		
-// 			personalDetails.creationDate = data.clientDetails.personalDetails.creationDate;
-// 			personalDetails.preferredName = data.clientDetails.personalDetails.preferredName;
-// 			personalDetails.reviewDate = data.clientDetails.personalDetails.reviewDate;
-// 			personalDetails.dob = data.clientDetails.personalDetails.dob;
-// 			personalDetails.email = data.clientDetails.personalDetails.email;
-// 			personalDetails.phoneNumber = data.clientDetails.personalDetails.phoneNumber;
-// 			personalDetails.mobileNumber = data.clientDetails.personalDetails.mobileNumber;
-		
-		//Alert information
-		var alertInformation = new Object();
-
-		
-		//Formal orders
-		var formalOrders = new Object();
-
-		
-		//Living arrangements
-		var livingArangements = new Object();
-
-		
-// 		//Add data to the clientdetails object
-// 		var clientDetails = new Object();
-// 		clientDetails.personalDetails = personalDetails;
-// 		clientDetails.alertInformation = alertInformation;
-// 		clientDetails.formalOrders = formalOrders;
-// 		clientDetails.livingArangements = livingArangements;
-		
-		/* ----------------------------- HEALTH DETAILS --------------------------------------- */
-		//Dietary requirements
-		var dietaryRequirements = new Object();
-		dietaryRequirements.assessmentDone = data.healthDetails.dietaryRequirements.assessmentDone;
-		dietaryRequirements.avoidFood = data.healthDetails.dietaryRequirements.avoidFood;
-		dietaryRequirements.breakfast = data.healthDetails.dietaryRequirements.breakfast;
-		dietaryRequirements.cannotEat = data.healthDetails.dietaryRequirements.cannotEat;
-		dietaryRequirements.dinner = data.healthDetails.dietaryRequirements.dinner;
-		dietaryRequirements.dislikes = data.healthDetails.dietaryRequirements.dislikes;
-		dietaryRequirements.eatingSupport = data.healthDetails.dietaryRequirements.eatingSupport;
-		dietaryRequirements.location = data.healthDetails.dietaryRequirements.location;
-		dietaryRequirements.lunch = data.healthDetails.dietaryRequirements.lunch;
-		dietaryRequirements.otherInfo = data.healthDetails.dietaryRequirements.otherInfo;
-		dietaryRequirements.snacks = data.healthDetails.dietaryRequirements.snacks;
-		dietaryRequirements.supportDrinking = data.healthDetails.dietaryRequirements.supportDrinking;
-		dietaryRequirements.usualDiet = data.healthDetails.dietaryRequirements.usualDiet;
-		
-		//Health information
-		var healthInformation = new Object();
-		healthInformation.additionalInfo = data.healthDetails.healthInformation.additionalInfo;
-		healthInformation.assistanceWithMedication = data.healthDetails.healthInformation.assistanceWithMedication;
-		healthInformation.conditions = data.healthDetails.healthInformation.conditions;
-		healthInformation.historyAndInfo = data.healthDetails.healthInformation.historyAndInfo;
-		healthInformation.selfMedicate = data.healthDetails.healthInformation.selfMedicate;
-		healthInformation.takeMedication = data.healthDetails.healthInformation.takeMedication;
-		
-		//Health management
-		var healthManagement = new Object();
-		healthManagement.duration = data.healthDetails.healthManagement.duration;
-		healthManagement.frequency = data.healthDetails.healthManagement.frequency;
-		healthManagement.frequencyPeriod = data.healthDetails.healthManagement.frequencyPeriod;
-		healthManagement.medicalCondition = data.healthDetails.healthManagement.medicalCondition;
-		healthManagement.precurser = data.healthDetails.healthManagement.precurser;
-		healthManagement.seizureBrief = data.healthDetails.healthManagement.seizureBrief;
-		healthManagement.seizureNonBrief = data.healthDetails.healthManagement.seizureNonBrief;
-		healthManagement.staffRespsonse = data.healthDetails.healthManagement.staffResponse;
-		healthManagement.symptom = data.healthDetails.healthManagement.symptom;
-		healthManagement.symptomAvoidance = data.healthDetails.healthManagement.symptomAvoidance;
+		doc.addPage(); //add new page
 				
-		//Add data to the health details object
-		var healthDetails = new Object();
-		healthDetails.dietaryRequirements = dietaryRequirements;
-		healthDetails.healthInformation = healthInformation;
-		healthDetails.healthManagement = healthManagement;
-		
-		/* ---------------------------- COMMUNICATION --------------------------------------- */
-		//Coms and decision making
-		var comsAndDecisionMaking = new Object();
-// 			comsAndDecisionMaking.dislikes = data.communication.comsAndDecisionMaking.dislikes;
-// 			//do not talk about object
-// 			var doNotTalkAbout = new Object();
-// 			doNotTalkAbout.topic = data.communication.comsAndDecisionMaking.doNotTalkAbout.topic;
-// 			doNotTalkAbout.translation = data.communication.comsAndDecisionMaking.doNotTalkAbout.translation;
-// 			//add 
-// 			comsAndDecisionMaking.doNotTalkAbout = doNotTalkAbout;
-		
-		comsAndDecisionMaking.dislikes = data.communication.comsAndDecisionMaking.dislikes;
-		comsAndDecisionMaking.goodTopics = data.communication.comsAndDecisionMaking.goodTopics;
-		comsAndDecisionMaking.iCommunicate = data.communication.comsAndDecisionMaking.iCommunicate;
-		comsAndDecisionMaking.independantDecisions = data.communication.comsAndDecisionMaking.independantDecisions;
-		comsAndDecisionMaking.likes = data.communication.comsAndDecisionMaking.likes;
-		comsAndDecisionMaking.supportMeBy = data.communication.comsAndDecisionMaking.supportMeBy;
-		comsAndDecisionMaking.supportPeople = data.communication.comsAndDecisionMaking.supportPeople;
-		comsAndDecisionMaking.youCommunicate = data.communication.comsAndDecisionMaking.youCommunicate;
-		
-		var communication = new Object();
-		communication.comsAndDecisionMaking = comsAndDecisionMaking;
-		
 		/* ------------------------- EDUCATION EMPLOYMENT --------------------------------------- */
 		//Education
 		var education = new Object();
@@ -385,11 +333,11 @@ function selectPP(el) {
 		relaxation.tVShow = data.supportRequired.relaxation.tVShow;
 		
 		var supportRequired = new Object();
-		supportRequired.generalSupport = generalSupport;
-		supportRequired.mobilityAndTransport = mobilityAndTransport;
-		supportRequired.financialSupport = financialSupport;
-		supportRequired.dailyActivities = dailyActivities;
-		supportRequired.relaxation = relaxation;
+// 		supportRequired.generalSupport = generalSupport;
+// 		supportRequired.mobilityAndTransport = mobilityAndTransport;
+// 		supportRequired.financialSupport = financialSupport;
+// 		supportRequired.dailyActivities = dailyActivities;
+// 		supportRequired.relaxation = relaxation;
 		
 // 		//Add data to personal plan
 // 		personalPlan.clientDetails = clientDetails;
