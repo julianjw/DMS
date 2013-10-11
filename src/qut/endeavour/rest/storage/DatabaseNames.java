@@ -84,8 +84,8 @@ public class DatabaseNames {
 	public final static String TBL_LIVING_ARRANGEMENTS = "client_living_arrangements";
 	public final static List<String> FLDS_LIVING_ARRANGEMENTS = new ArrayList<String>() {{
 		add("s*service");
-		add("s*houseno");
 		add("s*street");
+		add("s*houseno");
 		add("s*suburb");
 		add("i*post_code");
 		add("s*city");
