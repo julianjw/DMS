@@ -141,6 +141,7 @@ public class PlanResource {
 			) {
 		
 		
+		
 		System.out.println("Writing: Personal Plan");
 		if ( PlanUtility.storeBean(username, token, arg, clientid) ) return new Verification(Verification.Verified.SUCCESS);
 		return new Verification(Verification.Verified.FAILURE);

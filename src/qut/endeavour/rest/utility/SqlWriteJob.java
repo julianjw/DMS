@@ -130,13 +130,11 @@ public class SqlWriteJob {
 			) throws SQLException {
 		
 		boolean endKey = keyName != null; // do we want the key last?
-		System.out.println("Writing an update? "+endKey);
-		
-		//int total = row.size();
+		int total = row.size();
 		
 		int i = 0;
 		
-		System.out.println("Putting values in new query.");
+		System.out.println("\nPutting values in new query.");
 		
 		for ( Entry<String, Object> field : row.entrySet() ) {
 			char type = field.getKey().charAt(0);
@@ -149,15 +147,13 @@ public class SqlWriteJob {
 			}
 			
 			i++;
-			System.out.println(field.getKey());
+			
 			ps = insertData( ps, type, data, i) ;
 			
 		}
 		
-		
 		if ( endKey ) {
-			i++;
-			ps = insertData( ps, keyName.charAt(0), row.get(keyName), i);
+			ps = insertData( ps, keyName.charAt(0), row.get(keyName), total);
 		}
 		
 		return ps;
@@ -165,14 +161,6 @@ public class SqlWriteJob {
 
 
 	private PreparedStatement insertData(PreparedStatement ps, char type, Object data, int i) throws SQLException {
-		
-		if ( data == null ) {
-			//System.out.println("Null data at position : " + i);
-			ps.setNull(i, java.sql.Types.NULL);
-			return ps;
-		}
-		
-		System.out.println("-->"+data.toString());
 		
 		switch (type) {
 			case STRING:
@@ -196,4 +184,5 @@ public class SqlWriteJob {
 		}
 		return ps;
 	}
+	
 }
