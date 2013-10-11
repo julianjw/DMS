@@ -1,6 +1,9 @@
 package qut.endeavour.rest.factory;
 
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -9,17 +12,46 @@ import qut.endeavour.rest.bean.meeting.ScheduledMeeting;
 import qut.endeavour.rest.bean.meeting.UpcomingMeeting;
 import qut.endeavour.rest.bean.plan.educationemployment.Education;
 import qut.endeavour.rest.exception.DMSClientErrorException;
+import qut.endeavour.rest.exception.DMSException;
 import qut.endeavour.rest.storage.DatabaseAccess;
 import qut.endeavour.rest.storage.DatabaseNames;
 import qut.endeavour.rest.utility.Permissions;
 
 public class MeetingFactory {
 
-	public static List<UpcomingMeeting> createUpcomingMeetings(String userId,
-			String token) {
-
-
-		return null;
+	public static List<UpcomingMeeting> createUpcomingMeetings(String username,
+			String token)  {
+		
+		String userRole = DatabaseAccess.getRole(username, token);
+		if (!Permissions.canGetUpcomingMeetings( userRole) )  throw new DMSClientErrorException("User with role " + userRole.toUpperCase() + " cannot see upcoming meetings.");
+		
+		List<UpcomingMeeting> upcomingMeetings = new ArrayList<UpcomingMeeting>();
+		
+		//TODO Get rid of hard-coding	
+		String sql = "SELECT ui.name, ui.username, sm.meeting_date FROM  `scheduled_meeting` sm NATURAL JOIN  `user_info` ui ORDER BY sm.meeting_date DESC;";
+		
+		try {
+			PreparedStatement ps = DatabaseAccess.createPreparedStatement(sql);
+			ResultSet results = ps.executeQuery();
+			
+			while ( results.next() ) {
+				UpcomingMeeting m = new UpcomingMeeting();
+				
+				m.setrName(results.getString(1));
+				m.setUsername(results.getString(2));
+				m.setDate(results.getDate(3).toString());
+				
+				upcomingMeetings.add(m);
+			}
+		} catch ( SQLException se ) {
+			se.printStackTrace();
+			throw new DMSClientErrorException("Error getting meetings from database");
+		} catch ( DMSException de ) {
+			de.printStackTrace();
+			throw new DMSClientErrorException("Error getting meetings from database");
+		}
+		
+		return upcomingMeetings;
 	}
 
 	/*

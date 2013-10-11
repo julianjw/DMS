@@ -67,19 +67,19 @@ public class MeetingsResource {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/upcoming/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}")
+	@Path("/allmeetings/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}")
 	public List<UpcomingMeeting> getJSONUpcomingMeetings(
 			@PathParam("username") String username,
 			@PathParam("token") String token
 			) {
 		
 		// sanity checks
-		if( username == null ) throw new DMSClientErrorException("No user_id supplied");
-		if( username.length() < 1 ) throw new DMSClientErrorException("No user_id supplied");
+		if( username == null ) throw new DMSClientErrorException("No username supplied");
+		if( username.length() < 1 ) throw new DMSClientErrorException("No username supplied");
 		if( token == null ) throw new DMSClientErrorException("No token supplied");
 		if( token.length() < 1 ) throw new DMSClientErrorException("No token supplied");
 
-		System.out.println("Getting upcoming meeting details");
+		System.out.println("Getting upcoming meeting details.");
 		
 		return MeetingFactory.createUpcomingMeetings(username, token);
 	}
