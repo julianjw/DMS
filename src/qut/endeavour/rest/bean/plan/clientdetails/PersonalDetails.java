@@ -30,9 +30,14 @@ public class PersonalDetails {
 	
 	public PersonalDetails() {}
 
-	public PersonalDetails(String preferredName,
-			String dob, String email, String phoneNumber,
-			String mobileNumber, String creationDate, String reviewDate
+	public PersonalDetails(
+			String preferredName,
+			String dob,
+			String phoneNumber,
+			String mobileNumber,
+			String email,
+			String creationDate,
+			String reviewDate
 			) {
 		this.preferredName = preferredName;
 		this.dob = dob;

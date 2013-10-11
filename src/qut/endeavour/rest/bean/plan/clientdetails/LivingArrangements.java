@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class LivingArrangements {
+	
 	private String service;
-
 	private String houseNumber;
 	private String street;
 	private String suburb;
@@ -32,8 +32,13 @@ public class LivingArrangements {
 	 * @param sickContact
 	 * @param importantPerson
 	 */
-	public LivingArrangements(String service, String houseNumber,
-			String street, String suburb, int postCode, String city,
+	public LivingArrangements(
+			String service,
+			String street,
+			String houseNumber,
+			String suburb,
+			int postCode,
+			String city,
 			List<ContactDetails> familyMembers,
 			List<ContactDetails> sickContact,
 			List<ContactDetails> importantPerson
