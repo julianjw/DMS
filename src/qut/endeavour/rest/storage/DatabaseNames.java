@@ -229,8 +229,7 @@ public class DatabaseNames {
 	public final static String TBL_SUPPORT_SERVICES = "support_services";
 	public final static List<String> FLDS_SUPPORT_SERVICES = new ArrayList<String>() {{
 		add("s*service_name");
-		add("s*service_description");
-		add("a*service_id");
+//		add("s*service_description");
 	}};
 	
 		// COMMUNICATION
@@ -250,7 +249,6 @@ public class DatabaseNames {
 	public final static List<String> FLDS_BAD_TOPICS = new ArrayList<String>() {{
 		add("s*topics");
 		add("s*translation");
-		add("a*communication_bad_topics_id"); // Must be inserted as null
 	}};
 	
 		// EDUCATION AND EMPLOYMENT
