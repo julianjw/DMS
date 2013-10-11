@@ -57,11 +57,12 @@ public class PlanUtility {
 
 		// check if user is allowed to do this
 		String role = DatabaseAccess.getRole(username, token);
+		System.out.println("Have user role.");
 		if ( !userAllowed(role) ) {
 			System.out.println("User role \""+role+"\" not allowed to update personal plan.");
 			return false;
 		}
-		
+		System.out.println("User role \""+role+"\" is allowed to update personal plan.");
 		
 		//System.out.println("About to check for bean class -" + bean.getClass().toString());
 		try {
@@ -79,11 +80,14 @@ public class PlanUtility {
 				return false;
 			}
 			
+			System.out.println("Created writeJobs");
+			
 			//System.out.println("Found container bean.");
-			DatabaseAccess.performSqlJobs(writeJobs);
+			if (!DatabaseAccess.performSqlJobs(writeJobs)) return false;
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println("Exception while trying to write jobs.");
+			e.printStackTrace();
 			return false;
 			//throw new DMSClientErrorException("Cannot write Education & Employment.");
 		}
@@ -102,13 +106,16 @@ public class PlanUtility {
 		//System.out.println("*userIDNumber=** " + userNumber);
 		// if it's not in a list - put it in a list.
 		
+		//System.out.println("Updating "+tableName);
 		
-		
+		if ( bean == null ) return null;
+		if ( fields == null ) return null;
+		if ( tableName == null ) return null;
 		
 		List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
 		Map<String, Object> key = new HashMap<String, Object>();
 		key.put("i*user_id", userNumber);
-		
+
 		// education & employment
 		if ( bean.getClass() == Employment.class ) rows.addAll( prepareEmployment((Employment)bean, fields ) );
 		else if ( bean.getClass() == Education.class )rows.addAll( prepareEducation((Education)bean, fields));
@@ -216,7 +223,8 @@ public class PlanUtility {
 	private static List<SqlWriteJob> prepareCommunication( Communication bean, String clientid) throws DMSException, SQLException {
 		List<SqlWriteJob> writeJobs = new ArrayList<SqlWriteJob>();
 		writeJobs.add( prepareBase( bean.getComsAndDecisionMaking(), DatabaseNames.FLDS_COMMUNICATION, DatabaseNames.TBL_COMMUNICATION, DatabaseAccess.getUserIdNumber(clientid)));
-		writeJobs.addAll( prepareDoNotTalkAbout( bean.getComsAndDecisionMaking().getDoNotTalkAbout(), clientid));
+		if ( bean.getComsAndDecisionMaking() != null )
+			writeJobs.addAll( prepareDoNotTalkAbout( bean.getComsAndDecisionMaking().getDoNotTalkAbout(), clientid));
 		return writeJobs;
 	}
 	

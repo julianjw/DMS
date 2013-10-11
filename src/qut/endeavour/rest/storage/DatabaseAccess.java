@@ -75,25 +75,31 @@ public class DatabaseAccess {
 	
 	public static boolean performSqlJobs( List<SqlWriteJob> jobs ) {
 		
+		System.out.println("Writing to database");
 		try {
 			con.setAutoCommit(false);
-		
+			
 			for ( SqlWriteJob job : jobs ) {
+				if ( job == null ) continue; // any non-writes are to be ignored
 				job.execute();
 			}
 			
 			con.commit();
-			
+			con.setAutoCommit(true);
 			
 		} catch (Exception e) { // any exception, do the same thing
+			e.printStackTrace();
 			try {
+				System.out.println("Problem writing to databse - rolling back");
 				con.rollback();
 				con.setAutoCommit(true);
 				return false;
 				
-			} catch (SQLException e1) {}
+			} catch (SQLException e1) { return false; }
 			
 		}
+		
+		System.out.println("Write successful.");
 		return true;
 	}
 	
