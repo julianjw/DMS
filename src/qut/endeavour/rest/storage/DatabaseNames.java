@@ -303,4 +303,51 @@ public class DatabaseNames {
 	}};
 	
 	/* ***** END PERSONAL PLAN ***** */
+	
+	/* ***** BEGIN PLAN MEETINGS ***** */
+	public final static String TBL_SCHEDULE_MEETING = "scheduled_meeting";
+	public final static List<String> FLDS_SCHEDULE_MEETING = new ArrayList<String>() {{
+		add("b*education");
+		add("b*learn_life");
+		add("b*post_school");
+		add("d*meeting_d");
+		add("d*prelim_meeting_d");
+		add("s*discussion_record");
+		add("b*participation");
+		add("b*info_completed");
+		add("b*family");
+		add("b*guardian");
+		add("b*decision_maker");
+		add("b*advocate");
+		add("b*service_reps");
+		add("b*pbs_plan");
+		add("b*adapt_func_assessment");
+		add("b*chap_wellbeing_info");
+		add("b*current_personal_plan");
+		add("b*service_activity_options");
+		add("b*other_info");
+		add("b*medication");
+		add("b*user_budget");
+		add("b*reflections");
+		add("b*photo_release");
+		add("b*client_service_agree");
+		add("b*all_supp_agree");
+		add("b*cims_info");
+		add("b*medi_info_auth");
+		add("b*sched_personal_belongings");
+		add("b*pbs_maintenance_plan");
+		add("s*personal_meeting_plan_comments");
+		add("b*personal_plan_meet_outcomes");
+		add("b*personal_plan_complete");
+		add("b*complete_plan_signed");
+		add("b*plan_meeting_thanks");
+		add("s*personal_plan_comments");
+		add("b*user_choices_implement");
+		add("b*risk_assess_forms");
+		add("b*supp_progress_notes");
+		add("b*goal_progress_summary");
+		add("b*resources_for_implemenation");
+		add("s*implement_comment");
+	}};
+	
 }
