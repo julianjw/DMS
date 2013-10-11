@@ -31,7 +31,6 @@ import qut.endeavour.rest.bean.plan.support.FinancialSupport;
 import qut.endeavour.rest.bean.plan.support.GeneralSupport;
 import qut.endeavour.rest.bean.plan.support.MobilityAndTransport;
 import qut.endeavour.rest.bean.plan.support.Relaxation;
-import qut.endeavour.rest.bean.plan.support.SupportServices;
 import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.exception.DMSException;
 import qut.endeavour.rest.storage.DatabaseAccess;
