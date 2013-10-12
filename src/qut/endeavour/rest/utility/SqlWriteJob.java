@@ -222,7 +222,8 @@ public class SqlWriteJob {
 				ps.setDate(i, Date.valueOf( (String)data) );
 				break;
 			case AUTO_INCREMENT:
-				ps.setNull(i, java.sql.Types.NULL );
+				if ( data == null ) ps.setNull(i, java.sql.Types.NULL );
+				else ps.setInt(i, (Integer)data);
 				break;
 			default:
 				throw new DMSException("Unknown sql type \""+type+"\".");
