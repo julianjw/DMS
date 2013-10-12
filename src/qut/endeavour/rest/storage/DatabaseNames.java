@@ -89,9 +89,9 @@ public class DatabaseNames {
 		add("s*suburb");
 		add("i*post_code");
 		add("s*city");
-		add("s*contact"); // family members
-		add("s*relationship"); // sick contact
-		add("s*contact_arrangements"); // important people
+		add("s*family_contact"); // family members
+		add("s*sick_contact"); // sick contact
+		add("s*other_important_people"); // important people
 	}};
 	
 	// This table is part of the LivingArrangements
