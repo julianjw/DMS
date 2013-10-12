@@ -129,9 +129,11 @@
 			$("#SaveB").click(function(){
 				var planMeeting = new Object();
 				
+				//Assign data to plan meeting object
+				
 				
 
-				var jsonText = JSON.stringify(clientDetails);
+				var jsonText = JSON.stringify(planMeeting);
 
 				$.ajax({
 					url:'./rest/planmeeting/' + $.cookie('auth_token') + '/' + $.cookie('user_id') +'/' + $("#serviceID").val(),

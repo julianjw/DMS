@@ -126,8 +126,12 @@ function selectPP(el) {
 		doc.text(31, 210, data.clientDetails.livingArangements.city + ', '
 						+ data.clientDetails.livingArangements.postCode);		
 		doc.text(10, 215, 'Service: ' + data.clientDetails.livingArangements.service);
-
 		
+		//Add this stuff in when steven has added them into the personal plan (in database but coming back in json object)
+ 		//doc.text(10, 220, 'Family Contact: ' + data.clientDetails.livingArangements.familyContact);
+		//doc.text(10, 225, 'Sick Contact: ' + data.clientDetails.livingArangements.sickContact);
+		//doc.text(10, 230, 'Other Important People: ' + data.clientDetails.livingArangements.otherImportantPeople);
+
 		doc.addPage(); //add new page
 		
 		/* -------------------------------- HEALTH DETAILS --------------------------------------*/
@@ -159,10 +163,10 @@ function selectPP(el) {
 		doc.text(10, 90, 'Health Information');
 		doc.setFontType("normal");
 		doc.setFontSize(14);
-		doc.text(10, 95, 'Additional Information: ' +  data.healthDetails.healthInformation.additionalInfo);
-		doc.text(10, 100, 'Assistance With Medication: ' +  data.healthDetails.healthInformation.assistanceWithMedication);
+		doc.text(10, 95, 'Additional Info: ' +  data.healthDetails.healthInformation.additionalInfo);
+		doc.text(10, 100, 'Assistance With Meds: ' +  data.healthDetails.healthInformation.assistanceWithMedication);
 		doc.text(10, 105, 'Conditions: ' +  data.healthDetails.healthInformation.conditions);
-		doc.text(10, 110, 'History and Information: ' +  data.healthDetails.healthInformation.historyAndInfo);
+		doc.text(10, 110, 'History: ' +  data.healthDetails.healthInformation.historyAndInfo);
 		doc.text(10, 115, 'Self Medicate: ' +  data.healthDetails.healthInformation.selfMedicate);
 		doc.text(10, 120, 'Take Medication: ' +  data.healthDetails.healthInformation.takeMedication);
 		
@@ -217,7 +221,7 @@ function selectPP(el) {
 		doc.text(10, 35, 'Education Support Plan: ' + data.educationEmployment.education.eduSupportPlan);
 		doc.text(10, 40, 'Enrolled Course: ' + data.educationEmployment.education.enrolledCourse);
 		doc.text(10, 45, 'Instution Name: ' + data.educationEmployment.education.institutionName);
-		doc.text(10, 50, 'Liason: ' + data.educationEmployment.education.liason);
+		doc.text(10, 50, 'Liaison: ' + data.educationEmployment.education.liaison);
 		doc.text(10, 55, 'Other Support Required: ' + data.educationEmployment.education.otherSupportRequired);
 		doc.text(10, 60, 'Study Support: ' + data.educationEmployment.education.studySupport);
 		doc.text(10, 65, 'Support Persons: ' + data.educationEmployment.education.supportPersons);
