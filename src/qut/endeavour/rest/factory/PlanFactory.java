@@ -17,7 +17,6 @@ import qut.endeavour.rest.bean.plan.ExistingPlanDetails;
 import qut.endeavour.rest.bean.plan.Planning;
 import qut.endeavour.rest.bean.plan.SupportRequired;
 import qut.endeavour.rest.bean.plan.clientdetails.AlertInformation;
-import qut.endeavour.rest.bean.plan.clientdetails.ContactDetails;
 import qut.endeavour.rest.bean.plan.clientdetails.FormalOrders;
 import qut.endeavour.rest.bean.plan.clientdetails.LivingArrangements;
 import qut.endeavour.rest.bean.plan.clientdetails.PersonalDetails;
@@ -106,25 +105,25 @@ public class PlanFactory {
 				DatabaseNames.TBL_LIVING_ARRANGEMENTS
 				);
 		
-		List<ContactDetails> allContacts = PlanFactory.createContactDetails( username, token, clientid );
-		
-		if ( allContacts == null ) allContacts = new ArrayList<ContactDetails>();
-		
-		// divide the contacts up into their groups.
-		List<ContactDetails> fContact = new ArrayList<ContactDetails>();
-		List<ContactDetails> eContact = new ArrayList<ContactDetails>();
-		List<ContactDetails> iContact = new ArrayList<ContactDetails>();
-		
-		
-		for ( ContactDetails cd : allContacts ) {
-			
-			if ( cd.getContactType() == "Family Member" ) fContact.add(cd); else
-			if ( cd.getContactType() == "Emergency Contact" ) eContact.add(cd); else
-			if ( cd.getContactType() == "Important Person" ) iContact.add(cd);
-			
-			
-			
-		}
+//		List<ContactDetails> allContacts = PlanFactory.createContactDetails( username, token, clientid );
+//		
+//		if ( allContacts == null ) allContacts = new ArrayList<ContactDetails>();
+//		
+//		// divide the contacts up into their groups.
+//		List<ContactDetails> fContact = new ArrayList<ContactDetails>();
+//		List<ContactDetails> eContact = new ArrayList<ContactDetails>();
+//		List<ContactDetails> iContact = new ArrayList<ContactDetails>();
+//		
+//		
+//		for ( ContactDetails cd : allContacts ) {
+//			
+//			if ( cd.getContactType() == "Family Member" ) fContact.add(cd); else
+//			if ( cd.getContactType() == "Emergency Contact" ) eContact.add(cd); else
+//			if ( cd.getContactType() == "Important Person" ) iContact.add(cd);
+//			
+//			
+//			
+//		}
 		
 		return new LivingArrangements(
 				(String)fields.get(0),
@@ -133,9 +132,9 @@ public class PlanFactory {
 				(String)fields.get(3),
 				(Integer)fields.get(4),
 				(String)fields.get(5),
-				fContact,
-				eContact,
-				iContact
+				(String)fields.get(6),
+				(String)fields.get(7),
+				(String)fields.get(8)
 		);
 	}
 
@@ -151,30 +150,30 @@ public class PlanFactory {
 	 * @param contactType
 	 * @return
 	 */
-	private static List<ContactDetails> createContactDetails(String username,
-			String token, String clientid ) {
-
-
-		List<ArrayList<Object>> rows = PlanFactory.RetrieveInfo( username, token, clientid,
-				DatabaseNames.FLDS_CLIENT_CONTACTS,
-				DatabaseNames.TBL_CLIENT_CONTACTS
-				);
-		
-		List<ContactDetails> allContacts = new ArrayList<ContactDetails>();
-		
-		// put all results into a list of clients
-		for ( List<Object> row : rows ) {
-			allContacts.add(
-				new ContactDetails ( 
-						(String)row.get(0),
-						(String)row.get(1),
-						(String)row.get(2),
-						DatabaseAccess.getContactTypeById((Integer)row.get(3))
-						)
-				);
-		}
-		return allContacts;
-	}
+//	private static List<ContactDetails> createContactDetails(String username,
+//			String token, String clientid ) {
+//
+//
+//		List<ArrayList<Object>> rows = PlanFactory.RetrieveInfo( username, token, clientid,
+//				DatabaseNames.FLDS_CLIENT_CONTACTS,
+//				DatabaseNames.TBL_CLIENT_CONTACTS
+//				);
+//		
+//		List<ContactDetails> allContacts = new ArrayList<ContactDetails>();
+//		
+//		// put all results into a list of clients
+//		for ( List<Object> row : rows ) {
+//			allContacts.add(
+//				new ContactDetails ( 
+//						(String)row.get(0),
+//						(String)row.get(1),
+//						(String)row.get(2),
+//						DatabaseAccess.getContactTypeById((Integer)row.get(3))
+//						)
+//				);
+//		}
+//		return allContacts;
+//	}
 
 
 	private static AlertInformation createAlertInformation(String username,

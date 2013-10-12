@@ -370,6 +370,9 @@ public class BeansUtility {
 		row.put(fields.get(3), bean.getSuburb());
 		row.put(fields.get(4), bean.getPostCode());
 		row.put(fields.get(5), bean.getCity());
+		row.put(fields.get(6), bean.getFamilyMembers() );
+		row.put(fields.get(7), bean.getSickContact() );
+		row.put(fields.get(8), bean.getImportantPerson() );
 		return row;
 	}
 

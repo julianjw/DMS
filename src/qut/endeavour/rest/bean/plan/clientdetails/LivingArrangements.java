@@ -13,15 +13,13 @@ public class LivingArrangements {
 	private String suburb;
 	private int postCode;
 	private String city;
-	
-	private List<ContactDetails> familyMembers;
-	private List<ContactDetails> sickContact;
-	private List<ContactDetails> importantPerson;
+	private String familyMembers;
+	private String sickContact;
+	private String importantPerson;
 	
 	public LivingArrangements() {}
 	
 	/**
-	 * 
 	 * @param service
 	 * @param houseNumber
 	 * @param street
@@ -39,9 +37,9 @@ public class LivingArrangements {
 			String suburb,
 			int postCode,
 			String city,
-			List<ContactDetails> familyMembers,
-			List<ContactDetails> sickContact,
-			List<ContactDetails> importantPerson
+			String familyMembers,
+			String sickContact,
+			String importantPerson
 			) {
 		
 		this.service = service;
@@ -103,27 +101,27 @@ public class LivingArrangements {
 		this.city = city;
 	}
 
-	public List<ContactDetails> getFamilyMembers() {
+	public String getFamilyMembers() {
 		return familyMembers;
 	}
 
-	public void setFamilyMembers(List<ContactDetails> familyMembers) {
+	public void setFamilyMembers(String familyMembers) {
 		this.familyMembers = familyMembers;
 	}
 
-	public List<ContactDetails> getSickContact() {
+	public String getSickContact() {
 		return sickContact;
 	}
 
-	public void setSickContact(List<ContactDetails> sickContact) {
+	public void setSickContact(String sickContact) {
 		this.sickContact = sickContact;
 	}
 
-	public List<ContactDetails> getImportantPerson() {
+	public String getImportantPerson() {
 		return importantPerson;
 	}
 
-	public void setImportantPerson(List<ContactDetails> importantPerson) {
+	public void setImportantPerson(String importantPerson) {
 		this.importantPerson = importantPerson;
 	}
 	
