@@ -355,4 +355,24 @@ public class DatabaseNames {
 		add("s*implement_comment");
 	}};
 	
+	public final static String TBL_RISK_ASSESSMENT = "risk_assessment";
+	public final static List<String> FLDS_RISK_ASSESSMENT = new ArrayList<String>() {{
+		add("a*risk_id");
+		add("s*user_id");
+		add("s*service");
+		add("s*area");
+		add("d*risk_assess_date");
+		add("s*risk_description");
+		add("i*probability");
+		add("i*exposure");
+		add("i*consequences");
+		add("s*risk_controls");
+		add("d*target_date");
+		add("b*proceed");
+		add("s*service_manager");
+		add("d*sm_sign_date");
+		add("s*delegated_manager");
+		add("d*dm_sign_date");
+	}};
+	
 }

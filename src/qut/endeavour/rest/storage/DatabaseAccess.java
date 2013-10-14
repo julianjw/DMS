@@ -34,6 +34,7 @@ public class DatabaseAccess {
 	private final static char INTEGER = 'i';
 	private final static char STRING = 's';
 	private final static char DATE = 'd';
+	private final static char AUTO_INCREMENT = 'a';
 	private final static char DERIVED = 'x';
 	
 	/* ***** ADMIN ***** */
@@ -501,6 +502,77 @@ public class DatabaseAccess {
 		return false;
 	}
 
+	private static List<Map<String, Object>> getUserRelatedDetails( List<String> fields, String infoTable, String username ) {
+		return getRelatedDetails( fields, infoTable, username, null, true);
+	}
+	
+	/**
+	 * 
+	 * @param fieldNames
+	 * @param tableName
+	 * @param keyValue
+	 * @param keyName
+	 * @param joinToUserInfo
+	 * @return
+	 */
+	private static List<Map<String, Object>>getRelatedDetails(
+			List<String> fieldNames,
+			String tableName,
+			Object keyValue,
+			String keyName,
+			boolean joinToUserInfo
+			) {
+		
+		List<Map<String, Object>> resultMapList = new ArrayList<Map<String,Object>>();
+		
+		String sql = null;
+		
+		if ( joinToUserInfo ) {
+			sql = "SELECT tb.* from `"+tableName+"` tb inner join `"+TBL_USER_INFO+"` ui on tb.user_id=ui.user_id where ui.username = ?";
+		} else {
+			if ( keyName == null ) {
+				keyName = "a";
+				System.out.println("Key value name error.");
+			}
+			sql = "SELECT tb.* from `"+tableName+"` tb where tb."+keyName+" = ?";
+		}
+		
+		
+		System.out.println(sql);
+		
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+			if ( keyValue.getClass() == String.class ) ps.setString(1, (String)keyValue); else
+			if ( keyValue.getClass() == Integer.class ) ps.setInt(1, (Integer)keyValue);
+			
+			ResultSet results = ps.executeQuery();
+			
+			while (results.next()) {
+				Map<String, Object> resultMap = new HashMap<String, Object>();
+				
+				for ( String fieldName : fieldNames ) {
+					char type = fieldName.charAt(0);
+					fieldName = fieldName.substring(2); // get rid of type character and *
+					if ( type == STRING ) resultMap.put(fieldName, results.getString(fieldName)); else
+					if ( type == INTEGER ) resultMap.put(fieldName, results.getInt(fieldName)); else
+					if ( type == BOOLEAN) resultMap.put(fieldName, results.getBoolean(fieldName)); else
+					if ( type == DATE ) resultMap.put(fieldName, results.getDate(fieldName)); else 
+					if ( type == AUTO_INCREMENT ) resultMap.put(fieldName, results.getInt(fieldName)); else
+					System.out.println("Error: retrieving unknown type from db "+type);
+				}
+				
+				resultMapList.add(resultMap);
+			}
+			
+			if ( resultMapList.size() > 0 ) return resultMapList;
+			
+		} catch (SQLException e) {
+			System.out.println("DatabaseAccess: "+e);
+		}
+		
+		System.out.println("--(No rows returned)");
+		return null;
+	}
 	
 	
 	/**
@@ -510,7 +582,7 @@ public class DatabaseAccess {
 	 * @param username
 	 * @return
 	 */
-	private static List<Map<String, Object>> getUserRelatedDetails( List<String> fields, String infoTable, String username ) {
+	/*private static List<Map<String, Object>> getUserRelatedDetails( List<String> fields, String infoTable, String username ) {
 		
 		List<Map<String, Object>> resultMapList = new ArrayList<Map<String,Object>>();
 		
@@ -546,7 +618,7 @@ public class DatabaseAccess {
 		
 		System.out.println("--(No rows returned)");
 		return null;
-	}
+	}*/
 
 	/**
 	 * Returns the contact name type by the ID of the name
@@ -599,6 +671,14 @@ public class DatabaseAccess {
 			String tableName) {
 		if (!makeConnection()) throw new DMSClientErrorException("Cannot access database.");
 		return getUserRelatedDetails( fieldNames, tableName, clientid );
+	}
+	
+	public static List<Map<String, Object>> getTableContents(
+			int riskid,
+			List<String> fieldNames,
+			String tableName) {
+		if (!makeConnection()) throw new DMSClientErrorException("Cannot access database.");
+		return getRelatedDetails( fieldNames, tableName, riskid, "risk_id", false );
 	}
 
 	
