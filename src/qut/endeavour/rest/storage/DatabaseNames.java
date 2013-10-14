@@ -358,7 +358,7 @@ public class DatabaseNames {
 	public final static String TBL_RISK_ASSESSMENT = "risk_assessment";
 	public final static List<String> FLDS_RISK_ASSESSMENT = new ArrayList<String>() {{
 		add("a*risk_id");
-		add("s*user_id");
+		add("i*user_id");
 		add("s*service");
 		add("s*area");
 		add("d*risk_assess_date");

@@ -5,15 +5,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class RiskAssessment {
 
-	private int risk_id;
+	private Integer risk_id;
 	private String user_id;
 	private String service;
 	private String area;
 	private String risk_assess_date;
 	private String risk_description;
-	private int probability;
-	private int exposure;
-	private int consequences;
+	private Integer probability;
+	private Integer exposure;
+	private Integer consequences;
 	private String risk_controls;
 	private String target_date;
 	private boolean proceed;
@@ -43,9 +43,9 @@ public class RiskAssessment {
 	 * @param delegated_manager
 	 * @param dm_sign_date
 	 */
-	public RiskAssessment(int risk_id, String user_id, String service, String area,
-			String risk_assess_date, String risk_description, int probability,
-			int exposure, int consequences, String risk_controls,
+	public RiskAssessment(Integer risk_id, String user_id, String service, String area,
+			String risk_assess_date, String risk_description, Integer probability,
+			Integer exposure, Integer consequences, String risk_controls,
 			String target_date, boolean proceed, String service_manager,
 			String sm_sign_date, String delegated_manager, String dm_sign_date) {
 		super();
@@ -67,11 +67,11 @@ public class RiskAssessment {
 		this.dm_sign_date = dm_sign_date;
 	}
 
-	public int getRisk_id() {
+	public Integer getRisk_id() {
 		return risk_id;
 	}
 
-	public void setRisk_id(int risk_id) {
+	public void setRisk_id(Integer risk_id) {
 		this.risk_id = risk_id;
 	}
 
@@ -115,27 +115,27 @@ public class RiskAssessment {
 		this.risk_description = risk_description;
 	}
 
-	public int getProbability() {
+	public Integer getProbability() {
 		return probability;
 	}
 
-	public void setProbability(int probability) {
+	public void setProbability(Integer probability) {
 		this.probability = probability;
 	}
 
-	public int getExposure() {
+	public Integer getExposure() {
 		return exposure;
 	}
 
-	public void setExposure(int exposure) {
+	public void setExposure(Integer exposure) {
 		this.exposure = exposure;
 	}
 
-	public int getConsequences() {
+	public Integer getConsequences() {
 		return consequences;
 	}
 
-	public void setConsequences(int consequences) {
+	public void setConsequences(Integer consequences) {
 		this.consequences = consequences;
 	}
 

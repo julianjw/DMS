@@ -699,7 +699,7 @@ public class DatabaseAccess {
 			
 			userInfo.add( results.getString("username"));
 			userInfo.add( results.getString("name"));
-			userInfo.add( results.getString("password"));
+			userInfo.add( ""/*results.getString("password")*/);
 			userInfo.add( results.getString("role"));
 			
 		} catch (SQLException e) {
@@ -722,10 +722,10 @@ public class DatabaseAccess {
 		throw new DMSException("Cannot connect to database.");
 	}
 
-	public static int getUserIdNumber(String clientid) throws DMSException, SQLException {
+	public static int getUserIdNumberByUsername(String username) throws DMSException, SQLException {
 		if ( !makeConnection() ) throw new DMSException("Database down."); 
 		
-		String sql = "SELECT user_id FROM `user_info` WHERE username = '"+clientid+"';";
+		String sql = "SELECT user_id FROM `user_info` WHERE username = '"+username+"';";
 		PreparedStatement ps = con.prepareStatement(sql);
 		
 		ResultSet rs = ps.executeQuery();
@@ -735,10 +735,30 @@ public class DatabaseAccess {
 		if ( rs.next() ) {
 			userIdNumber = rs.getInt("user_id");
 		} else {
-			throw new DMSException("User \""+clientid+"\" doesn't exist.");
+			throw new DMSException("User \""+username+"\" doesn't exist.");
 		}
 		
 		
 		return userIdNumber;
+	}
+	
+	public static String getUsernameByIdNumber(int userId) throws DMSException, SQLException {
+		if ( !makeConnection() ) throw new DMSException("Database down."); 
+		
+		String sql = "SELECT username FROM `user_info` WHERE user_id = "+userId+";";
+		PreparedStatement ps = con.prepareStatement(sql);
+		
+		ResultSet rs = ps.executeQuery();
+		
+		String userName = null;
+		
+		if ( rs.next() ) {
+			userName = rs.getString("username");
+		} else {
+			throw new DMSException("User \""+userId+"\" doesn't exist.");
+		}
+		
+		
+		return userName;
 	}
 }

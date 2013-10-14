@@ -30,25 +30,25 @@ import qut.endeavour.rest.utility.BeansUtility;
 
 @Path("/risk")
 public class RiskResource {
-	/*
+	
 	@POST
-	@Path("/{user_id: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
+	@Path("/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{riskid: [0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Verification setJSONPlanning(
 			Planning arg,
 			@PathParam("user_id") String username,
 			@PathParam("token") String token,
-			@PathParam("clientid") String clientid
+			@PathParam("clientid") Integer riskid
 			) {
 		
 		System.out.println("Writing: Plan Meeting");
-		if ( BeansUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
+		if ( BeansUtility.storeBean(arg, riskid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
 		System.out.println("Failure.");
 		return new Verification(Verification.Verified.FAILURE);
 		
-	}*/
-	
+	}
+
 	@GET
 	@Path("/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{riskid: [0-9]+}")
 	@Produces(MediaType.APPLICATION_JSON)

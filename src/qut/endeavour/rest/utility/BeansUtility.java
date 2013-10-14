@@ -31,6 +31,7 @@ import qut.endeavour.rest.bean.plan.support.FinancialSupport;
 import qut.endeavour.rest.bean.plan.support.GeneralSupport;
 import qut.endeavour.rest.bean.plan.support.MobilityAndTransport;
 import qut.endeavour.rest.bean.plan.support.Relaxation;
+import qut.endeavour.rest.bean.risk.RiskAssessment;
 import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.exception.DMSException;
 import qut.endeavour.rest.storage.DatabaseAccess;
@@ -41,7 +42,7 @@ public class BeansUtility {
 	/* DATABASE STORAGE */
 	public static boolean storeBean(
 			Object bean,
-			String clientid,
+			Object keyValue,
 			String username,
 			String token
 			) {
@@ -59,13 +60,15 @@ public class BeansUtility {
 		try {
 			List<SqlWriteJob> writeJobs = new ArrayList<SqlWriteJob>();
 			
-			if ( bean.getClass() == EducationEmployment.class ) writeJobs.addAll( prepareEducationEmployment( (EducationEmployment)bean, clientid ) );
-			else if ( bean.getClass() == HealthDetails.class ) writeJobs.addAll( prepareHealthDetails( (HealthDetails)bean, clientid ) );
-			else if ( bean.getClass() == Communication.class ) writeJobs.addAll( prepareCommunication( (Communication)bean, clientid ) );
-			else if ( bean.getClass() == Planning.class ) writeJobs.addAll( preparePlanning( (Planning)bean, clientid ) );
-			else if ( bean.getClass() == ClientDetails.class ) writeJobs.addAll( prepareClientDetails( (ClientDetails)bean, clientid ) );
-			else if ( bean.getClass() == SupportRequired.class ) writeJobs.addAll( prepareSupportRequired( (SupportRequired)bean, clientid ) );
-			else if ( bean.getClass() == ScheduledMeeting.class ) writeJobs.addAll( prepareScheduledMeeting( (ScheduledMeeting)bean, clientid ) );
+			if ( bean.getClass() == EducationEmployment.class ) writeJobs.addAll( prepareEducationEmployment( (EducationEmployment)bean, (String)keyValue ) );
+			else if ( bean.getClass() == HealthDetails.class ) writeJobs.addAll( prepareHealthDetails( (HealthDetails)bean, (String)keyValue ) );
+			else if ( bean.getClass() == Communication.class ) writeJobs.addAll( prepareCommunication( (Communication)bean, (String)keyValue ) );
+			else if ( bean.getClass() == Planning.class ) writeJobs.addAll( preparePlanning( (Planning)bean, (String)keyValue ) );
+			else if ( bean.getClass() == ClientDetails.class ) writeJobs.addAll( prepareClientDetails( (ClientDetails)bean, (String)keyValue ) );
+			else if ( bean.getClass() == SupportRequired.class ) writeJobs.addAll( prepareSupportRequired( (SupportRequired)bean, (String)keyValue ) );
+			else if ( bean.getClass() == ScheduledMeeting.class ) writeJobs.addAll( prepareScheduledMeeting( (ScheduledMeeting)bean, (String)keyValue ) );
+			
+			else if ( bean.getClass() == RiskAssessment.class ) writeJobs.addAll( prepareRiskAssessment( (RiskAssessment)bean, (Integer)keyValue ) );
 			
 			else {
 				System.out.println("Cannot handle class: " + bean.getClass().toString());
@@ -84,20 +87,26 @@ public class BeansUtility {
 		return true;
 	}
 	
+	
+
 	/* PREPARATION OF BASES */
 	private static SqlWriteJob prepareBase(
 			Object bean,
 			List<String> fields,
 			String tableName,
-			int userNumber
+			Integer keyValue
 			) throws DMSException {
 		
 		//System.out.println("*userIDNumber=** " + userNumber);
 		
 		Map<String, Object> row = null;
 		Map<String, Object> key = new HashMap<String, Object>();
-		key.put("i*user_id", userNumber);
 		
+		if ( bean.getClass() == RiskAssessment.class ) {
+			key.put("a*risk_id", keyValue);
+		} else {
+			key.put("i*user_id", keyValue);
+		}
 		
 		
 		// education & employment
@@ -133,6 +142,7 @@ public class BeansUtility {
 		
 		else if ( bean.getClass() == ScheduledMeeting.class ) row = prepareScheduledMeeting((ScheduledMeeting)bean, fields);
 		
+		else if ( bean.getClass() == RiskAssessment.class ) row = prepareRiskAssessment((RiskAssessment)bean, fields);
 		// not found
 		else throw new DMSException("Cannot find sub-class:" + bean.getClass().toString());
 		
@@ -142,7 +152,15 @@ public class BeansUtility {
 		List<Map<String,Object>> table = new ArrayList<Map<String,Object>>();
 		table.add(row);
 		
-		return new SqlWriteJob( tableName, key, table );
+		SqlWriteJob job = null;
+		
+//		if ( bean.getClass() == RiskAssessment.class ) {
+//			job = new SqlWriteJob( tableName, key, key, table );
+//		} else {
+//			job = new SqlWriteJob( tableName, key, table );
+//		}
+		job = new SqlWriteJob( tableName, key, table );
+		return job;
 	}
 	
 	
@@ -155,18 +173,18 @@ public class BeansUtility {
 	private static List<SqlWriteJob> prepareScheduledMeeting(
 			ScheduledMeeting bean, String clientid) throws DMSException, SQLException {
 		List<SqlWriteJob> writeJobs = new ArrayList<SqlWriteJob>();
-		writeJobs.add( prepareBase( bean, DatabaseNames.FLDS_SCHEDULE_MEETING, DatabaseNames.TBL_SCHEDULE_MEETING, DatabaseAccess.getUserIdNumber(clientid)));
+		writeJobs.add( prepareBase( bean, DatabaseNames.FLDS_SCHEDULE_MEETING, DatabaseNames.TBL_SCHEDULE_MEETING, DatabaseAccess.getUserIdNumberByUsername(clientid)));
 		return writeJobs;
 	}
 	
 	private static List<SqlWriteJob> prepareSupportRequired(
 			SupportRequired bean, String clientid) throws DMSException, SQLException {
 		List<SqlWriteJob> writeJobs = new ArrayList<SqlWriteJob>();
-		writeJobs.add( prepareBase( bean.getDailyActivities(), DatabaseNames.FLDS_ACTIVITIES, DatabaseNames.TBL_ACTIVITIES, DatabaseAccess.getUserIdNumber(clientid)));
-		writeJobs.add( prepareBase( bean.getFinancialSupport(), DatabaseNames.FLDS_FINANCIAL, DatabaseNames.TBL_FINANCIAL, DatabaseAccess.getUserIdNumber(clientid)));
-		writeJobs.add( prepareBase( bean.getGeneralSupport(), DatabaseNames.FLDS_SUPPORT_GENERAL, DatabaseNames.TBL_SUPPORT_GENERAL, DatabaseAccess.getUserIdNumber(clientid)));
-		writeJobs.add( prepareBase( bean.getMobilityAndTransport(), DatabaseNames.FLDS_MOBILITY_TRANSPORT, DatabaseNames.TBL_MOBILITY_TRANSPORT, DatabaseAccess.getUserIdNumber(clientid)));
-		writeJobs.add( prepareBase( bean.getRelaxation(), DatabaseNames.FLDS_RELAXATION, DatabaseNames.TBL_RELAXATION, DatabaseAccess.getUserIdNumber(clientid)));
+		writeJobs.add( prepareBase( bean.getDailyActivities(), DatabaseNames.FLDS_ACTIVITIES, DatabaseNames.TBL_ACTIVITIES, DatabaseAccess.getUserIdNumberByUsername(clientid)));
+		writeJobs.add( prepareBase( bean.getFinancialSupport(), DatabaseNames.FLDS_FINANCIAL, DatabaseNames.TBL_FINANCIAL, DatabaseAccess.getUserIdNumberByUsername(clientid)));
+		writeJobs.add( prepareBase( bean.getGeneralSupport(), DatabaseNames.FLDS_SUPPORT_GENERAL, DatabaseNames.TBL_SUPPORT_GENERAL, DatabaseAccess.getUserIdNumberByUsername(clientid)));
+		writeJobs.add( prepareBase( bean.getMobilityAndTransport(), DatabaseNames.FLDS_MOBILITY_TRANSPORT, DatabaseNames.TBL_MOBILITY_TRANSPORT, DatabaseAccess.getUserIdNumberByUsername(clientid)));
+		writeJobs.add( prepareBase( bean.getRelaxation(), DatabaseNames.FLDS_RELAXATION, DatabaseNames.TBL_RELAXATION, DatabaseAccess.getUserIdNumberByUsername(clientid)));
 		return writeJobs;
 	}
 	
@@ -174,44 +192,49 @@ public class BeansUtility {
 	private static List<SqlWriteJob> prepareClientDetails(
 			ClientDetails bean, String clientid) throws DMSException, SQLException {
 		List<SqlWriteJob> writeJobs = new ArrayList<SqlWriteJob>();
-		writeJobs.add( prepareBase( bean.getAlertInformation(), DatabaseNames.FLDS_ALERT_INFO, DatabaseNames.TBL_ALERT_INFO, DatabaseAccess.getUserIdNumber(clientid)));
-		writeJobs.add( prepareBase( bean.getFormalOrders(), DatabaseNames.FLDS_FORMAL_ORDERS, DatabaseNames.TBL_FORMAL_ORDERS, DatabaseAccess.getUserIdNumber(clientid)));
-		writeJobs.add( prepareBase( bean.getLivingArangements(), DatabaseNames.FLDS_LIVING_ARRANGEMENTS, DatabaseNames.TBL_LIVING_ARRANGEMENTS, DatabaseAccess.getUserIdNumber(clientid)));
-		writeJobs.add( prepareBase( bean.getPersonalDetails(), DatabaseNames.FLDS_PERSONAL_DETAILS, DatabaseNames.TBL_PERSONAL_DETAILS, DatabaseAccess.getUserIdNumber(clientid)));
+		writeJobs.add( prepareBase( bean.getAlertInformation(), DatabaseNames.FLDS_ALERT_INFO, DatabaseNames.TBL_ALERT_INFO, DatabaseAccess.getUserIdNumberByUsername(clientid)));
+		writeJobs.add( prepareBase( bean.getFormalOrders(), DatabaseNames.FLDS_FORMAL_ORDERS, DatabaseNames.TBL_FORMAL_ORDERS, DatabaseAccess.getUserIdNumberByUsername(clientid)));
+		writeJobs.add( prepareBase( bean.getLivingArangements(), DatabaseNames.FLDS_LIVING_ARRANGEMENTS, DatabaseNames.TBL_LIVING_ARRANGEMENTS, DatabaseAccess.getUserIdNumberByUsername(clientid)));
+		writeJobs.add( prepareBase( bean.getPersonalDetails(), DatabaseNames.FLDS_PERSONAL_DETAILS, DatabaseNames.TBL_PERSONAL_DETAILS, DatabaseAccess.getUserIdNumberByUsername(clientid)));
 		return writeJobs;
 	}
 	
 	private static List<SqlWriteJob> preparePlanning(
 			Planning bean, String clientid) throws DMSException, SQLException {
 		List<SqlWriteJob> writeJobs = new ArrayList<SqlWriteJob>();
-		writeJobs.add( prepareBase( bean.getGoalPlan(), DatabaseNames.FLDS_GOAL, DatabaseNames.TBL_GOAL, DatabaseAccess.getUserIdNumber(clientid)));
-		writeJobs.add( prepareBase( bean.getHolidayPlan(), DatabaseNames.FLDS_HOLIDAY, DatabaseNames.TBL_HOLIDAY, DatabaseAccess.getUserIdNumber(clientid)));
+		writeJobs.add( prepareBase( bean.getGoalPlan(), DatabaseNames.FLDS_GOAL, DatabaseNames.TBL_GOAL, DatabaseAccess.getUserIdNumberByUsername(clientid)));
+		writeJobs.add( prepareBase( bean.getHolidayPlan(), DatabaseNames.FLDS_HOLIDAY, DatabaseNames.TBL_HOLIDAY, DatabaseAccess.getUserIdNumberByUsername(clientid)));
 		return writeJobs;
 	}
 	
 	private static List<SqlWriteJob> prepareCommunication( Communication bean, String clientid) throws DMSException, SQLException {
 		List<SqlWriteJob> writeJobs = new ArrayList<SqlWriteJob>();
-		writeJobs.add( prepareBase( bean.getComsAndDecisionMaking(), DatabaseNames.FLDS_COMMUNICATION, DatabaseNames.TBL_COMMUNICATION, DatabaseAccess.getUserIdNumber(clientid)));
+		writeJobs.add( prepareBase( bean.getComsAndDecisionMaking(), DatabaseNames.FLDS_COMMUNICATION, DatabaseNames.TBL_COMMUNICATION, DatabaseAccess.getUserIdNumberByUsername(clientid)));
 		return writeJobs;
 	}
 	
 	private static List<SqlWriteJob> prepareEducationEmployment( EducationEmployment bean, String clientid ) throws DMSException, SQLException {
 		List<SqlWriteJob> writeJobs = new ArrayList<SqlWriteJob>();
-		writeJobs.add( prepareBase( bean.getEducation(), DatabaseNames.FLDS_EDUCATION, DatabaseNames.TBL_EDUCATION, DatabaseAccess.getUserIdNumber(clientid)));
-		writeJobs.add( prepareBase( bean.getEmployment(), DatabaseNames.FLDS_EMPLOYMENT, DatabaseNames.TBL_EMPLOYMENT, DatabaseAccess.getUserIdNumber(clientid)));
+		writeJobs.add( prepareBase( bean.getEducation(), DatabaseNames.FLDS_EDUCATION, DatabaseNames.TBL_EDUCATION, DatabaseAccess.getUserIdNumberByUsername(clientid)));
+		writeJobs.add( prepareBase( bean.getEmployment(), DatabaseNames.FLDS_EMPLOYMENT, DatabaseNames.TBL_EMPLOYMENT, DatabaseAccess.getUserIdNumberByUsername(clientid)));
 		return writeJobs;
 	}
 	
 	private static List<SqlWriteJob> prepareHealthDetails( HealthDetails bean, String clientid ) throws DMSException, SQLException {
 		List<SqlWriteJob> writeJobs = new ArrayList<SqlWriteJob>();
-		writeJobs.add( prepareBase( bean.getDietaryRequirements(), DatabaseNames.FLDS_DIETARY, DatabaseNames.TBL_DIETARY, DatabaseAccess.getUserIdNumber(clientid)));
-		writeJobs.add( prepareBase( bean.getHealthManagement(), DatabaseNames.FLDS_MANAGEMENT, DatabaseNames.TBL_MANAGEMENT, DatabaseAccess.getUserIdNumber(clientid)));
-		writeJobs.add( prepareBase( bean.getHealthInformation(), DatabaseNames.FLDS_DISABILITY, DatabaseNames.TBL_DISABILITY, DatabaseAccess.getUserIdNumber(clientid)));
+		writeJobs.add( prepareBase( bean.getDietaryRequirements(), DatabaseNames.FLDS_DIETARY, DatabaseNames.TBL_DIETARY, DatabaseAccess.getUserIdNumberByUsername(clientid)));
+		writeJobs.add( prepareBase( bean.getHealthManagement(), DatabaseNames.FLDS_MANAGEMENT, DatabaseNames.TBL_MANAGEMENT, DatabaseAccess.getUserIdNumberByUsername(clientid)));
+		writeJobs.add( prepareBase( bean.getHealthInformation(), DatabaseNames.FLDS_DISABILITY, DatabaseNames.TBL_DISABILITY, DatabaseAccess.getUserIdNumberByUsername(clientid)));
 		return writeJobs;
 	}
 
 	
-	
+	private static List<SqlWriteJob> prepareRiskAssessment(
+			RiskAssessment bean, Integer keyValue) throws DMSException {
+		List<SqlWriteJob> writeJobs = new ArrayList<SqlWriteJob>();
+		writeJobs.add( prepareBase( bean, DatabaseNames.FLDS_RISK_ASSESSMENT, DatabaseNames.TBL_RISK_ASSESSMENT, keyValue ) );
+		return writeJobs;
+	}
 	
 
 	
@@ -473,8 +496,7 @@ public class BeansUtility {
 		row.put(fields.get(3), bean.gettVShow());
 		row.put(fields.get(4), bean.getOtherActivities());
 		return row;
-	}
-	
+	}	
 
 
 	private static Map<String, Object> prepareScheduledMeeting(ScheduledMeeting bean, List<String> fields) {
@@ -520,6 +542,40 @@ public class BeansUtility {
 		row.put(fields.get(38), bean.isGoalProgressSummary());
 		row.put(fields.get(39), bean.isResourcesForImplementation());
 		row.put(fields.get(40), bean.getImplementComment());
+		return row;
+	}	
+
+
+	private static Map<String, Object> prepareRiskAssessment(RiskAssessment bean, List<String> fields) {
+		Map<String, Object> row = new HashMap<String, Object>();
+		
+		Integer userIdNumber = null;
+		try {
+			userIdNumber = DatabaseAccess.getUserIdNumberByUsername(bean.getUser_id());
+		} catch (DMSException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		row.put(fields.get(0),  bean.getRisk_id());
+		row.put(fields.get(1),  userIdNumber);
+		row.put(fields.get(2),  bean.getService());
+		row.put(fields.get(3),  bean.getArea());
+		row.put(fields.get(4),  bean.getRisk_assess_date());
+		row.put(fields.get(5),  bean.getRisk_description());
+		row.put(fields.get(6),  bean.getProbability());
+		row.put(fields.get(7),  bean.getExposure());
+		row.put(fields.get(8),  bean.getConsequences());
+		row.put(fields.get(9),  bean.getRisk_controls());
+		row.put(fields.get(10), bean.getTarget_date());
+		row.put(fields.get(11), bean.isProceed());
+		row.put(fields.get(12), bean.getService_manager());
+		row.put(fields.get(13), bean.getSm_sign_date());
+		row.put(fields.get(14), bean.getDelegated_manager());
+		row.put(fields.get(15), bean.getDm_sign_date());
 		return row;
 	}
 	

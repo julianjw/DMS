@@ -1,12 +1,14 @@
 package qut.endeavour.rest.factory;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import qut.endeavour.rest.bean.risk.RiskAssessment;
 import qut.endeavour.rest.exception.DMSClientErrorException;
+import qut.endeavour.rest.exception.DMSException;
 import qut.endeavour.rest.storage.DatabaseAccess;
 import qut.endeavour.rest.storage.DatabaseNames;
 import qut.endeavour.rest.utility.Permissions;
@@ -61,16 +63,27 @@ public class RiskFactory {
 		
 		// verify user is allowed to do action
 		if (!Permissions.canGetRiskAssessment(userRole)) throw new DMSClientErrorException("User with role " + userRole.toUpperCase() + " cannot view risk assessments.");
-		
+	 
 		List<Object> fields = RiskFactory.getFields(
 				riskid,
 				DatabaseNames.FLDS_RISK_ASSESSMENT,
 				DatabaseNames.TBL_RISK_ASSESSMENT
 				);
 		
+		String clientLoginName = "";
+		try {
+			clientLoginName = DatabaseAccess.getUsernameByIdNumber( (Integer)fields.get(1) );
+		} catch (DMSException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return new RiskAssessment(
 				(Integer)fields.get(0),
-				(String)fields.get(1),
+				clientLoginName,
 				(String)fields.get(2),
 				(String)fields.get(3),
 				((Date)fields.get(4)).toString(),
