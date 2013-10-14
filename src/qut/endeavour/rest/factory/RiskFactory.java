@@ -1,11 +1,14 @@
 package qut.endeavour.rest.factory;
 
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import qut.endeavour.rest.bean.risk.ClientRisk;
 import qut.endeavour.rest.bean.risk.RiskAssessment;
 import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.exception.DMSException;
@@ -15,40 +18,7 @@ import qut.endeavour.rest.utility.Permissions;
 
 public class RiskFactory {
 
-	//public static List<ClientRisks> createUpcomingMeetings(String username,
-	//		String token)  {
-		/*
-		String userRole = DatabaseAccess.getRole(username, token);
-		if (!Permissions.canGetUpcomingMeetings( userRole) )  throw new DMSClientErrorException("User with role " + userRole.toUpperCase() + " cannot see upcoming meetings.");
-		
-		List<UpcomingMeeting> upcomingMeetings = new ArrayList<UpcomingMeeting>();
-		
-		//TODO Get rid of hard-coding	
-		String sql = "SELECT ui.name, ui.username, sm.meeting_date FROM  `scheduled_meeting` sm NATURAL JOIN  `user_info` ui ORDER BY sm.meeting_date DESC;";
-		
-		try {
-			PreparedStatement ps = DatabaseAccess.createPreparedStatement(sql);
-			ResultSet results = ps.executeQuery();
-			
-			while ( results.next() ) {
-				UpcomingMeeting m = new UpcomingMeeting();
-				
-				m.setrName(results.getString(1));
-				m.setUsername(results.getString(2));
-				m.setDate(results.getDate(3).toString());
-				
-				upcomingMeetings.add(m);
-			}
-		} catch ( SQLException se ) {
-			se.printStackTrace();
-			throw new DMSClientErrorException("Error getting meetings from database");
-		} catch ( DMSException de ) {
-			de.printStackTrace();
-			throw new DMSClientErrorException("Error getting meetings from database");
-		}
-		
-		return upcomingMeetings;*/
-	//}
+	
 
 	/*
 	 * Get a meeting's details
@@ -131,6 +101,66 @@ public class RiskFactory {
 		}
 		return rows;
 	}
+
+
+
+	public static List<ClientRisk> createClientRisks(String username,
+			String token, String clientid) {
+		String userRole = DatabaseAccess.getRole(username, token);
+		if (!Permissions.canGetClientRisks( userRole) )  throw new DMSClientErrorException("User with role " + userRole.toUpperCase() + " cannot see upcoming meetings.");
+		
+		List<ClientRisk> risks = new ArrayList<ClientRisk>();
+		
+		
+		
+		Integer clientIdNumber = null;
+		try {
+			clientIdNumber = DatabaseAccess.getUserIdNumberByUsername( clientid );
+		} catch (DMSException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//TODO Get rid of hard-coding
+		String sql = "SELECT tb.risk_id, tb.service, tb.area, tb.risk_assess_date FROM risk_assessment tb WHERE tb.user_id = ?;";
+		
+		try {
+			PreparedStatement ps = DatabaseAccess.createPreparedStatement(sql);
+			ps.setInt(1, clientIdNumber );
+			ResultSet results = ps.executeQuery();
+			
+			while ( results.next() ) {
+				ClientRisk r = new ClientRisk();
+				
+				r.setRisk_id( results.getInt(1) );
+				r.setService( results.getString(2) );
+				r.setArea( results.getString(3) );
+				r.setDate( results.getDate(4).toString() );
+				
+				risks.add(r);
+			}
+		} catch ( SQLException se ) {
+			se.printStackTrace();
+			throw new DMSClientErrorException("Error getting risks from database");
+		} catch ( DMSException de ) {
+			de.printStackTrace();
+			throw new DMSClientErrorException("Error getting risks from database");
+		}
+		
+		return risks;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 //	private static List<Object> getFields( String clientid, List<String> columns, String tableName){
 //		List<ArrayList<Object>> objects = 

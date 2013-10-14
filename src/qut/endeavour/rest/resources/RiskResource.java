@@ -19,6 +19,7 @@ import qut.endeavour.rest.bean.meeting.ScheduledMeeting;
 import qut.endeavour.rest.bean.meeting.UpcomingMeeting;
 import qut.endeavour.rest.bean.plan.Planning;
 import qut.endeavour.rest.bean.plan.SupportRequired;
+import qut.endeavour.rest.bean.risk.ClientRisk;
 import qut.endeavour.rest.bean.risk.RiskAssessment;
 import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.factory.AuthFactory;
@@ -39,7 +40,7 @@ public class RiskResource {
 			Planning arg,
 			@PathParam("user_id") String username,
 			@PathParam("token") String token,
-			@PathParam("clientid") Integer riskid
+			@PathParam("riskid") Integer riskid
 			) {
 		
 		System.out.println("Writing: Plan Meeting");
@@ -66,13 +67,14 @@ public class RiskResource {
 	
 	
 	
-	/*
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/allmeetings/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}")
-	public List<UpcomingMeeting> getJSONUpcomingMeetings(
+	@Path("/clientrisks/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
+	public List<ClientRisk> getJSONUpcomingMeetings(
 			@PathParam("username") String username,
-			@PathParam("token") String token
+			@PathParam("token") String token,
+			@PathParam("clientid") String clientid
 			) {
 		
 		// sanity checks
@@ -80,11 +82,13 @@ public class RiskResource {
 		if( username.length() < 1 ) throw new DMSClientErrorException("No username supplied");
 		if( token == null ) throw new DMSClientErrorException("No token supplied");
 		if( token.length() < 1 ) throw new DMSClientErrorException("No token supplied");
+		if( clientid == null ) throw new DMSClientErrorException("No username supplied");
+		if( clientid.length() < 1 ) throw new DMSClientErrorException("No username supplied");
 
 		System.out.println("Getting upcoming meeting details.");
 		
-		return MeetingFactory.createUpcomingMeetings(username, token);
-	}*/
+		return RiskFactory.createClientRisks(username, token, clientid);
+	}
 	
 	
 	
