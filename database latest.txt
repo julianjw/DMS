@@ -1,1 +1,1 @@
-database v1.25 - organisation instead of client based risk assessment
+database v1.26 - reverted back to client oriented risk assessment
