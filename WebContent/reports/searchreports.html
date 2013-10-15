@@ -126,11 +126,9 @@ function selectPP(el) {
 		doc.text(31, 210, data.clientDetails.livingArangements.city + ', '
 						+ data.clientDetails.livingArangements.postCode);		
 		doc.text(10, 215, 'Service: ' + data.clientDetails.livingArangements.service);
-		
-		//Add this stuff in when steven has added them into the personal plan (in database but coming back in json object)
- 		//doc.text(10, 220, 'Family Contact: ' + data.clientDetails.livingArangements.familyContact);
-		//doc.text(10, 225, 'Sick Contact: ' + data.clientDetails.livingArangements.sickContact);
-		//doc.text(10, 230, 'Other Important People: ' + data.clientDetails.livingArangements.otherImportantPeople);
+ 		doc.text(10, 220, 'Family Members: ' + data.clientDetails.livingArangements.familyMembers);
+		doc.text(10, 225, 'Sick Contact: ' + data.clientDetails.livingArangements.sickContact);
+		doc.text(10, 230, 'Other Important People: ' + data.clientDetails.livingArangements.importantPerson);
 
 		doc.addPage(); //add new page
 		
@@ -376,7 +374,7 @@ function selectPP(el) {
 		doc.text(10, 150, 'TV Show: ' + data.supportRequired.relaxation.tVShow);
 			
 		//Prompt the user to save the pdf
-		doc.save($(el).attr("id") + '_personal_plan' + date + '.pdf');
+		doc.save($(el).attr("id") + '_personal_plan_' + date + '.pdf');
 	});
 
 }
