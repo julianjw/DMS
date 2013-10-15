@@ -43,6 +43,7 @@ public class RiskResource {
 			) {
 		
 		Integer riskid = arg.getRisk_id();
+		System.out.println("Risk id is " + riskid);
 		
 		System.out.println("Writing: Plan Meeting");
 		if ( BeansUtility.storeBean(arg, riskid, username, token) ) return new Verification(Verification.Verified.SUCCESS);

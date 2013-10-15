@@ -124,12 +124,9 @@ public class SqlWriteJob {
 		insertSql = "INSERT INTO `"+tableName+"`("+insertSqlFields+") VALUES ("+insertSqlValues+");";
 		updateSql = "UPDATE `"+tableName+"` SET "+updateSqlSet+" WHERE "+actualKeyName.substring(2)+" = ?;";
 		
-		System.out.println(countSql);
-		System.out.println(insertSql);
-		System.out.println(updateSql);
-		
 		System.out.println("SqlWriteJob: Preparing.");
 		
+		System.out.println(countSql);
 		PreparedStatement countPs = populateValues(actualKey, null, DatabaseAccess.createPreparedStatement(countSql) );
 		ResultSet countRs = countPs.executeQuery(); // count how many times it is in the database
 		
@@ -137,11 +134,13 @@ public class SqlWriteJob {
 			System.out.println( "number of times user id number found in table: " + countRs.getInt(1));
 			if ( countRs.getInt(1) == 0 ) { // if the count is 0, we need to insert it.
 				System.out.println("Executing an insert.");
+				System.out.println(insertSql);
 				PreparedStatement insertPs = populateValues(row, null, DatabaseAccess.createPreparedStatement(insertSql));
 				insertPs.executeUpdate();
 				
 			} else {
 				System.out.println("Executin an update.");
+				System.out.println(updateSql);
 				PreparedStatement updatePs = populateValues(row, actualKeyName, DatabaseAccess.createPreparedStatement(updateSql));
 				updatePs.executeUpdate();
 			}
@@ -166,7 +165,7 @@ public class SqlWriteJob {
 			) throws SQLException, DMSException {
 		
 		boolean writeKeyInWhereClause = keyName != null; // do we want the key last?
-		int total = row.size();
+		//int total = row.size();
 		
 		int i = 0;
 		
@@ -182,13 +181,13 @@ public class SqlWriteJob {
 				continue; // if we want the key last
 			}
 			
-			i++;
+			i++; // move to next ? in query
 			
-			ps = insertData( ps, type, data, i) ;
+			ps = insertData( ps, type, data, i);
 		}
 		
 		if ( writeKeyInWhereClause ) {
-			ps = insertData( ps, keyName.charAt(0), row.get(keyName), total);
+			ps = insertData( ps, keyName.charAt(0), row.get(keyName), ++i);
 		}
 		
 		return ps;
@@ -210,24 +209,30 @@ public class SqlWriteJob {
 	private static PreparedStatement insertData(PreparedStatement ps, char type, Object data, int i) throws SQLException, DMSException {
 		switch (type) {
 			case STRING:
+				System.out.print( " S:" + (String)data );
 				ps.setString(i, (String)data);
 				break;
 			case INTEGER:
+				System.out.print( " I:" + (Integer)data );
 				ps.setInt(i, (Integer)data);
 				break;
 			case BOOLEAN:
+				System.out.print( " B:" + (Boolean)data );
 				ps.setBoolean(i, (Boolean)data);
 				break;
 			case DATE:
+				System.out.print( " D:" + Date.valueOf( (String)data) );
 				ps.setDate(i, Date.valueOf( (String)data) );
 				break;
 			case AUTO_INCREMENT:
+				System.out.print( " AI:" + (Integer)data );
 				if ( data == null ) ps.setNull(i, java.sql.Types.NULL );
 				else ps.setInt(i, (Integer)data);
 				break;
 			default:
 				throw new DMSException("Unknown sql type \""+type+"\".");
 		}
+		System.out.println();
 		return ps;
 	}
 	
