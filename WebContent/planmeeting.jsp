@@ -59,11 +59,11 @@
 	<br />
 	<br />
 	<label id='preliminaryL' style="font-weight: bold;">Contact with the service user's nominated invitees and support network</label> <br />
-	<input type="checkbox" name="education" id='family' value="true">Family Member(s) <br />
-	<input type="checkbox" name="education" id='guardian' value="true">Guardian(s) <br />
-	<input type="checkbox" name="education" id='decisionMaker' value="true">Substitute Decision Maker(s) <br />
-	<input type="checkbox" name="education" id='advocate' value="true">Advocate(s) <br />
-	<input type="checkbox" name="education" id='serviceReps' value="true">Representatives from other services accessed by the service user <br />
+	<input type="checkbox" name="family" id='family' value="true">Family Member(s) <br />
+	<input type="checkbox" name="guardian" id='guardian' value="true">Guardian(s) <br />
+	<input type="checkbox" name="decisionMaker" id='decisionMaker' value="true">Substitute Decision Maker(s) <br />
+	<input type="checkbox" name="advocate" id='advocate' value="true">Advocate(s) <br />
+	<input type="checkbox" name="serviceReps" id='serviceReps' value="true">Representatives from other services accessed by the service user <br />
 	<br />
 	<hr>
 	<br />
@@ -141,7 +141,13 @@
 				//Coordination of the personal plannning process
  				planMeeting.prelimMeetingDate =	$("#preliminaryT").val();
  				planMeeting.discussion_record =	$("#recordT").val();
- 				planMeeting.userChoicesImplemented = //$("").val(); //#confirmYes, #confirmNo
+ 				
+ 				if ($("#confirmYes").is(":checked")) {
+ 					planMeeting.userChoicesImplemented = $("#confirmYes").val();
+ 				} else {
+ 					planMeeting.userChoicesImplemented = $("#confirmNo").val();
+ 				}
+ 				//planMeeting.userChoicesImplemented = //$("").val(); //#confirmYes, #confirmNo
  				planMeeting.infoCompleted = $("#informedDecision").is(":checked");
 	
 				//Contact with the service user's nominated invitees and support network 
