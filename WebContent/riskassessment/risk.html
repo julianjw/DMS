@@ -92,6 +92,7 @@ $(document).ready(function(){
 		risk.delegated_manager = $("#delegatedManagerT").val();
 		risk.dm_sign_date = $("#delegatedManagerDateT").val();
 		risk.target_date = $("#targetDateT").val();
+		risk.user_id = $.cookie("client_id");
 		
 		if($("#authYes").prop("checked", true)) {
 			risk.proceed=true;			
@@ -103,7 +104,7 @@ $(document).ready(function(){
 		var jsonText = JSON.stringify(risk);
 		
 		$.ajax({
-			url:'./rest/risk/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/' + $.cookie("client_id"),
+			url:'./rest/risk/' + $.cookie('user_id') + "/" + $.cookie('auth_token'),
 			type: 'POST',
 			contentType: 'application/json; charset=UTF-8',
 			dataType: 'json',
@@ -113,6 +114,7 @@ $(document).ready(function(){
 					alert("failure");
 				}else {
 					alert("risk assessment details saved!");
+					location.reload(true);
 				}				
 			},
 			error: function(jqXHR, textStatus) {
