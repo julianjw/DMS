@@ -92,7 +92,12 @@ $(document).ready(function(){
 		risk.delegated_manager = $("#delegatedManagerT").val();
 		risk.dm_sign_date = $("#delegatedManagerDateT").val();
 		risk.target_date = $("#targetDateT").val();
+		
 		risk.user_id = $.cookie("client_id");
+		if($.cookie("risk_id")) {
+			risk.risk_id = $.cookie("risk_id");
+		}
+		
 		
 		if($("#authYes").prop("checked", true)) {
 			risk.proceed=true;			
