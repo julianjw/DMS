@@ -683,31 +683,7 @@ public class DatabaseAccess {
 
 	
 	
-	public static List<String> getUserInfo(String username) {
-		
-		String sql = "select ui.username, ui.name, ui.password, r.role from user_info ui inner join roles r on ui.role_id=r.role_id where ui.username=?";
-		
-		List<String> userInfo = new Vector<String>();
-		
-		try {
-			
-			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setString(1, username);
-			ResultSet results = ps.executeQuery();
-			
-			results.next();
-			
-			userInfo.add( results.getString("username"));
-			userInfo.add( results.getString("name"));
-			userInfo.add( ""/*results.getString("password")*/);
-			userInfo.add( results.getString("role"));
-			
-		} catch (SQLException e) {
-			return null;
-		}
-		
-		return userInfo;
-	}
+	
 
 	/**
 	 * Get a prepared statement ready.
@@ -761,4 +737,50 @@ public class DatabaseAccess {
 		
 		return userName;
 	}
+
+	public static List<List<String>> getAllUsersWithRole(String role) {
+		role = role.toUpperCase();
+		String sql = "select ui.username, ui.name, ui.password, r.role from user_info ui inner join roles r on ui.role_id=r.role_id where r.role=?";
+		ResultSet results = queryUserInfo(sql, role);
+		
+		List<List<String>> allClients = new ArrayList<List<String>>();
+		
+		List<String> client = null;
+		while ( (client = extractUserInfo(results)) != null ) allClients.add(client);
+		
+		return allClients;
+	}
+	
+	public static List<String> getUserInfo(String username) {
+		String sql = "select ui.username, ui.name, ui.password, r.role from user_info ui inner join roles r on ui.role_id=r.role_id where ui.username=?";
+		ResultSet results = queryUserInfo(sql, username);
+		return extractUserInfo(results);
+	}
+	
+	private static List<String> extractUserInfo( ResultSet r ){
+		
+		List<String> userInfo = new Vector<String>();
+		try {
+			if ( !r.next() ) return null;
+			userInfo.add( r.getString("username"));
+			userInfo.add( r.getString("name"));
+			userInfo.add( ""/*r.getString("password")*/);
+			userInfo.add( r.getString("role"));
+			return userInfo;
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+	
+	private static ResultSet queryUserInfo(String sql, String whereValue ) {
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, whereValue);
+			ResultSet results = ps.executeQuery();
+			return results;
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+	
 }

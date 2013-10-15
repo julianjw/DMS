@@ -4,11 +4,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="user")
 public class DMSUser {
-	private String user_id;
+	private String user_id; /* login username */
 	private String rName;
 	private String password;
 	private String role;
 	
+	/**
+	 * 
+	 * @param user_id
+	 * @param rName
+	 * @param password
+	 * @param role
+	 */
 	public DMSUser ( String user_id, String rName, String password, String role ) {
 		this.user_id = user_id;
 		this.rName = rName;

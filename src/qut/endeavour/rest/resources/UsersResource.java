@@ -1,5 +1,7 @@
 package qut.endeavour.rest.resources;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -25,24 +27,26 @@ public class UsersResource {
 	private final String USER_ID_FIELD = "user_id";
 	private final String AUTH_TOKEN_FIELD = "auth_token";
 	
+	@GET
+	@Path("/getallclients/{user_id: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<DMSUser> getAllClients(
+			@PathParam("user_id") String username,
+			@PathParam("token") String token
+			){
+		return UserFactory.createAllClients( username, token );
+	}
 	
 	@GET
 	@Path("/{user_id: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{user_to_get: [a-zA-Z_0-9]+}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public DMSUser existinguser(
-			@PathParam("user_id") String currentUser_id,
+			@PathParam("user_id") String username,
 			@PathParam("token") String token,
 			@PathParam("user_to_get") String userToRetrieve
 			){
 		
-		return UserFactory.createUser( userToRetrieve );
-		
-//		DMSUser user = new DMSUser();
-//		user.setrName("namefield");
-//		user.setPassword("passwordfield");
-//		user.setRole("rolefield");
-//		user.setUser_id("idfield");
-//		return user;
+		return UserFactory.createUser( username, token, userToRetrieve );
 	}
 	
 	
@@ -55,20 +59,6 @@ public class UsersResource {
 			@PathParam("user_id") String currentUser_id,
 			@PathParam("token") String token
 			) {
-		
-//		throw new DMSClientErrorException("asldjf");
-		
-//		System.out.println("Existing user id: "+currentUser_id);
-//		System.out.println("Existing user auth: "+token);
-//		
-//		System.out.println("new user_id:"+newUser.getUser_id());
-//		System.out.println("new user name:"+newUser.getrName());
-//		System.out.println("new user password:"+newUser.getPassword());
-//		System.out.println("new user role:"+newUser.getRole());
-		
-		
-		
-		
 		// sanity checks
 		if( currentUser_id == null ) throw new DMSClientErrorException("No user_id supplied");
 		if( currentUser_id.length() < 1 ) throw new DMSClientErrorException("No user_id supplied");

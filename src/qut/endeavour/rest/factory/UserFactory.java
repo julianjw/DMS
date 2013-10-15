@@ -5,23 +5,48 @@ import java.util.List;
 import java.util.Map;
 
 import qut.endeavour.rest.bean.admin.DMSUser;
+import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.storage.DatabaseAccess;
+import qut.endeavour.rest.utility.Permissions;
 
 public class UserFactory {
 	
-	public static DMSUser createUser(String username) {
+	private static String CLIENT_ROLE = "CLIENT";
+	
+	public static DMSUser createUser(String requester_username, String token, String username) {
+		
+		String role = DatabaseAccess.getRole(requester_username, token);
+		if ( !Permissions.canRequestUser( role ) ) throw new DMSClientErrorException("User role "+role+" cannot request a user.");
 		
 		List<String> userInfo = DatabaseAccess.getUserInfo( username );
 		
-		DMSUser user = new DMSUser();
+		return new DMSUser (
+				userInfo.get(0),	// user login name
+				userInfo.get(1),	// user's real name
+				null, 				// no password returned
+				userInfo.get(3)		// role
+				);
+	}
+	
+	public static List<DMSUser> createAllClients(String username, String token) {
+	
+		{
+			String role = DatabaseAccess.getRole(username, token);
+			if ( !Permissions.canRequestClients( role ) ) throw new DMSClientErrorException("User role "+role+" cannot request a user.");
+		}
 		
-		user.setUser_id( userInfo.get(0) );
-		user.setrName( userInfo.get(1) );
-		user.setPassword( userInfo.get(2) );
-		user.setRole( userInfo.get(3) );
+		List<List<String>> clientsInfo = DatabaseAccess.getAllUsersWithRole( CLIENT_ROLE ); // TODO make this a constant
+		List<DMSUser> users = new ArrayList<DMSUser>();
 		
-		
-		return user;
+		for ( List<String> client : clientsInfo ) {
+			users.add( new DMSUser(
+					client.get(0),	// user login name
+					client.get(1),	// user's real name
+					null, 			// no password returned
+					null			// no role will be returned
+					) );
+		}
+		return users;
 	}
 	
 }
