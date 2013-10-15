@@ -1,3 +1,4 @@
+<h2 class='instructions'>3) Edit</h2>
 <label class='title'>Service User Name</label><span id='serviceUsername'></span>
 <br />
 <label class='title'>Service User ID</label><span id='serviceID'></span>
@@ -60,9 +61,64 @@
 <input type='text' id='targetDateT' class='inline' placeholder='dd/mm/yyyy'/>
 
 <label class='bold inline'>Authority to proceed?</label>
-<input type="radio"  id='authYes' value="true"> Yes
-<input type="radio" id='authNo' value="false"> No
+<input type="radio" name='auth'  id='authYes' value="true"> Yes
+<input type="radio" name='auth' id='authNo' value="false"> No
 <br />
 <br />
 
-<button id='saveB'>Save</button>
+<button id='saveB'>Save</button> <h2 style="display: inline-block;"class='instructions'>4) Save</h2>
+
+
+<script type='text/javascript'>
+$(document).ready(function(){
+	//page load
+	
+	
+	//BINDS
+	//Save
+	$("#saveB").click(function(){
+		var risk =  new Object();
+		
+		risk.service = $("#serviceT").val();
+		risk.area = $("#areaT").val();
+		risk.risk_assess_date = $("#dateT").val();
+		risk.risk_description = $("#locationDescT").val();
+		risk.probability = $("#probabilityT").val();
+		risk.exposure = $("#exposureT").val();
+		risk.consequences = $("#consequenceT").val();
+		risk.risk_controls = $("#riskControlsT").val();
+		risk.service_manager = $("#serviceManagerT").val();
+		risk.sm_sign_date = $("#serviceManagerDateT").val();
+		risk.delegated_manager = $("#delegatedManagerT").val();
+		risk.dm_sign_date = $("#delegatedManagerDateT").val();
+		risk.target_date = $("#targetDateT").val();
+		
+		if($("#authYes").prop("checked", true)) {
+			risk.proceed=true;			
+		}else {
+			risk.proceed=false;
+		}
+		
+		
+		var jsonText = JSON.stringify(risk);
+		
+		$.ajax({
+			url:'./rest/risk/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/' + $.cookie("client_id"),
+			type: 'POST',
+			contentType: 'application/json; charset=UTF-8',
+			dataType: 'json',
+			data: jsonText,
+			success: function(data, textStatus, jqXHR) {
+				if(data.verified=="failure") {
+					alert("failure");
+				}else {
+					alert("risk assessment details saved!");
+				}				
+			},
+			error: function(jqXHR, textStatus) {
+				alert("error saving risk assessment details");
+			}
+		});
+	});
+});
+</script>

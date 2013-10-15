@@ -1,11 +1,25 @@
-<div id='searchD'>
+<div id='clientSearchD' >
+	<h2 class='instructions'>1) Choose a client</h2>
 	<table border=0>
 	<tr>
 		<td>
-			<label for='queryT' id='queryL' class='toggle'>Service: </label>
-			<input type='text' name='queryT' id='queryT' />
-			<button id='queryB'>Search</button>
+			<label for='clientQueryT' id='clientQueryL' >Name: </label>
+			<input type='text' name='clientQueryT' id='clientQueryT' />
+			<button id='clientQueryB'>Search</button>
 	
+			<div id='clientSearchResults'></div>
+		</td>
+		<td>OR</td>
+		<td><button id='createNewClientButton' >Create a new Client</button></td>
+	</tr>
+	</table>
+</div>
+
+<div id='riskSearchD' class='hidden'>
+	<h2 class='instructions'>2) Choose a risk assessment</h2>
+	<table border=0>
+	<tr>
+		<td>
 			<div id='searchResults'></div>
 		</td>
 		<td>OR</td>
@@ -21,14 +35,87 @@ function selectRisk(el) {
 	$.cookie('risk_id', $(el).attr("id"));
 	//continue to forms
 	$("#searchD").hide();
-	pullData("risk");
+	pullData("riskD");
 	$("#riskD").show();
 }
 
 
+
+function showClients() {
+	$.ajax({
+		url: "./rest/user/getallclients/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
+		type:"get",
+		contentType: "application/json",
+		success: function(d) {
+			$("#clientSearchResults").html("");
+			var content = "<table>"
+				content += "<tr><th>ID</th><th>Name</th></tr>";
+			for (var i = 0; i < d.user.length; i++) {
+				content += "<tr><td>" + d.user[i].user_id + "</td>";	
+				content += "<td class='fakeLink' id='" + d.user[i].user_id + "'onClick='selectClient(this);'>" + d.user[i].rName + "</td></tr>";						
+			}
+			content += "</table>";
+			$("#clientSearchResults").append(content);
+		},
+		error: function(xhr) {
+			// do something to handle error
+			alert("error getting client list");
+		}
+	});
+}
+
+
+
+function selectClient(el) {
+	//create the cookie
+	$.cookie("client_id", $(el).attr("id"));
+	
+	
+	//get list of existing clients
+	$.ajax({
+		url: "./rest/risk/clientrisks/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + $.cookie("client_id"),
+		type:"get",
+		contentType: "application/json",
+		success: function(d) {
+			if(d==null) {
+				var content = "<h3 class='nothingFound'>No risk assessments found</h3>"
+			}else {
+				$("#searchResults").html("");
+				var content = "<table>"
+				content += "<tr><th>Risk No.</th><th>Service</th><th>Area</th><th>Date</th></tr>";
+			
+				if(d.clientRisk[0]==null) {
+					content += "<tr><td class='fakeLink' id='" + d.clientRisk.risk_id + "'onClick='selectRisk(this);'>" + d.clientRisk.risk_id + "</td>";
+					content += "<td>" + d.clientRisk.service + "</td>";
+					content += "<td>" + d.clientRisk.area + "</td>";
+					content += "<td>" + d.clientRisk.date + "</td>";
+				}else {
+					for (var i = 0; i < d.clientRisk.length; i++) {
+						content += "<tr><td class='fakeLink' id='" + d.clientRisk[i].risk_id + "'onClick='selectRisk(this);'>" + d.clientRisk[i].risk_id + "</td>";
+						content += "<td>" + d.clientRisk[i].service + "</td>";
+						content += "<td>" + d.clientRisk[i].area + "</td>";
+						content += "<td>" + d.clientRisk[i].date + "</td>";
+					}
+				}
+				content += "</table>";
+			}
+			$("#searchResults").append(content);
+		},
+		error: function(xhr) {
+			// do something to handle error
+			alert("error getting risk assessment details for client");
+		}
+	});
+	
+	$("#clientSearchD").hide();
+	$("#riskSearchD").show();
+}
+
+
+
 $(document).ready(function(){
 	
-	
+	//BINDS
 	//click on create new risk assessment button
 	$("#createNewRiskButton").click(function(){
 		$("#searchD").hide();
@@ -36,59 +123,23 @@ $(document).ready(function(){
 		$("#riskD").show();
 	});
 	
+	//click on create new client
+	$("#createNewClientButton").click(function(){
+		window.location.replace("http://" + window.location.hostname + ":8080/EndeavourDMS/createuser.jsp");
+	});
+	
+	//click on client search button
+	$("#clientQueryB").click(function(){
+		
+	});
+	
+	
+	
+	
+	
 	
 	//page loads
-	//get list of existing clients
-	$.ajax({
-		url: "./rest/risk/allriskassessment/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
-		type:"get",
-		contentType: "application/json",
-		success: function(d) {
-			$("#searchResults").html("");
-			var content = "<table>"
-			content += "<tr><th>Risk No.</th><th>Service</th><th>Area</th><th>Date</th></tr>";
-			for (var i = 0; i < d.existingRiskDetails.length; i++) {
-				content += "<tr><td class='fakeLink' id='" + d.existingRiskDetails[i].risk_id + "'onClick='selectRisk(this);'>" + d.existingRiskDetails[i].risk_id + "</td>";
-				content += "<td>" + d.existingRiskDetails[i].service + "</td>";
-				content += "<td>" + d.existingRiskDetails[i].area + "</td>";
-				content += "<td>" + d.existingRiskDetails[i].date + "</td>";
-			}
-			content += "</table>";
-			$("#searchResults").append(content);
-		},
-		error: function(xhr) {
-			// do something to handle error
-			alert("error getting existing personal plan details");
-		}
-	});
+	showClients();
 	
-	
-	//click on search button
-	$("#queryB").click(function(){
-		$.ajax({
-			url: "./rest/risk/allclientswithplans/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
-			type:"get",
-			contentType: "application/json",
-			success: function(d) {
-				$("#searchResults").html("");
-				var content = "<table>"
-					content += "<tr><th>Risk No.</th><th>Service</th><th>Area</th><th>Date</th></tr>";
-				for (var i = 0; i < d.existingRiskDetails.length; i++) {
-					if(d.existingRiskDetails[i].service == $("#queryT").val() || $("#queryT").val()=="") {
-						content += "<tr><td class='fakeLink' id='" + d.existingRiskDetails[i].risk_id + "'onClick='selectRisk(this);'>" + d.existingRiskDetails[i].risk_id + "</td>";
-						content += "<td>" + d.existingRiskDetails[i].service + "</td>";
-						content += "<td>" + d.existingRiskDetails[i].area + "</td>";
-						content += "<td>" + d.existingRiskDetails[i].date + "</td>";
-					}
-				}
-				content += "</table>";
-				$("#searchResults").append(content);
-			},
-			error: function(xhr) {
-				// do something to handle error
-				alert("error getting existing risk assessment details");
-			}
-		});
-	});
 });
 </script>
