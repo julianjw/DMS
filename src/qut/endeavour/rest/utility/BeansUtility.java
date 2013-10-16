@@ -57,6 +57,9 @@ public class BeansUtility {
 		//if ( )
 		
 		//System.out.println("About to check for bean class -" + bean.getClass().toString());
+		
+		System.out.println("Extract information from bean.");
+		
 		try {
 			List<SqlWriteJob> writeJobs = new ArrayList<SqlWriteJob>();
 			
@@ -75,10 +78,13 @@ public class BeansUtility {
 				return false;
 			}
 			
+			System.out.println("Extracted all infomration from bean.");
+			
 			//System.out.println("Found container bean.");
 			DatabaseAccess.performSqlJobs(writeJobs);
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println(e);
 			return false;
 			//throw new DMSClientErrorException("Cannot write Education & Employment.");

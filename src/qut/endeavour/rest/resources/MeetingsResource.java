@@ -33,8 +33,8 @@ public class MeetingsResource {
 	@Path("/{user_id: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Verification setJSONPlanning(
-			Planning arg,
+	public Verification setJSONScheduledMeeting(
+			ScheduledMeeting arg,
 			@PathParam("user_id") String username,
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
@@ -50,7 +50,7 @@ public class MeetingsResource {
 	@GET
 	@Path("/{username: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{clientid: [a-zA-Z_0-9]+}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ScheduledMeeting JSONSupportRequired(
+	public ScheduledMeeting getJSONScheduledMeeting(
 			@PathParam("username") String username,
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
