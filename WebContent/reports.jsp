@@ -13,6 +13,13 @@
 	
 <jsp:include page="partials/footer.html" flush="true" />
 <!-- Page specific scripts -->
+<script type='text/javascript'>
+if($.cookie('user_role')=="r&do" || $.cookie('user_role')=="som" || $.cookie('user_role')=="sdim") {
+	
+}else {
+	window.location.replace("http://" + window.location.hostname + ":8080/EndeavourDMS/restricted.jsp");
+}
+</script>
 </html></head>
 <body>
 </body>

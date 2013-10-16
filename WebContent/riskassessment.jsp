@@ -25,6 +25,12 @@
 <!-- Page specific scripts -->
 <script type='text/javascript'>
 
+if($.cookie('user_role')!="client") {
+	
+}else {
+	window.location.replace("http://" + window.location.hostname + ":8080/EndeavourDMS/restricted.jsp");
+}
+
 function pullData(page) {
 	switch(page) {
 	case "new":

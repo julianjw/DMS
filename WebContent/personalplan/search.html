@@ -76,7 +76,7 @@ $(document).ready(function(){
 				content += "<tr><th>Client ID</th><th>Name</th><th>DOB</th><th>Mobile</th><th>Telephone</th></tr>";
 				for (var i = 0; i < d.existingPlanDetails.length; i++) {
 					if(d.existingPlanDetails[i].user_id == $("#queryT").val() || $("#queryT").val()=="") {
-						content += "<tr><td>" + d.existingPlanDetails[i].user_id + "</td>";
+						content += "<tr><td class='fakeLink' id='" + d.existingPlanDetails[i].user_id + "'onClick='selectPP(this);'>" + d.existingPlanDetails[i].user_id + "</td>";
 						content += "<td>" + d.existingPlanDetails[i].rName + "</td>";
 						content += "<td>" + d.existingPlanDetails[i].dob + "</td>";
 						content += "<td>" + d.existingPlanDetails[i].mobile + "</td>";

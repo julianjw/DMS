@@ -21,10 +21,26 @@
         			
         			
         			//add elements to page based off role
-        			//support worker
-        			if($.cookie('user_role')!="client" ) {
+        			//client
+        			if($.cookie("user_role")=="client") {
+        				$("#main-nav").html("");
+        				$("#main-nav").append("<li><a href='goals.jsp'>Goals</a></li>");
+        			}else if($.cookie("user_role")=="sw") {
+        				$("#main-nav").html("");
+        				$("#main-nav").append("<li><a href='personalplan.jsp'>Personal Plan</a></li>");
+        				$("#main-nav").append("<li><a href='riskassessment.jsp'>Risk Assessment</a></li>");
+        				$("#main-nav").append("<li><a href='goals.jsp'>Goals</a></li>");
+        			}else if($.cookie("user_role")=="sdim" || $.cookie("user_role")=="som" || $.cookie("user_role")=="r&do") {
+        				$("#main-nav").html("");
+        				$("#main-nav").append("<li><a href='personalplan.jsp'>Personal Plan</a></li>");
+        				$("#main-nav").append("<li><a href='riskassessment.jsp'>Risk Assessment</a></li>");
+        				$("#main-nav").append("<li><a href='goals.jsp'>Goals</a></li>");
+        				$("#main-nav").append("<li><a href='planmeeting.jsp'>Plan Meetings</a></li>");
         				$("#main-nav").append("<li><a href='createuser.jsp'>Create User</a></li>");
+        				$("#main-nav").append("<li><a href='reports.jsp'>Reports</a></li>");
         			}
+        			
+        			
         			
         			
         			//click on logout button
@@ -56,7 +72,7 @@
         
         
         <div id="con-header">
-            <div id="con-head-logo"> <img src="images/endeavourLogo.jpg"> </div>
+            <div id="con-head-logo"> <a href="index.jsp" ><img src="images/endeavourLogo.jpg"></a></div>
             <div id="con-head-quote"> <em>"quote"</em> </div>
             <div id="con-head-worder"> <h2>user</h2></div>
 		</div> 
@@ -65,12 +81,6 @@
             <div id="con-body-nav">
              	<h2>Main Page<br />Navigation Menu</h2> 
                 <ul id="main-nav">
-					<li class='mainNavigation'><a href="index.jsp">Home</a></li>
-					<li class='mainNavigation'><a href="personalplan.jsp">Personal Plan</a></li>
-					<li class='mainNavigation'><a href="riskassessment.jsp">Risk Assessment</a></li>
-					<li class='mainNavigation'><a href="reports.jsp">Reports</a></li>
-					<li class='mainNavigation'><a href="planmeeting.jsp">Plan Meeting</a></li>
-					<li class='mainNavigation'><a href="goals.jsp">Goals</a></li>
 				</ul>
             </div>
             <div id="con-body-main">
