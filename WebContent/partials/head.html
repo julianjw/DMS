@@ -58,6 +58,11 @@
         				    }
         				});	
         			});
+        			
+        			
+        			$("#quoteHere").html("");
+                	$("#quoteHere").html(quotes[i]);
+        			
         		});
         	}
         	if(document.URL!="http://"+window.location.hostname + ":8080/EndeavourDMS/personalplan.jsp") {
@@ -65,6 +70,34 @@
         			$.removeCookie('currentClientPlanId');
         		}
         	}
+        	
+        	
+        	
+        	//get random quote
+        	var quotes = new Array();
+        	quotes[0] = "Wake up every morning with the thought that something wonderful is about to happen.";
+        	quotes[1] = "If you desire to make a difference in the world you must be different.";
+        	quotes[2] = "One small positive thought can change your whole day.";
+        	quotes[3] = "Success is not final, Failure is not Fatal, it is the courage to continue that counts.";
+        	quotes[4] = "Remember, your present situation is not your final destination. The best is yet to come.";
+        	quotes[5] = "Don’t let someone dim your light simply because its shining in their eyes.";
+        	quotes[6] = "You can only lose something that you have, but you cannot lose something that you are.";
+        	quotes[7] = "Friendship is not a big thing… It’s a million little things.";
+        	quotes[8] = "Even the smallest act of caring, has the potential to turn a life around.";
+        	quotes[9] = "If you desire to make a difference in the world, you must be different from the world.";
+        	quotes[10] = "Take time to be thankful for what you have. you can always have more, but you could also have less.";
+        	quotes[11] = "Don’t count the days, make the days count.";
+        	quotes[12] = "Life has no pause buttons. Dreams have no expiry date. Time has no holiday. So dont waste a single moment in your life. Live it! Love it! Rock it!";
+        	quotes[13] = "Some people will always throw stones in your path. It depends on you what you make with them.. a Wall or a Bridge! You are the architect of your life.";
+        	
+        	var i = Math.floor(Math.random() * quotes.length);
+        	
+        	
+        	
+        	
+        	
+        	
+        	
         </script>
 	</head>
 	
@@ -73,16 +106,15 @@
         
         <div id="con-header">
             <div id="con-head-logo"> <a href="index.jsp" ><img src="images/endeavourLogo.jpg"></a></div>
-            <div id="con-head-quote"> <em>"quote"</em> </div>
+            <div id="con-head-quote"> <em id='quoteHere'></em> </div>
             <div id="con-head-worder"> <h2>user</h2></div>
 		</div> 
 
         <div id="con-body">
             <div id="con-body-nav">
-             	<h2>Main Page<br />Navigation Menu</h2> 
                 <ul id="main-nav">
 				</ul>
             </div>
             <div id="con-body-main">
-            	<div id="con-body-main-title"> <h2>
+            	 <div id="con-body-main-nav"> 
                    

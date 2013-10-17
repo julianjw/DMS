@@ -1,9 +1,4 @@
 <jsp:include page="partials/head.html" flush="true" />
-	<!--title -->
-	Create User
-<jsp:include page="partials/nav.html" flush="true" />
-	<!-- navigation -->
-<!-- 	<h3>Personal Plan Nav</h3> -->
 
 <jsp:include page="partials/body.html" flush="true" />
 	<!-- page content -->

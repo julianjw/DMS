@@ -1,9 +1,5 @@
 <jsp:include page="partials/head.html" flush="true" />
 
-	<!--title -->
-	Edit Personal Plan
-	
-<jsp:include page="partials/nav.html" flush="true" />
 	<!-- navigation -->
 	<!-- 	<h3>Personal Plan Nav</h3> -->
 	<a href='personalplan.jsp'>New Personal Plan</a>

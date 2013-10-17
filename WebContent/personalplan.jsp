@@ -1,9 +1,4 @@
 <jsp:include page="partials/head.html" flush="true" />
-
-	<!--title -->
-	Personal Plan
-	
-<jsp:include page="partials/nav.html" flush="true" />
 	<!-- navigation -->
 	<div class="horizontalNav">
 	<ul>

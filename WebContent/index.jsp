@@ -1,8 +1,4 @@
 <jsp:include page="partials/head.html" flush="true" />
-	<!--title -->
-	User Home
-
-<jsp:include page="partials/nav.html" flush="true" />
 	<!-- navigation -->
 <!-- 	<h3>Client Home</h3> -->
 <jsp:include page="partials/body.html" flush="true" />

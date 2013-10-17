@@ -1,7 +1,5 @@
 <jsp:include page="partials/head.html" flush="true" />
-	<!--title -->
-	Risk Assessment
-<jsp:include page="partials/nav.html" flush="true" />
+	
 	<!-- navigation -->
 <div class="horizontalNav">
 <ul>
