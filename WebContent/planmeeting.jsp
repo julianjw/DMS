@@ -1,133 +1,231 @@
 <jsp:include page="partials/head.html" flush="true" />
 	<!-- navigation -->
 <!-- 	<h3>Personal Plan Nav</h3> -->
-	<a href='newmeeting.html'>New Meeting</a>
-	<a href='savedmeetings.html'>Saved Meetings</a>
+<div class="horizontalNav">
+<ul>
+	<li id="search" class='pageNav'><a href='#search'>Saved Meetings</a></li>
+	<li id="meeting" class="pageNav"><a href='#meeting'>New Meeting</a></li>
+</ul>
+</div>
 <jsp:include page="partials/body.html" flush="true" />
 	<!-- page content -->
 	
-	<table border="0">
-		<tr>
-		<td>
-			<label id='serviceIDL' style="font-weight: bold;" >User Service ID: </label>
-			<input type='text' id='serviceID' name='serviceID'  />
-		</td>
-		<td>
-			<label id='meetingDateL' style="font-weight: bold;" >Scheduled Meeting Date</label>
-			<input type='text' name='meetingDateT' id='meetingDateT' placeholder='dd/mm/yyyy' />
-			<br />
-		</td>
-		</tr>
-		<tr>
-		<td>
-			<label id='nameOfServiceL' style="font-weight: bold;">Name of service</label>
-			<br />
-			<input type="checkbox" name="education" id='education' value="true">Education <br />
-			<input type="checkbox" name="learningLifestyle" id='learningLifestyle' value="true">Learning and Lifestyle <br />
-			<input type="checkbox" name="post-school" id='post-school' value="true">Post-School
-		</td>
-		<td>
-			<label id='serviceUserNameL' style="font-weight: bold;" >Service user name</label>
-			<input type='text' name='serviceUsernameT' id='serviceUsernameT' />
-		</td>
-		</tr>
-	</table>
-	<br />
-	<hr>
-	<br />
-	<h2>Coordination of the Personal Planning Process</h2>
-	<br />
-	<label id='preliminaryL' style="font-weight: bold;" >Preliminary meeting with service user date</label>
-	<input type='text' name='preliminaryT' id='preliminaryT' placeholder='dd/mm/yyyy' />
-	<br />
-	<br />
-	<label for='recordT' class='toggle' style="font-weight: bold;">Record of Discussion: </label>
-	<div id='recordD'>
-		<textarea id='recordT' name='recordT' rows="3" cols="50"></textarea>
-	</div>
-	<br />
-	<label for='takeMeds' style="font-weight: bold;">Confirm service user's choice to participate:
-	<input type="radio" name="confirm" id='confirmYes' value="true"> Yes
-	<input type="radio" name="confirm" id='confirmNo' value="false"> No
-	<br />
-	<br />
-	<label for='takeMeds' style="font-weight: bold;">Informed Decision Making for Complex Areas (QF 8022.02) completed as required:
-	<input type="checkbox" name="informedDecision" id='informedDecision' value="true">Yes
-	<br />
-	<br />
-	<label id='preliminaryL' style="font-weight: bold;">Contact with the service user's nominated invitees and support network</label> <br />
-	<input type="checkbox" name="family" id='family' value="true">Family Member(s) <br />
-	<input type="checkbox" name="guardian" id='guardian' value="true">Guardian(s) <br />
-	<input type="checkbox" name="decisionMaker" id='decisionMaker' value="true">Substitute Decision Maker(s) <br />
-	<input type="checkbox" name="advocate" id='advocate' value="true">Advocate(s) <br />
-	<input type="checkbox" name="serviceReps" id='serviceReps' value="true">Representatives from other services accessed by the service user <br />
-	<br />
-	<hr>
-	<br />
-	<h2>Preparation for Personal Plan Meeting</h2>
-	<br />
-	<p>Check that all information that is pertinent to developing/updating a Personal Plan for an individual is available for reference during the personal planning process:</p>
-	<br />
-	<input type="checkbox" name="PBSPlan" id='PBSPlan' value="true">PBS Plan, including restrictive practice information (These plans are not to be reviewed at the PP meeting they are for reference as applicable). <br />
-	<input type="checkbox" name="adaptive" id='adaptive' value="true">Adaptive Functioning Assessment<br />
-	<input type="checkbox" name="CHAP" id='CHAP' value="true">Current CHAP and Related Health & Wellbeing information.<br />
-	<input type="checkbox" name="currentPP" id='currentPP' value="true">Current Personal Plan (or any current support plans including; behaviour support, safe swallowing, medication, communication, mobility, other). <br />
-	<input type="checkbox" name="serviceActivity" id='serviceActivity' value="true">Service Activity Options <br />
-	<input type="checkbox" name="gatherInfo" id='gatherInfo' value="true">Gather any other information and knowledge relevant to the discussion related to the development of the Personalised Plan. <br />
-	<input type="checkbox" name="medicationFolder" id='medicationFolder' value="true">Medication folder.<br />
-	<input type="checkbox" name="personalBudget" id='personalBudget' value="true">Service user's personal budget <br />
-	<input type="checkbox" name="reflections" id='reflections' value="true">Reflections/what we have discovered resource.<br />
-	<br />
-	<br />
-
-	<p>Service Coordinator to ensure that the following documents are reviewed and updated as part of the personal plan process annually:</p>
-	<input type="checkbox" name="photoRelease" id='photoRelease' value="true">Photo Release Form <br />
-	<input type="checkbox" name="clientServiceAgreement" id='clientServiceAgreement' value="true">Client Service Agreement (once only) <br />
-	<input type="checkbox" name="allSupportAgreements" id='allSupportAgreements' value="true">All Support Agreements <br />
-	<input type="checkbox" name="CIMS" id='CIMS' value="true">CIMS Information <br />
-	<input type="checkbox" name="medUpdatedYearly" id='medUpdatedYearly' value="true">Medication Folder and all forms, particularly the Medication Information Authorisation Form required to be updated annually <br />
-	<input type="checkbox" name="personalBelongings" id='personalBelongings' value="true">Service User Schedule of Individual Personal Belongings <br />
-	<input type="checkbox" name="PBSMaintenance" id='PBSMaintenance' value="true">PBS Maintenance plan. <br />
-	<label for='otherT1' class='toggle'>Additional Comments:</label>
-	<div id='otherD1'>
-		<textarea id='otherT1' name='otherT1' rows="3" cols="50"></textarea>
-	</div>
-	<br />
-	<hr>
-	<br />
-	<h2>Personal Plan Meeting and Outcomes</h2>
-	<input type="checkbox" name="ppMeetingOutcomes" id='ppMeetingOutcomes' value="true">Personal Plan Meeting and Outcomes <br />
-	<input type="checkbox" name="ppComplete" id='ppComplete' value="true">Personal Plan completed in full. <br />
-	<input type="checkbox" name="ppSignedOff" id='ppSignedOff' value="true">Completed Personal Plan signed and distributed as required. <br />
-	<input type="checkbox" name="thanked" id='thanked' value="true">All participants thanked for their input at the end of meeting. <br />
-	<label for='otherT2' class='toggle'>Additional Comments:</label>
-	<div id='otherD2'>
-		<textarea id='otherT2' name='otherT2' rows="3" cols="50"></textarea>
-	</div>
-	<br />
-	<hr>
-	<br />
-	<h2>Implementation of Personal Plan</h2>
-	<input type="checkbox" name="choices" id='choices' value="true">Service user activity choices and preferences incorporated into the service. <br />
-	<input type="checkbox" name="riskAssessment" id='riskAssessment' value="true">Risk Assessment Form/s completed as required. <br />
-	<input type="checkbox" name="indivSupport" id='indivSupport' value="true">Individual Support / Progress notes prepared. <br />
-	<input type="checkbox" name="goalProgressSummary" id='goalProgressSummary' value="true">Goal Progress Summary to be completed quarterly. <br />
-	<input type="checkbox" name="prepare" id='prepare' value="true">Prepare Resources to support Implementation (as required).<br />
-	<label for='otherT3' class='toggle'>Additional Comments:</label>
-	<div id='otherD3'>
-		<textarea id='otherT3' name='otherT3' rows="3" cols="50"></textarea>
-	</div>
-
-	<button id='SaveB'></button>
+	<div id="searchD" class="hidden"><jsp:include page="planmeeting/searchmeeting.html" flush="true" /></div>
+	<div id="meetingD" class="hidden"><jsp:include page="planmeeting/meeting.html" flush="true" /></div>
 
 
 	<script type='text/javascript'>
+	
+	function pullData(page) {
+		switch(page) {
+		
+		case "new":
+			$.removeCookie('client_id');
+		
+			//Housekeeping data
+			$("#serviceID").val("");
+			$("#serviceUsernameT").val("");
+			$("#meetingDateT").val("");
+			//name of service
+			$("#education").prop('checked', false);
+			$("#learningLifestyle").prop('checked', false);
+			$("#post-school").prop('checked', false);
+
+			//Coordination of the personal plannning process
+			$("#preliminaryT").val("");
+			$("#recordT").val("");
+			
+
+			$("#confirmYes").prop('checked', false);
+
+			$("#confirmNo").prop('checked', false);
+
+			//planMeeting.userChoicesImplemented = //$("").val(); //#confirmYes, #confirmNo
+			$("#informedDecision").prop('checked', false);
+
+			//Contact with the service user's nominated invitees and support network 
+			$("#family").prop('checked', false);
+			$("#guardian").prop('checked', false);
+			$("#decisionMaker").prop('checked', false);
+			$("#advocate").prop('checked', false);
+			$("#serviceReps").prop('checked', false);
+
+			//Preparation for Personal Plan Meeting
+			//Check that all information that is pertinent to developing/updating a Personal Plan for an individual is available for reference during the personal planning process
+			$("#PBSPlan").prop('checked', false);
+			$("#adaptive").prop('checked', false);
+			$("#CHAP").prop('checked', false);
+			$("#currentPP").prop('checked', false);
+			$("#serviceActivity").prop('checked', false);
+			$("#gatherInfo").prop('checked', false);
+			$("#medicationFolder").prop('checked', false);
+			$("#personalBudget").prop('checked', false);
+			$("#reflections").prop('checked', false);
+				
+			//Service Coordinator to ensure that the following documents are reviewed and updated as part of the personal plan process annually
+			$("#photoRelease").prop('checked', false);
+			$("#clientServiceAgreement").prop('checked', false);
+			$("#allSupportAgreements").prop('checked', false);
+			$("#CIMS").prop('checked', false);
+			$("#medUpdatedYearly").prop('checked', false);
+			$("#personalBelongings").prop('checked', false);
+			$("#PBSMaintenance").prop('checked', false);
+			$("#otherT1").val("");
+			
+			//personal plan meeting and outcomes
+			$("#ppMeetingOutcomes").prop('checked', false);
+			$("#ppComplete").prop('checked', false);
+			$("#ppSignedOff").prop('checked', false);
+			$("#thanked").prop('checked', false);
+			$("#otherT2").val("");
+				
+			//Implementation of personal plan
+			$("#choices").prop('checked', false);
+			$("#riskAssessment").prop('checked', false);
+			$("#indivSupport").prop('checked', false);
+			$("#goalProgressSummary").prop('checked', false);
+			$("#prepare").prop('checked', false);
+			$("#otherT3").val("");
+			
+			break;
+		
+		case "meetingD":
+			
+			//pull the name
+			$.ajax({
+				url: "./rest/user/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + $.cookie('client_id'),
+				type:"get",
+				contentType: "application/json",
+				success: function(d) {		
+					$("#serviceUsernameT").val(d.rName);
+					$("#serviceID").val(d.user_id);
+
+				},
+				error: function(xhr) {
+					// do something to handle error
+					alert(xhr.responseText);
+				}
+			});
+			
+			//get the data and display it
+			$.ajax({
+				url:'./rest/planmeeting/' + $.cookie('user_id') + '/' + $.cookie('auth_token') +'/' + $.cookie('client_id'),
+				type:"get",
+				contentType: "application/json",
+				success: function(d) {		
+
+					//display the data
+					//Housekeeping data
+					$("#meetingDateT").val(d.meetingDate);
+					//name of service
+					$("#education").prop('checked', d.education);
+					$("#learningLifestyle").prop('checked', d.learnlife);
+					$("#post-school").prop('checked', d.postSchool);
+
+					//Coordination of the personal plannning process
+					$("#preliminaryT").val(d.prelimMeetingDate);
+					$("#recordT").val(d.discussion_record);
+					
+					if (d.userChoicesImplemented == true) {
+						
+						$("#confirmYes").prop('checked', true);
+						$("#confirmNo").prop('checked', false);
+						
+					} else {
+						
+						$("#confirmYes").prop('checked', false);
+						$("#confirmNo").prop('checked', true);
+					}
+
+					//planMeeting.userChoicesImplemented = //$("").val(); //#confirmYes, #confirmNo
+					$("#informedDecision").prop('checked', d.infoCompleted);
+
+					//Contact with the service user's nominated invitees and support network 
+					$("#family").prop('checked', d.family);
+					$("#guardian").prop('checked', d.guardian);
+					$("#decisionMaker").prop('checked', d.decisionMaker);
+					$("#advocate").prop('checked', d.advocate);
+					$("#serviceReps").prop('checked', d.serviceReps);
+
+					//Preparation for Personal Plan Meeting
+					//Check that all information that is pertinent to developing/updating a Personal Plan for an individual is available for reference during the personal planning process
+					$("#PBSPlan").prop('checked', d.pbsPlan);
+					$("#adaptive").prop('checked', d.adaptFuncAssessment);
+					$("#CHAP").prop('checked', d.chapWellbeingInfo);
+					$("#currentPP").prop('checked', d.currentPersonalPlan);
+					$("#serviceActivity").prop('checked', d.serviceActivityOptions);
+					$("#gatherInfo").prop('checked', d.otherInfo);
+					$("#medicationFolder").prop('checked', d.medication);
+					$("#personalBudget").prop('checked', d.userBudget);
+					$("#reflections").prop('checked', d.reflections);
+						
+					//Service Coordinator to ensure that the following documents are reviewed and updated as part of the personal plan process annually
+					$("#photoRelease").prop('checked', d.photoRelease);
+					$("#clientServiceAgreement").prop('checked', d.clientServiceAgree);
+					$("#allSupportAgreements").prop('checked', d.allSuppAgree);
+					$("#CIMS").prop('checked', d.cimsInfo);
+					$("#medUpdatedYearly").prop('checked', d.mediInfoAuth);
+					$("#personalBelongings").prop('checked', d.schedPersonalBelongings);
+					$("#PBSMaintenance").prop('checked', d.pbsMaintenancePlan);
+					$("#otherT1").val(d.personalPlanComments);
+					
+					//personal plan meeting and outcomes
+					$("#ppMeetingOutcomes").prop('checked', d.personalMeetingPlanOutcomes);
+					$("#ppComplete").prop('checked', d.personalPlanComplete);
+					$("#ppSignedOff").prop('checked', d.completePlanSigned);
+					$("#thanked").prop('checked', d.planMeetingThanks);
+					$("#otherT2").val(d.personalMeetingPlanComments);
+						
+					//Implementation of personal plan
+					$("#choices").prop('checked', d.participation);
+					$("#riskAssessment").prop('checked', d.riskAssessForms);
+					$("#indivSupport").prop('checked', d.suppProgrssNotes);
+					$("#goalProgressSummary").prop('checked', d.goalProgressSummary);
+					$("#prepare").prop('checked', d.resourcesForImplementation);
+					$("#otherT3").val(d.implementComment);
+					
+				}
+			});
+			
+			break;
+		}
+	}
+	
+	$(document).ready(function(){
+
+		$("#searchD").show();
+
+		//BINDS
+		//click on existing risk assessments nav link
+		$("#search").click(function(){
+			$("#meetingD").hide();
+			$("#searchD").show();
+		});
+		
+		//click on risk assessment nav link
+		$("#meeting").click(function(){
+			$("#searchD").hide();
+			$("#meetingD").show();
+		});
+		
+		
+// 		//click on toggle class element
+// 		$(".toggle").click(function(event){
+// 			$(this).next().toggle();
+// 		});
+		
+		
+	});
+
+	
+	
 	if($.cookie('user_role')=="r&do" || $.cookie('user_role')=="som" || $.cookie('user_role')=="sdim") {
 		
 	}else {
 		window.location.replace("http://" + window.location.hostname + ":8080/EndeavourDMS/restricted.jsp");
 	}
 		$(document).ready(function(){
+			
 			$("#SaveB").click(function(){
 				var planMeeting = new Object();
 				
@@ -137,7 +235,7 @@
  				planMeeting.meetingDate = $("#meetingDateT").val();
 				//name of service
  				planMeeting.education =	$("#education").is(":checked");
- 				planMeeting.learnLife = $("#learnLifestyle").is(":checked");
+ 				planMeeting.learnLife = $("#learningLifestyle").is(":checked");
  				planMeeting.postSchool = $("#post-school").is(":checked");
 	
 				//Coordination of the personal plannning process
@@ -204,8 +302,7 @@
 					contentType: 'application/json',
 					data: jsonText,
 					complete: function(jqXHR, textStatus) {
-						alert(textStatus);
-						alert(jqXHR.responseText);
+
 					}
 				});
 			});
