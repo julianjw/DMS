@@ -29,6 +29,7 @@
         			
         			//click on logout button
         			$("#logout").click(function(){
+        				$.removeCookie("loginAttempt");
         				$.ajax({
         				    url: "./rest/auth?user_id=" + $.cookie('user_id') + "&auth_token=" + $.cookie('auth_token'),
         				    type: 'DELETE',
