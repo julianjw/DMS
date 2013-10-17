@@ -1,6 +1,7 @@
 <jsp:include page="partials/head.html" flush="true" />
 <jsp:include page="partials/body.html" flush="true" />
 	<!-- page content -->
+	<h2 class='instructions'>1) Login</h2>
 	<form method="post" action="./rest/auth">
 		<input type='text' name='user_id' id='user_id' placeholder='username' />
 		<p class='error' id='usernameE' name='usernameE'></p>

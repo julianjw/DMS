@@ -3,8 +3,8 @@
 	<!-- navigation -->
 <div class="horizontalNav">
 <ul>
-	<li id="search" class='pageNav'><a href='#search'>Existing Risk Assessments</a></li>
-	<li id="risk" class="pageNav"><a href='#risk'>Risk Assessment</a></li>
+	<li id="search" class='pageNav'><a href='#search' class='navTopLeft navBottomLeft'>Existing Risk Assessments</a></li>
+	<li id="risk" class="pageNav"><a href='#risk' class='navTopRight navBottomRight'>Risk Assessment</a></li>
 </ul>
 </div>
 <jsp:include page="partials/body.html" flush="true" />

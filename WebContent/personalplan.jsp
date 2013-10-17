@@ -2,13 +2,13 @@
 	<!-- navigation -->
 	<div class="horizontalNav">
 	<ul>
-		<li id="search" class='pageNav'><a href='#search'>Personal Plan</a></li>
+		<li id="search" class='pageNav'><a href='#search' class='navTopLeft'>Personal Plan</a></li>
 		<li id="client" class="pageNav"><a href='#client'>Client Details</a></li>
 		<li id="health" class="pageNav"><a href='#health'>Health Details</a></li>
 		<li id="support" class="pageNav"><a href='#support'>Support Required</a></li>
-		<li id="communication" class="pageNav"><a href='#communication'>Communication</a></li>
-		<li id="education" class="pageNav"><a href='#education'>Education and Employment</a></li>
-		<li id="planning" class="pageNav"><a href='#planning'>Planning</a></li>
+		<li id="communication" class="pageNav"><a href='#communication' class="navTopRight">Communication</a></li>
+		<li id="education" class="pageNav"><a href='#education' class="navBottomLeft">Education and Employment</a></li>
+		<li id="planning" class="pageNav"><a href='#planning' class="navBottomRight">Planning</a></li>
 	</ul>
 	</div>
 <jsp:include page="partials/body.html" flush="true" />

@@ -30,6 +30,30 @@ function checkRole() {
 			data:{auth_token:$.cookie('auth_token'),user_id:$.cookie('user_id')},
 			success: function(d) {  
 				$.cookie('user_role', d.role);
+				//add elements to page based off role
+    			//client
+    			if($.cookie("user_role")=="client") {
+    				$("#main-nav").html("");
+    				$("#main-nav").append("<br/>");
+    				$("#main-nav").append("<li><a href='goals.jsp'>Goals</a></li>");
+    			//support worker
+    			}else if($.cookie("user_role")=="sw") {
+    				$("#main-nav").html("");
+    				$("#main-nav").append("<br/>");
+    				$("#main-nav").append("<li><a href='personalplan.jsp'>Personal Plan</a></li>");
+    				$("#main-nav").append("<li><a href='riskassessment.jsp'>Risk Assessment</a></li>");
+    				$("#main-nav").append("<li><a href='goals.jsp'>Goals</a></li>");
+    			//others
+    			}else if($.cookie("user_role")=="sdim" || $.cookie("user_role")=="som" || $.cookie("user_role")=="r&do") {
+    				$("#main-nav").html("");
+    				$("#main-nav").append("<br/>");
+    				$("#main-nav").append("<li><a href='personalplan.jsp'>Personal Plan</a></li>");
+    				$("#main-nav").append("<li><a href='riskassessment.jsp'>Risk Assessment</a></li>");
+    				$("#main-nav").append("<li><a href='goals.jsp'>Goals</a></li>");
+    				$("#main-nav").append("<li><a href='planmeeting.jsp'>Plan Meetings</a></li>");
+    				$("#main-nav").append("<li><a href='createuser.jsp'>Create User</a></li>");
+    				$("#main-nav").append("<li><a href='reports.jsp'>Reports</a></li>");
+    			}
 			},
 			error: function(xhr) {
 				// do something to handle error

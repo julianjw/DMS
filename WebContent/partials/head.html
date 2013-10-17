@@ -15,30 +15,14 @@
         <script type='text/javascript'>
         	if(document.URL!="http://"+window.location.hostname + ":8080/EndeavourDMS/login.jsp") {
         		checkRole();
+        		
+        		//wait
         		$(document).ready(function(){
         			$("#con-head-worder").html("<h2>" + $.cookie('user_id') + "</h2>");
         			$("#con-head-worder").append("<button id='logout'>Log Out</button>");
         			
         			
-        			//add elements to page based off role
-        			//client
-        			if($.cookie("user_role")=="client") {
-        				$("#main-nav").html("");
-        				$("#main-nav").append("<li><a href='goals.jsp'>Goals</a></li>");
-        			}else if($.cookie("user_role")=="sw") {
-        				$("#main-nav").html("");
-        				$("#main-nav").append("<li><a href='personalplan.jsp'>Personal Plan</a></li>");
-        				$("#main-nav").append("<li><a href='riskassessment.jsp'>Risk Assessment</a></li>");
-        				$("#main-nav").append("<li><a href='goals.jsp'>Goals</a></li>");
-        			}else if($.cookie("user_role")=="sdim" || $.cookie("user_role")=="som" || $.cookie("user_role")=="r&do") {
-        				$("#main-nav").html("");
-        				$("#main-nav").append("<li><a href='personalplan.jsp'>Personal Plan</a></li>");
-        				$("#main-nav").append("<li><a href='riskassessment.jsp'>Risk Assessment</a></li>");
-        				$("#main-nav").append("<li><a href='goals.jsp'>Goals</a></li>");
-        				$("#main-nav").append("<li><a href='planmeeting.jsp'>Plan Meetings</a></li>");
-        				$("#main-nav").append("<li><a href='createuser.jsp'>Create User</a></li>");
-        				$("#main-nav").append("<li><a href='reports.jsp'>Reports</a></li>");
-        			}
+        			
         			
         			
         			
@@ -107,7 +91,7 @@
         <div id="con-header">
             <div id="con-head-logo"> <a href="index.jsp" ><img src="images/endeavourLogo.jpg"></a></div>
             <div id="con-head-quote"> <em id='quoteHere'></em> </div>
-            <div id="con-head-worder"> <h2>user</h2></div>
+            <div id="con-head-worder"> <h2></h2></div>
 		</div> 
 
         <div id="con-body">
