@@ -114,6 +114,24 @@ $(document).ready(function(){
 	//BINDS
 	//click on create new risk assessment button
 	$("#createNewRiskButton").click(function(){
+		//load the username and id
+		$.ajax({
+			url: "./rest/user/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + $.cookie('client_id'),
+			type:"get",
+			contentType: "application/json",
+			success: function(d) {		
+				$("#serviceUsername").html("");
+				$("#serviceID").html("");
+				$("#serviceUsername").html(d.rName);
+				$("#serviceID").html($.cookie("client_id"));
+
+			},
+			error: function(xhr) {
+				// do something to handle error
+				
+			}
+		});
+		
 		$("#searchD").hide();
 		pullData("new");
 		$("#riskD").show();

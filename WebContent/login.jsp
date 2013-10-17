@@ -13,15 +13,12 @@
 		<p class='error' id='passwordE' name='passwordE'></p>
 		<br />
 		<input type="submit" name='loginB' id='loginB' value='Login' />
-		<input type="submit" name='forgotB' id='forgotB' value='Submit' />
-		<p id='forgotlink' name='forgotlink' class='fakeLink'>forgot my password</p>
 	</form>
 <jsp:include page="partials/footer.html" flush="true" />
 <!-- Page specific scripts -->
 <script type='text/javascript'>
 	$(document).ready(function() {
 		//page load
-		$("#forgotB").hide();
 
 		//badlogin will be the flag
 		if($.getUrlVars()) {
@@ -29,18 +26,7 @@
 			$('#passwordE').show();
 		}
 
-		//click on forgot password link
-		$('#forgotlink').click(function() {
-			$('#password').hide();
-			$('#loginB').hide();
-			$('#forgotB').show();
-		});
-
 		
-		//click on forgot password button
-		$('#forgotB').click(function(){
-			
-		});
 	});
 </script>
 

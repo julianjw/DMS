@@ -65,12 +65,16 @@ function PageNavigation(dir, nav, el) {
 				if(i+1==navArr.length-1) {
 					$(el).hide();
 					$(el).next('.submitButton').show();
+					$(el).next(".submitButton").next().css("display", "inline");
+					$(el).next('.submitButton').next().show();
 				}
 			}else if(dir=='prev') {
 				//show the next button
 				$(el).next().show();
 				//hide the submit button
 				$(el).next().next().hide();
+				//hide the instructions
+				$(el).next().next().next().hide();
 				//show previous div
 				$("#" + navArr[i-1]).show();
 				//hide the previous button if we are on the first page
