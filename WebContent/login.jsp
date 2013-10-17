@@ -16,11 +16,16 @@
 <script type='text/javascript'>
 	$(document).ready(function() {
 		//page load
+		
+		//BINDS
+		$("#loginB").click(function(){
+			$.cookie("loginAttempt", "1");
+		});
 
-		//badlogin will be the flag
-		if($.getUrlVars()) {
-			$('#passwordE').val()=='Incorrect login details. Please try again.';
-			$('#passwordE').show();
+		//check for bad login attempt
+		if($.cookie("loginAttempt")) {
+			$("#passwordE").html("Incorrect login details. Please try again...");
+			$.removeCookie("loginAttempt");
 		}
 
 		
