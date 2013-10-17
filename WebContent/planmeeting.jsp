@@ -208,13 +208,6 @@
 			$("#meetingD").show();
 		});
 		
-		
-// 		//click on toggle class element
-// 		$(".toggle").click(function(event){
-// 			$(this).next().toggle();
-// 		});
-		
-		
 	});
 
 	
