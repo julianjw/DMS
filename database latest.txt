@@ -1,1 +1,5 @@
-database v1.26 - reverted back to client oriented risk assessment
+Database v1.27
+	- Removed the redundant field in plan_sign_off - a clientid's existance in table can represent if they have been signed off or not, no need for an additional boolean field.
+
+database v1.26
+	- reverted back to client oriented risk assessment
