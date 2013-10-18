@@ -436,14 +436,14 @@
 				data: jsonText,
 				success: function(data, textStatus, jqXHR) {
 					if(data.verified=="failure") {
-						alert("failure");
+					
 					}else {
-						alert("support details saved!");
+					
 						nextNav('supportD');
 					}				
 				},
 				error: function(jqXHR, textStatus) {
-					alert("error saving support details");
+					
 				}
 			});
 		});

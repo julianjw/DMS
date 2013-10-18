@@ -74,14 +74,14 @@
 				data: jsonText,
 				success: function(data, textStatus, jqXHR) {
 					if(data.verified=="failure") {
-						alert("failure");
+						
 					}else {
-						alert("communication details saved!");
+						
 						nextNav('communicationD');
 					}				
 				},
 				error: function(jqXHR, textStatus) {
-					alert("error saving communication details");
+					
 				}
 			});
 		});	

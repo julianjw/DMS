@@ -27,6 +27,19 @@ function selectPP(el) {
 }
 
 
+
+function signOff(el) {
+	//see if checkbox is checked or not
+	if($("#"+$(el).attr("id")).prop("checked", true)) {
+		
+	}else {
+		
+	}
+}
+
+
+
+
 $(document).ready(function(){
 	
 	
@@ -45,24 +58,65 @@ $(document).ready(function(){
 		type:"get",
 		contentType: "application/json",
 		success: function(d) {
-			$("#searchResults").html("");
-			var content = "<table>"
-			content += "<tr><th>Client ID</th><th>Name</th><th>DOB</th><th>Mobile</th><th>Telephone</th></tr>";
-			for (var i = 0; i < d.existingPlanDetails.length; i++) {
-				content += "<tr><td class='fakeLink' id='" + d.existingPlanDetails[i].user_id + "'onClick='selectPP(this);'>" + d.existingPlanDetails[i].user_id + "</td>";
-				content += "<td>" + d.existingPlanDetails[i].rName + "</td>";
-				content += "<td>" + d.existingPlanDetails[i].dob + "</td>";
-				content += "<td>" + d.existingPlanDetails[i].mobile + "</td>";
-				content += "<td>" + d.existingPlanDetails[i].telephone + "</td></tr>";
+			//change search table if they have an elevated roles
+			if($.cookie("user_role")=="sdim" || $.cookie("user_role")=="som" || $.cookie("user_role")=="r&do") {
+				$("#searchResults").html("");
+				var content = "<table>";
+				content += "<tr><th>SignOff</th><th>Client ID</th><th>Name</th><th>DOB</th><th>Mobile</th><th>Telephone</th></tr>";
+				for (var i = 0; i < d.existingPlanDetails.length; i++) {
+					//get the signoff details
+					$.ajax({
+						url: "./rest/signoff/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + d.existingPlanDetails[i].user_id,
+						type:"get",
+						async:false,
+						contentType: "application/json",
+						success: function(da) {  
+							if(da.found=="false") {
+								content += "<tr><td><input type='checkbox' id='sign"+d.existingPlanDetails[i].user_id+"' onClick='signOff(this);'</td>";
+							}else {
+								content += "<tr><td><input type='checkbox' id='sign"+d.existingPlanDetails[i].user_id+"' onClick='signOff(this);' class='checked'</td>";
+							}
+							
+						},
+						error: function(xhr) {
+							// do something to handle error
+							
+						}
+					});
+					content += "<td class='fakeLink' id='" + d.existingPlanDetails[i].user_id + "'onClick='selectPP(this);'>" + d.existingPlanDetails[i].user_id + "</td>";
+					content += "<td>" + d.existingPlanDetails[i].rName + "</td>";
+					content += "<td>" + d.existingPlanDetails[i].dob + "</td>";
+					content += "<td>" + d.existingPlanDetails[i].mobile + "</td>";
+					content += "<td>" + d.existingPlanDetails[i].telephone + "</td></tr>";
+				}
+				content += "</table>";
+				$("#searchResults").append(content);
+				$('.checked').prop('checked', true);
+				
+				
+			}else {
+				$("#searchResults").html("");
+				var content = "<table>"
+				content += "<tr><th>Client ID</th><th>Name</th><th>DOB</th><th>Mobile</th><th>Telephone</th></tr>";
+				for (var i = 0; i < d.existingPlanDetails.length; i++) {
+					content += "<tr><td class='fakeLink' id='" + d.existingPlanDetails[i].user_id + "'onClick='selectPP(this);'>" + d.existingPlanDetails[i].user_id + "</td>";
+					content += "<td>" + d.existingPlanDetails[i].rName + "</td>";
+					content += "<td>" + d.existingPlanDetails[i].dob + "</td>";
+					content += "<td>" + d.existingPlanDetails[i].mobile + "</td>";
+					content += "<td>" + d.existingPlanDetails[i].telephone + "</td></tr>";
+				}
+				content += "</table>";
+				$("#searchResults").append(content);
 			}
-			content += "</table>";
-			$("#searchResults").append(content);
 		},
 		error: function(xhr) {
 			// do something to handle error
-			alert("error getting existing personal plan details");
+			
 		}
 	});
+	
+	
+	
 	
 	
 	//click on search button
@@ -89,9 +143,10 @@ $(document).ready(function(){
 			},
 			error: function(xhr) {
 				// do something to handle error
-				alert("error getting existing personal plan details");
+			
 			}
 		});
 	});
+	
 });
 </script>

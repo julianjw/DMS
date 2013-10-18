@@ -132,15 +132,15 @@
 				data: jsonText,
 				success: function(data, textStatus, jqXHR) {
 					if(data.verified=="failure") {
-						alert("failure");
+			
 					}else {
-						alert("planning details saved!");
+					
 						$("#goalsD").hide();
 						nextNav('lastD');
 					}				
 				},
 				error: function(jqXHR, textStatus) {
-					alert("error saving planning details");
+					
 				}
 			});
 		});

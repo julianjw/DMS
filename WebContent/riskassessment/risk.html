@@ -100,7 +100,6 @@ $(document).ready(function(){
 		risk.user_id = $.cookie("client_id");
 		if($.cookie("risk_id")) {
 			risk.risk_id = $.cookie("risk_id");
-			alert("object about to be sent has risk_id of " + risk.risk_id);
 		}
 		
 		
@@ -121,14 +120,14 @@ $(document).ready(function(){
 			data: jsonText,
 			success: function(data, textStatus, jqXHR) {
 				if(data.verified=="failure") {
-					alert("failure");
+					
 				}else {
-					alert("risk assessment details saved!");
+					
 					location.reload(true);
 				}				
 			},
 			error: function(jqXHR, textStatus) {
-				alert("error saving risk assessment details");
+				
 			}
 		});
 	});

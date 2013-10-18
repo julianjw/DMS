@@ -76,7 +76,7 @@ function pullData(page) {
 			},
 			error: function(xhr) {
 				// do something to handle error
-				alert("error getting risk assessment details");
+			
 			}
 		});
 		break;

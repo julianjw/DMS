@@ -294,14 +294,14 @@ DROPDOWN HERE + INLINE FORMATTING
 				data: jsonText,
 				success: function(data, textStatus, jqXHR) {
 					if(data.verified=="failure") {
-						alert("failure");
+						
 					}else {
-						alert("health details saved!");
+					
 						nextNav('healthD');
 					}				
 				},
 				error: function(jqXHR, textStatus) {
-					alert("error saving health details");
+					
 				}
 			});
 		});

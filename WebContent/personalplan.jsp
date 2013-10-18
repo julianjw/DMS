@@ -531,7 +531,7 @@ function pullData(page) {
 			},
 			error: function(xhr) {
 				// do something to handle error
-				alert("error support");
+				
 			}
 		});
 		break;

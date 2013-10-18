@@ -8,13 +8,13 @@
 		<label for='nameT' id='nameL' class='toggle'>Name: </label>
 		<div id='nameD' >
 			<input type='text' name='nameT' id='nameT' />
-			<p class='error' id='nameE' ></p>
+			<p class='error' id='nameE' readonly ></p>
 		</div>
 		<br />
 		
 		<label for='IDT' id='IDL' class='toggle'>ID: </label>
 		<div id='IDTD'>
-			<input type='text' name='IDT' id='IDT' />
+			<input type='text' name='IDT' id='IDT' readonly />
 			<p class='error' id='IDE' ></p>
 		</div>
 		<br />
@@ -370,14 +370,14 @@
 				data: jsonText,
 				success: function(data, textStatus, jqXHR) {
 					if(data.verified=="failure") {
-						alert("failure");
+						
 					}else {
-						alert("client details saved!");
+						
 						nextNav('clientD');
 					}				
 				},
 				error: function(jqXHR, textStatus) {
-					alert("error saving client details");
+					
 				}
 			});
 			
@@ -386,27 +386,7 @@
 			var clientName = new Object();
 			clientName.rName = $("#nameT").val();
 			clientName.IDT = $("#IDT").val();
-			var jsonText2 = JSON.stringify(clientName); 
-			
-			
-			
-			//push the name
-			$.ajax({
-				url: "./rest/user/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + $.cookie('client_id'),
-				type:"POST",
-				contentType: "application/json; charset=UTF-8",
-				dataType: 'json',
-				data: jsonText2,
-				success: function(data, textStatus, jqXHR) {
-					if(data.verified=="failure") {
-						alert("failure saving name and id");
-					}				
-				},
-				error: function(jqXHR, textStatus) {
-					alert("error saving client name and id");
-				}
-			});
-			
+			var jsonText2 = JSON.stringify(clientName); 			
 		});	
 	});
 </script>
