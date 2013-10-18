@@ -11,7 +11,7 @@ public class PersonalPlan {
 	private Communication com;
 	private EducationEmployment ee;
 	private Planning pl;
-	
+	private Boolean signedOff;
 	
 	public PersonalPlan(
 			ClientDetails cd,
@@ -84,5 +84,14 @@ public class PersonalPlan {
 	}
 	public void setPlanning(Planning pl) {
 		this.pl = pl;
+	}
+	
+	
+	
+	public Boolean getSignedOff(){
+		return this.signedOff;
+	}
+	public void setSignedOff(Boolean signedOff) {
+		this.signedOff = signedOff;
 	}
 }

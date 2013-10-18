@@ -105,26 +105,6 @@ public class PlanFactory {
 				DatabaseNames.TBL_LIVING_ARRANGEMENTS
 				);
 		
-//		List<ContactDetails> allContacts = PlanFactory.createContactDetails( username, token, clientid );
-//		
-//		if ( allContacts == null ) allContacts = new ArrayList<ContactDetails>();
-//		
-//		// divide the contacts up into their groups.
-//		List<ContactDetails> fContact = new ArrayList<ContactDetails>();
-//		List<ContactDetails> eContact = new ArrayList<ContactDetails>();
-//		List<ContactDetails> iContact = new ArrayList<ContactDetails>();
-//		
-//		
-//		for ( ContactDetails cd : allContacts ) {
-//			
-//			if ( cd.getContactType() == "Family Member" ) fContact.add(cd); else
-//			if ( cd.getContactType() == "Emergency Contact" ) eContact.add(cd); else
-//			if ( cd.getContactType() == "Important Person" ) iContact.add(cd);
-//			
-//			
-//			
-//		}
-		
 		return new LivingArrangements(
 				(String)fields.get(0),
 				(String)fields.get(1),
@@ -139,41 +119,6 @@ public class PlanFactory {
 	}
 
 
-	
-
-	/**
-	 * Pull contacts from database 
-	 * 
-	 * @param username
-	 * @param token
-	 * @param clientid
-	 * @param contactType
-	 * @return
-	 */
-//	private static List<ContactDetails> createContactDetails(String username,
-//			String token, String clientid ) {
-//
-//
-//		List<ArrayList<Object>> rows = PlanFactory.RetrieveInfo( username, token, clientid,
-//				DatabaseNames.FLDS_CLIENT_CONTACTS,
-//				DatabaseNames.TBL_CLIENT_CONTACTS
-//				);
-//		
-//		List<ContactDetails> allContacts = new ArrayList<ContactDetails>();
-//		
-//		// put all results into a list of clients
-//		for ( List<Object> row : rows ) {
-//			allContacts.add(
-//				new ContactDetails ( 
-//						(String)row.get(0),
-//						(String)row.get(1),
-//						(String)row.get(2),
-//						DatabaseAccess.getContactTypeById((Integer)row.get(3))
-//						)
-//				);
-//		}
-//		return allContacts;
-//	}
 
 
 	private static AlertInformation createAlertInformation(String username,
@@ -332,8 +277,6 @@ public class PlanFactory {
 				DatabaseNames.FLDS_ACTIVITIES,
 				DatabaseNames.TBL_ACTIVITIES
 				);
-		
-//		List<String> services = PlanFactory.createServices( username, token, clientid );
 
 		return new DailyActivities(
 				(String)fields.get(0),
@@ -361,25 +304,6 @@ public class PlanFactory {
 				);
 	}
 
-
-	// DIFFERENT
-//	private static List<String> createServices(String username, String token,
-//			String clientid) {
-//
-//		List<ArrayList<Object>> rows = PlanFactory.RetrieveInfo( username, token, clientid,
-//				DatabaseNames.FLDS_SUPPORT_SERVICES,
-//				DatabaseNames.TBL_SUPPORT_SERVICES
-//				);
-//		
-//		List<String> allServices = new ArrayList<String>();
-//
-//
-//		for ( ArrayList<Object> row : rows ) {
-//			if ( row == null ) return null;
-//			allServices.add((String)row.get(0));
-//		}
-//		return allServices;
-//	}
 
 
 	private static FinancialSupport createFinancialSupport(String username,
@@ -479,26 +403,6 @@ public class PlanFactory {
 		return new Communication(coms);
 	}
 	
-//	private static List<BadTopics> createBadTopics(String username,
-//			String token, String clientid) {
-//		
-//		List<ArrayList<Object>> rows = PlanFactory.RetrieveInfo( username, token, clientid,
-//				DatabaseNames.FLDS_BAD_TOPICS,
-//				DatabaseNames.TBL_BAD_TOPICS
-//				);
-//		
-//		List<BadTopics> badTopics = new ArrayList<BadTopics>();
-//		
-//		for ( ArrayList<Object> row : rows ) {
-//			if ( row == null ) return null;
-//			badTopics.add( new BadTopics (
-//						(String)row.get(0),
-//						(String)row.get(1)
-//					) );
-//		}
-//			
-//		return badTopics;
-//	}
 
 
 	/**
@@ -640,7 +544,9 @@ public class PlanFactory {
 		Communication com = createCommunication(username, token, clientid);
 		EducationEmployment ee = createEducationEmployment(username, token, clientid);
 		Planning plan = createPlanning(username, token, clientid);
-		return new PersonalPlan( cd, hd, sr, com, ee, plan );
+		PersonalPlan pp = new PersonalPlan( cd, hd, sr, com, ee, plan );
+		pp.setSignedOff( DatabaseAccess.isSignedOff(clientid) );
+		return pp;
 	}
 	
 	

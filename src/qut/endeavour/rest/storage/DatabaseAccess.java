@@ -20,6 +20,7 @@ import java.util.Vector;
 
 import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.exception.DMSException;
+import qut.endeavour.rest.utility.Permissions;
 import qut.endeavour.rest.utility.SqlWriteJob;
 
 
@@ -35,7 +36,6 @@ public class DatabaseAccess {
 	private final static char STRING = 's';
 	private final static char DATE = 'd';
 	private final static char AUTO_INCREMENT = 'a';
-	private final static char DERIVED = 'x';
 	
 	/* ***** ADMIN ***** */
 	private final static String TBL_ACTIVE_SESSION = "active_session";
@@ -780,6 +780,66 @@ public class DatabaseAccess {
 			return results;
 		} catch (SQLException e) {
 			return null;
+		}
+	}
+
+	public static Boolean isSignedOff(String clientid) {
+		if (!makeConnection()) return null;
+		
+		System.out.println( "Checking if signed off.");
+		
+		try {
+			String sql = "select count(user_id) as count from plan_sign_off where user_id = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, DatabaseAccess.getUserIdNumberByUsername(clientid));
+			ResultSet results = ps.executeQuery();
+			results.next();
+			int count = results.getInt(1);
+			boolean response = count > 0; 
+			System.out.println("Signed off: " + response);
+			return response;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (DMSException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+
+	
+	public static void addSignOff(String clientid) {
+		if (!makeConnection()) return;
+		Boolean performDelete = isSignedOff(clientid);
+		if ( performDelete == null ) return;
+		
+		if ( !performDelete ) {
+			String sql = "INSERT INTO  `"+DATABASE_NAME+"`.`plan_sign_off` ( `user_id` ) VALUES ( ? );";
+			changeSignOff( sql, clientid);
+		}
+	}
+	
+	public static void removeSignOff(String clientid) {
+		if (!makeConnection()) return;
+		Boolean performDelete = isSignedOff(clientid);
+		if ( performDelete == null ) return;
+		
+		if ( performDelete ) {
+			String sql = "DELETE FROM `"+DATABASE_NAME+"`.`plan_sign_off` WHERE `plan_sign_off`.`user_id` = ?;";
+			changeSignOff( sql, clientid);
+		}
+	}
+	
+	private static void changeSignOff( String sql, String clientid ) {
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, DatabaseAccess.getUserIdNumberByUsername(clientid));
+			ps.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (DMSException e) {
+			e.printStackTrace();
 		}
 	}
 	

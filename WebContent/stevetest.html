@@ -7,6 +7,20 @@
 
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+
+<script type='text/javascript'>
+	
+	function postSignOff(method) {
+		$.ajax({
+			url:'./rest/signoff/staff/asdfasfdasdf/coolbeans',
+			type: method,
+			success: function(jqXHR, textStatus) {
+				//alert(textStatus);
+			}
+		});
+	}
+	</script>
+
 </head>
 <body>
 
@@ -52,6 +66,13 @@
 	<p>
 		<a href="./rest/user/getallclients/staff/asdfasfdasdf">Get all clients</a> (YOU MUST ACCESS ANOTHER LINK FIRST)
 	</p>
+	<h3>SignOff</h3>
+	<p>
+		<a href="./rest/signoff/staff/asdfasfdasdf/coolbeans">Get coolbeans sign off status</a><br>
+		<input type="button" value="sign off on coolbeans" onClick="postSignOff('POST')"><br>
+		<input type="button" value="delete sign off on coolbeans" onClick="postSignOff('DELETE')">
+		
+	</p>
 	<br>
 	<h3>Risk</h3>
 	<p>
@@ -92,6 +113,9 @@
 	
 </body>
 	<!--  This section is used to test POSTing -->
+	
+	
+	
 	<script type='text/javascript'>
 		/*	
 		var DMSUser = new Object();
