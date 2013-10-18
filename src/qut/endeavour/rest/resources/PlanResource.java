@@ -44,9 +44,18 @@ public class PlanResource {
 			@PathParam("clientid") String clientid
 			) {
 		
+		boolean signedOff = DatabaseAccess.isSignedOff(clientid);
+		boolean canAccess = false;
 		String userRole = DatabaseAccess.getRole(username, token);
+		
+		if ( signedOff ) {
+			canAccess = Permissions.canPostPersonalPlanPostSignOff(userRole);
+		} else {
+			canAccess = Permissions.canGetPersonalPlan(userRole);
+		}
+		
 		// TODO Should refactor hardcoding
-		if ( !Permissions.canGetPersonalPlan(userRole) && !userRole.toLowerCase().equals("client".toLowerCase())) {
+		if ( !canAccess && !userRole.toLowerCase().equals("client".toLowerCase())) {
 			System.out.println("User " + username + " cannot perform this action.");
 			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
 		}
@@ -69,8 +78,18 @@ public class PlanResource {
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
+		
+		boolean signedOff = DatabaseAccess.isSignedOff(clientid);
+		boolean canAccess = false;
 		String userRole = DatabaseAccess.getRole(username, token);
-		if ( !Permissions.canPostPersonalPlan(userRole) ) {
+		
+		if ( signedOff ) {
+			canAccess = Permissions.canPostPersonalPlanPostSignOff(userRole);
+		} else {
+			canAccess = Permissions.canGetPersonalPlan(userRole);
+		}
+
+		if ( !canAccess  ) {
 			System.out.println("User " + username + " cannot perform this action.");
 			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
 		}
@@ -92,8 +111,17 @@ public class PlanResource {
 			@PathParam("clientid") String clientid
 			) {
 		
+		boolean signedOff = DatabaseAccess.isSignedOff(clientid);
+		boolean canAccess = false;
 		String userRole = DatabaseAccess.getRole(username, token);
-		if ( !Permissions.canPostPersonalPlan(userRole) ) {
+		
+		if ( signedOff ) {
+			canAccess = Permissions.canPostPersonalPlanPostSignOff(userRole);
+		} else {
+			canAccess = Permissions.canGetPersonalPlan(userRole);
+		}
+
+		if ( !canAccess ) {
 			System.out.println("User " + username + " cannot perform this action.");
 			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
 		}
@@ -115,8 +143,17 @@ public class PlanResource {
 			@PathParam("clientid") String clientid
 			) {
 		
+		boolean signedOff = DatabaseAccess.isSignedOff(clientid);
+		boolean canAccess = false;
 		String userRole = DatabaseAccess.getRole(username, token);
-		if ( !Permissions.canPostPersonalPlan(userRole) ) {
+		
+		if ( signedOff ) {
+			canAccess = Permissions.canPostPersonalPlanPostSignOff(userRole);
+		} else {
+			canAccess = Permissions.canGetPersonalPlan(userRole);
+		}
+
+		if ( !canAccess ) {
 			System.out.println("User " + username + " cannot perform this action.");
 			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
 		}
@@ -138,8 +175,17 @@ public class PlanResource {
 			@PathParam("clientid") String clientid
 			) {
 		
+		boolean signedOff = DatabaseAccess.isSignedOff(clientid);
+		boolean canAccess = false;
 		String userRole = DatabaseAccess.getRole(username, token);
-		if ( !Permissions.canPostPersonalPlan(userRole) ) {
+		
+		if ( signedOff ) {
+			canAccess = Permissions.canPostPersonalPlanPostSignOff(userRole);
+		} else {
+			canAccess = Permissions.canGetPersonalPlan(userRole);
+		}
+
+		if ( !canAccess ) {
 			System.out.println("User " + username + " cannot perform this action.");
 			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
 		}
@@ -161,8 +207,17 @@ public class PlanResource {
 			@PathParam("clientid") String clientid
 			) {
 		
+		boolean signedOff = DatabaseAccess.isSignedOff(clientid);
+		boolean canAccess = false;
 		String userRole = DatabaseAccess.getRole(username, token);
-		if ( !Permissions.canPostPersonalPlan(userRole) ) {
+		
+		if ( signedOff ) {
+			canAccess = Permissions.canPostPersonalPlanPostSignOff(userRole);
+		} else {
+			canAccess = Permissions.canGetPersonalPlan(userRole);
+		}
+		
+		if ( !canAccess ) {
 			System.out.println("User " + username + " cannot perform this action.");
 			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
 		}
@@ -184,8 +239,17 @@ public class PlanResource {
 			@PathParam("clientid") String clientid
 			) {
 		
+		boolean signedOff = DatabaseAccess.isSignedOff(clientid);
+		boolean canAccess = false;
 		String userRole = DatabaseAccess.getRole(username, token);
-		if ( !Permissions.canPostPersonalPlan(userRole) ) {
+		
+		if ( signedOff ) {
+			canAccess = Permissions.canPostPersonalPlanPostSignOff(userRole);
+		} else {
+			canAccess = Permissions.canGetPersonalPlan(userRole);
+		}
+		
+		if ( !canAccess ) {
 			System.out.println("User " + username + " cannot perform this action.");
 			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
 		}

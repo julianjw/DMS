@@ -24,6 +24,14 @@ public class Permissions {
 		return false;
 	}
 	
+	public static boolean canPostPersonalPlanPostSignOff( String userRole ) {
+		return testRole( new String[] {
+				RESEARCH_AND_DEVELOPMENT_OFFICER,
+				SERVICE_DEVELOPMENT_AND_INNOVATIONS_MANAGER,
+				SERVICE_OPERATION_MANGER
+				} , userRole );
+	}
+	
 	public static boolean canPostPersonalPlan( String userRole ) {
 		return testRole( new String[] {
 			SUPPORT_WORKER,
@@ -44,7 +52,6 @@ public class Permissions {
 	
 	public static boolean canPostMeeting( String userRole ) {
 		return testRole( new String[] {
-			SUPPORT_WORKER,
 			RESEARCH_AND_DEVELOPMENT_OFFICER,
 			SERVICE_DEVELOPMENT_AND_INNOVATIONS_MANAGER,
 			SERVICE_OPERATION_MANGER
@@ -89,7 +96,6 @@ public class Permissions {
 
 	public static boolean canChangeSignedOff(String userRole) {
 		return testRole( new String[] {
-				SUPPORT_WORKER,
 				RESEARCH_AND_DEVELOPMENT_OFFICER,
 				SERVICE_DEVELOPMENT_AND_INNOVATIONS_MANAGER,
 				SERVICE_OPERATION_MANGER
@@ -107,7 +113,6 @@ public class Permissions {
 
 	public static boolean canPostUser(String userRole) {
 		return testRole( new String[] {
-				SUPPORT_WORKER,
 				RESEARCH_AND_DEVELOPMENT_OFFICER,
 				SERVICE_DEVELOPMENT_AND_INNOVATIONS_MANAGER,
 				SERVICE_OPERATION_MANGER
