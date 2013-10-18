@@ -18,6 +18,8 @@ import javax.ws.rs.core.UriInfo;
 import qut.endeavour.rest.bean.AuthResponse;
 import qut.endeavour.rest.bean.AuthToken;
 import qut.endeavour.rest.bean.Verification;
+import qut.endeavour.rest.bean.admin.Authentication;
+import qut.endeavour.rest.bean.admin.DMSUser;
 import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.factory.AuthFactory;
 import qut.endeavour.rest.storage.DatabaseAccess;
@@ -56,14 +58,12 @@ public class AuthResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Verification logout( @Context UriInfo uriInfo ) {
 		
-		
-		
 		MultivaluedMap<String, String> params = uriInfo.getQueryParameters();
 		
 		String token = params.getFirst(AUTH_TOKEN_FIELD);
 		String user_id = params.getFirst(USER_ID_FIELD);
 		
-		System.out.println("Deleting a user " +user_id + " with token " + token);
+		System.out.println("Logging out user " +user_id + " with token " + token);
 		
 		// sanity checks
 		if( user_id == null ) throw new DMSClientErrorException("No user_id supplied");
@@ -71,7 +71,10 @@ public class AuthResource {
 		if( token == null ) throw new DMSClientErrorException("No token supplied");
 		if( token.length() < 1 ) throw new DMSClientErrorException("No token supplied");
 		
-		return AuthFactory.authLogoutUser(token, user_id);
+		if ( DatabaseAccess.validateUser(user_id, token) ) {
+			return AuthFactory.authLogoutUser(token, user_id);
+		}
+		return new Verification(Verification.Verified.FAILURE);
 	}
 	
 	
@@ -100,9 +103,48 @@ public class AuthResource {
 	}
 	
 	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/app")
+	public Authentication jsonAuthRequest( DMSUser user ) {
+		
+		String userId = user.getUser_id();
+		String password = user.getPassword();
+		
+		System.out.println();
+		System.out.println("user_id: "+userId);
+		System.out.println("password: "+password);
+		
+		//Sanity Checks
+		if (	userId != null &&
+				userId != "" &&
+				password != null &&
+				password != "" 
+				) {
+				   
+			boolean validLogin = false;
+			
+			validLogin = DatabaseAccess.loginAttempt( userId, password );
+			   
+			// redirect user to first page
+			if ( validLogin ) {
+				// generate token
+				AuthToken t = AuthFactory.makeToken();
+				
+				// store token as active session
+				if ( DatabaseAccess.createAuthentication( userId, t.toString()) ) {
+					return new Authentication( userId, t.getTokenId() );
+				} 
+			} 
+		} 
+		throw new DMSClientErrorException("Invalid login details" );
+	}
+	
 	
 	/**
+	 * WEBSITE USE ONLY
 	 * Checks user_id and password
+	 * redirects
 	 * @param userId
 	 * @param password
 	 * @param response

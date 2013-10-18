@@ -15,9 +15,6 @@ public class UserFactory {
 	
 	public static DMSUser createUser(String requester_username, String token, String username) {
 		
-		String role = DatabaseAccess.getRole(requester_username, token);
-		if ( !Permissions.canRequestUser( role ) ) throw new DMSClientErrorException("User role "+role+" cannot request a user.");
-		
 		List<String> userInfo = DatabaseAccess.getUserInfo( username );
 		
 		return new DMSUser (
@@ -29,11 +26,6 @@ public class UserFactory {
 	}
 	
 	public static List<DMSUser> createAllClients(String username, String token) {
-	
-		{
-			String role = DatabaseAccess.getRole(username, token);
-			if ( !Permissions.canRequestClients( role ) ) throw new DMSClientErrorException("User role "+role+" cannot request a user.");
-		}
 		
 		List<List<String>> clientsInfo = DatabaseAccess.getAllUsersWithRole( CLIENT_ROLE ); // TODO make this a constant
 		List<DMSUser> users = new ArrayList<DMSUser>();

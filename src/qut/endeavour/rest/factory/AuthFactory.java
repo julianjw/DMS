@@ -27,9 +27,22 @@ public final class AuthFactory {
 	private static final String validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	private static final Random r = new Random( System.currentTimeMillis() );
 	
+	/**
+	 * Generates a token string of default length
+	 * @return
+	 */
 	private static String generateTokenString() {
+		return generateTokenString(tokenLength);
+	}
+	
+	/**
+	 * 
+	 * @param n number of characters in token string
+	 * @return
+	 */
+	private static String generateTokenString( int n ) {
 		String st = "";
-		for ( int i = 0; i < tokenLength; i++ ) {
+		for ( int i = 0; i < n; i++ ) {
 			st += validChars.charAt( r.nextInt( validChars.length() ) );
 		}
 		return st;
@@ -44,18 +57,23 @@ public final class AuthFactory {
 		return new AuthToken( generateTokenString() );
 	}
 
-
+	/**
+	 * finds a user's role and returns it as an object
+	 * @param userId
+	 * @param token
+	 * @return
+	 */
 	public static AuthRole createRole(String userId, String token) {
 		String role = DatabaseAccess.getRole(userId, token);
 		return new AuthRole(role);
 	}
-	
-//	private static Role AuthRole(String role) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 
-
+	/**
+	 * returns all user roles
+	 * @param user_id
+	 * @param token
+	 * @return
+	 */
 	public static List<AuthRole> createRoles(String user_id, String token) {
 		List<String> roles = DatabaseAccess.getRoles(user_id, token);
 		List<AuthRole> authRoles = new ArrayList<AuthRole>();
@@ -100,10 +118,8 @@ public final class AuthFactory {
 	 * @return
 	 */
 	public static Verification authLogoutUser( String user_id, String token ) {
-		if ( DatabaseAccess.validateUser(user_id, token)) {
-			if ( DatabaseAccess.logoutUser(user_id, token) ) {
-				return new Verification(Verification.Verified.SUCCESS);
-			}
+		if ( DatabaseAccess.logoutUser(user_id, token) ) {
+			return new Verification(Verification.Verified.SUCCESS);
 		}
 		return new Verification(Verification.Verified.FAILURE);
 	}

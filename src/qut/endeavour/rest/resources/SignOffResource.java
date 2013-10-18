@@ -27,7 +27,8 @@ public class SignOffResource {
 			) {
 		
 		String userRole = DatabaseAccess.getRole(username, token);
-		if ( !Permissions.canRequestClients(userRole) ) {
+		
+		if ( !Permissions.canGetClients(userRole) ) {
 			throw new DMSClientErrorException("User with role " + userRole.toUpperCase() + " cannot access client information.");
 		}
 		
@@ -46,7 +47,7 @@ public class SignOffResource {
 		System.out.println("Signing off.");
 		
 		String userRole = DatabaseAccess.getRole(username, token);
-		if ( !Permissions.canRequestClients(userRole) ) {
+		if ( !Permissions.canChangeSignedOff(userRole) ) {
 			throw new DMSClientErrorException("User with role " + userRole.toUpperCase() + " cannot access client information.");
 		}
 		
@@ -65,7 +66,7 @@ public class SignOffResource {
 		System.out.println("Removing sign off.");
 		
 		String userRole = DatabaseAccess.getRole(username, token);
-		if ( !Permissions.canRequestClients(userRole) ) {
+		if ( !Permissions.canChangeSignedOff(userRole) ) {
 			throw new DMSClientErrorException("User with role " + userRole.toUpperCase() + " cannot access client information.");
 		}
 		

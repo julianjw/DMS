@@ -232,7 +232,6 @@ public class SqlWriteJob {
 			default:
 				throw new DMSException("Unknown sql type \""+type+"\".");
 		}
-		System.out.println();
 		return ps;
 	}
 	

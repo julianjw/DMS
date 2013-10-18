@@ -107,11 +107,11 @@ public class DatabaseAccess {
 	 */
 	public static List<String> getRoles( String user_id, String token ) {
 		List<String> roles = new ArrayList<String>();
-		if ( validateUser(user_id, token) ) {
-			for ( Entry<String,RoleRecord> record : roleByName.entrySet()){
-				roles.add( record.getValue().role.toLowerCase() );
-			}
+		//if ( validateUser(user_id, token) ) {
+		for ( Entry<String,RoleRecord> record : roleByName.entrySet()){
+			roles.add( record.getValue().role.toLowerCase() );
 		}
+		//}
 		return roles;
 	}
 	
@@ -338,7 +338,7 @@ public class DatabaseAccess {
 	 * @return
 	 */
 	public static boolean createUser( String currentUser_id, String token, String personName, String newUser_id, String password, String role_name ){
-		String currentUserRole = getRole(currentUser_id, token);
+		//String currentUserRole = getRole(currentUser_id, token);
 		
 		//TODO THIS IS BROKEN
 		
@@ -351,26 +351,20 @@ public class DatabaseAccess {
 		
 		int role_id;
 		
-//		
-//		for ( Entry<String,RoleRecord> es : roleByName.entrySet() ) {
-//			System.out.println("Role Record- Key: "+es.getKey()+", id: "+es.getValue().roleId+", role: "+es.getValue().role+", roleName: "+es.getValue().details);
-//		}
-		
 		
 		try {
 			role_id = roleByName.get(role_name.toLowerCase()).roleId;
 		} catch (Exception e) {
 			// role doesn't exist in database
 			// this is case sensitive
-//			throw new DMSClientErrorException("Incorrect role.");
 			 throw new DMSClientErrorException("Bad user role");//return false;
 		}
 		
 		System.out.println("Role id: " + Integer.toString(role_id));
 		
 		// Refuse roles that aren't allowed to create users.
-		if ( currentUserRole.equals("") ) throw new DMSClientErrorException("Current cannot create a new user");//return false;
-		if ( currentUserRole.equals("CLIENT") ) throw new DMSClientErrorException("Current cannot create a new user");// return false;
+		//if ( currentUserRole.equals("") ) throw new DMSClientErrorException("Current cannot create a new user");//return false;
+		//if ( currentUserRole.equals("CLIENT") ) throw new DMSClientErrorException("Current cannot create a new user");// return false;
 		
 		// TODO check if they are allowed to make a new client
 		
@@ -451,7 +445,7 @@ public class DatabaseAccess {
 	public static String getRole(String user_id, String token) {
 		
 		if (!makeConnection()) return "";
-		if (!validateUser(user_id, token)) return ""; // can only see your own role
+		//if (!validateUser(user_id, token)) return ""; // can only see your own role
 		
 		System.out.println("DatabaseAccess: Getting role.");
 		
@@ -661,7 +655,7 @@ public class DatabaseAccess {
 			String token, String clientid, List<String> fieldNames,
 			String tableName) {
 		if (!makeConnection()) return null;
-		if (!validateUser(username, token)) return null;//throw new NotFoundException("Not using a valid session");
+		//if (!validateUser(username, token)) return null;//throw new NotFoundException("Not using a valid session");
 		return getUserRelatedDetails( fieldNames, tableName, clientid );
 	}
 	

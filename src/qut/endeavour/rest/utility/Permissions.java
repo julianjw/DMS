@@ -69,7 +69,7 @@ public class Permissions {
 			} , userRole );
 	}
 
-	public static boolean canGetClientRisks(String userRole) {
+	public static boolean canGetUser(String userRole) {
 		return testRole( new String[] {
 			SUPPORT_WORKER,
 			RESEARCH_AND_DEVELOPMENT_OFFICER,
@@ -78,7 +78,7 @@ public class Permissions {
 			} , userRole );
 	}
 
-	public static boolean canRequestUser(String userRole) {
+	public static boolean canGetClients(String userRole) {
 		return testRole( new String[] {
 			SUPPORT_WORKER,
 			RESEARCH_AND_DEVELOPMENT_OFFICER,
@@ -87,12 +87,39 @@ public class Permissions {
 			} , userRole );
 	}
 
-	public static boolean canRequestClients(String userRole) {
+	public static boolean canChangeSignedOff(String userRole) {
 		return testRole( new String[] {
-			SUPPORT_WORKER,
-			RESEARCH_AND_DEVELOPMENT_OFFICER,
-			SERVICE_DEVELOPMENT_AND_INNOVATIONS_MANAGER,
-			SERVICE_OPERATION_MANGER
-			} , userRole );
+				SUPPORT_WORKER,
+				RESEARCH_AND_DEVELOPMENT_OFFICER,
+				SERVICE_DEVELOPMENT_AND_INNOVATIONS_MANAGER,
+				SERVICE_OPERATION_MANGER
+				} , userRole );
+	}
+
+	public static boolean canPostRiskAssessment(String userRole) {
+		return testRole( new String[] {
+				SUPPORT_WORKER,
+				RESEARCH_AND_DEVELOPMENT_OFFICER,
+				SERVICE_DEVELOPMENT_AND_INNOVATIONS_MANAGER,
+				SERVICE_OPERATION_MANGER
+				} , userRole );
+	}
+
+	public static boolean canPostUser(String userRole) {
+		return testRole( new String[] {
+				SUPPORT_WORKER,
+				RESEARCH_AND_DEVELOPMENT_OFFICER,
+				SERVICE_DEVELOPMENT_AND_INNOVATIONS_MANAGER,
+				SERVICE_OPERATION_MANGER
+				} , userRole );
+	}
+
+	public static boolean canGetPersonalPlan(String userRole) {
+		return testRole( new String[] {
+				SUPPORT_WORKER,
+				RESEARCH_AND_DEVELOPMENT_OFFICER,
+				SERVICE_DEVELOPMENT_AND_INNOVATIONS_MANAGER,
+				SERVICE_OPERATION_MANGER
+				} , userRole );
 	}
 }

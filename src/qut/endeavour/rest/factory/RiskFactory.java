@@ -18,7 +18,6 @@ import qut.endeavour.rest.utility.Permissions;
 
 public class RiskFactory {
 
-	
 
 	/*
 	 * Get a meeting's details
@@ -29,11 +28,6 @@ public class RiskFactory {
 			Integer riskid
 			) {
 
-		String userRole = DatabaseAccess.getRole(username, token);
-		
-		// verify user is allowed to do action
-		if (!Permissions.canGetRiskAssessment(userRole)) throw new DMSClientErrorException("User with role " + userRole.toUpperCase() + " cannot view risk assessments.");
-	 
 		List<Object> fields = RiskFactory.getFields(
 				riskid,
 				DatabaseNames.FLDS_RISK_ASSESSMENT,
@@ -107,11 +101,8 @@ public class RiskFactory {
 	public static List<ClientRisk> createClientRisks(String username,
 			String token, String clientid) {
 		String userRole = DatabaseAccess.getRole(username, token);
-		if (!Permissions.canGetClientRisks( userRole) )  throw new DMSClientErrorException("User with role " + userRole.toUpperCase() + " cannot see upcoming meetings.");
 		
 		List<ClientRisk> risks = new ArrayList<ClientRisk>();
-		
-		
 		
 		Integer clientIdNumber = null;
 		try {
@@ -150,29 +141,4 @@ public class RiskFactory {
 		
 		return risks;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	private static List<Object> getFields( String clientid, List<String> columns, String tableName){
-//		List<ArrayList<Object>> objects = 
-//		if ( objects.size() < 1 ) return null;
-//		List<Object> fields = objects.get(0);
-//		if ( fields.size() != fieldNames.size() ) return null;
-//		return fields;
-//	}
-//	
-//
-//	//perform action
-//	List<Map<String, Object>> resultsList = DatabaseAccess.getTableContents( clientid, fieldNames, tableNames);
-//	List<ArrayList<Object>> rows = ProcessResults( resultsList, fieldNames );
-//	
 }

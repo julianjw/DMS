@@ -47,17 +47,6 @@ public class BeansUtility {
 			String token
 			) {
 		
-		{
-			String role = DatabaseAccess.getRole(username, token);
-			if ( !Permissions.canPostPersonalPlan(role) ) {
-				System.out.println("A "+role.toUpperCase()+" cannot update/add a personal plan.");
-				return false;
-			}
-		}
-		//if ( )
-		
-		//System.out.println("About to check for bean class -" + bean.getClass().toString());
-		
 		System.out.println("Extract information from bean.");
 		
 		try {

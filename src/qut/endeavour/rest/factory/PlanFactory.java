@@ -577,7 +577,7 @@ public class PlanFactory {
 	public static List<ExistingPlanDetails> createExistingPlanDetails(
 			String username, String token) {
 		// TODO Authenticate against roles.
-		if (!DatabaseAccess.validateUser(username, token)) throw new DMSClientErrorException("Not logged in.");
+		//if (!DatabaseAccess.validateUser(username, token)) throw new DMSClientErrorException("Not logged in.");
 		
 		List<ExistingPlanDetails> details = new ArrayList<ExistingPlanDetails>();
 		

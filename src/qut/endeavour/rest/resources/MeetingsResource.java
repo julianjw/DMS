@@ -23,7 +23,9 @@ import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.factory.AuthFactory;
 import qut.endeavour.rest.factory.MeetingFactory;
 import qut.endeavour.rest.factory.PlanFactory;
+import qut.endeavour.rest.storage.DatabaseAccess;
 import qut.endeavour.rest.utility.BeansUtility;
+import qut.endeavour.rest.utility.Permissions;
 
 
 @Path("/planmeeting")
@@ -39,6 +41,14 @@ public class MeetingsResource {
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
+		
+		
+		String role = DatabaseAccess.getRole(username, token);
+		if ( !Permissions.canPostMeeting(role) ) {
+			System.out.println("User " + username + " cannot perform this action.");
+			return new Verification(Verification.Verified.FAILURE);
+		}
+		
 		
 		System.out.println("Writing: Plan Meeting");
 		if ( BeansUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
@@ -57,6 +67,12 @@ public class MeetingsResource {
 			) {
 		
 		System.out.println("Requesting: meeting details");
+		
+		String role = DatabaseAccess.getRole(username, token);
+		if ( !Permissions.canGetMeeting(role) ) {
+			System.out.println("User " + username + " cannot perform this action.");
+			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
+		}
 		
 		return MeetingFactory.createScheduledMeeting(username, token, clientid);
 	}
@@ -79,6 +95,12 @@ public class MeetingsResource {
 		if( token == null ) throw new DMSClientErrorException("No token supplied");
 		if( token.length() < 1 ) throw new DMSClientErrorException("No token supplied");
 
+		String role = DatabaseAccess.getRole(username, token);
+		if ( !Permissions.canGetUpcomingMeetings(role) ) {
+			System.out.println("User " + username + " cannot perform this action.");
+			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
+		}
+		
 		System.out.println("Getting upcoming meeting details.");
 		
 		return MeetingFactory.createUpcomingMeetings(username, token);

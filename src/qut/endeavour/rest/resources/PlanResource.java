@@ -20,8 +20,11 @@ import qut.endeavour.rest.bean.plan.HealthDetails;
 import qut.endeavour.rest.bean.plan.PersonalPlan;
 import qut.endeavour.rest.bean.plan.Planning;
 import qut.endeavour.rest.bean.plan.SupportRequired;
+import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.factory.PlanFactory;
+import qut.endeavour.rest.storage.DatabaseAccess;
 import qut.endeavour.rest.utility.BeansUtility;
+import qut.endeavour.rest.utility.Permissions;
 
 @Path("/personalplan")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -41,6 +44,13 @@ public class PlanResource {
 			@PathParam("clientid") String clientid
 			) {
 		
+		String userRole = DatabaseAccess.getRole(username, token);
+		// TODO Should refactor hardcoding
+		if ( !Permissions.canGetPersonalPlan(userRole) && !userRole.toLowerCase().equals("client".toLowerCase())) {
+			System.out.println("User " + username + " cannot perform this action.");
+			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
+		}
+		
 		System.out.println("Writing: Planning");
 		if ( BeansUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
 		System.out.println("Failure.");
@@ -59,6 +69,11 @@ public class PlanResource {
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
+		String userRole = DatabaseAccess.getRole(username, token);
+		if ( !Permissions.canPostPersonalPlan(userRole) ) {
+			System.out.println("User " + username + " cannot perform this action.");
+			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
+		}
 		
 		System.out.println("Writing: Communication");
 		if ( BeansUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
@@ -77,6 +92,12 @@ public class PlanResource {
 			@PathParam("clientid") String clientid
 			) {
 		
+		String userRole = DatabaseAccess.getRole(username, token);
+		if ( !Permissions.canPostPersonalPlan(userRole) ) {
+			System.out.println("User " + username + " cannot perform this action.");
+			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
+		}
+		
 		System.out.println("Writing: Support Required");
 		if ( BeansUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
 		System.out.println("Failure.");
@@ -93,6 +114,12 @@ public class PlanResource {
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
+		
+		String userRole = DatabaseAccess.getRole(username, token);
+		if ( !Permissions.canPostPersonalPlan(userRole) ) {
+			System.out.println("User " + username + " cannot perform this action.");
+			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
+		}
 		
 		System.out.println("Writing: Health Details");
 		if ( BeansUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
@@ -111,6 +138,12 @@ public class PlanResource {
 			@PathParam("clientid") String clientid
 			) {
 		
+		String userRole = DatabaseAccess.getRole(username, token);
+		if ( !Permissions.canPostPersonalPlan(userRole) ) {
+			System.out.println("User " + username + " cannot perform this action.");
+			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
+		}
+		
 		System.out.println("Writing: Client Details");
 		if ( BeansUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
 		System.out.println("Failure.");
@@ -127,6 +160,12 @@ public class PlanResource {
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
+		
+		String userRole = DatabaseAccess.getRole(username, token);
+		if ( !Permissions.canPostPersonalPlan(userRole) ) {
+			System.out.println("User " + username + " cannot perform this action.");
+			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
+		}
 		
 		System.out.println("Writing: Education & Employment");
 		if ( BeansUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
@@ -145,6 +184,12 @@ public class PlanResource {
 			@PathParam("clientid") String clientid
 			) {
 		
+		String userRole = DatabaseAccess.getRole(username, token);
+		if ( !Permissions.canPostPersonalPlan(userRole) ) {
+			System.out.println("User " + username + " cannot perform this action.");
+			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
+		}
+		
 		System.out.println("Writing: Personal Plan");
 		if ( BeansUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
 		System.out.println("Failure.");
@@ -162,9 +207,14 @@ public class PlanResource {
 			@PathParam("clientid") String clientid
 			) {
 		
-		System.out.println("Requesting: Planning");
+		String userRole = DatabaseAccess.getRole(username, token);
+		// TODO Should refactor hardcoding
+		if ( !Permissions.canGetPersonalPlan(userRole) && !userRole.toLowerCase().equals("client".toLowerCase())) {
+			System.out.println("User " + username + " cannot perform this action.");
+			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
+		}
 		
-		return PlanFactory.createPlanning(username, token, clientid);
+		System.out.println("Requesting: Planning");return PlanFactory.createPlanning(username, token, clientid);
 	}
 	
 	@GET
@@ -175,6 +225,12 @@ public class PlanResource {
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
+		
+		String userRole = DatabaseAccess.getRole(username, token);
+		if ( !Permissions.canGetPersonalPlan(userRole) ) {
+			System.out.println("User " + username + " cannot perform this action.");
+			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
+		}
 		
 		System.out.println("Requesting: communication");
 		
@@ -190,6 +246,12 @@ public class PlanResource {
 			@PathParam("clientid") String clientid
 			) {
 		
+		String userRole = DatabaseAccess.getRole(username, token);
+		if ( !Permissions.canGetPersonalPlan(userRole) ) {
+			System.out.println("User " + username + " cannot perform this action.");
+			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
+		}
+		
 		System.out.println("Requesting: support required");
 		
 		return PlanFactory.createSupportRequired(username, token, clientid);
@@ -204,6 +266,12 @@ public class PlanResource {
 			@PathParam("clientid") String clientid
 			) {
 		
+		String userRole = DatabaseAccess.getRole(username, token);
+		if ( !Permissions.canGetPersonalPlan(userRole) ) {
+			System.out.println("User " + username + " cannot perform this action.");
+			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
+		}
+		
 		System.out.println("Requesting: health details");
 
 		return PlanFactory.createHealthDetails( username, token, clientid );
@@ -217,6 +285,12 @@ public class PlanResource {
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
+		
+		String userRole = DatabaseAccess.getRole(username, token);
+		if ( !Permissions.canGetPersonalPlan(userRole) ) {
+			System.out.println("User " + username + " cannot perform this action.");
+			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
+		}
 
 		System.out.println("Requesting: ClientDetails");
 
@@ -231,6 +305,12 @@ public class PlanResource {
 			@PathParam("token") String token,
 			@PathParam("clientid") String clientid
 			) {
+		
+		String userRole = DatabaseAccess.getRole(username, token);
+		if ( !Permissions.canGetPersonalPlan(userRole) ) {
+			System.out.println("User " + username + " cannot perform this action.");
+			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
+		}
 
 		System.out.println("Requesting: Education & Employment");
 
@@ -246,6 +326,12 @@ public class PlanResource {
 			@PathParam("clientid") String clientid
 			) {
 		
+		String userRole = DatabaseAccess.getRole(username, token);
+		if ( !Permissions.canGetPersonalPlan(userRole) ) {
+			System.out.println("User " + username + " cannot perform this action.");
+			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
+		}
+		
 		System.out.println("Requesting: PersonalPlan");
 
 		return PlanFactory.createPersonalPlan( username, token, clientid );
@@ -259,6 +345,12 @@ public class PlanResource {
 			@PathParam("username") String username,
 			@PathParam("token") String token
 			) {
+		
+		String userRole = DatabaseAccess.getRole(username, token);
+		if ( !Permissions.canGetPersonalPlan(userRole) ) {
+			System.out.println("User " + username + " cannot perform this action.");
+			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
+		}
 
 		System.out.println("Requesting: Existing plan details");
 

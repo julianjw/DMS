@@ -14,6 +14,8 @@ import qut.endeavour.rest.bean.Verification;
 import qut.endeavour.rest.bean.admin.DMSUser;
 import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.factory.UserFactory;
+import qut.endeavour.rest.storage.DatabaseAccess;
+import qut.endeavour.rest.utility.Permissions;
 import qut.endeavour.rest.utility.UserUtility;
 
 /**
@@ -24,9 +26,6 @@ import qut.endeavour.rest.utility.UserUtility;
 @Path("/user")
 public class UsersResource {
 	
-	private final String USER_ID_FIELD = "user_id";
-	private final String AUTH_TOKEN_FIELD = "auth_token";
-	
 	@GET
 	@Path("/getallclients/{user_id: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -34,6 +33,13 @@ public class UsersResource {
 			@PathParam("user_id") String username,
 			@PathParam("token") String token
 			){
+		
+		String role = DatabaseAccess.getRole(username, token);
+		if ( !Permissions.canGetClients(role) ) {
+			System.out.println("User " + username + " cannot perform this action.");
+			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
+		}
+		
 		return UserFactory.createAllClients( username, token );
 	}
 	
@@ -46,6 +52,12 @@ public class UsersResource {
 			@PathParam("user_to_get") String userToRetrieve
 			){
 		
+		String role = DatabaseAccess.getRole(username, token);
+		if ( !Permissions.canGetUser(role) ) {
+			System.out.println("User " + username + " cannot perform this action.");
+			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
+		}
+		
 		return UserFactory.createUser( username, token, userToRetrieve );
 	}
 	
@@ -56,16 +68,23 @@ public class UsersResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Verification newUser(
 			final DMSUser newUser,
-			@PathParam("user_id") String currentUser_id,
+			@PathParam("user_id") String username,
 			@PathParam("token") String token
 			) {
 		// sanity checks
-		if( currentUser_id == null ) throw new DMSClientErrorException("No user_id supplied");
-		if( currentUser_id.length() < 1 ) throw new DMSClientErrorException("No user_id supplied");
+		if( username == null ) throw new DMSClientErrorException("No user_id supplied");
+		if( username.length() < 1 ) throw new DMSClientErrorException("No user_id supplied");
 		if( token == null ) throw new DMSClientErrorException("No token supplied");
 		if( token.length() < 1 ) throw new DMSClientErrorException("No token supplied");
 		
-		if ( UserUtility.putUserInDatabase( currentUser_id, token, newUser ) ) {
+		
+		String userRole = DatabaseAccess.getRole(username, token);
+		if ( !Permissions.canPostUser(userRole) ) {
+			System.out.println("User " + username + " cannot perform this action.");
+			throw new DMSClientErrorException("User \""+username+"\"does not have permission for this action.");
+		}
+		
+		if ( UserUtility.putUserInDatabase( username, token, newUser ) ) {
 			return new Verification(Verification.Verified.SUCCESS);
 		}
 		return new Verification(Verification.Verified.FAILURE);

@@ -45,7 +45,11 @@ public class RoleResource {
 		return AuthFactory.createRoles(userId, token);
 	}
 	
-	
+	/**
+	 * Get a user's role.
+	 * @param uriInfo
+	 * @return
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public AuthRole getJSONRole(@Context UriInfo uriInfo ) {

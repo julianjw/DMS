@@ -22,12 +22,10 @@ public class MeetingFactory {
 	public static List<UpcomingMeeting> createUpcomingMeetings(String username,
 			String token)  {
 		
-		String userRole = DatabaseAccess.getRole(username, token);
-		if (!Permissions.canGetUpcomingMeetings( userRole) )  throw new DMSClientErrorException("User with role " + userRole.toUpperCase() + " cannot see upcoming meetings.");
 		
 		List<UpcomingMeeting> upcomingMeetings = new ArrayList<UpcomingMeeting>();
-		
-		//TODO Get rid of hard-coding	
+
+		// TODO refactor hard coding
 		String sql = "SELECT ui.name, ui.username, sm.meeting_date FROM  `scheduled_meeting` sm NATURAL JOIN  `user_info` ui ORDER BY sm.meeting_date DESC;";
 		
 		try {
@@ -63,11 +61,6 @@ public class MeetingFactory {
 			String token,
 			String clientid
 			) {
-
-		String userRole = DatabaseAccess.getRole(username, token);
-		
-		// verify user is allowed to do action
-		if (!Permissions.canGetMeeting(userRole)) throw new DMSClientErrorException("User with role " + userRole.toUpperCase() + " cannot view meeting details.");
 		
 		List<Object> fields = MeetingFactory.getFields(
 				clientid,
@@ -150,18 +143,5 @@ public class MeetingFactory {
 		}
 		return rows;
 	}
-	
-//	private static List<Object> getFields( String clientid, List<String> columns, String tableName){
-//		List<ArrayList<Object>> objects = 
-//		if ( objects.size() < 1 ) return null;
-//		List<Object> fields = objects.get(0);
-//		if ( fields.size() != fieldNames.size() ) return null;
-//		return fields;
-//	}
-//	
-//
-//	//perform action
-//	List<Map<String, Object>> resultsList = DatabaseAccess.getTableContents( clientid, fieldNames, tableNames);
-//	List<ArrayList<Object>> rows = ProcessResults( resultsList, fieldNames );
-//	
+
 }
