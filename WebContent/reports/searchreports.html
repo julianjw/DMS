@@ -18,6 +18,23 @@ function selectPP(el) {
 	
 	//get the personal plan of the selected client
 	
+	var clientName = "";
+		
+	//pull the name
+	$.ajax({
+		url: "./rest/user/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + $(el).attr("id"),
+		type:"get",
+		contentType: "application/json",
+		success: function(d) {		
+			clientName = d.rName;
+
+		},
+		error: function(xhr) {
+			// do something to handle error
+			alert(xhr.response);
+		}
+	});
+	
 	var a = function(callback)
 	{
 	
@@ -39,7 +56,7 @@ function selectPP(el) {
 		console.log(data); //outputing json object into console
 		
 		//Create the PDF
-		alert("PDF Being Generated"); //testing only
+		//alert("PDF Being Generated"); //testing only
 		
 		//Create today's date
 		var d =  new Date();
@@ -67,9 +84,14 @@ function selectPP(el) {
 		/* -------------------------------- CLIENT DETAILS --------------------------------------*/
 		doc.setFontSize(18);
 		doc.text(10, ((pagePosY * 5) + 20), 'Client Details'); pagePosY++;
-		//Personal details
+		//client name
+		doc.setFontType("normal");
 		doc.setFontSize(16);
-		doc.text(10, 20, 'Personal Details');
+		doc.text(10, ((pagePosY * 5) + 20), 'Client Name: ' + clientName); pagePosY++;
+		//Personal details
+		doc.setFontType("bold");
+		//doc.setFontSize(16);
+		doc.text(10, ((pagePosY * 5) + 20), 'Personal Details'); pagePosY++;
 		doc.setFontType("normal"); //set font type back to normal
 		doc.setFontSize(14);
 		doc.text(10, ((pagePosY * 5) + 20), 'Creation Date: ' + data.clientDetails.personalDetails.creationDate); pagePosY++;
