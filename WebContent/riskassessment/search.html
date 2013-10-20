@@ -44,11 +44,12 @@ function showClients() {
 		contentType: "application/json",
 		success: function(d) {
 			$("#clientSearchResults").html("");
-			var content = "<table>"
-				content += "<tr><th>ID</th><th>Name</th></tr>";
-			for (var i = 0; i < d.user.length; i++) {
-				content += "<tr><td>" + d.user[i].user_id + "</td>";	
-				content += "<td class='fakeLink' id='" + d.user[i].user_id + "'onClick='selectClient(this);'>" + d.user[i].rName + "</td></tr>";						
+			var content = "<table>";
+			content += "<tr><th>ID</th><th>Name</th></tr>";
+			
+			for (var i = 0; i < d.dmsClientUser.length; i++) {
+				content += "<tr><td>" + d.dmsClientUser[i].user_id + "</td>";	
+				content += "<td class='fakeLink' id='" + d.dmsClientUser[i].user_id + "'onClick='selectClient(this);'>" + d.dmsClientUser[i].rName + "</td></tr>";						
 			}
 			content += "</table>";
 			$("#clientSearchResults").append(content);

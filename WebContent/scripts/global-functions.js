@@ -51,6 +51,7 @@ function checkRole() {
     				$("#main-nav").append("<li><a href='planmeeting.jsp'>Plan Meetings</a></li>");
     				$("#main-nav").append("<li><a href='createuser.jsp'>Create User</a></li>");
     				$("#main-nav").append("<li><a href='reports.jsp'>Reports</a></li>");
+    				$("#main-nav").append("<li><a href='resetpassword.jsp'>Reset Passwords</a></li>");
     			}
 			},
 			error: function(xhr) {
