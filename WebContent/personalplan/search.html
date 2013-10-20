@@ -27,12 +27,31 @@ function selectPP(el) {
 
 
 function signOff(el) {
+	//get the client id
+	var split = el.id.split("sign");
+	var clientID = split[1];
+	
 	//see if checkbox is checked or not
-	if($("#"+$(el).attr("id")).prop("checked", true)) {
-		
+	if(el.checked==true) {
+		//sign off on personal plan
+		method="POST";
 	}else {
-		
+		//un-sign off on the personal plan
+		method = "DELETE";
 	}
+	
+	//make the call
+	$.ajax({
+		url:"./rest/signoff/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + clientID,
+		type: method,
+		async: false,
+		success: function(data, jqXHR, textStatus) {
+			
+		},
+		error: function(jqXHR, textStatus) {
+			
+		}
+	});
 }
 
 
@@ -69,12 +88,13 @@ $(document).ready(function(){
 						async:false,
 						contentType: "application/json",
 						success: function(da) {  
-							if(da.found=="false") {
-								content += "<tr><td><input type='checkbox' id='sign"+d.user[i].user_id+"' onClick='signOff(this);'</td>";
-							}else {
-								content += "<tr><td><input type='checkbox' id='sign"+d.user[i].user_id+"' onClick='signOff(this);' class='checked'</td>";
+							if(d.user[i].dob!=undefined) {
+								if(da.found=="false") {
+									content += "<tr><td><input type='checkbox' id='sign"+d.user[i].user_id+"' onClick='signOff(this);'</td>";
+								}else {
+									content += "<tr><td><input type='checkbox' id='sign"+d.user[i].user_id+"' onClick='signOff(this);' class='checked'</td>";
+								}
 							}
-							
 						},
 						error: function(xhr) {
 							// do something to handle error
