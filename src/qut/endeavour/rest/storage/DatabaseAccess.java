@@ -1,11 +1,15 @@
 package qut.endeavour.rest.storage;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,10 +22,13 @@ import java.util.Map.Entry;
 
 import java.util.Vector;
 
+import qut.endeavour.rest.bean.admin.DMSClientUser;
 import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.exception.DMSException;
 import qut.endeavour.rest.utility.Permissions;
 import qut.endeavour.rest.utility.SqlWriteJob;
+import qut.endeavour.rest.utility.security.PasswordUtility;
+import qut.endeavour.rest.utility.security.SaltAndHash;
 
 
 public class DatabaseAccess {
@@ -51,27 +58,6 @@ public class DatabaseAccess {
 
 	
 	
-	
-	
-	/**
-	 * 
-	 * Used to poulate cTypeByName
-	 * client contact types details
-	 * 
-	 * @param user_id
-	 * @param token
-	 * @return
-	 * @throws DMSException 
-	 */
-//	public static List<String> getContactTypes( String user_id, String token ) {
-//		List<String> contactTypes = new ArrayList<String>();
-//		if ( validateUser(user_id, token) ) {
-//			for ( Entry<String,ContactTypeRecord> record : cTypeByName.entrySet() ){
-//				contactTypes.add(record.getValue().cType.toLowerCase());
-//			}
-//		}
-//		return contactTypes;
-//	}
 	
 	
 	public static boolean performSqlJobs( List<SqlWriteJob> jobs ) {
@@ -105,7 +91,7 @@ public class DatabaseAccess {
 	 * @param token
 	 * @return
 	 */
-	public static List<String> getRoles( String user_id, String token ) {
+	public static List<String> getRoles() {
 		List<String> roles = new ArrayList<String>();
 		//if ( validateUser(user_id, token) ) {
 		for ( Entry<String,RoleRecord> record : roleByName.entrySet()){
@@ -276,7 +262,25 @@ public class DatabaseAccess {
 		return false;
 	}
 
-	
+	public static SaltAndHash getSaltAndHash( String username ) {
+		
+		String sql = "select password_hash, salt from user_info where username = ?";
+		try {
+			
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, username);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			
+			byte[] hash = rs.getBytes(1);
+			byte[] salt = rs.getBytes(2);
+			return new SaltAndHash(salt, hash);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	
 	/**
@@ -291,35 +295,61 @@ public class DatabaseAccess {
 	public static boolean loginAttempt(String user_id, String password) {
 		if (!makeConnection()) return false;
 		
-//		for ( Entry<String,RoleRecord> record : roleByName.entrySet()){
-//			System.out.println( record.getKey() +": "+ record.getValue().roleId +", "+ record.getValue().role +", "+ record.getValue().details);
-//		}
-			
-		
-		System.out.println("DatabaseAccess: Validating login.");
-		
-		// check if user exists.
-		String sql = "SELECT count(*) as 'count' FROM `user_info` WHERE username = ? and password = ?";
-		
 		try {
+			String sql = "SELECT count(*) as 'count' FROM `user_info` WHERE username = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, user_id);
-			ps.setString(2, password);
 			ResultSet countResult = ps.executeQuery();
 			countResult.next();
-			
-			if ( countResult.getInt("count")  == 1 ) {
-				System.out.println("DatabaseAccess: username & password are valid.");
-				logoutUser(user_id);
-				return true; 
-			}
-			
-			return false;
-			
+			if ( countResult.getInt("count") != 1 ) return false; 
 		} catch (SQLException e) {
-			System.out.println("SQLException: " + e.toString());
+			e.printStackTrace();
+			return false;
 		}
 		
+		System.out.println("User found in db.");
+		
+		SaltAndHash sah;
+		
+		try {
+			sah = DatabaseAccess.getSaltAndHash(user_id);
+			
+			if ( PasswordUtility.compareAgainstHash(sah, password) ) {
+				logoutUser(user_id);
+				return true;
+			}
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			return false;
+		} catch (InvalidKeySpecException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+//		System.out.println("Get encrypted password.");
+		
+//		psp2 = DatabaseAccess.getSaltAndHash(user_id);
+//		storedPassword = psp2.getPassword();
+//		
+//		System.out.println("DatabaseAccess: Validating login.");
+//
+//		System.out.println( storedPassword );
+//		System.out.println( encryptedPassword );
+//		
+//		for ( byte b : storedPassword ) System.out.print(b);
+//		System.out.println();
+//		for ( byte b : encryptedPassword ) System.out.print(b);
+//		System.out.println();
+		
+		
+		// check if password is valid
+//		if ( Arrays.equals( storedPassword , encryptedPassword) ) {
+//			System.out.println("DatabaseAccess: username & password are valid.");
+//			logoutUser(user_id);
+//			return true;
+//		}
+		
+		System.out.println("User and password combo incorrect.");
 		return false;
 	}
 
@@ -337,20 +367,12 @@ public class DatabaseAccess {
 	 * @param role_name
 	 * @return
 	 */
-	public static boolean createUser( String currentUser_id, String token, String personName, String newUser_id, String password, String role_name ){
+	public static boolean createUser( String currentUser_id, String personName, String newUser_id, byte[] salt, byte[] hash, String role_name ){
 		//String currentUserRole = getRole(currentUser_id, token);
 		
-		//TODO THIS IS BROKEN
-		
-		System.out.println("current user: "+currentUser_id);
-		System.out.println("new person's name: "+personName);
-		System.out.println("new username: "+newUser_id);
-		System.out.println("new person's role: "+password);
-		
-		System.out.println("Role name: \"" + role_name + "\"");
+		System.out.println("Making a new user.");
 		
 		int role_id;
-		
 		
 		try {
 			role_id = roleByName.get(role_name.toLowerCase()).roleId;
@@ -362,17 +384,13 @@ public class DatabaseAccess {
 		
 		System.out.println("Role id: " + Integer.toString(role_id));
 		
-		// Refuse roles that aren't allowed to create users.
-		//if ( currentUserRole.equals("") ) throw new DMSClientErrorException("Current cannot create a new user");//return false;
-		//if ( currentUserRole.equals("CLIENT") ) throw new DMSClientErrorException("Current cannot create a new user");// return false;
-		
 		// TODO check if they are allowed to make a new client
 		
 		// TODO check if they are allowed to make a new staff
 		
 		System.out.println("DatabaseAccess: Creating new user.");
 		
-		String sql = "INSERT INTO `"+DATABASE_NAME+"`.`user_info` (`user_id`, `name`, `username`, `password`, `role_id`) VALUES (NULL, ?, ?, ?, ?);";
+		String sql = "INSERT INTO `"+DATABASE_NAME+"`.`user_info` (`user_id`, `name`, `username`, `password_hash`, `salt`, `role_id`) VALUES (NULL, ?, ?, ?, ?, ?);";
 		PreparedStatement ps;
 		
 		System.out.println(sql);
@@ -381,8 +399,9 @@ public class DatabaseAccess {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, personName);
 			ps.setString(2, newUser_id);
-			ps.setString(3, password);
-			ps.setInt(4, role_id);
+			ps.setBytes(3, hash);
+			ps.setBytes(4, salt);
+			ps.setInt(5, role_id);
 			ps.executeUpdate();
 			return true;
 			
@@ -734,7 +753,7 @@ public class DatabaseAccess {
 
 	public static List<List<String>> getAllUsersWithRole(String role) {
 		role = role.toUpperCase();
-		String sql = "select ui.username, ui.name, ui.password, r.role from user_info ui inner join roles r on ui.role_id=r.role_id where r.role=?";
+		String sql = "select ui.username, ui.name, r.role from user_info ui inner join roles r on ui.role_id=r.role_id where r.role=?";
 		ResultSet results = queryUserInfo(sql, role);
 		
 		List<List<String>> allClients = new ArrayList<List<String>>();
@@ -746,7 +765,7 @@ public class DatabaseAccess {
 	}
 	
 	public static List<String> getUserInfo(String username) {
-		String sql = "select ui.username, ui.name, ui.password, r.role from user_info ui inner join roles r on ui.role_id=r.role_id where ui.username=?";
+		String sql = "select ui.username, ui.name, r.role from user_info ui inner join roles r on ui.role_id=r.role_id where ui.username=?";
 		ResultSet results = queryUserInfo(sql, username);
 		return extractUserInfo(results);
 	}
@@ -835,6 +854,35 @@ public class DatabaseAccess {
 		} catch (DMSException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static List<DMSClientUser> getAllClients() {
+		String sql = "select ui.username, ui.name, pd.dob, pd.mobileno, pd.phoneno from client_personal_details pd natural right join user_info ui  inner join roles r on ui.role_id=r.role_id where r.role = 'client';";
+		PreparedStatement ps = null;
+		ResultSet r = null;
+		
+		List<DMSClientUser> allClients = new ArrayList<DMSClientUser>();
+		
+		try {
+			ps = con.prepareStatement(sql);
+			r = ps.executeQuery();
+			
+			while (r.next()) {
+				DMSClientUser c = new DMSClientUser();
+				c.setUser_id( r.getString("username") );
+				c.setrName( r.getString("name") );
+				c.setDob( r.getDate("dob").toString() );
+				c.setMobile( r.getString("mobileno") );
+				c.setTelephone( r.getString("phoneno") );
+				allClients.add(c);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DMSClientErrorException("Cannot get client information");
+		}
+		
+		return allClients;
 	}
 	
 }

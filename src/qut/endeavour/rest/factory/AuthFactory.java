@@ -25,7 +25,7 @@ public final class AuthFactory {
 	
 	private static final int tokenLength = 32;
 	private static final String validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-	private static final Random r = new Random( System.currentTimeMillis() );
+	private static Random r = new Random( System.currentTimeMillis() );
 	
 	/**
 	 * Generates a token string of default length
@@ -74,8 +74,8 @@ public final class AuthFactory {
 	 * @param token
 	 * @return
 	 */
-	public static List<AuthRole> createRoles(String user_id, String token) {
-		List<String> roles = DatabaseAccess.getRoles(user_id, token);
+	public static List<AuthRole> createRoles() {
+		List<String> roles = DatabaseAccess.getRoles();
 		List<AuthRole> authRoles = new ArrayList<AuthRole>();
 		
 		for ( String role : roles ) authRoles.add( new AuthRole(role));

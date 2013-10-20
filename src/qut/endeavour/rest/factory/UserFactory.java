@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import qut.endeavour.rest.bean.admin.DMSClientUser;
 import qut.endeavour.rest.bean.admin.DMSUser;
 import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.storage.DatabaseAccess;
@@ -25,20 +26,20 @@ public class UserFactory {
 				);
 	}
 	
-	public static List<DMSUser> createAllClients(String username, String token) {
+	public static List<DMSClientUser> createAllClients(String username, String token) {
 		
-		List<List<String>> clientsInfo = DatabaseAccess.getAllUsersWithRole( CLIENT_ROLE ); // TODO make this a constant
-		List<DMSUser> users = new ArrayList<DMSUser>();
-		
-		for ( List<String> client : clientsInfo ) {
-			users.add( new DMSUser(
-					client.get(0),	// user login name
-					client.get(1),	// user's real name
-					null, 			// no password returned
-					null			// no role will be returned
-					) );
-		}
-		return users;
+		List<DMSClientUser> clientsInfo = DatabaseAccess.getAllClients();//DatabaseAccess.getAllUsersWithRole( CLIENT_ROLE ); // TODO make this a constant
+//		List<DMSUser> users = new ArrayList<DMSUser>();
+//		
+//		for ( List<String> client : clientsInfo ) {
+//			users.add( new DMSUser(
+//					client.get(0),	// user login name
+//					client.get(1),	// user's real name
+//					null, 			// no password returned
+//					null			// no role will be returned
+//					) );
+//		}
+		return clientsInfo;
 	}
 	
 }

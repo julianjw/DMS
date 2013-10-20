@@ -11,6 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import qut.endeavour.rest.bean.Verification;
+import qut.endeavour.rest.bean.admin.DMSClientUser;
 import qut.endeavour.rest.bean.admin.DMSUser;
 import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.factory.UserFactory;
@@ -29,7 +30,7 @@ public class UsersResource {
 	@GET
 	@Path("/getallclients/{user_id: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<DMSUser> getAllClients(
+	public List<DMSClientUser> getAllClients(
 			@PathParam("user_id") String username,
 			@PathParam("token") String token
 			){

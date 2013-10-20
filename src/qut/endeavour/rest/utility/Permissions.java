@@ -127,4 +127,13 @@ public class Permissions {
 				SERVICE_OPERATION_MANGER
 				} , userRole );
 	}
+
+	public static boolean canGetRoles(String userRole) {
+		return testRole( new String[] {
+				SUPPORT_WORKER,
+				RESEARCH_AND_DEVELOPMENT_OFFICER,
+				SERVICE_DEVELOPMENT_AND_INNOVATIONS_MANAGER,
+				SERVICE_OPERATION_MANGER
+				} , userRole );
+	}
 }
