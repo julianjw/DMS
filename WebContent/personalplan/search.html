@@ -9,8 +9,6 @@
 	
 			<div id='searchResults'></div>
 		</td>
-		<td>OR</td>
-		<td><button id='createNewPPButton' >Create a new Personal Plan</button></td>
 	</tr>
 	</table>
 </div>
@@ -44,17 +42,17 @@ $(document).ready(function(){
 	
 	
 	//click on create new PP button
-	$("#createNewPPButton").click(function(){
-		$("#searchD").hide();
-		pullData("new");
-		$("#clientD").show();
-	});
+	//$("#createNewPPButton").click(function(){
+		//$("#searchD").hide();
+		//pullData("new");
+		//$("#clientD").show();
+	//});
 	
 	
 	//page loads
 	//get list of existing clients
 	$.ajax({
-		url: "./rest/personalplan/allclientswithplans/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
+		url: "./rest/user/getallclients/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
 		type:"get",
 		contentType: "application/json",
 		success: function(d) {
@@ -63,18 +61,18 @@ $(document).ready(function(){
 				$("#searchResults").html("");
 				var content = "<table>";
 				content += "<tr><th>SignOff</th><th>Client ID</th><th>Name</th><th>DOB</th><th>Mobile</th><th>Telephone</th></tr>";
-				for (var i = 0; i < d.existingPlanDetails.length; i++) {
+				for (var i = 0; i < d.user.length; i++) {
 					//get the signoff details
 					$.ajax({
-						url: "./rest/signoff/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + d.existingPlanDetails[i].user_id,
+						url: "./rest/signoff/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + d.user[i].user_id,
 						type:"get",
 						async:false,
 						contentType: "application/json",
 						success: function(da) {  
 							if(da.found=="false") {
-								content += "<tr><td><input type='checkbox' id='sign"+d.existingPlanDetails[i].user_id+"' onClick='signOff(this);'</td>";
+								content += "<tr><td><input type='checkbox' id='sign"+d.user[i].user_id+"' onClick='signOff(this);'</td>";
 							}else {
-								content += "<tr><td><input type='checkbox' id='sign"+d.existingPlanDetails[i].user_id+"' onClick='signOff(this);' class='checked'</td>";
+								content += "<tr><td><input type='checkbox' id='sign"+d.user[i].user_id+"' onClick='signOff(this);' class='checked'</td>";
 							}
 							
 						},
@@ -83,11 +81,11 @@ $(document).ready(function(){
 							
 						}
 					});
-					content += "<td class='fakeLink' id='" + d.existingPlanDetails[i].user_id + "'onClick='selectPP(this);'>" + d.existingPlanDetails[i].user_id + "</td>";
-					content += "<td>" + d.existingPlanDetails[i].rName + "</td>";
-					content += "<td>" + d.existingPlanDetails[i].dob + "</td>";
-					content += "<td>" + d.existingPlanDetails[i].mobile + "</td>";
-					content += "<td>" + d.existingPlanDetails[i].telephone + "</td></tr>";
+					content += "<td class='fakeLink' id='" + d.user[i].user_id + "'onClick='selectPP(this);'>" + d.user[i].user_id + "</td>";
+					content += "<td>" + d.user[i].rName + "</td>";
+					content += "<td>" + d.user[i].dob + "</td>";
+					content += "<td>" + d.user[i].mobile + "</td>";
+					content += "<td>" + d.user[i].telephone + "</td></tr>";
 				}
 				content += "</table>";
 				$("#searchResults").append(content);
@@ -98,12 +96,12 @@ $(document).ready(function(){
 				$("#searchResults").html("");
 				var content = "<table>"
 				content += "<tr><th>Client ID</th><th>Name</th><th>DOB</th><th>Mobile</th><th>Telephone</th></tr>";
-				for (var i = 0; i < d.existingPlanDetails.length; i++) {
-					content += "<tr><td class='fakeLink' id='" + d.existingPlanDetails[i].user_id + "'onClick='selectPP(this);'>" + d.existingPlanDetails[i].user_id + "</td>";
-					content += "<td>" + d.existingPlanDetails[i].rName + "</td>";
-					content += "<td>" + d.existingPlanDetails[i].dob + "</td>";
-					content += "<td>" + d.existingPlanDetails[i].mobile + "</td>";
-					content += "<td>" + d.existingPlanDetails[i].telephone + "</td></tr>";
+				for (var i = 0; i < d.user.length; i++) {
+					content += "<tr><td class='fakeLink' id='" + d.user[i].user_id + "'onClick='selectPP(this);'>" + d.user[i].user_id + "</td>";
+					content += "<td>" + d.user[i].rName + "</td>";
+					content += "<td>" + d.user[i].dob + "</td>";
+					content += "<td>" + d.user[i].mobile + "</td>";
+					content += "<td>" + d.user[i].telephone + "</td></tr>";
 				}
 				content += "</table>";
 				$("#searchResults").append(content);

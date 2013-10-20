@@ -2,7 +2,8 @@
 
 <jsp:include page="partials/body.html" flush="true" />
 	<!-- page content -->
-		<label for='createName' id='createNameL' >Name: </label>
+	<p id='successMsg' style="color:green;"></p>
+	<label for='createName' id='createNameL' >Name: </label>
 	<input type='text' id='createName' name='createName' /><br />
 	
 	<label for='createRole' id='createRoleL' >Role: </label>
@@ -13,7 +14,8 @@
 	<input type='text' id='createUsername' name='createUsername' /><br />
 	
 	<label for='createpassword' id='createPasswordL' >Password: </label>
-	<input type='password' id='createPassword' name='createPassword' /><br />
+	<input type='password' id='createPassword' name='createPassword' value="password" readonly /><br />
+	<p><em>Default password is "password". Upon first login, the user will be prompted to change their password</em></p>
 	
 
 	<button id='submitB'>Create User</button>
@@ -23,6 +25,12 @@
 <script type='text/javascript'>
 $(document).ready(function(){
 	//page load
+	
+	if($.cookie("userCreated")) {
+		$("#successMsg").html("User created!");
+		$.removeCookie("userCreated");
+	}
+	
 	//get all roles
 	$.ajax({
 		url: "./rest/role/all/",
@@ -40,7 +48,7 @@ $(document).ready(function(){
 		},
 		error: function(data) {
 			//do something to handle error
-			alert("error getting roles");
+			
 		}
 	});
 	
@@ -64,8 +72,7 @@ $(document).ready(function(){
 			data: jsonText,
 			success: function(jqXHR, textStatus) {
 				//check for bad return
-				
-				alert("User Created");
+				$.cookie("userCreated", "1");
 				document.location.reload(true);
 			},
 			error : function(jqXHR) {

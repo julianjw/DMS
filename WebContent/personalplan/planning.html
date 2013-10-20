@@ -134,9 +134,12 @@
 					if(data.verified=="failure") {
 			
 					}else {
-					
-						$("#goalsD").hide();
-						nextNav('lastD');
+						if($.cookie("user_role")=="client") {
+							document.location.reload(true);
+						}else {
+							$("#goalsD").hide();
+							nextNav('lastD');
+						}
 					}				
 				},
 				error: function(jqXHR, textStatus) {

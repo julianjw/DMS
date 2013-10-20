@@ -35,21 +35,19 @@ function checkRole() {
     			if($.cookie("user_role")=="client") {
     				$("#main-nav").html("");
     				$("#main-nav").append("<br/>");
-    				$("#main-nav").append("<li><a href='goals.jsp'>Goals</a></li>");
+    				$("#main-nav").append("<li><a href='personalplan.jsp#goals'>Goals</a></li>");
     			//support worker
     			}else if($.cookie("user_role")=="sw") {
     				$("#main-nav").html("");
     				$("#main-nav").append("<br/>");
     				$("#main-nav").append("<li><a href='personalplan.jsp'>Personal Plan</a></li>");
     				$("#main-nav").append("<li><a href='riskassessment.jsp'>Risk Assessment</a></li>");
-    				$("#main-nav").append("<li><a href='goals.jsp'>Goals</a></li>");
     			//others
     			}else if($.cookie("user_role")=="sdim" || $.cookie("user_role")=="som" || $.cookie("user_role")=="r&do") {
     				$("#main-nav").html("");
     				$("#main-nav").append("<br/>");
     				$("#main-nav").append("<li><a href='personalplan.jsp'>Personal Plan</a></li>");
     				$("#main-nav").append("<li><a href='riskassessment.jsp'>Risk Assessment</a></li>");
-    				$("#main-nav").append("<li><a href='goals.jsp'>Goals</a></li>");
     				$("#main-nav").append("<li><a href='planmeeting.jsp'>Plan Meetings</a></li>");
     				$("#main-nav").append("<li><a href='createuser.jsp'>Create User</a></li>");
     				$("#main-nav").append("<li><a href='reports.jsp'>Reports</a></li>");

@@ -23,7 +23,23 @@
 <jsp:include page="partials/footer.html" flush="true" />
 <!-- Page specific scripts -->
 <script>
-function PageNavigation(dir, nav, el) {
+//check for a client role
+if($.cookie("user_role")=="client") {
+	$("#searchD").hide();
+	$("#planningD").show();
+	//hide the navigation
+	$("#search").hide();
+	$("#client").hide();
+	$("#health").hide();
+	$("#support").hide();
+	$("#communication").hide();
+	$("#education").hide();
+	pullData("planningD");
+
+}
+
+
+function PageNavigation(dir, nav, el) {	
 	var clientPageDivNav = new Array("detailsD", "alertInfoD", "livingD", "formalD");
 	var eduPageDivNav = new Array("educationD2", "employmentD");
 	var healthPageDivNav = new Array("healthD2", "hManagementD", "dietD");
