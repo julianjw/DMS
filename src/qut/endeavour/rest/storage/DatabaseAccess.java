@@ -868,10 +868,16 @@ public class DatabaseAccess {
 			r = ps.executeQuery();
 			
 			while (r.next()) {
+				
+				String dob = null;
+				
+				if (r.getDate("dob") != null)
+					dob = r.getDate("dob").toString();
+				
 				DMSClientUser c = new DMSClientUser();
 				c.setUser_id( r.getString("username") );
 				c.setrName( r.getString("name") );
-				c.setDob( r.getDate("dob").toString() );
+				c.setDob( dob );
 				c.setMobile( r.getString("mobileno") );
 				c.setTelephone( r.getString("phoneno") );
 				allClients.add(c);
