@@ -59,7 +59,7 @@ public class PasswordResource {
 	 * @throws SQLException
 	 * @throws DMSException
 	 */
-	@GET ///{clientid: [a-zA-Z_0-9]+}
+	@POST ///{clientid: [a-zA-Z_0-9]+}
 	@Path("/changepassword/{user_id: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Verification validate(
@@ -67,6 +67,8 @@ public class PasswordResource {
 			@PathParam("user_id") String username,
 			@PathParam("token") String token
 			) {
+		
+		System.out.println("Changing password.");
 		
 		try {
 		
