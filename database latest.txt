@@ -1,4 +1,7 @@
-Database v1.27
+Database v1.27 - Steven
+	- Modified user_info table - removed password field. Added salt and password_hash fields.
+
+Database v1.27 - Steven
 	- Removed the redundant field in plan_sign_off - a clientid's existance in table can represent if they have been signed off or not, no need for an additional boolean field.
 
 database v1.26
