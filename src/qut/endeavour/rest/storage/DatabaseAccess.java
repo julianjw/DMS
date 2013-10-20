@@ -295,6 +295,7 @@ public class DatabaseAccess {
 	public static boolean loginAttempt(String user_id, String password) {
 		if (!makeConnection()) return false;
 		
+		// does the user exist?
 		try {
 			String sql = "SELECT count(*) as 'count' FROM `user_info` WHERE username = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -309,6 +310,8 @@ public class DatabaseAccess {
 		
 		System.out.println("User found in db.");
 		
+		
+		// is the user valid?
 		SaltAndHash sah;
 		
 		try {
@@ -325,29 +328,6 @@ public class DatabaseAccess {
 			e.printStackTrace();
 			return false;
 		}
-		
-//		System.out.println("Get encrypted password.");
-		
-//		psp2 = DatabaseAccess.getSaltAndHash(user_id);
-//		storedPassword = psp2.getPassword();
-//		
-//		System.out.println("DatabaseAccess: Validating login.");
-//
-//		System.out.println( storedPassword );
-//		System.out.println( encryptedPassword );
-//		
-//		for ( byte b : storedPassword ) System.out.print(b);
-//		System.out.println();
-//		for ( byte b : encryptedPassword ) System.out.print(b);
-//		System.out.println();
-		
-		
-		// check if password is valid
-//		if ( Arrays.equals( storedPassword , encryptedPassword) ) {
-//			System.out.println("DatabaseAccess: username & password are valid.");
-//			logoutUser(user_id);
-//			return true;
-//		}
 		
 		System.out.println("User and password combo incorrect.");
 		return false;
