@@ -21,12 +21,27 @@ import qut.endeavour.rest.exception.DMSClientErrorException;
 
 public class PasswordUtility {
 
-	public static final String PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA1";
+	private static final String DEFAULT_PASSWORD = "password";
+	
+	private static final String PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA1";
 	
 	private static final int SALT_BYTE_SIZE = 24;
 	private static final int HASH_BYTE_SIZE = 24;
 	
 	private static final int ITERATIONS = 1021;
+	
+	/**
+	 * create a new salt and hash object using default password
+	 * 
+	 * @param password
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 * @throws InvalidKeySpecException 
+	 * @throws NoSuchAlgorithmException 
+	 */
+	public static SaltAndHash newDefaultSaltAndHash() throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeySpecException {
+		return newSaltAndHash( DEFAULT_PASSWORD );
+	}
 	
 	/**
 	 * create a new salt and hash object 

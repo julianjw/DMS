@@ -136,4 +136,12 @@ public class Permissions {
 				SERVICE_OPERATION_MANGER
 				} , userRole );
 	}
+
+	public static boolean canChangeUserPassword(String userRole) {
+		return testRole( new String[] {
+				RESEARCH_AND_DEVELOPMENT_OFFICER,
+				SERVICE_DEVELOPMENT_AND_INNOVATIONS_MANAGER,
+				SERVICE_OPERATION_MANGER
+				} , userRole );
+	}
 }

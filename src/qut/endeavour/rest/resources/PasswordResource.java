@@ -34,6 +34,7 @@ import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.exception.DMSException;
 import qut.endeavour.rest.factory.AuthFactory;
 import qut.endeavour.rest.storage.DatabaseAccess;
+import qut.endeavour.rest.utility.Permissions;
 import qut.endeavour.rest.utility.security.PasswordUtility;
 import qut.endeavour.rest.utility.security.SaltAndHash;
 
@@ -113,12 +114,15 @@ public class PasswordResource {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
+	/**
+	 * Reset a given user's password to the default password
+	 * 
+	 * @param pwdChange
+	 * @param username
+	 * @param token
+	 * @param userToChange
+	 * @return
+	 */
 	//resetpassword/{username}/{token}/{userToChange}
 	@POST ///{clientid: [a-zA-Z_0-9]+}
 	@Path("/resetpassword/{user_id: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}{userToChange: [a-zA-Z_0-9]+}")
@@ -131,18 +135,14 @@ public class PasswordResource {
 			) {
 		
 		System.out.println("Resetting user\'s password.");
-		return new Verification(Verification.Verified.FAILURE);
-		/*
+		
 		try {
 		
 			// verify user
-			if ( !DatabaseAccess.validateUser(username, token) ) return new Verification(Verification.Verified.FAILURE);
-			
-			// verify old password
-			if (! DatabaseAccess.loginAttempt(username, pwdChange.getOldPassword() ) ) return new Verification(Verification.Verified.FAILURE);
+			if ( Permissions.canChangeUserPassword( DatabaseAccess.getRole(username, token) ) ) return new Verification(Verification.Verified.FAILURE);
 			
 			// create new password
-			SaltAndHash sah = PasswordUtility.newSaltAndHash( pwdChange.getNewPassword() );
+			SaltAndHash sah = PasswordUtility.newDefaultSaltAndHash();
 			
 			// update to new password in db
 			String sql = "update user_info set password_hash = ?, salt = ? where user_id = ?";
@@ -150,7 +150,7 @@ public class PasswordResource {
 		
 			ps.setBytes(1, sah.getHash() );
 			ps.setBytes(2, sah.getSalt() );
-			ps.setInt(3, DatabaseAccess.getUserIdNumberByUsername(username) );
+			ps.setInt(3, DatabaseAccess.getUserIdNumberByUsername(userToChange) );
 			ps.execute();
 		
 		} catch ( SQLException ex ) {
@@ -171,6 +171,6 @@ public class PasswordResource {
 		}
 		
 		System.out.println("Password Updated.");
-		return new Verification(Verification.Verified.SUCCESS);*/
+		return new Verification(Verification.Verified.SUCCESS);
 	}
 }
