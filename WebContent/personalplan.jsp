@@ -129,10 +129,15 @@ function pullData(page) {
 		$("#restrictiveT").val("");
 		$("#safetyConcernsT").val("");		
 
-		$("#addressT").val("");
-		$("#phoneT").val("");
 		$("#serviceT").val("");
-		$("#sickContactT").val("");	
+		$("#livingHouseNum").val("");
+		$("#livingStreet").val("");
+		$("#livingSuburb").val("");
+		$("#livingCity").val("");
+		$("#livingPostcode").val("");
+		$("#familyContactT").val("");
+		$("#otherContactT").val("");
+		$("#sickContactT").val("");
 		
 		$("#appointeeT").val("");
 		$("#startDateT").val("");
@@ -367,10 +372,18 @@ function pullData(page) {
 				$("#safetyConcernsT").val(d.alertInformation.safetyConcerns);
 				
 
-				$("#addressLivingT").val(d.livingArangements.address);
-				$("#phoneT").val(d.livingArangements.phoneNumber);
+
 				$("#serviceT").val(d.livingArangements.service);
+				$("#livingHouseNum").val(d.livingArangements.houseNumber);
+				$("#livingStreet").val(d.livingArangements.street);
+				$("#livingSuburb").val(d.livingArangements.suburb);
+				$("#livingCity").val(d.livingArangements.city);
+				$("#livingPostcode").val(d.livingArangements.postCode);
+				$("#familyContactT").val(d.livingArangements.familyMembers);
+				$("#otherContactT").val(d.livingArangements.importantPerson);
 				$("#sickContactT").val(d.livingArangements.sickContact);
+				
+				
 				
 				
 				$("#appointeeT").val(d.formalOrders.appointee);

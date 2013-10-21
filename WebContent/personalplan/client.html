@@ -131,48 +131,37 @@
 			<textarea id='serviceT' name='serviceT' rows="3" cols="50"></textarea>
 		</div>
 		<br />
-
-		<label for='addressLivingT' class='toggle'>Address: </label>
-		<div id='addressLivingD'>
-			<textarea id='addressLivingT' name='addressLivingT' rows="3" cols="50"></textarea>
-		</div>
+		
+		<label class='toggle'>House Number: </label>
+		<input type='text' id='livingHouseNum' />
 		<br />
 		
-		<label for='phoneT' class='toggle' >Phone: </label>
+		<label class='toggle'>Street: </label>
+		<input type='text' id='livingStreet' />
+		<br />
+		
+		<label class='toggle'>Suburb: </label>
+		<input type='text' id='livingSuburb' />
+		<br />
+		
+		<label class='toggle'>City: </label>
+		<input type='text' id='livingCity' />
+		<br />
+		
+		<label class='toggle'>Postcode: </label>
+		<input type='text' id='livingPostcode' />
+		<br />
+		
+		
+		<label for='familyContactT' class='toggle' >Family Contact: </label>
 		<div id='phoneD'>
-			<textarea id='phoneT' name='phoneT' rows="3" cols="50"></textarea>
+			<textarea id='familyContactT' name='familyContactT' rows="3" cols="50"></textarea>
 		</div>
 		<br />
 
 		<label for='familyD' class='toggle'>Other Important Person: </label>
 		<div>
-			<br />
-			<label for='familyNameT' >Name: </label>
-			<input type='text' name='familyNameT' id='familyNameT' />
-			<br />
-			<label for='familyRelationshipT' >Relationship: </label>
-			<input type='text' name='familyRelationshipT' id='familyRelationshipT' />
-			<br />
-			<label for='familyContactT' >Contact Arangements: </label>
-			<br />
-			<textarea id='familyContactT' name='familyContactT' rows="3" cols="50"></textarea>
-			<br />
-		</div>
-		
-		
-		
-		
-		<label for='familyD' class='toggle'>Other Important Contact: </label>
-		<div>
-			<label for='otherPeopleNameT' >Name: </label>
-			<input type='text' name='otherPeopleNameT' id='otherPeopleNameT' />
-			<br />
-			<label for='otherPeopleRelationshipT' >Relationship: </label>
-			<input type='text' name='otherPeopleRelationshipT' id='otherPeopleRelationshipT' />
-			<br />
-			<label for='otherPeopleContactT' >Contact Arrangements: </label>
-			<br />
-			<textarea id='otherPeopleContactT' name='otherPeopleContactT' rows="3" cols="50"></textarea>
+			<textarea id='otherContactT' name='otherContactT' rows="3" cols="50"></textarea>
 			<br />
 		</div>
 		<br />
@@ -342,14 +331,18 @@
 			formalOrders.visitorInfo = $("#communityVisitorT").val();
 			
 			var livingArangements = new Object();
-			livingArangements.address = $("#addressLivingT").val();		
-			livingArangements.phoneNumber = $("#phoneT").val();
 			livingArangements.service = $("#serviceT").val();
+			livingArangements.houseNumber = $("#livingHouseNum").val();
+			livingArangements.street = $("#livingStreet").val();
+			livingArangements.suburb = $("#livingSuburb").val();
+			livingArangements.city = $("#livingCity").val();
+			livingArangements.postCode = $("#livingPostcode").val();
+			livingArangements.familyMembers = $("#familyNameT").val();
+			livingArangements.importantPerson = $("#otherContactT").val();
 			livingArangements.sickContact = $("#sickContactT").val();
 			
 			
 			
-			//familyNameT, familyRelationshipT, familyContactT, otherPeopleNameT, otherPeopleRelationshipT, otherPeopleContactT
 			
 			
 			var clientDetails = new Object();
@@ -376,7 +369,7 @@
 					}				
 				},
 				error: function(jqXHR, textStatus) {
-					
+
 				}
 			});
 			

@@ -4,6 +4,9 @@
 	<!-- page content -->
 	
 	<div id='changePasswordAdmin' style="display:hidden;"></div>
+	<p id="successMsgAdmin" style="color:green;"></p>
+	
+	<br />
 	
 	
 	<div id='changePassword'>
@@ -32,11 +35,12 @@ function Reset(el) {
 		type:"POST",
 		contentType: "application/json",
 		success: function(d) {
-			
+			$("#successMsgAdmin").html("");
+			$("#successMsgAdmin").html(el.id + "'s password has been reset to 'password'");
 		},
 		error: function(xhr) {
 			// do something to handle error
-			
+			alert("error hitting server");
 		}
 	});
 }
@@ -54,7 +58,7 @@ $(document).ready(function(){
 			success: function(d) {
 				$("#changePasswordAdmin").html("");
 				var content = "<table>";
-				content += "<tr><th>ID</th><th>Name</th></tr>";
+				content += "<tr><th></th><th>ID</th><th>Name</th></tr>";
 				
 				for (var i = 0; i < d.dmsClientUser.length; i++) {
 					content += "<tr><td class='fakeLink' id='" + d.dmsClientUser[i].user_id + "'onClick='Reset(this);'>reset</td>";
