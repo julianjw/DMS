@@ -80,7 +80,7 @@ public class PlanFactory {
 				DatabaseNames.FLDS_FORMAL_ORDERS,
 				DatabaseNames.TBL_FORMAL_ORDERS
 				);
-		
+		if ( fields == null ) return new FormalOrders();
 		int[] itemNumbers = {8};
 		String[] dates = ConvertDates.convertDateToString(itemNumbers, fields);
 		
@@ -108,7 +108,7 @@ public class PlanFactory {
 				DatabaseNames.FLDS_LIVING_ARRANGEMENTS,
 				DatabaseNames.TBL_LIVING_ARRANGEMENTS
 				);
-		
+		if ( fields == null ) return new LivingArrangements();
 		return new LivingArrangements(
 				(String)fields.get(0),
 				(String)fields.get(1),
@@ -132,7 +132,7 @@ public class PlanFactory {
 				DatabaseNames.FLDS_ALERT_INFO,
 				DatabaseNames.TBL_ALERT_INFO
 				);
-		
+		if ( fields == null ) return new AlertInformation();
 		return new AlertInformation(
 				(String)fields.get(0),
 				(String)fields.get(1),
@@ -154,7 +154,7 @@ public class PlanFactory {
 				DatabaseNames.FLDS_PERSONAL_DETAILS,
 				DatabaseNames.TBL_PERSONAL_DETAILS
 				);
-		
+		if ( fields == null ) return new PersonalDetails();
 		String[] dates = ConvertDates.convertDateToString( new int[]{1,5,6} , fields);
 		
 		return new PersonalDetails(
@@ -185,7 +185,7 @@ public class PlanFactory {
 				DatabaseNames.FLDS_DIETARY,
 				DatabaseNames.TBL_DIETARY
 				);
-		
+		if ( fields == null ) return new HealthDietary();
 		return new HealthDietary(
 				(String)fields.get(0),
 				(String)fields.get(1),
@@ -211,7 +211,7 @@ public class PlanFactory {
 				DatabaseNames.FLDS_MANAGEMENT,
 				DatabaseNames.TBL_MANAGEMENT
 				);
-		
+		if ( fields == null ) return new HealthManagement();
 		return new HealthManagement(
 				(String)fields.get(0),
 				(String)fields.get(1),
@@ -234,6 +234,8 @@ public class PlanFactory {
 				DatabaseNames.FLDS_DISABILITY,
 				DatabaseNames.TBL_DISABILITY
 				);
+		
+		if ( fields == null ) return new HealthInformation();
 		
 		return new HealthInformation(
 				(String)fields.get(0),
@@ -265,7 +267,7 @@ public class PlanFactory {
 				DatabaseNames.FLDS_RELAXATION,
 				DatabaseNames.TBL_RELAXATION
 				);
-		
+		if ( fields == null ) return new Relaxation();
 		return new Relaxation(
 				(String)fields.get(0),
 				(String)fields.get(1),
@@ -283,7 +285,7 @@ public class PlanFactory {
 				DatabaseNames.FLDS_ACTIVITIES,
 				DatabaseNames.TBL_ACTIVITIES
 				);
-
+		if ( fields == null ) return new DailyActivities();
 		return new DailyActivities(
 				(String)fields.get(0),
 				(String)fields.get(1),
@@ -319,7 +321,7 @@ public class PlanFactory {
 				DatabaseNames.FLDS_FINANCIAL,
 				DatabaseNames.TBL_FINANCIAL
 				);
-
+		if ( fields == null ) return new FinancialSupport();
 		return new FinancialSupport(
 				(String)fields.get(0),
 				(String)fields.get(1),
@@ -346,7 +348,7 @@ public class PlanFactory {
 				DatabaseNames.FLDS_MOBILITY_TRANSPORT,
 				DatabaseNames.TBL_MOBILITY_TRANSPORT
 				);
-		
+		if ( fields == null ) return new MobilityAndTransport();
 		return new MobilityAndTransport(
 				(String)fields.get(0),
 				(String)fields.get(1),
@@ -367,7 +369,7 @@ public class PlanFactory {
 				DatabaseNames.FLDS_SUPPORT_GENERAL,
 				DatabaseNames.TBL_SUPPORT_GENERAL
 				);
-	
+		if ( fields == null ) return new GeneralSupport();
 		return new GeneralSupport(
 				(String)fields.get(0),
 				(String)fields.get(1),
@@ -393,7 +395,8 @@ public class PlanFactory {
 				DatabaseNames.FLDS_COMMUNICATION,
 				DatabaseNames.TBL_COMMUNICATION
 				);
-	
+		if ( fields == null ) return new Communication();
+		
 		ComsAndDecisionMaking coms = new ComsAndDecisionMaking(
 				(String)fields.get(0),
 				(String)fields.get(1),
@@ -431,7 +434,7 @@ public class PlanFactory {
 				DatabaseNames.FLDS_EMPLOYMENT,
 				DatabaseNames.TBL_EMPLOYMENT
 				);
-		
+		if ( fields == null ) return new Employment();
 		return new Employment(
 				(String)fields.get(0),
 				(String)fields.get(1),
@@ -451,7 +454,7 @@ public class PlanFactory {
 				DatabaseNames.FLDS_EDUCATION,
 				DatabaseNames.TBL_EDUCATION
 				);
-		
+		if ( fields == null ) return new Education();
 		return new Education(
 				(String)fields.get(0),
 				(String)fields.get(1),
@@ -505,7 +508,7 @@ public class PlanFactory {
 				DatabaseNames.FLDS_GOAL,
 				DatabaseNames.TBL_GOAL
 				);
-		
+		if ( fields == null ) return new GoalPlan();
 		return new GoalPlan(
 				(String)fields.get(0),
 				(String)fields.get(1),
@@ -524,7 +527,7 @@ public class PlanFactory {
 				DatabaseNames.FLDS_HOLIDAY,
 				DatabaseNames.TBL_HOLIDAY
 				);
-		
+		if ( fields == null ) return new HolidayPlan();
 		return new HolidayPlan(
 				(String)fields.get(0),
 				(String)fields.get(1),

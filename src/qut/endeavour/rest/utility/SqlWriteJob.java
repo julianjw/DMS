@@ -217,8 +217,13 @@ public class SqlWriteJob {
 				ps.setString(i, (String)data);
 				break;
 			case INTEGER:
-				System.out.print( " I:" + (Integer)data );
-				ps.setInt(i, (Integer)data);
+				if ( data == null ) {
+					System.out.print( " I: null" );
+					ps.setNull(i, java.sql.Types.NULL );
+				} else {
+					System.out.print( " I:" + (Integer)data );
+					ps.setInt(i, (Integer)data);
+				}
 				break;
 			case BOOLEAN:
 				System.out.print( " B:" + (Boolean)data );

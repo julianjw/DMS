@@ -51,7 +51,7 @@ public class MeetingsResource {
 		
 		
 		System.out.println("Writing: Plan Meeting");
-		if ( BeansUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
+		if ( BeansUtility.storeBean(arg, clientid) ) return new Verification(Verification.Verified.SUCCESS);
 		System.out.println("Failure.");
 		return new Verification(Verification.Verified.FAILURE);
 		

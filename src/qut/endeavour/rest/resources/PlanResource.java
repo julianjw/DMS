@@ -61,7 +61,7 @@ public class PlanResource {
 		}
 		
 		System.out.println("Writing: Planning");
-		if ( BeansUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
+		if ( BeansUtility.storeBean(arg, clientid) ) return new Verification(Verification.Verified.SUCCESS);
 		System.out.println("Failure.");
 		return new Verification(Verification.Verified.FAILURE);
 		
@@ -95,7 +95,7 @@ public class PlanResource {
 		}
 		
 		System.out.println("Writing: Communication");
-		if ( BeansUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
+		if ( BeansUtility.storeBean(arg, clientid) ) return new Verification(Verification.Verified.SUCCESS);
 		System.out.println("Failure.");
 		return new Verification(Verification.Verified.FAILURE);
 	}
@@ -127,7 +127,7 @@ public class PlanResource {
 		}
 		
 		System.out.println("Writing: Support Required");
-		if ( BeansUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
+		if ( BeansUtility.storeBean(arg, clientid) ) return new Verification(Verification.Verified.SUCCESS);
 		System.out.println("Failure.");
 		return new Verification(Verification.Verified.FAILURE);
 	}
@@ -159,7 +159,7 @@ public class PlanResource {
 		}
 		
 		System.out.println("Writing: Health Details");
-		if ( BeansUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
+		if ( BeansUtility.storeBean(arg, clientid) ) return new Verification(Verification.Verified.SUCCESS);
 		System.out.println("Failure.");
 		return new Verification(Verification.Verified.FAILURE);
 	}
@@ -191,7 +191,7 @@ public class PlanResource {
 		}
 		
 		System.out.println("Writing: Client Details");
-		if ( BeansUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
+		if ( BeansUtility.storeBean(arg, clientid) ) return new Verification(Verification.Verified.SUCCESS);
 		System.out.println("Failure.");
 		return new Verification(Verification.Verified.FAILURE);
 	}
@@ -223,7 +223,7 @@ public class PlanResource {
 		}
 		
 		System.out.println("Writing: Education & Employment");
-		if ( BeansUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
+		if ( BeansUtility.storeBean(arg, clientid) ) return new Verification(Verification.Verified.SUCCESS);
 		System.out.println("Failure.");
 		return new Verification(Verification.Verified.FAILURE);
 	}
@@ -255,7 +255,7 @@ public class PlanResource {
 		}
 		
 		System.out.println("Writing: Personal Plan");
-		if ( BeansUtility.storeBean(arg, clientid, username, token) ) return new Verification(Verification.Verified.SUCCESS);
+		if ( BeansUtility.storeBean(arg, clientid) ) return new Verification(Verification.Verified.SUCCESS);
 		System.out.println("Failure.");
 		return new Verification(Verification.Verified.FAILURE);
 	}

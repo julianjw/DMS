@@ -11,7 +11,7 @@ public class LivingArrangements {
 	private String houseNumber;
 	private String street;
 	private String suburb;
-	private int postCode;
+	private Integer postCode;
 	private String city;
 	private String familyMembers;
 	private String sickContact;
@@ -35,7 +35,7 @@ public class LivingArrangements {
 			String street,
 			String houseNumber,
 			String suburb,
-			int postCode,
+			Integer postCode,
 			String city,
 			String familyMembers,
 			String sickContact,
@@ -85,11 +85,11 @@ public class LivingArrangements {
 		this.suburb = suburb;
 	}
 
-	public int getPostCode() {
+	public Integer getPostCode() {
 		return postCode;
 	}
 
-	public void setPostCode(int postCode) {
+	public void setPostCode(Integer postCode) {
 		this.postCode = postCode;
 	}
 

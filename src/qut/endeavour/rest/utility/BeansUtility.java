@@ -42,9 +42,7 @@ public class BeansUtility {
 	/* DATABASE STORAGE */
 	public static boolean storeBean(
 			Object bean,
-			Object keyValue,
-			String username,
-			String token
+			Object keyValue
 			) {
 		
 		System.out.println("Extract information from bean.");
@@ -61,6 +59,10 @@ public class BeansUtility {
 			else if ( bean.getClass() == ScheduledMeeting.class ) writeJobs.addAll( prepareScheduledMeeting( (ScheduledMeeting)bean, (String)keyValue ) );
 			
 			else if ( bean.getClass() == RiskAssessment.class ) writeJobs.addAll( prepareRiskAssessment( (RiskAssessment)bean, (Integer)keyValue ) );
+			
+//			else if ( bean.getClass() == PersonalDetails.class ) {
+//				writeJobs.add( prepareBase( bean, DatabaseNames.FLDS_PERSONAL_DETAILS, DatabaseNames.TBL_PERSONAL_DETAILS, DatabaseAccess.getUserIdNumberByUsername((String)keyValue)));
+//			}
 			
 			else {
 				System.out.println("Cannot handle class: " + bean.getClass().toString());
@@ -189,10 +191,12 @@ public class BeansUtility {
 	private static List<SqlWriteJob> prepareClientDetails(
 			ClientDetails bean, String clientid) throws DMSException, SQLException {
 		List<SqlWriteJob> writeJobs = new ArrayList<SqlWriteJob>();
+		// must be first.
+		writeJobs.add( prepareBase( bean.getPersonalDetails(), DatabaseNames.FLDS_PERSONAL_DETAILS, DatabaseNames.TBL_PERSONAL_DETAILS, DatabaseAccess.getUserIdNumberByUsername(clientid)));
+
 		writeJobs.add( prepareBase( bean.getAlertInformation(), DatabaseNames.FLDS_ALERT_INFO, DatabaseNames.TBL_ALERT_INFO, DatabaseAccess.getUserIdNumberByUsername(clientid)));
 		writeJobs.add( prepareBase( bean.getFormalOrders(), DatabaseNames.FLDS_FORMAL_ORDERS, DatabaseNames.TBL_FORMAL_ORDERS, DatabaseAccess.getUserIdNumberByUsername(clientid)));
 		writeJobs.add( prepareBase( bean.getLivingArangements(), DatabaseNames.FLDS_LIVING_ARRANGEMENTS, DatabaseNames.TBL_LIVING_ARRANGEMENTS, DatabaseAccess.getUserIdNumberByUsername(clientid)));
-		writeJobs.add( prepareBase( bean.getPersonalDetails(), DatabaseNames.FLDS_PERSONAL_DETAILS, DatabaseNames.TBL_PERSONAL_DETAILS, DatabaseAccess.getUserIdNumberByUsername(clientid)));
 		return writeJobs;
 	}
 	

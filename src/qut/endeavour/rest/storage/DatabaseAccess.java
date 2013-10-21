@@ -523,7 +523,7 @@ public class DatabaseAccess {
 		String sql = null;
 		
 		if ( joinToUserInfo ) {
-			sql = "SELECT tb.* from `"+tableName+"` tb inner join `"+TBL_USER_INFO+"` ui on tb.user_id=ui.user_id where ui.username = ?";
+			sql = "SELECT tb.* from `"+tableName+"` tb right join `"+TBL_USER_INFO+"` ui on tb.user_id=ui.user_id where ui.username = ?";
 		} else {
 			if ( keyName == null ) {
 				keyName = "a";

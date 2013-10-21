@@ -13,9 +13,15 @@ import javax.ws.rs.core.MediaType;
 import qut.endeavour.rest.bean.Verification;
 import qut.endeavour.rest.bean.admin.DMSClientUser;
 import qut.endeavour.rest.bean.admin.DMSUser;
+import qut.endeavour.rest.bean.plan.ClientDetails;
+import qut.endeavour.rest.bean.plan.clientdetails.AlertInformation;
+import qut.endeavour.rest.bean.plan.clientdetails.FormalOrders;
+import qut.endeavour.rest.bean.plan.clientdetails.LivingArrangements;
+import qut.endeavour.rest.bean.plan.clientdetails.PersonalDetails;
 import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.factory.UserFactory;
 import qut.endeavour.rest.storage.DatabaseAccess;
+import qut.endeavour.rest.utility.BeansUtility;
 import qut.endeavour.rest.utility.Permissions;
 import qut.endeavour.rest.utility.UserUtility;
 
@@ -62,13 +68,20 @@ public class UsersResource {
 		return UserFactory.createUser( username, token, userToRetrieve );
 	}
 	
-	
+	/**
+	 * Create a new user
+	 * 
+	 * @param newUser
+	 * @param username
+	 * @param token
+	 * @return
+	 */
 	@POST
 	@Path("/{user_id: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Verification newUser(
-			final DMSUser newUser,
+			DMSUser newUser,
 			@PathParam("user_id") String username,
 			@PathParam("token") String token
 			) {
@@ -86,8 +99,17 @@ public class UsersResource {
 		}
 		
 		if ( UserUtility.putUserInDatabase( username, token, newUser ) ) {
+			
+			ClientDetails cd = new ClientDetails();
+			cd.setPersonalDetails(new PersonalDetails(null,null,null,null,null,null,null));
+			cd.setAlertInformation( new AlertInformation(null,null,null,null,null,null,null,null,null) );
+			cd.setFormalOrders( new FormalOrders(null,null,null,null,null,null,null,null,null,null,null,null,null) );
+			cd.setLivingArangements( new LivingArrangements(null,null,null,null,null,null,null,null,null) );
+			
+			BeansUtility.storeBean( cd , newUser.getUser_id() );
 			return new Verification(Verification.Verified.SUCCESS);
 		}
+
 		return new Verification(Verification.Verified.FAILURE);
 	}
 	
