@@ -128,7 +128,6 @@ public class PasswordResource {
 	@Path("/resetpassword/{user_id: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}{userToChange: [a-zA-Z_0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Verification resetPassword(
-			PasswordChange pwdChange,
 			@PathParam("user_id") String username,
 			@PathParam("token") String token,
 			@PathParam("userToChange") String userToChange
