@@ -5,8 +5,6 @@
 		<td>	
 			<div id='clientSearchResults'></div>
 		</td>
-		<td>OR</td>
-		<td><button id='createNewClientButton' >Create a new Client</button></td>
 	</tr>
 	</table>
 </div>
@@ -132,7 +130,8 @@ $(document).ready(function(){
 				
 			}
 		});
-		
+		//delete any previous risk_id cookie
+		$.removeCookie("risk_id");
 		$("#searchD").hide();
 		pullData("new");
 		$("#riskD").show();
