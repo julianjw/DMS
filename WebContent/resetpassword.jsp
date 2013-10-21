@@ -27,7 +27,7 @@
 
 function Reset(el) {
 	$.ajax({
-		url: "./password/user/resetpassword/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + el.id,
+		url: "./rest/password/resetpassword/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + el.id,
 		type:"POST",
 		contentType: "application/json",
 		success: function(d) {
@@ -91,14 +91,14 @@ $(document).ready(function(){
 			var jsonText = JSON.stringify(creds);
 			
 			$.ajax({
-				url: "./password/changepassword/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
+				url: "./rest/password/changepassword/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
 				type: 'POST',
 				contentType: 'application/json; charset=UTF-8',
 				dataType: 'json',
 				data: jsonText,
 				success: function(data, textStatus, jqXHR) {
 					if(data.verified=="failure") {
-						
+						alert("FAILED TO CHANGE PASSWORD");
 					}else {
 						
 						nextNav('clientD');

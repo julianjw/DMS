@@ -144,11 +144,39 @@
 		</div>
 		<br />
 
-		<label for='familyD' class='toggle'>Other Family Members: </label>
+		<label for='familyD' class='toggle'>Other Important Person: </label>
+		<div>
+			<br />
+			<label for='familyNameT' >Name: </label>
+			<input type='text' name='familyNameT' id='familyNameT' />
+			<br />
+			<label for='familyRelationshipT' >Relationship: </label>
+			<input type='text' name='familyRelationshipT' id='familyRelationshipT' />
+			<br />
+			<label for='familyContactT' >Contact Arangements: </label>
+			<br />
+			<textarea id='familyContactT' name='familyContactT' rows="3" cols="50"></textarea>
+			<br />
+		</div>
+		
+		
+		
+		
+		<label for='familyD' class='toggle'>Other Important Contact: </label>
+		<div>
+			<label for='otherPeopleNameT' >Name: </label>
+			<input type='text' name='otherPeopleNameT' id='otherPeopleNameT' />
+			<br />
+			<label for='otherPeopleRelationshipT' >Relationship: </label>
+			<input type='text' name='otherPeopleRelationshipT' id='otherPeopleRelationshipT' />
+			<br />
+			<label for='otherPeopleContactT' >Contact Arrangements: </label>
+			<br />
+			<textarea id='otherPeopleContactT' name='otherPeopleContactT' rows="3" cols="50"></textarea>
+			<br />
+		</div>
 		<br />
-		<div id='familyD'></div>
-		<button id='familyAddRecord' name='familyAddRecord' onclick="Duplicate('familyD');">Add Another</button>
-		<br />
+		
 		
 		<label for='sickContactT' >Sick contact: </label>
 		<div id='sickContactD'>
@@ -156,11 +184,6 @@
 		</div>
 		<br />
 		
-		<label for='otherPeopleD' class='toggle'>Other Important People: </label>
-		<br />
-		<div id='otherPeopleD'></div>
-		<button id='otherPeopleAddRecord' name='otherPeopleAddRecord' onclick="Duplicate('otherPeopleD');">Add Another</button>
-		<br />
 	</div>	
 
 	<div id='formalD' class='hidden'>
@@ -253,34 +276,6 @@
 
 
 
-	<!--
-	TEMPLATES FOR CLONING -- hidden by css
-	-->	
-	<div id='familyDTemplate' class='formTemplate'>
-		<label for='familyNameT' >Name: </label>
-		<input type='text' name='familyNameT' id='familyNameT' />
-		<br />
-		<label for='familyRelationshipT' >Relationship: </label>
-		<input type='text' name='familyRelationshipT' id='familyRelationshipT' />
-		<br />
-		<label for='familyContactT' >Contact Arangements: </label>
-		<textarea id='familyContactT' name='familyContactT' rows="3" cols="50"></textarea>
-		<br />
-	</div>
-
-	<div id='otherPeopleDTemplate' class='formTemplate'>
-		<label for='otherPeopleNameT' >Name: </label>
-		<input type='text' name='otherPeopleNameT' id='otherPeopleNameT' />
-		<br />
-		<label for='otherPeopleRelationshipT' >Relationship: </label>
-		<input type='text' name='otherPeopleRelationshipT' id='otherPeopleRelationshipT' />
-		<br />
-		<label for='otherPeopleContactT' >Contact Arrangements: </label>
-		<textarea id='otherPeopleContactT' name='otherPeopleContactT' rows="3" cols="50"></textarea>
-		<br />
-	</div>
-
-
 
 <script type='text/javascript'>
 	function putDate() {
@@ -351,6 +346,10 @@
 			livingArangements.phoneNumber = $("#phoneT").val();
 			livingArangements.service = $("#serviceT").val();
 			livingArangements.sickContact = $("#sickContactT").val();
+			
+			
+			
+			//familyNameT, familyRelationshipT, familyContactT, otherPeopleNameT, otherPeopleRelationshipT, otherPeopleContactT
 			
 			
 			var clientDetails = new Object();
