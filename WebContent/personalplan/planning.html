@@ -103,7 +103,7 @@
 		$("#PageNavSubmitBPlan").click(function(){
 			var holidayPlan = new Object();
 			holidayPlan.holidayType = $("#holidayT").val();
-			holidayPlan.detailsAndInfo = $("#detailsT").val();
+			holidayPlan.detailsAndInfo = $("#holidayDetailsT").val();
 			holidayPlan.howWhoWhere = $("#howT").val();
 			holidayPlan.resourcesRequired = $("#resourcesT").val();
 			holidayPlan.strategies = $("#stratT").val();
@@ -137,7 +137,7 @@
 						if($.cookie("user_role")=="client") {
 							document.location.reload(true);
 						}else {
-							$("#goalsD").hide();
+							$("#planningD").hide();
 							nextNav('lastD');
 						}
 					}				
