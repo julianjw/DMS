@@ -49,7 +49,7 @@ import qut.endeavour.rest.utility.security.SaltAndHash;
 public class PasswordResource {
 	
 	/**
-	 * RESET ALL PASSWORDS TO 'password'
+	 * Change someone's password
 	 * 
 	 * Keep this commented out unless required.
 	 * 
@@ -62,7 +62,8 @@ public class PasswordResource {
 	@POST ///{clientid: [a-zA-Z_0-9]+}
 	@Path("/changepassword/{user_id: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Verification validate(
+	@Produces(MediaType.APPLICATION_JSON)
+	public Verification changePassword(
 			PasswordChange pwdChange,
 			@PathParam("user_id") String username,
 			@PathParam("token") String token
@@ -112,4 +113,64 @@ public class PasswordResource {
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	//resetpassword/{username}/{token}/{userToChange}
+	@POST ///{clientid: [a-zA-Z_0-9]+}
+	@Path("/resetpassword/{user_id: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}{userToChange: [a-zA-Z_0-9]+}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Verification resetPassword(
+			PasswordChange pwdChange,
+			@PathParam("user_id") String username,
+			@PathParam("token") String token,
+			@PathParam("userToChange") String userToChange
+			) {
+		
+		System.out.println("Resetting user\'s password.");
+		return new Verification(Verification.Verified.FAILURE);
+		/*
+		try {
+		
+			// verify user
+			if ( !DatabaseAccess.validateUser(username, token) ) return new Verification(Verification.Verified.FAILURE);
+			
+			// verify old password
+			if (! DatabaseAccess.loginAttempt(username, pwdChange.getOldPassword() ) ) return new Verification(Verification.Verified.FAILURE);
+			
+			// create new password
+			SaltAndHash sah = PasswordUtility.newSaltAndHash( pwdChange.getNewPassword() );
+			
+			// update to new password in db
+			String sql = "update user_info set password_hash = ?, salt = ? where user_id = ?";
+			PreparedStatement ps = DatabaseAccess.createPreparedStatement(sql);
+		
+			ps.setBytes(1, sah.getHash() );
+			ps.setBytes(2, sah.getSalt() );
+			ps.setInt(3, DatabaseAccess.getUserIdNumberByUsername(username) );
+			ps.execute();
+		
+		} catch ( SQLException ex ) {
+			ex.printStackTrace();
+			return new Verification(Verification.Verified.FAILURE);
+		} catch ( DMSException ex ) {
+			ex.printStackTrace();
+			return new Verification(Verification.Verified.FAILURE);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return new Verification(Verification.Verified.FAILURE);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			return new Verification(Verification.Verified.FAILURE);
+		} catch (InvalidKeySpecException e) {
+			e.printStackTrace();
+			return new Verification(Verification.Verified.FAILURE);
+		}
+		
+		System.out.println("Password Updated.");
+		return new Verification(Verification.Verified.SUCCESS);*/
+	}
 }
