@@ -411,22 +411,100 @@
 		
 		//click on the submit button
 		$("#PageNavSubmitBSupport").click(function(){
-			var supportRequired = new Object();
-			supportRequired.dislikes = $("#dislikesT").val();
-			supportRequired.goodTopics = $("#goodTopicsT").val();
-			supportRequired.ICommunicate = $("#ICommunicateT").val();
-			supportRequired.independantDecisions = $("#independantDecisionsT").val();
-			supportRequired.likes = $("#likesT").val();
-			supportRequired.supportMeBy = $("#supportMeByT").val();
-			supportRequired.supportPeople = $("#supportPeopleT").val();
-			supportRequired.youCommunicate = $("#youCommunicateT").val();
+			
+			
+			
+			//support required		
+			var generalSupport = new Object();
+			generalSupport.crowdSafety = $("#crowdT").val();
+			generalSupport.strangerDanger = $("#strangerT").val();
+			generalSupport.moneyHandling = $("#moneyT").val();
+			generalSupport.crowds = $("#crowdsT").val();
+			generalSupport.socialNetworks = $("#socialT").val();
+			generalSupport.communications = $("#teleT").val();
+			generalSupport.eatingOut = $("#eatingoutT").val();
+			generalSupport.beliefs = $("#beliefsT").val();
+			generalSupport.leisure = $("#leisureT").val();
+			generalSupport.usingApplicances = $("#appliancesT").val();
+			generalSupport.usingChemical = $("#chemicalT").val();
+			generalSupport.hazardRecognition = $("#recoginitionT").val();
+			generalSupport.otherSafetyInfo = $("#otherSafetyT").val();
+			
+			
+			//mobility and transport
+			var mobilityAndTransport = new Object();
+			mobilityAndTransport.height = $("#heightT").val();
+			mobilityAndTransport.liftsAndEscalators = $("#elevatorT").val();
+			mobilityAndTransport.mobilityAids = $("#mobilityT").val();
+			mobilityAndTransport.otherTravelSupport = $("#otherMobilityT").val();
+			mobilityAndTransport.publicTransport = $("#publicTransportT").val();
+			mobilityAndTransport.roadSafetySkills = $("#roadSafetyT").val();
+			mobilityAndTransport.travelPreferences = $("#seatingT").val();
+			mobilityAndTransport.unevenSurfaces = $("#unevenT").val();
+			
+			
+			
+			//financial support
+			var financialSupport = new Object();
+			financialSupport.budgetBills = $("#budgetBillsT").val();
+			financialSupport.budgetConstraintGoal = $("#budgetContraintsT").val();
+			financialSupport.budgetEmergency = $("#budgetSafetyT").val();
+			financialSupport.budgetExpend = $("#budgetAvailableT").val();
+			financialSupport.budgetGroceries = $("#budgetFoodT").val();
+			financialSupport.budgetHouse = $("#budgetHouseT").val();
+			financialSupport.budgetSupportNetwork = $("#budgetSupportNetworkT").val();
+			financialSupport.budgetTransport = $("#budgetTransportT").val();
+			financialSupport.budgetUtilities = $("#budgetUtilT").val();
+			financialSupport.budgeting = $("#budgetSupportT").val();
+			financialSupport.financialAdmin = $("#financialAdminT").val();
+			financialSupport.moneyHandlingSupport = $("#budgetSupportHandleT").val();
+			financialSupport.otherRequirements = $("#otherBudgetT").val();
+			financialSupport.personalItemsSupport = $("#personalItemsT").val();
+			
+			
+			//daily activities
+			var dailyActivities = new Object();
+			dailyActivities.bathing = $("#bathingCareT").val();
+			dailyActivities.bedTime = $("#btrT").val();
+			dailyActivities.cleaning = $("#cleaningT").val();
+			dailyActivities.cooking = $("#cookingT").val();
+			dailyActivities.dressing = $("#dressingT").val();
+			dailyActivities.friday = $("#FridayT").val();
+			dailyActivities.menstruation = $("#MenstruationT").val();
+			dailyActivities.monday = $("#MondayT").val();
+			dailyActivities.otherThings = $("#weeklyOtherT").val();
+			dailyActivities.routineAfternoon = $("#arvoRoutineT").val();
+			dailyActivities.routineMealTime = $("#mealTimeT").val();
+			dailyActivities.routineMorning = $("#morningT").val();
+			dailyActivities.routineSleeping = $("#overnightT").val();
+			dailyActivities.routineWeekend = $("#weekendT").val();
+			dailyActivities.saturday = $("#SaturdayT").val();
+			dailyActivities.sleeping = $("#sleepingT").val();
+			dailyActivities.sunday = $("#SundayT").val();
+			dailyActivities.thursday = $("#ThursdayT").val();
+			dailyActivities.toileting = $("#toiletT").val();
+			dailyActivities.tuesday = $("#TuesdayT").val();
+			dailyActivities.wednesday = $("#WednesdayT").val();
+			
+			//relaxation
+			var relaxation = new Object();
+			relaxation.activities = $("#relaxPrefT").val();
+			relaxation.movie = $("#relaxMovieT").val();
+			relaxation.music = $("#relaxMusicT").val();
+			relaxation.otherActivities = $("#relaxOtherT").val();
+			relaxation.tVShow = $("#relaxTVT").val();			
 
 			
 			
-			var communication = new Object();
-			communication.comsAndDecisionMaking = comsAndDecisionMaking;
+			var supportRequired = new Object();
+			supportRequired.generalSupport = generalSupport;
+			supportRequired.mobilityAndTransport = mobilityAndTransport;
+			supportRequired.financialSupport = financialSupport;
+			supportRequired.dailyActivities = dailyActivities;
+			supportRequired.relaxation = relaxation;
 			
-			var jsonText = JSON.stringify(communication);
+			
+			var jsonText = JSON.stringify(supportRequired);
 			
 			$.ajax({
 				url:'./rest/personalplan/supportrequired/' + $.cookie('user_id') + "/" + $.cookie('auth_token') +'/' + $.cookie("client_id"),
@@ -443,7 +521,7 @@
 					}				
 				},
 				error: function(jqXHR, textStatus) {
-					
+					alert("ERROR HITTTING SERVICE");
 				}
 			});
 		});

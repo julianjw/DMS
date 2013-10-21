@@ -10,7 +10,7 @@
 <input type='text' id='areaT' class='inline'/>
 
 <label class='bold inline'>Date: </label>
-<input type='text' id='dateT' class='inline' placeholder='dd/mm/yyyy'/>
+<input type='text' id='dateT' class='inline' placeholder='yyyy/mm/dd'/>
 
 <p class='bold'>Location and Description of Hazardous Condition and/or Procedure:</p>
 <textarea id='locationDescT' rows="6" cols="75"></textarea>
@@ -42,14 +42,14 @@
 	<input type='text' id='serviceManagerT' class='inline' >
 	<br />
 	<label class='bold inline'>Date: </label>
-	<input type='text' id='serviceManagerDateT' class='inline' placeholder='dd/mm/yyyy'/>
+	<input type='text' id='serviceManagerDateT' class='inline' placeholder='yyy/mm/dd'/>
 </td>
 <td>
 	<label class='bold inline'>Delegated Manager</label>
 	<input type='text' id='delegatedManagerT' class='inline' >
 	<br />
 	<label class='bold inline'>Date: </label>
-	<input type='text' id='delegatedManagerDateT' class='inline' placeholder='dd/mm/yyyy'/>
+	<input type='text' id='delegatedManagerDateT' class='inline' placeholder='yyy/mm/dd'/>
 </td>
 </tr>
 </table>
@@ -58,7 +58,7 @@
 <br />
 
 <label class='bold inline'>Target Date: </label>
-<input type='text' id='targetDateT' class='inline' placeholder='dd/mm/yyyy'/>
+<input type='text' id='targetDateT' class='inline' placeholder='yyy/mm/dd'/>
 
 <label >Authority to proceed?</label>
 <input type="radio" name="authProceed" id='authYes' value="true"> Yes
@@ -108,8 +108,7 @@ $(document).ready(function(){
 		}else {
 			risk.proceed=false;
 		}
-		
-		alert(risk.proceed);
+	
 		
 		var jsonText = JSON.stringify(risk);
 		

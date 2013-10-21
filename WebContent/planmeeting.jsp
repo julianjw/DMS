@@ -220,87 +220,95 @@
 		$(document).ready(function(){
 			
 			$("#SaveB").click(function(){
-				var planMeeting = new Object();
 				
-				//Assign data to plan meeting object
-				
-				//Housekeeping data
- 				planMeeting.meetingDate = $("#meetingDateT").val();
-				//name of service
- 				planMeeting.education =	$("#education").is(":checked");
- 				planMeeting.learnLife = $("#learningLifestyle").is(":checked");
- 				planMeeting.postSchool = $("#post-school").is(":checked");
-	
-				//Coordination of the personal plannning process
- 				planMeeting.prelimMeetingDate =	$("#preliminaryT").val();
- 				planMeeting.discussion_record =	$("#recordT").val();
- 				
- 				if ($("#confirmYes").is(":checked")) {
- 					planMeeting.userChoicesImplemented = $("#confirmYes").val();
- 				} else {
- 					planMeeting.userChoicesImplemented = $("#confirmNo").val();
- 				}
- 				//planMeeting.userChoicesImplemented = //$("").val(); //#confirmYes, #confirmNo
- 				planMeeting.infoCompleted = $("#informedDecision").is(":checked");
-	
-				//Contact with the service user's nominated invitees and support network 
-				planMeeting.family = $("#family").is(":checked");
-				planMeeting.guardian = $("#guardian").is(":checked");
-				planMeeting.decisionMaker = $("#decisionMaker").is(":checked");
-				planMeeting.advocate = $("#advocate").is(":checked");
-				planMeeting.serviceReps = $("#serviceReps").is(":checked");
-
-				//Preparation for Personal Plan Meeting
-				//Check that all information that is pertinent to developing/updating a Personal Plan for an individual is available for reference during the personal planning process
-				planMeeting.pbsPlan = $("#PBSPlan").is(":checked");
-				planMeeting.adaptFuncAssessment = $("#adaptive").is(":checked");
-				planMeeting.chapWellbeingInfo = $("#CHAP").is(":checked");
-				planMeeting.currentPersonalPlan = $("#currentPP").is(":checked");
-				planMeeting.serviceActivityOptions = $("#serviceActivity").is(":checked");
-				planMeeting.otherInfo =	$("#gatherInfo").is(":checked");
-				planMeeting.medication = $("#medicationFolder").is(":checked");
-				planMeeting.userBudget = $("#personalBudget").is(":checked");
-				planMeeting.reflections = $("#reflections").is(":checked");
+				if ($("#serviceID").val() == "") {
 					
-				//Service Coordinator to ensure that the following documents are reviewed and updated as part of the personal plan process annually
-				planMeeting.photoRelease = $("#photoRelease").is(":checked");
-				planMeeting.clientServiceAgree = $("#clientServiceAgreement").is(":checked");
-				planMeeting.allSuppAgree = 	$("#allSupportAgreements").is(":checked");
-				planMeeting.cimsInfo = $("#CIMS").is(":checked");
-				planMeeting.mediInfoAuth =	$("#medUpdatedYearly").is(":checked");
-				planMeeting.schedPersonalBelongings = $("#personalBelongings").is(":checked");
-				planMeeting.pbsMaintenancePlan = $("#PBSMaintenance").is(":checked");
-				planMeeting.personalPlanComments = $("#otherT1").val();
-				
-				//personal plan meeting and outcomes
-				planMeeting.personalMeetingPlanOutcomes = $("#ppMeetingOutcomes").is(":checked");
-				planMeeting.personalPlanComplete =	$("#ppComplete").is(":checked");
-				planMeeting.completePlanSigned = $("#ppSignedOff").is(":checked");
-				planMeeting.planMeetingThanks = $("#thanked").is(":checked");
-				planMeeting.personalMeetingPlanComments = $("#otherT2").val();
+					alert("You must select a client to create a meeting for.");
 					
-				//Implementation of personal plan
-				planMeeting.participation = $("#choices").is(":checked");
-				planMeeting.riskAssessForms = $("#riskAssessment").is(":checked");
-				planMeeting.suppProgrssNotes = $("#indivSupport").is(":checked");
-				planMeeting.goalProgressSummary = $("#goalProgressSummary").is(":checked");
-				planMeeting.resourcesForImplementation = $("#prepare").is(":checked");
-				planMeeting.implementComment = $("#otherT3").val();
+				} else {
 				
-				var jsonText = JSON.stringify(planMeeting);
-
-				$.ajax({
-					url:'./rest/planmeeting/' + $.cookie('user_id') + '/' + $.cookie('auth_token') +'/' + $("#serviceID").val(),
-					type: 'POST',
-					contentType: 'application/json',
-					data: jsonText,
-					success: function(data, jqXHR, textStatus) {
-						window.location.reload(true);
-					},
-					error: function(){
-						alert("ERROR");
-					}
-				});
+					var planMeeting = new Object();
+					
+					//Assign data to plan meeting object
+					
+					//Housekeeping data
+	 				planMeeting.meetingDate = $("#meetingDateT").val();
+					//name of service
+	 				planMeeting.education =	$("#education").is(":checked");
+	 				planMeeting.learnLife = $("#learningLifestyle").is(":checked");
+	 				planMeeting.postSchool = $("#post-school").is(":checked");
+		
+					//Coordination of the personal plannning process
+	 				planMeeting.prelimMeetingDate =	$("#preliminaryT").val();
+	 				planMeeting.discussion_record =	$("#recordT").val();
+	 				
+	 				if ($("#confirmYes").is(":checked")) {
+	 					planMeeting.userChoicesImplemented = $("#confirmYes").val();
+	 				} else {
+	 					planMeeting.userChoicesImplemented = $("#confirmNo").val();
+	 				}
+	 				//planMeeting.userChoicesImplemented = //$("").val(); //#confirmYes, #confirmNo
+	 				planMeeting.infoCompleted = $("#informedDecision").is(":checked");
+		
+					//Contact with the service user's nominated invitees and support network 
+					planMeeting.family = $("#family").is(":checked");
+					planMeeting.guardian = $("#guardian").is(":checked");
+					planMeeting.decisionMaker = $("#decisionMaker").is(":checked");
+					planMeeting.advocate = $("#advocate").is(":checked");
+					planMeeting.serviceReps = $("#serviceReps").is(":checked");
+	
+					//Preparation for Personal Plan Meeting
+					//Check that all information that is pertinent to developing/updating a Personal Plan for an individual is available for reference during the personal planning process
+					planMeeting.pbsPlan = $("#PBSPlan").is(":checked");
+					planMeeting.adaptFuncAssessment = $("#adaptive").is(":checked");
+					planMeeting.chapWellbeingInfo = $("#CHAP").is(":checked");
+					planMeeting.currentPersonalPlan = $("#currentPP").is(":checked");
+					planMeeting.serviceActivityOptions = $("#serviceActivity").is(":checked");
+					planMeeting.otherInfo =	$("#gatherInfo").is(":checked");
+					planMeeting.medication = $("#medicationFolder").is(":checked");
+					planMeeting.userBudget = $("#personalBudget").is(":checked");
+					planMeeting.reflections = $("#reflections").is(":checked");
+						
+					//Service Coordinator to ensure that the following documents are reviewed and updated as part of the personal plan process annually
+					planMeeting.photoRelease = $("#photoRelease").is(":checked");
+					planMeeting.clientServiceAgree = $("#clientServiceAgreement").is(":checked");
+					planMeeting.allSuppAgree = 	$("#allSupportAgreements").is(":checked");
+					planMeeting.cimsInfo = $("#CIMS").is(":checked");
+					planMeeting.mediInfoAuth =	$("#medUpdatedYearly").is(":checked");
+					planMeeting.schedPersonalBelongings = $("#personalBelongings").is(":checked");
+					planMeeting.pbsMaintenancePlan = $("#PBSMaintenance").is(":checked");
+					planMeeting.personalPlanComments = $("#otherT1").val();
+					
+					//personal plan meeting and outcomes
+					planMeeting.personalMeetingPlanOutcomes = $("#ppMeetingOutcomes").is(":checked");
+					planMeeting.personalPlanComplete =	$("#ppComplete").is(":checked");
+					planMeeting.completePlanSigned = $("#ppSignedOff").is(":checked");
+					planMeeting.planMeetingThanks = $("#thanked").is(":checked");
+					planMeeting.personalMeetingPlanComments = $("#otherT2").val();
+						
+					//Implementation of personal plan
+					planMeeting.participation = $("#choices").is(":checked");
+					planMeeting.riskAssessForms = $("#riskAssessment").is(":checked");
+					planMeeting.suppProgrssNotes = $("#indivSupport").is(":checked");
+					planMeeting.goalProgressSummary = $("#goalProgressSummary").is(":checked");
+					planMeeting.resourcesForImplementation = $("#prepare").is(":checked");
+					planMeeting.implementComment = $("#otherT3").val();
+					
+					var jsonText = JSON.stringify(planMeeting);
+	
+					$.ajax({
+						url:'./rest/planmeeting/' + $.cookie('user_id') + '/' + $.cookie('auth_token') +'/' + $("#serviceID").val(),
+						type: 'POST',
+						contentType: 'application/json',
+						data: jsonText,
+						success: function(data, jqXHR, textStatus) {
+							window.location.reload(true);
+						},
+						error: function(){
+							alert("ERROR");
+						}
+					});
+				}
 			});
 		});
 	</script>
