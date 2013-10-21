@@ -15,63 +15,13 @@
         <script type='text/javascript'>
         	if(document.URL!="http://"+window.location.hostname + ":8080/EndeavourDMS/login.jsp") {
         		checkRole();
-        		
-        		//wait
-        		$(document).ready(function(){
-        			//pull the name
-        			$.ajax({
-        				url: "./rest/user/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + $.cookie('user_id'),
-        				type:"get",
-        				contentType: "application/json",
-        				success: function(d) {		
-        					$("#con-head-worder").html("<h2>" + d.rName + "</h2>");
-        					$("#con-head-worder").append("<button id='logout'>Log Out</button>");
-                			$("#con-head-worder").append("&nbsp;&nbsp;&nbsp;<a href='resetpassword.jsp' style='display:inline; color:black;'>reset password</a>");
-        				},
-        				error: function(xhr) {
-        					// do something to handle error
-        					
-        				}
-        			});
-        			
-        			
-        			
-        			
-        			
-        			
-        			
-        			
-        			//click on logout button
-        			$("#logout").click(function(){
-        				$.removeCookie("loginAttempt");
-        				$.ajax({
-        				    url: "./rest/auth?user_id=" + $.cookie('user_id') + "&auth_token=" + $.cookie('auth_token'),
-        				    type: 'DELETE',
-        				    success: function(result) {
-        				    	$.removeCookie('user_id');
-     	        				$.removeCookie('auth_token');
-     	        				window.location.replace("http://" + window.location.hostname + ":8080/EndeavourDMS/login.jsp");
-        				    },
-        				    error: function(){
-        				    	alert("failed to hit logout service");
-        				    }
-        				});	
-        			});
-        			
-        			
-        			$("#quoteHere").html("");
-                	$("#quoteHere").html(quotes[i]);
-        			
-        		});
         	}
         	if(document.URL!="http://"+window.location.hostname + ":8080/EndeavourDMS/personalplan.jsp") {
         		if ($.cookie('currentClientPlanId') != null) {
         			$.removeCookie('currentClientPlanId');
         		}
         	}
-        	
-        	
-        	
+
         	//get random quote
         	var quotes = new Array();
         	quotes[0] = "Wake up every morning with the thought that something wonderful is about to happen.";
@@ -93,8 +43,42 @@
         	
         	
         	
-        	
-        	
+        	//wait
+    		$(document).ready(function(){    			
+    			if($.cookie("user_id")) {
+    				$("#con-head-worder").html("<h2>" + $.cookie('user_id') + "</h2>");
+        			$("#con-head-worder").append("<button id='logoutB'>Log Out</button>");
+        			$("#con-head-worder").append("&nbsp;&nbsp;&nbsp;<a href='resetpassword.jsp' style='display:inline; color:black;'>reset password</a>");
+    			}
+    			
+    			
+    			
+    			$("#quoteHere").html("");
+            	$("#quoteHere").html(quotes[i]);
+            	
+            	
+            	//click on logout button
+    			$("#logoutB").click(function(){
+    				$.removeCookie("loginAttempt");
+    				$.ajax({
+    				    url: "./rest/auth?user_id=" + $.cookie('user_id') + "&auth_token=" + $.cookie('auth_token'),
+    				    type: 'DELETE',
+    				    success: function(result) {
+    				    	$.removeCookie('user_id');
+    	        				$.removeCookie('auth_token');
+    	        				window.location.replace("http://" + window.location.hostname + ":8080/EndeavourDMS/login.jsp");
+    				    },
+    				    error: function(){
+    				    	alert("failed to hit logout service");
+    				    }
+    				});	
+    			});
+            	
+            	
+            	
+
+    			
+    		});
         	
         	
         </script>

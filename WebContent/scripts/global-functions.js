@@ -56,7 +56,7 @@ function checkRole() {
 			},
 			error: function(xhr) {
 				// do something to handle error
-				alert("error getting role");
+				
 			}
 		});
 	}else {
