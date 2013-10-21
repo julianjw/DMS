@@ -3,8 +3,8 @@
 <!-- 	<h3>Personal Plan Nav</h3> -->
 <div class="horizontalNav">
 <ul>
-	<li id="search" class='pageNav'><a href='#search'>Saved Meetings</a></li>
-	<li id="meeting" class="pageNav"><a href='#meeting'>New Meeting</a></li>
+	<li id="search" class='pageNav'><a href='#search' class='navTopLeft navBottomLeft'>Saved Meetings</a></li>
+	<li id="meeting" class="pageNav"><a href='#meeting' class='navTopRight navBottomRight'>New Meeting</a></li>
 </ul>
 </div>
 <jsp:include page="partials/body.html" flush="true" />
@@ -294,8 +294,11 @@
 					type: 'POST',
 					contentType: 'application/json',
 					data: jsonText,
-					complete: function(jqXHR, textStatus) {
-
+					success: function(data, jqXHR, textStatus) {
+						window.location.reload(true);
+					},
+					error: function(){
+						alert("ERROR");
 					}
 				});
 			});

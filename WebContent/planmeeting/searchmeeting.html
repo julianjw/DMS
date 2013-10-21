@@ -8,8 +8,6 @@
 	
 			<div id='searchResults'></div>
 		</td>
-		<td>OR</td>
-		<td><button id='createNewMButton' >Create a new Meeting</button></td>
 	</tr>
 	</table>
 </div>
@@ -40,19 +38,19 @@ $(document).ready(function(){
 	//page loads
 	//get list of existing clients
 	$.ajax({
-		url: "./rest/personalplan/allclientswithplans/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
+		url: "./rest/user/getallclients/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
 		type:"get",
 		contentType: "application/json",
 		success: function(d) {
 			$("#searchResults").html("");
 			var content = "<table>"
 			content += "<tr><th>Client ID</th><th>Name</th><th>DOB</th><th>Mobile</th><th>Telephone</th></tr>";
-			for (var i = 0; i < d.existingPlanDetails.length; i++) {
-				content += "<tr><td class='fakeLink' id='" + d.existingPlanDetails[i].user_id + "'onClick='selectM(this);'>" + d.existingPlanDetails[i].user_id + "</td>";
-				content += "<td>" + d.existingPlanDetails[i].rName + "</td>";
-				content += "<td>" + d.existingPlanDetails[i].dob + "</td>";
-				content += "<td>" + d.existingPlanDetails[i].mobile + "</td>";
-				content += "<td>" + d.existingPlanDetails[i].telephone + "</td></tr>";
+			for (var i = 0; i < d.dmsClientUser.length; i++) {
+				content += "<tr><td class='fakeLink' id='" + d.dmsClientUser[i].user_id + "'onClick='selectM(this);'>" + d.dmsClientUser[i].user_id + "</td>";
+				content += "<td>" + d.dmsClientUser[i].rName + "</td>";
+				content += "<td>" + d.dmsClientUser[i].dob + "</td>";
+				content += "<td>" + d.dmsClientUser[i].mobile + "</td>";
+				content += "<td>" + d.dmsClientUser[i].telephone + "</td></tr>";
 			}
 			content += "</table>";
 			$("#searchResults").append(content);

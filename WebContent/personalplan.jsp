@@ -297,7 +297,7 @@ function pullData(page) {
 		$("#addressEmploymentT").val("");
 		$("#annualLeaveT").val("");
 		$("#arrangementsT").val("");
-		$("#contactPersonT").val("");
+		$("#employmentContactPersonT").val("");
 		$("#employerT").val("");
 		$("#equipmentT").val("");
 		$("#positionT").val("");
@@ -609,7 +609,7 @@ function pullData(page) {
 				$("#addressEmploymentT").val(d.employment.address);
 				$("#annualLeaveT").val(d.employment.annualLeave);
 				$("#arrangementsT").val(d.employment.arrangements);
-				$("#contactPersonT").val(d.employment.contactPerson);
+				$("#employmentContactPersonT").val(d.employment.contactPerson);
 				$("#employerT").val(d.employment.employer);
 				$("#equipmentT").val(d.employment.equipment);
 				$("#positionT").val(d.employment.position);

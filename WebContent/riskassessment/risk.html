@@ -60,9 +60,9 @@
 <label class='bold inline'>Target Date: </label>
 <input type='text' id='targetDateT' class='inline' placeholder='dd/mm/yyyy'/>
 
-<label class='bold inline'>Authority to proceed?</label>
-<input type="radio" name='auth'  id='authYes' value="true"> Yes
-<input type="radio" name='auth' id='authNo' value="false"> No
+<label >Authority to proceed?</label>
+<input type="radio" name="authProceed" id='authYes' value="true"> Yes
+<input type="radio" name="authProceed" id='authNo' value="false"> No
 <br />
 <br />
 
@@ -109,6 +109,7 @@ $(document).ready(function(){
 			risk.proceed=false;
 		}
 		
+		alert(risk.proceed);
 		
 		var jsonText = JSON.stringify(risk);
 		
