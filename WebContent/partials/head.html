@@ -25,6 +25,8 @@
         				contentType: "application/json",
         				success: function(d) {		
         					$("#con-head-worder").html("<h2>" + d.rName + "</h2>");
+        					$("#con-head-worder").append("<button id='logout'>Log Out</button>");
+                			$("#con-head-worder").append("&nbsp;&nbsp;&nbsp;<a href='resetpassword.jsp' style='display:inline; color:black;'>reset password</a>");
         				},
         				error: function(xhr) {
         					// do something to handle error
@@ -32,8 +34,7 @@
         				}
         			});
         			
-        			$("#con-head-worder").append("<button id='logout'>Log Out</button>");
-        			$("#con-head-worder").append("&nbsp;&nbsp;&nbsp;<a href='resetpassword.jsp' style='display:inline; color:black;'>reset password</a>");
+        			
         			
         			
         			
