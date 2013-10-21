@@ -1,3 +1,6 @@
+Database v1.30 - Steven
+	- Risks foreign key changed to user_info table
+
 Database v1.29 - Steven
 	- Modified client_living_arrangements to allow null values in unrequired fields.
 	- Modified client_alerts, added allow null
