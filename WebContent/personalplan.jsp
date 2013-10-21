@@ -527,6 +527,7 @@ function pullData(page) {
 				$("#otherBudgetT").val(d.financialSupport.otherRequirements);
 				$("#personalItemsT").val(d.financialSupport.personalItemsSupport);
 				
+				//daily activities
 				$("#bathingCareT").val(d.dailyActivities.bathing);
 				$("#btrT").val(d.dailyActivities.bedTime);
 				$("#cleaningT").val(d.dailyActivities.cleaning);

@@ -230,9 +230,10 @@
 			</div>
 			<br />
 			
-			<label for='startDateT' class='toggle' >Date of Commencement: </label>
+			<label class='toggle' >Date of Commencement: </label>
 			<div id='startDateD'>
-				<textarea id='startDateT' name='startDateT' rows="3" cols="50"></textarea>
+				<input type='text' id='startDateT' name='startDateT' placeholder="yyyy-mm-dd" />
+				<p class='error' id="commDateE"></p>
 			</div>
 			<br />
 			
@@ -299,17 +300,12 @@
 			//validation
 			//date checking
 			var dob = $("#dobT").val();
+			var commDate = $("#startDateT").val();
 			
-			var re = /\A[0-9]{4}-[0-1]?[0-9]{1}-[0-3]?[0-9]{1}\Z/;
+			var dobResult = dob.match("^[0-9]{4}-[0-1]?[0-9]{1}-[0-3]?[0-9]{1}$");
+			var commResult = commDate.match("^[0-9]{4}-[0-1]?[0-9]{1}-[0-3]?[0-9]{1}$");
 			
-			//var result = dob.match(re);
-			//var result = re.exec(dob);
-			var result = re.test(dob);
-			
-			alert(result);
-	
-			
-			if(result==null) {
+			if(dobResult!=dob) {
 				$("#formalD").hide();
 				$("#detailsD").show();
 				$("#PageNavPrevClient").hide();
@@ -317,6 +313,9 @@
 				$("#PageNavSubmitBClient").hide();
 				$("#dobE").html("");
 				$("#dobE").html("format: yyyy-mm-dd");
+			}else if(commResult!=commDate) {
+				$("#commDateE").html("");
+				$("#commDateE").html("format: yyyy-mm-dd");
 			} else {
 				var personalDetails = new Object();
 				personalDetails.creationDate = $("#createDateT").val();
