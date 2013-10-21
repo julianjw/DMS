@@ -125,28 +125,32 @@ public class PasswordResource {
 	 */
 	//resetpassword/{username}/{token}/{userToChange}
 	@POST ///{clientid: [a-zA-Z_0-9]+}
-	@Path("/resetpassword/{user_id: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}{userToChange: [a-zA-Z_0-9]+}")
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/resetpassword/{user_id: [a-zA-Z_0-9]+}/{token: [a-zA-Z_0-9]+}/{userToChange: [a-zA-Z_0-9]+}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Verification resetPassword(
 			@PathParam("user_id") String username,
 			@PathParam("token") String token,
 			@PathParam("userToChange") String userToChange
 			) {
 		
-		System.out.println("Resetting user\'s password.");
+		System.out.println("PasswordResource: Resetting user "+userToChange+"'s password.");
 		
 		try {
 		
+			System.out.println("PasswordResource: Checking if loger has permission.");
 			// verify user
-			if ( Permissions.canChangeUserPassword( DatabaseAccess.getRole(username, token) ) ) return new Verification(Verification.Verified.FAILURE);
+			if ( !Permissions.canChangeUserPassword( DatabaseAccess.getRole(username, token) ) ) return new Verification(Verification.Verified.FAILURE);
 			
+			System.out.println("PasswordResource: Creating new salt and a default password hash.");
 			// create new password
 			SaltAndHash sah = PasswordUtility.newDefaultSaltAndHash();
 			
+			System.out.println("PasswordResource: Preparing SQL.");
 			// update to new password in db
 			String sql = "update user_info set password_hash = ?, salt = ? where user_id = ?";
 			PreparedStatement ps = DatabaseAccess.createPreparedStatement(sql);
 		
+			System.out.println("PasswordResource: Putting values in prepared statement.");
 			ps.setBytes(1, sah.getHash() );
 			ps.setBytes(2, sah.getSalt() );
 			ps.setInt(3, DatabaseAccess.getUserIdNumberByUsername(userToChange) );
@@ -169,7 +173,7 @@ public class PasswordResource {
 			return new Verification(Verification.Verified.FAILURE);
 		}
 		
-		System.out.println("Password Updated.");
+		System.out.println("PasswordResource: Password reset.");
 		return new Verification(Verification.Verified.SUCCESS);
 	}
 }
