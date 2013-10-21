@@ -8,6 +8,7 @@
 	
 	<div id='changePassword'>
 		<h3>Reset your password</h3>
+		<p id="successMsg" style="color:green;"></p>
 		<input type='password' name='passwordOld' id='passwordOld' placeholder='old password' />
 		<br />
 		<br />
@@ -73,6 +74,13 @@ $(document).ready(function(){
 		$("#changePasswordAdmin").show();
 	}
 	
+	if($.cookie("pwChangeSuccess")) {
+		//insert the message
+		$("#successMsg").html("");
+		$("#successMsg").html("Password changed!");
+		$.removeCookie("pwChangeSuccess");
+	}
+	
 	
 	//click on reset password button
 	$("#resetB").click(function(){
@@ -85,8 +93,8 @@ $(document).ready(function(){
 		}else {
 			
 			var creds = new Object();
-			creds.passwordOld = $("#passwordOld").val();
-			creds.passwordNew = $("#password").val();
+			creds.oldPassword = $("#passwordOld").val();
+			creds.newPassword = $("#password").val();
 			
 			var jsonText = JSON.stringify(creds);
 			
@@ -98,14 +106,15 @@ $(document).ready(function(){
 				data: jsonText,
 				success: function(data, textStatus, jqXHR) {
 					if(data.verified=="failure") {
-						alert("FAILED TO CHANGE PASSWORD");
+						$("#passwordE").html("");
+						$("#passwordE").html("password change failed. Please check your current password and try again.");
 					}else {
-						
-						nextNav('clientD');
+						$.cookie("pwChangeSuccess", "1");
+						window.location.reload(true);
 					}				
 				},
 				error: function(jqXHR, textStatus) {
-					alert("ERROR HITTING FORGOT PASSWORD");
+					
 				}
 			});
 		}
