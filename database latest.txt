@@ -1,4 +1,17 @@
-Database v1.27 - Steven
+Database v1.29 - Steven
+	- Modified client_living_arrangements to allow null values in unrequired fields.
+	- Modified client_alerts, added allow null
+	- Modified client_formal_orders, added allow null 
+	- Modified client_personal_details, allow null values
+	- Modified education, allows null values
+	- Modified employment, allows null values
+	- Modified health_dietary, allows null values
+	- Modified health_disability, allows null values
+	- Modified health_management, allows null values
+	- Modified scheduled_meeting, allows null values
+	- Maybe others, too.
+
+Database v1.28 - Steven
 	- Modified user_info table - removed password field. Added salt and password_hash fields.
 
 Database v1.27 - Steven
