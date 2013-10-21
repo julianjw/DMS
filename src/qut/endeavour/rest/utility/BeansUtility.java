@@ -70,7 +70,11 @@ public class BeansUtility {
 			System.out.println("Extracted all infomration from bean.");
 			
 			//System.out.println("Found container bean.");
-			DatabaseAccess.performSqlJobs(writeJobs);
+			if ( DatabaseAccess.performSqlJobs(writeJobs) ) {
+				return true;
+			} else {
+				return false;
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -78,8 +82,6 @@ public class BeansUtility {
 			return false;
 			//throw new DMSClientErrorException("Cannot write Education & Employment.");
 		}
-		
-		return true;
 	}
 	
 	
