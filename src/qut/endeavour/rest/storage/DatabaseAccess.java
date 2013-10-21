@@ -54,11 +54,7 @@ public class DatabaseAccess {
 	private static Map<String,ContactTypeRecord> cTypeByMap = null; //  get contact type record by name or (String)id
 	private static Map<String,PeriodRecord> periodByMap = null; //  get contact type record by name or (String)id
 	
-	
 
-	
-	
-	
 	
 	public static boolean performSqlJobs( List<SqlWriteJob> jobs ) {
 		
@@ -74,11 +70,17 @@ public class DatabaseAccess {
 			
 		} catch (Exception e) { // any exception, do the same thing
 			try {
+				System.out.println("DatabaseAccess: Write job failed, rolling back.");
+				e.printStackTrace();
 				con.rollback();
 				con.setAutoCommit(true);
 				return false;
 				
-			} catch (SQLException e1) {}
+			} catch (SQLException e1) {
+				System.out.println("DatabaseAccess: Unable to perform rollback.");
+				e.printStackTrace();
+				return false;
+			}
 			
 		}
 		return true;

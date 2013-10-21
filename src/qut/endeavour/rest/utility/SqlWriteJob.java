@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.exception.DMSException;
 import qut.endeavour.rest.storage.DatabaseAccess;
 
@@ -124,29 +125,31 @@ public class SqlWriteJob {
 		insertSql = "INSERT INTO `"+tableName+"`("+insertSqlFields+") VALUES ("+insertSqlValues+");";
 		updateSql = "UPDATE `"+tableName+"` SET "+updateSqlSet+" WHERE "+actualKeyName.substring(2)+" = ?;";
 		
-		System.out.println("SqlWriteJob: Preparing.");
-		
+		System.out.println("\n=====\nSqlWriteJob: Preparing.");
 		System.out.println(countSql);
+		
 		PreparedStatement countPs = populateValues(actualKey, null, DatabaseAccess.createPreparedStatement(countSql) );
 		ResultSet countRs = countPs.executeQuery(); // count how many times it is in the database
 		
 		if( countRs.next() ) {
-			System.out.println( "number of times user id number found in table: " + countRs.getInt(1));
+			System.out.println( "SqlWriteJob: Count found in db: " + countRs.getInt(1));
 			if ( countRs.getInt(1) == 0 ) { // if the count is 0, we need to insert it.
-				System.out.println("Executing an insert.");
+				System.out.println("SqlWriteJob: Executing an insert.");
 				System.out.println(insertSql);
 				PreparedStatement insertPs = populateValues(row, null, DatabaseAccess.createPreparedStatement(insertSql));
 				insertPs.executeUpdate();
 				
 			} else {
-				System.out.println("Executin an update.");
+				System.out.println("SqlWriteJob: Executing an update.");
 				System.out.println(updateSql);
 				PreparedStatement updatePs = populateValues(row, actualKeyName, DatabaseAccess.createPreparedStatement(updateSql));
 				updatePs.executeUpdate();
 			}
 		}
 		
-		System.out.println("Finished writing row with unique id - \"" + actualKeyValue.toString() +"\"");
+		String reportValue = null; 
+		if (actualKeyValue != null) reportValue = actualKeyValue.toString();
+		System.out.println("SqlWriteJob: Finished writing row with unique id - \"" + reportValue +"\"");
 	}
 	
 
@@ -169,7 +172,7 @@ public class SqlWriteJob {
 		
 		int i = 0;
 		
-		System.out.println("\nPutting values in new query.");
+		System.out.println("SqlWriteJob: Putting values in new query.");
 		
 		for ( Entry<String, Object> field : row.entrySet() ) {
 			char type = field.getKey().charAt(0);
@@ -177,7 +180,7 @@ public class SqlWriteJob {
 			Object data = field.getValue();
 			
 			if ( (field.getKey() == keyName) && writeKeyInWhereClause ) {
-				System.out.println("Detected an endKey.");
+				System.out.println("\nSqlWriteJob: Detected an endKey - We must be performing an update.");
 				continue; // if we want the key last
 			}
 			
@@ -189,6 +192,7 @@ public class SqlWriteJob {
 		if ( writeKeyInWhereClause ) {
 			ps = insertData( ps, keyName.charAt(0), row.get(keyName), ++i);
 		}
+		System.out.println("\n");
 		
 		return ps;
 	}
@@ -221,8 +225,20 @@ public class SqlWriteJob {
 				ps.setBoolean(i, (Boolean)data);
 				break;
 			case DATE:
-				System.out.print( " D:" + Date.valueOf( (String)data) );
-				ps.setDate(i, Date.valueOf( (String)data) );
+				Date date = null;
+				if ( (String)data != null && !((String)data).equals("") ) { 
+					if ( ((String)data).matches("\\A[0-9]{4}-[0-1]?[0-9]{1}-[0-3]?[0-9]{1}\\Z") ) {
+						date = Date.valueOf( (String)data );
+						System.out.print( " D:" + date );
+					} else {
+						System.out.println("User supplied invalid date format ("+(String)data+"). must be yyyy-[m]m-[d]d");
+						throw new DMSException("User supplied invalid date format ("+(String)data+"). must be yyyy-[m]m-[d]d");
+					}
+				} else {
+					System.out.print( " D: is null");
+				}
+				
+				ps.setDate(i, date );
 				break;
 			case AUTO_INCREMENT:
 				System.out.print( " AI:" + (Integer)data );
@@ -232,6 +248,7 @@ public class SqlWriteJob {
 			default:
 				throw new DMSException("Unknown sql type \""+type+"\".");
 		}
+		
 		return ps;
 	}
 	

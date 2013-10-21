@@ -1,38 +1,21 @@
 package qut.endeavour.rest.resources;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.UriInfo;
 
-import qut.endeavour.rest.bean.AuthResponse;
-import qut.endeavour.rest.bean.AuthToken;
 import qut.endeavour.rest.bean.Verification;
-import qut.endeavour.rest.bean.admin.Authentication;
-import qut.endeavour.rest.bean.admin.DMSUser;
 import qut.endeavour.rest.bean.admin.PasswordChange;
-import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.exception.DMSException;
-import qut.endeavour.rest.factory.AuthFactory;
 import qut.endeavour.rest.storage.DatabaseAccess;
 import qut.endeavour.rest.utility.Permissions;
 import qut.endeavour.rest.utility.security.PasswordUtility;

@@ -37,7 +37,12 @@ public class MeetingFactory {
 				
 				m.setrName(results.getString(1));
 				m.setUsername(results.getString(2));
-				m.setDate(results.getDate(3).toString());
+				try {
+					m.setDate(results.getDate(3).toString());
+				} catch (Exception e) {
+					m.setDate( null );
+				}
+				
 				
 				upcomingMeetings.add(m);
 			}

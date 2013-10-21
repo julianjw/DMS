@@ -14,6 +14,7 @@ import qut.endeavour.rest.exception.DMSClientErrorException;
 import qut.endeavour.rest.exception.DMSException;
 import qut.endeavour.rest.storage.DatabaseAccess;
 import qut.endeavour.rest.storage.DatabaseNames;
+import qut.endeavour.rest.utility.ConvertDates;
 import qut.endeavour.rest.utility.Permissions;
 
 public class RiskFactory {
@@ -45,23 +46,27 @@ public class RiskFactory {
 			e.printStackTrace();
 		}
 		
+		
+		int[] itemNumbers = { 4, 10, 13, 15 };
+		String[] dates = ConvertDates.convertDateToString(itemNumbers, fields);
+		
 		return new RiskAssessment(
 				(Integer)fields.get(0),
 				clientLoginName,
 				(String)fields.get(2),
 				(String)fields.get(3),
-				((Date)fields.get(4)).toString(),
+				dates[0],
 				(String)fields.get(5),
 				(Integer)fields.get(6),
 				(Integer)fields.get(7),
 				(Integer)fields.get(8),
 				(String)fields.get(9),
-				((Date)fields.get(10)).toString(),
+				dates[1],
 				(Boolean)fields.get(11),
 				(String)fields.get(12),
-				((Date)fields.get(13)).toString(),
+				dates[2],
 				(String)fields.get(14),
-				((Date)fields.get(15)).toString()
+				dates[3]
 				);
 	}
 
@@ -127,7 +132,11 @@ public class RiskFactory {
 				r.setRisk_id( results.getInt(1) );
 				r.setService( results.getString(2) );
 				r.setArea( results.getString(3) );
-				r.setDate( results.getDate(4).toString() );
+				try {
+					r.setDate( results.getDate(4).toString() );
+				} catch (Exception e) {
+					r.setDate( null );
+				}
 				
 				risks.add(r);
 			}

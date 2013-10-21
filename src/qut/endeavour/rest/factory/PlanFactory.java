@@ -38,6 +38,7 @@ import qut.endeavour.rest.exception.DMSException;
 import qut.endeavour.rest.exception.DMSNotFoundException;
 import qut.endeavour.rest.storage.DatabaseAccess;
 import qut.endeavour.rest.storage.DatabaseNames;
+import qut.endeavour.rest.utility.ConvertDates;
 
 public class PlanFactory {
 	/**
@@ -80,6 +81,9 @@ public class PlanFactory {
 				DatabaseNames.TBL_FORMAL_ORDERS
 				);
 		
+		int[] itemNumbers = {8};
+		String[] dates = ConvertDates.convertDateToString(itemNumbers, fields);
+		
 		return new FormalOrders(
 				(String)fields.get(0),
 				(String)fields.get(1),
@@ -89,7 +93,7 @@ public class PlanFactory {
 				(String)fields.get(5),
 				(String)fields.get(6),
 				(String)fields.get(7),
-				((Date)fields.get(8)).toString(),
+				dates[0],
 				(String)fields.get(9),
 				(String)fields.get(10),
 				(String)fields.get(11),
@@ -151,14 +155,16 @@ public class PlanFactory {
 				DatabaseNames.TBL_PERSONAL_DETAILS
 				);
 		
+		String[] dates = ConvertDates.convertDateToString( new int[]{1,5,6} , fields);
+		
 		return new PersonalDetails(
 				(String)fields.get(0),
-				((Date)fields.get(1)).toString(),
+				dates[0],
 				(String)fields.get(2),
 				(String)fields.get(3),
 				(String)fields.get(4),
-				((Date)fields.get(5)).toString(),
-				((Date)fields.get(6)).toString()
+				dates[1],
+				dates[2]
 				);
 	}
 
@@ -576,8 +582,6 @@ public class PlanFactory {
 
 	public static List<ExistingPlanDetails> createExistingPlanDetails(
 			String username, String token) {
-		// TODO Authenticate against roles.
-		//if (!DatabaseAccess.validateUser(username, token)) throw new DMSClientErrorException("Not logged in.");
 		
 		List<ExistingPlanDetails> details = new ArrayList<ExistingPlanDetails>();
 		
@@ -597,7 +601,11 @@ public class PlanFactory {
 				
 				d.setUser_id(rs.getString("username"));
 				d.setrName(rs.getString("name"));
-				d.setDob(rs.getDate("dob").toString());
+				try {
+					d.setDob(rs.getDate("dob").toString());
+				} catch (Exception e) {
+					d.setDob( null );
+				}
 				d.setTelephone(rs.getString("phoneno"));
 				d.setMobile(rs.getString("mobileno"));
 				
