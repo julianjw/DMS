@@ -56,29 +56,37 @@ $(document).ready(function(){
 	
 	//click on the submit button
 	$("#submitB").click(function(){
-		var details = new Object();
-		details.user_id = $("#createUsername").val();
-		details.password = $("#createPassword").val();
-		details.rName=$("#createName").val();
-		details.role = $("#createRole").val();
-
-		var jsonText = JSON.stringify(details);
 		
-		$.ajax({
-			url:'./rest/user/' + $.cookie('user_id') + "/" + $.cookie('auth_token'),
-			type: 'POST',
-			contentType: 'application/json; charset=UTF-8',
-			dataType: 'json',
-			data: jsonText,
-			success: function(jqXHR, textStatus) {
-				//check for bad return
-				$.cookie("userCreated", "1");
-				document.location.reload(true);
-			},
-			error : function(jqXHR) {
-				alert(jqXHR);
-			}
-		});
+		if ($("#createUsername").val() == "" || $("#createUsername").val() == null) {
+			alert("You must enter a username");
+		} else if ($("#createName").val() == "" || $("#createName").val() == null) {
+			alert("You must enter a name");
+		} else {
+			
+			var details = new Object();
+			details.user_id = $("#createUsername").val();
+			details.password = $("#createPassword").val();
+			details.rName=$("#createName").val();
+			details.role = $("#createRole").val();
+	
+			var jsonText = JSON.stringify(details);
+			
+			$.ajax({
+				url:'./rest/user/' + $.cookie('user_id') + "/" + $.cookie('auth_token'),
+				type: 'POST',
+				contentType: 'application/json; charset=UTF-8',
+				dataType: 'json',
+				data: jsonText,
+				success: function(jqXHR, textStatus) {
+					//check for bad return
+					$.cookie("userCreated", "1");
+					document.location.reload(true);
+				},
+				error : function(jqXHR) {
+					alert(jqXHR);
+				}
+			});
+		}
 	});
 });
 </script>

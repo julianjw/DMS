@@ -47,7 +47,7 @@ function selectPP(el) {
 			success: callback, //synchronous request (wait for data to be returned before creating pdf)
 			error: function(xhr) {
 				// do something to handle error
-				
+				alert(xhr.response);
 			}
 		});
 	};
