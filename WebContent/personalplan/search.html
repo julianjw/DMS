@@ -108,11 +108,31 @@ $(document).ready(function(){
 					
 					
 				}else {
+					
+					
+					
 					$("#searchResults").html("");
 					var content = "<table>"
-					content += "<tr><th>Client ID</th><th>Name</th><th>DOB</th><th>Mobile</th><th>Telephone</th></tr>";
+					content += "<tr><th>Signed Off</th><th>Client ID</th><th>Name</th><th>DOB</th><th>Mobile</th><th>Telephone</th></tr>";
 					for (var i = 0; i < d.dmsClientUser.length; i++) {
-						content += "<tr><td class='fakeLink' id='" + d.dmsClientUser[i].user_id + "'onClick='selectPP(this);'>" + d.dmsClientUser[i].user_id + "</td>";
+						$.ajax({
+							url: "./rest/signoff/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + d.dmsClientUser[i].user_id,
+							type:"get",
+							async:false,
+							contentType: "application/json",
+							success: function(da) {  
+								if(d.dmsClientUser[i].dob!=undefined) {
+									content += "<tr><td>" + da.found + "</td>";
+								}else {
+									content+="<tr><td>No Plan</td>";
+								}
+							},
+							error: function(xhr) {
+								// do something to handle error
+								
+							}
+						});
+						content += "<td class='fakeLink' id='" + d.dmsClientUser[i].user_id + "'onClick='selectPP(this);'>" + d.dmsClientUser[i].user_id + "</td>";
 						content += "<td>" + d.dmsClientUser[i].rName + "</td>";
 						content += "<td>" + d.dmsClientUser[i].dob + "</td>";
 						content += "<td>" + d.dmsClientUser[i].mobile + "</td>";
