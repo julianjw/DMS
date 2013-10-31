@@ -16,15 +16,48 @@
 
 	<script type='text/javascript'>
 	
+	function checkBoolean(text) {
+		
+		if (text == "true") {
+			return true;
+		} else if (text == "false") {
+			return false;
+		}
+	}
+	
 	function pullData(page) {
 		switch(page) {
 		
 		case "new":
 			$.removeCookie('client_id');
 		
+			$("#serviceID").empty();
+		
 			//Housekeeping data
-			$("#serviceID").val("");
-			$("#serviceUsernameT").val("");
+			//$("#serviceID").val("");
+			$.ajax({
+				url: "./rest/user/getallclients/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
+				type:"get",
+				contentType: "application/json",
+				success: function(d) {		
+					
+					for (var i=0; i<d.dmsClientUser.length; i++) {
+						
+						$("#serviceID").append('<option value=' + d.dmsClientUser[i].user_id + '>' + d.dmsClientUser[i].user_id + '</option>');
+						
+						if (i==0) {
+							$("#serviceUsernameT").val(d.dmsClientUser[i].rName);
+						}
+					}
+
+				},
+				error: function(xhr) {
+					// do something to handle error
+					alert(xhr.responseText);
+				}
+			});
+			
+			//$("#serviceUsernameT").val("");
 			$("#meetingDateT").val("");
 			//name of service
 			$("#education").prop('checked', false);
@@ -113,20 +146,29 @@
 				type:"get",
 				contentType: "application/json",
 				success: function(d) {		
-
+					
 					//display the data
 					//Housekeeping data
 					$("#meetingDateT").val(d.meetingDate);
 					//name of service
-					$("#education").prop('checked', d.education);
-					$("#learningLifestyle").prop('checked', d.learnlife);
-					$("#post-school").prop('checked', d.postSchool);
+					//if (d.education == 1) {
+					//	$("#education").prop('checked', true);
+					//}
+					console.log(d);
+					
+					$("#education").prop('checked', checkBoolean(d.education));
+					//alert("hello?");
+					//alert($("#learningLifestyle").prop('checked'));
+					$("#learningLifestyle").prop('checked', checkBoolean(d.learnlife));
+					//alert("d.learnLife = " + d.learnLife);
+					//alert($("#learningLifestyle").prop('checked'));
+					$("#post-school").prop('checked', checkBoolean(d.postSchool));
 
 					//Coordination of the personal plannning process
 					$("#preliminaryT").val(d.prelimMeetingDate);
 					$("#recordT").val(d.discussion_record);
 					
-					if (d.userChoicesImplemented == true) {
+					if (d.userChoicesImplemented == "true") {
 						
 						$("#confirmYes").prop('checked', true);
 						$("#confirmNo").prop('checked', false);
@@ -138,50 +180,50 @@
 					}
 
 					//planMeeting.userChoicesImplemented = //$("").val(); //#confirmYes, #confirmNo
-					$("#informedDecision").prop('checked', d.infoCompleted);
+					$("#informedDecision").prop('checked', checkBoolean(d.infoCompleted));
 
 					//Contact with the service user's nominated invitees and support network 
-					$("#family").prop('checked', d.family);
-					$("#guardian").prop('checked', d.guardian);
-					$("#decisionMaker").prop('checked', d.decisionMaker);
-					$("#advocate").prop('checked', d.advocate);
-					$("#serviceReps").prop('checked', d.serviceReps);
+					$("#family").prop('checked', checkBoolean(d.family));
+					$("#guardian").prop('checked', checkBoolean(d.guardian));
+					$("#decisionMaker").prop('checked', checkBoolean(d.decisionMaker));
+					$("#advocate").prop('checked', checkBoolean(d.advocate));
+					$("#serviceReps").prop('checked', checkBoolean(d.serviceReps));
 
 					//Preparation for Personal Plan Meeting
 					//Check that all information that is pertinent to developing/updating a Personal Plan for an individual is available for reference during the personal planning process
-					$("#PBSPlan").prop('checked', d.pbsPlan);
-					$("#adaptive").prop('checked', d.adaptFuncAssessment);
-					$("#CHAP").prop('checked', d.chapWellbeingInfo);
-					$("#currentPP").prop('checked', d.currentPersonalPlan);
-					$("#serviceActivity").prop('checked', d.serviceActivityOptions);
-					$("#gatherInfo").prop('checked', d.otherInfo);
-					$("#medicationFolder").prop('checked', d.medication);
-					$("#personalBudget").prop('checked', d.userBudget);
-					$("#reflections").prop('checked', d.reflections);
+					$("#PBSPlan").prop('checked', checkBoolean(d.pbsPlan));
+					$("#adaptive").prop('checked', checkBoolean(d.adaptFuncAssessment));
+					$("#CHAP").prop('checked', checkBoolean(d.chapWellbeingInfo));
+					$("#currentPP").prop('checked', checkBoolean(d.currentPersonalPlan));
+					$("#serviceActivity").prop('checked', checkBoolean(d.serviceActivityOptions));
+					$("#gatherInfo").prop('checked', checkBoolean(d.otherInfo));
+					$("#medicationFolder").prop('checked', checkBoolean(d.medication));
+					$("#personalBudget").prop('checked', checkBoolean(d.userBudget));
+					$("#reflections").prop('checked', checkBoolean(d.reflections));
 						
 					//Service Coordinator to ensure that the following documents are reviewed and updated as part of the personal plan process annually
-					$("#photoRelease").prop('checked', d.photoRelease);
-					$("#clientServiceAgreement").prop('checked', d.clientServiceAgree);
-					$("#allSupportAgreements").prop('checked', d.allSuppAgree);
-					$("#CIMS").prop('checked', d.cimsInfo);
-					$("#medUpdatedYearly").prop('checked', d.mediInfoAuth);
-					$("#personalBelongings").prop('checked', d.schedPersonalBelongings);
-					$("#PBSMaintenance").prop('checked', d.pbsMaintenancePlan);
+					$("#photoRelease").prop('checked', checkBoolean(d.photoRelease));
+					$("#clientServiceAgreement").prop('checked', checkBoolean(d.clientServiceAgree));
+					$("#allSupportAgreements").prop('checked', checkBoolean(d.allSuppAgree));
+					$("#CIMS").prop('checked', checkBoolean(d.cimsInfo));
+					$("#medUpdatedYearly").prop('checked', checkBoolean(d.mediInfoAuth));
+					$("#personalBelongings").prop('checked', checkBoolean(d.schedPersonalBelongings));
+					$("#PBSMaintenance").prop('checked', checkBoolean(d.pbsMaintenancePlan));
 					$("#otherT1").val(d.personalPlanComments);
 					
 					//personal plan meeting and outcomes
-					$("#ppMeetingOutcomes").prop('checked', d.personalMeetingPlanOutcomes);
-					$("#ppComplete").prop('checked', d.personalPlanComplete);
-					$("#ppSignedOff").prop('checked', d.completePlanSigned);
-					$("#thanked").prop('checked', d.planMeetingThanks);
+					$("#ppMeetingOutcomes").prop('checked', checkBoolean(d.personalMeetingPlanOutcomes));
+					$("#ppComplete").prop('checked', checkBoolean(d.personalPlanComplete));
+					$("#ppSignedOff").prop('checked', checkBoolean(d.completePlanSigned));
+					$("#thanked").prop('checked', checkBoolean(d.planMeetingThanks));
 					$("#otherT2").val(d.personalMeetingPlanComments);
 						
 					//Implementation of personal plan
-					$("#choices").prop('checked', d.participation);
-					$("#riskAssessment").prop('checked', d.riskAssessForms);
-					$("#indivSupport").prop('checked', d.suppProgrssNotes);
-					$("#goalProgressSummary").prop('checked', d.goalProgressSummary);
-					$("#prepare").prop('checked', d.resourcesForImplementation);
+					$("#choices").prop('checked', checkBoolean(d.participation));
+					$("#riskAssessment").prop('checked', checkBoolean(d.riskAssessForms));
+					$("#indivSupport").prop('checked', checkBoolean(d.suppProgrssNotes));
+					$("#goalProgressSummary").prop('checked', checkBoolean(d.goalProgressSummary));
+					$("#prepare").prop('checked', checkBoolean(d.resourcesForImplementation));
 					$("#otherT3").val(d.implementComment);
 					
 				}
@@ -206,7 +248,12 @@
 		$("#meeting").click(function(){
 			$("#searchD").hide();
 			$("#meetingD").show();
+			if ($("#meetingDateT").val() == "") {
+				pullData("new");
+			}
 		});
+		
+
 		
 	});
 

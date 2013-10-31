@@ -8,6 +8,8 @@
 	
 			<div id='searchResults'></div>
 		</td>
+		<td>OR</td>
+		<td><button id='createNewMeetingButton' >Create a new Meeting</button></td>
 	</tr>
 	</table>
 </div>
@@ -21,43 +23,78 @@ function selectM(el) {
 	$("#searchD").hide();
 	pullData("meetingD");
 	$("#meetingD").show();
+	
+	$("#serviceID").append('<option value=' + $(el).attr("id") + '>' + $(el).attr("id") + '</option>');
+	$("#serviceID").prop("disabled", true);
+	
 }
 
 
 $(document).ready(function(){
 	
 	
-	//click on create new PP button
-	$("#createNewMButton").click(function(){
+	//click on create new Meeting button
+	$("#createNewMeetingButton").click(function(){
 		$("#searchD").hide();
 		pullData("new");
 		$("#meetingD").show();
+		
+		$("#serviceID")
+			.empty()
+			.prop("disabled", false);
+		
+		$("#serviceID")
+		  .change(function() {
+		    var str = "";
+		    $( "#serviceID option:selected" ).each(function() {
+		      str += $( this ).text() + " ";
+		    });
+		    
+		    if (str != "" && str != null) {
+				//pull the name
+				$.ajax({
+					url: "./rest/user/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + str,
+					type:"get",
+					contentType: "application/json",
+					success: function(d) {		
+						$("#serviceUsernameT").val(d.rName);
+	
+					},
+					error: function(xhr) {
+						// do something to handle error
+						//alert(xhr.responseText);
+					}
+				});
+		    }
+		    //alert(str);
+		    //$("#serviceUsernameT").val(str);
+		    //$( "div" ).text( str );
+		  })
+		  .trigger( "change" );
 	});
 	
 	
 	//page loads
 	//get list of existing clients
 	$.ajax({
-		url: "./rest/user/getallclients/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
+		url: "./rest/planmeeting/allmeetings/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
 		type:"get",
 		contentType: "application/json",
 		success: function(d) {
 			$("#searchResults").html("");
 			var content = "<table>"
-			content += "<tr><th>Client ID</th><th>Name</th><th>DOB</th><th>Mobile</th><th>Telephone</th></tr>";
-			for (var i = 0; i < d.dmsClientUser.length; i++) {
-				content += "<tr><td class='fakeLink' id='" + d.dmsClientUser[i].user_id + "'onClick='selectM(this);'>" + d.dmsClientUser[i].user_id + "</td>";
-				content += "<td>" + d.dmsClientUser[i].rName + "</td>";
-				content += "<td>" + d.dmsClientUser[i].dob + "</td>";
-				content += "<td>" + d.dmsClientUser[i].mobile + "</td>";
-				content += "<td>" + d.dmsClientUser[i].telephone + "</td></tr>";
+			content += "<tr><th>Client ID</th><th>Name</th><th>Meeting Date</th></tr>";
+			for (var i = 0; i < d.upcomingMeeting.length; i++) {
+				content += "<tr><td class='fakeLink' id='" + d.upcomingMeeting[i].username + "'onClick='selectM(this);'>" + d.upcomingMeeting[i].username + "</td>";
+				content += "<td>" + d.upcomingMeeting[i].rName + "</td>";
+				content += "<td>" + d.upcomingMeeting[i].date + "</td></tr>";
 			}
 			content += "</table>";
 			$("#searchResults").append(content);
 		},
 		error: function(xhr) {
 			// do something to handle error
-			alert("error getting existing personal plan details");
+			alert("error getting existing meetings");
 		}
 	});
 	
@@ -65,20 +102,18 @@ $(document).ready(function(){
 	//click on search button
 	$("#queryB").click(function(){
 		$.ajax({
-			url: "./rest/personalplan/allclientswithplans/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
+			url: "./rest/planmeeting/allmeetings/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
 			type:"get",
 			contentType: "application/json",
 			success: function(d) {
 				$("#searchResults").html("");
 				var content = "<table>"
-				content += "<tr><th>Client ID</th><th>Name</th><th>DOB</th><th>Mobile</th><th>Telephone</th></tr>";
-				for (var i = 0; i < d.existingPlanDetails.length; i++) {
-					if(d.existingPlanDetails[i].user_id == $("#queryT").val() || $("#queryT").val()=="") {
-						content += "<tr><td class='fakeLink' id='" + d.existingPlanDetails[i].user_id + "'onClick='selectM(this);'>" + d.existingPlanDetails[i].user_id + "</td>";
-						content += "<td>" + d.existingPlanDetails[i].rName + "</td>";
-						content += "<td>" + d.existingPlanDetails[i].dob + "</td>";
-						content += "<td>" + d.existingPlanDetails[i].mobile + "</td>";
-						content += "<td>" + d.existingPlanDetails[i].telephone + "</td></tr>";
+				content += "<tr><th>Client ID</th><th>Name</th><th>Meeting Date</th></tr>";
+				for (var i = 0; i < d.upcomingMeeting.length; i++) {
+					if(d.upcomingMeeting[i].username == $("#queryT").val() || $("#queryT").val()=="") {
+						content += "<tr><td class='fakeLink' id='" + d.upcomingMeeting[i].username + "'onClick='selectM(this);'>" + d.upcomingMeeting[i].username + "</td>";
+						content += "<td>" + d.upcomingMeeting[i].rName + "</td>";
+						content += "<td>" + d.upcomingMeeting[i].date + "</td></tr>";
 					}
 				}
 				content += "</table>";
@@ -86,9 +121,11 @@ $(document).ready(function(){
 			},
 			error: function(xhr) {
 				// do something to handle error
-				alert("error getting existing personal plan details");
+				alert("error getting existing meetings");
 			}
 		});
+		
+		
 	});
 });
 </script>
