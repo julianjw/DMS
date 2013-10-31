@@ -111,12 +111,12 @@ $(document).ready(function(){
 					$("#searchResults").html("");
 					var content = "<table>"
 					content += "<tr><th>Client ID</th><th>Name</th><th>DOB</th><th>Mobile</th><th>Telephone</th></tr>";
-					for (var i = 0; i < d.user.length; i++) {
-						content += "<tr><td class='fakeLink' id='" + d.user[i].user_id + "'onClick='selectPP(this);'>" + d.user[i].user_id + "</td>";
-						content += "<td>" + d.user[i].rName + "</td>";
-						content += "<td>" + d.user[i].dob + "</td>";
-						content += "<td>" + d.user[i].mobile + "</td>";
-						content += "<td>" + d.user[i].telephone + "</td></tr>";
+					for (var i = 0; i < d.dmsClientUser.length; i++) {
+						content += "<tr><td class='fakeLink' id='" + d.dmsClientUser[i].user_id + "'onClick='selectPP(this);'>" + d.dmsClientUser[i].user_id + "</td>";
+						content += "<td>" + d.dmsClientUser[i].rName + "</td>";
+						content += "<td>" + d.dmsClientUser[i].dob + "</td>";
+						content += "<td>" + d.dmsClientUser[i].mobile + "</td>";
+						content += "<td>" + d.dmsClientUser[i].telephone + "</td></tr>";
 					}
 					content += "</table>";
 					$("#searchResults").append(content);
