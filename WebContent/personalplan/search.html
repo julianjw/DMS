@@ -59,74 +59,75 @@ function signOff(el) {
 
 $(document).ready(function(){
 	
-	//page loads
-	//get list of existing clients
-	$.ajax({
-		url: "./rest/user/getallclients/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
-		type:"get",
-		contentType: "application/json",
-		success: function(d) {
-			//change search table if they have an elevated roles
-			if($.cookie("user_role")=="sdim" || $.cookie("user_role")=="som" || $.cookie("user_role")=="r&do") {
-				$("#searchResults").html("");
-				var content = "<table>";
-				content += "<tr><th>SignOff</th><th>Client ID</th><th>Name</th><th>DOB</th><th>Mobile</th><th>Telephone</th></tr>";
-				for (var i = 0; i < d.dmsClientUser.length; i++) {
-					//get the signoff details
-					$.ajax({
-						url: "./rest/signoff/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + d.dmsClientUser[i].user_id,
-						type:"get",
-						async:false,
-						contentType: "application/json",
-						success: function(da) {  
-							if(d.dmsClientUser[i].dob!=undefined) {
-								if(da.found=="false") {
-									content += "<tr><td><input type='checkbox' id='sign"+d.dmsClientUser[i].user_id+"' onClick='signOff(this);'</td>";
+	if ($.cookie("user_role") != "client") {
+	
+		//page loads
+		//get list of existing clients
+		$.ajax({
+			url: "./rest/user/getallclients/" + $.cookie('user_id') + "/" + $.cookie('auth_token'),
+			type:"get",
+			contentType: "application/json",
+			success: function(d) {
+				//change search table if they have an elevated roles
+				if($.cookie("user_role")=="sdim" || $.cookie("user_role")=="som" || $.cookie("user_role")=="r&do") {
+					$("#searchResults").html("");
+					var content = "<table>";
+					content += "<tr><th>SignOff</th><th>Client ID</th><th>Name</th><th>DOB</th><th>Mobile</th><th>Telephone</th></tr>";
+					for (var i = 0; i < d.dmsClientUser.length; i++) {
+						//get the signoff details
+						$.ajax({
+							url: "./rest/signoff/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + d.dmsClientUser[i].user_id,
+							type:"get",
+							async:false,
+							contentType: "application/json",
+							success: function(da) {  
+								if(d.dmsClientUser[i].dob!=undefined) {
+									if(da.found=="false") {
+										content += "<tr><td><input type='checkbox' id='sign"+d.dmsClientUser[i].user_id+"' onClick='signOff(this);'</td>";
+									}else {
+										content += "<tr><td><input type='checkbox' id='sign"+d.dmsClientUser[i].user_id+"' onClick='signOff(this);' class='checked'</td>";
+									}
 								}else {
-									content += "<tr><td><input type='checkbox' id='sign"+d.dmsClientUser[i].user_id+"' onClick='signOff(this);' class='checked'</td>";
+									content+="<tr><td></td>";
 								}
-							}else {
-								content+="<tr><td></td>";
+							},
+							error: function(xhr) {
+								// do something to handle error
+								
 							}
-						},
-						error: function(xhr) {
-							// do something to handle error
-							
-						}
-					});
-					content += "<td class='fakeLink' id='" + d.dmsClientUser[i].user_id + "'onClick='selectPP(this);'>" + d.dmsClientUser[i].user_id + "</td>";
-					content += "<td>" + d.dmsClientUser[i].rName + "</td>";
-					content += "<td>" + d.dmsClientUser[i].dob + "</td>";
-					content += "<td>" + d.dmsClientUser[i].mobile + "</td>";
-					content += "<td>" + d.dmsClientUser[i].telephone + "</td></tr>";
+						});
+						content += "<td class='fakeLink' id='" + d.dmsClientUser[i].user_id + "'onClick='selectPP(this);'>" + d.dmsClientUser[i].user_id + "</td>";
+						content += "<td>" + d.dmsClientUser[i].rName + "</td>";
+						content += "<td>" + d.dmsClientUser[i].dob + "</td>";
+						content += "<td>" + d.dmsClientUser[i].mobile + "</td>";
+						content += "<td>" + d.dmsClientUser[i].telephone + "</td></tr>";
+					}
+					content += "</table>";
+					$("#searchResults").append(content);
+					$('.checked').prop('checked', true);
+					
+					
+				}else {
+					$("#searchResults").html("");
+					var content = "<table>"
+					content += "<tr><th>Client ID</th><th>Name</th><th>DOB</th><th>Mobile</th><th>Telephone</th></tr>";
+					for (var i = 0; i < d.user.length; i++) {
+						content += "<tr><td class='fakeLink' id='" + d.user[i].user_id + "'onClick='selectPP(this);'>" + d.user[i].user_id + "</td>";
+						content += "<td>" + d.user[i].rName + "</td>";
+						content += "<td>" + d.user[i].dob + "</td>";
+						content += "<td>" + d.user[i].mobile + "</td>";
+						content += "<td>" + d.user[i].telephone + "</td></tr>";
+					}
+					content += "</table>";
+					$("#searchResults").append(content);
 				}
-				content += "</table>";
-				$("#searchResults").append(content);
-				$('.checked').prop('checked', true);
-				
-				
-			}else {
-				$("#searchResults").html("");
-				var content = "<table>"
-				content += "<tr><th>Client ID</th><th>Name</th><th>DOB</th><th>Mobile</th><th>Telephone</th></tr>";
-				for (var i = 0; i < d.user.length; i++) {
-					content += "<tr><td class='fakeLink' id='" + d.user[i].user_id + "'onClick='selectPP(this);'>" + d.user[i].user_id + "</td>";
-					content += "<td>" + d.user[i].rName + "</td>";
-					content += "<td>" + d.user[i].dob + "</td>";
-					content += "<td>" + d.user[i].mobile + "</td>";
-					content += "<td>" + d.user[i].telephone + "</td></tr>";
-				}
-				content += "</table>";
-				$("#searchResults").append(content);
+			},
+			error: function(xhr) {
+				// do something to handle error
+				alert("error getting clients");
 			}
-		},
-		error: function(xhr) {
-			// do something to handle error
-			alert("error getting clients");
-		}
-	});
-	
-	
+		});
+	}
 	
 	
 	

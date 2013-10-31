@@ -631,19 +631,23 @@ function pullData(page) {
 			type:"get",
 			contentType: "application/json",
 			success: function(d) {		
-				$("#holidayT").val(d.holidayPlan.holidayType);
-				$("#stratT").val(d.holidayPlan.strategies);
-				$("#howT").val(d.holidayPlan.howWhoWhere);
-				$("#holidayTimeframesT").val(d.holidayPlan.timeframes);
-				$("#holidayDetailsT").val(d.holidayPlan.detailsAndInfo);
-				$("#resourcesT").val(d.holidayPlan.resourcesRequired);				
 				
-				$("#myGoalT").val(d.goalPlan.goalToAchieve);
-				$("#goalStratT").val(d.goalPlan.strategies);
-				$("#goalHowT").val(d.goalPlan.howWhoWhere);
-				$("#goalTimeframesT").val(d.goalPlan.timeframes);
-				$("#goalOutcomeT").val(d.goalPlan.outcomes);
-				$("#goalResourcesT").val(d.goalPlan.resourcesRequired);
+				if (d.holidayPlan != null && d.goalPlan == null) {
+				
+					$("#holidayT").val(d.holidayPlan.holidayType);
+					$("#stratT").val(d.holidayPlan.strategies);
+					$("#howT").val(d.holidayPlan.howWhoWhere);
+					$("#holidayTimeframesT").val(d.holidayPlan.timeframes);
+					$("#holidayDetailsT").val(d.holidayPlan.detailsAndInfo);
+					$("#resourcesT").val(d.holidayPlan.resourcesRequired);				
+					
+					$("#myGoalT").val(d.goalPlan.goalToAchieve);
+					$("#goalStratT").val(d.goalPlan.strategies);
+					$("#goalHowT").val(d.goalPlan.howWhoWhere);
+					$("#goalTimeframesT").val(d.goalPlan.timeframes);
+					$("#goalOutcomeT").val(d.goalPlan.outcomes);
+					$("#goalResourcesT").val(d.goalPlan.resourcesRequired);
+				}
 				
 			},
 			error: function(xhr) {
