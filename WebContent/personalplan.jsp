@@ -685,14 +685,20 @@ $(document).ready(function(){
 	var navs = new Array("lastD", "searchD", "clientD", "healthD", "supportD", "communicationD", "educationD", "planningD");	
 	//bind the navigation clicks
 	$('li.pageNav').bind('click', function(){
-		for (var i=0; i<navs.length;i++) {
-			if (navs[i] != ($(this).attr('id')+"D")) {
-				$("#"+navs[i]).hide();
-			} else {
-				pullData(navs[i]);
-				$("#"+navs[i]).show();
-				$("#"+navs[i]).css("display", "block");					//change css too
+		if ($.cookie("client_id") != null && $.cookie("client_id") != "") {
+			
+			for (var i=0; i<navs.length;i++) {
+				if (navs[i] != ($(this).attr('id')+"D")) {
+					$("#"+navs[i]).hide();
+				} else {
+					pullData(navs[i]);
+					$("#"+navs[i]).show();
+					$("#"+navs[i]).css("display", "block");					//change css too
+				}
 			}
+
+		} else if ($(this).attr('id') != "search") {
+			alert("You must select a client before you can edit the personal plan.");
 		}
 	});
 	
