@@ -33,10 +33,6 @@ import qut.endeavour.rest.utility.security.SaltAndHash;
 
 public class DatabaseAccess {
 	
-	private final static String DBMS_LOCATION = "jdbc:mysql://localhost:3306/";
-	private final static String DATABASE_NAME = "endeavourdb";
-	private final static String dbUsername = "root";
-	private final static String dbPassword = "";
 	
 	private final static char BOOLEAN = 'b';
 	private final static char INTEGER = 'i';
@@ -108,7 +104,28 @@ public class DatabaseAccess {
 			if ( con == null ) {
 				Class.forName("com.mysql.jdbc.Driver");
 				System.out.println("DatabaseAccess: Making a new connection to the database.");
-				con = DriverManager.getConnection(DBMS_LOCATION+DATABASE_NAME, dbUsername, dbPassword );
+				
+				String dbHost = DatabaseDetails.getInstance().getHost();
+				String dbPort = DatabaseDetails.getInstance().getPort();
+				String dbName = DatabaseDetails.getInstance().getDatabase();
+				String dbUsername = DatabaseDetails.getInstance().getUsername();
+				String dbPassword = DatabaseDetails.getInstance().getPassword();
+				
+				// check for errors
+				if ( 	dbHost == null ||
+						dbPort == null ||
+						dbName == null ||
+						dbUsername == null ||
+						dbPassword == null ) {
+					System.out.println("Database configuration file has returned null values.");
+					return false;
+				}
+					
+				
+				String connectionString = "jdbc:mysql://" + dbHost + ":" + dbPort + "/" + dbName;
+				
+				
+				con = DriverManager.getConnection(connectionString, dbUsername, dbPassword );
 				
 				//TODO refactor these
 				populateRoles();
@@ -242,7 +259,7 @@ public class DatabaseAccess {
 		
 		System.out.print("DatabaseAccess: Validating session token->");
 		
-		String sql = "SELECT count(*) as count FROM `"+DATABASE_NAME+"`.`"+TBL_ACTIVE_SESSION+"` WHERE username = ? and token = ?";
+		String sql = "SELECT count(*) as count FROM `"+DatabaseDetails.getInstance().getDatabase()+"`.`"+TBL_ACTIVE_SESSION+"` WHERE username = ? and token = ?";
 		
 		try {
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -372,7 +389,7 @@ public class DatabaseAccess {
 		
 		System.out.println("DatabaseAccess: Creating new user.");
 		
-		String sql = "INSERT INTO `"+DATABASE_NAME+"`.`user_info` (`user_id`, `name`, `username`, `password_hash`, `salt`, `role_id`) VALUES (NULL, ?, ?, ?, ?, ?);";
+		String sql = "INSERT INTO `"+DatabaseDetails.getInstance().getDatabase()+"`.`user_info` (`user_id`, `name`, `username`, `password_hash`, `salt`, `role_id`) VALUES (NULL, ?, ?, ?, ?, ?);";
 		PreparedStatement ps;
 		
 		System.out.println(sql);
@@ -419,7 +436,7 @@ public class DatabaseAccess {
 	private static boolean logoutUser(String user_id) {
 		System.out.println("DatabaseAccess: User is being logged out.");
 		
-		String sql = "DELETE FROM `"+DATABASE_NAME+"`.`"+TBL_ACTIVE_SESSION+"` WHERE `"+TBL_ACTIVE_SESSION+"`.`username` = ?";
+		String sql = "DELETE FROM `"+DatabaseDetails.getInstance().getDatabase()+"`.`"+TBL_ACTIVE_SESSION+"` WHERE `"+TBL_ACTIVE_SESSION+"`.`username` = ?";
 		PreparedStatement ps;
 		
 		try {
@@ -481,7 +498,7 @@ public class DatabaseAccess {
 		if (!makeConnection()) return false;
 		
 		System.out.println("DatabaseAccess: User is being logged in.");
-		String sql = "INSERT INTO `"+DATABASE_NAME+"`.`"+TBL_ACTIVE_SESSION+"` (`username`, `token`, `create_timestamp`) VALUES (?, ?, CURRENT_TIMESTAMP);";
+		String sql = "INSERT INTO `"+DatabaseDetails.getInstance().getDatabase()+"`.`"+TBL_ACTIVE_SESSION+"` (`username`, `token`, `create_timestamp`) VALUES (?, ?, CURRENT_TIMESTAMP);";
 		
 		try {
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -809,7 +826,7 @@ public class DatabaseAccess {
 		if ( performDelete == null ) return;
 		
 		if ( !performDelete ) {
-			String sql = "INSERT INTO  `"+DATABASE_NAME+"`.`plan_sign_off` ( `user_id` ) VALUES ( ? );";
+			String sql = "INSERT INTO  `"+DatabaseDetails.getInstance().getDatabase()+"`.`plan_sign_off` ( `user_id` ) VALUES ( ? );";
 			changeSignOff( sql, clientid);
 		}
 	}
@@ -820,7 +837,7 @@ public class DatabaseAccess {
 		if ( performDelete == null ) return;
 		
 		if ( performDelete ) {
-			String sql = "DELETE FROM `"+DATABASE_NAME+"`.`plan_sign_off` WHERE `plan_sign_off`.`user_id` = ?;";
+			String sql = "DELETE FROM `"+DatabaseDetails.getInstance().getDatabase()+"`.`plan_sign_off` WHERE `plan_sign_off`.`user_id` = ?;";
 			changeSignOff( sql, clientid);
 		}
 	}
