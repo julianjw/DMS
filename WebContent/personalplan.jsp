@@ -626,13 +626,20 @@ function pullData(page) {
 		
 	
 	case "planningD":
+		if ($.cookie('user_role') == "client") {
+			client =$.cookie('user_id');
+			
+		} else {
+			client = $.cookie('client_id');
+		}
+		
 		$.ajax({
-			url: "./rest/personalplan/planning/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + $.cookie('client_id'),
+			url: "./rest/personalplan/planning/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + client,
 			type:"get",
 			contentType: "application/json",
 			success: function(d) {		
 				
-				if (d.holidayPlan != null && d.goalPlan == null) {
+				if (d.holidayPlan != null && d.goalPlan != null) {
 				
 					$("#holidayT").val(d.holidayPlan.holidayType);
 					$("#stratT").val(d.holidayPlan.strategies);

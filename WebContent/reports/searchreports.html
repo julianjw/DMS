@@ -19,13 +19,16 @@ function selectPP(el) {
 	//get the personal plan of the selected client
 	
 	var clientName = "";
+	
+	//alert($(el).attr("id"));
 		
 	//pull the name
 	$.ajax({
 		url: "./rest/user/" + $.cookie('user_id') + "/" + $.cookie('auth_token') + "/" + $(el).attr("id"),
 		type:"get",
 		contentType: "application/json",
-		success: function(d) {		
+		success: function(d) {	
+			
 			clientName = d.rName;
 
 		},
@@ -34,6 +37,8 @@ function selectPP(el) {
 			alert(xhr.response);
 		}
 	});
+	
+	
 	
 	var a = function(callback)
 	{
